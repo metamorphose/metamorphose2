@@ -1,0 +1,20 @@
+[Desktop Entry]
+Name=Métamorphose2
+GenericName=Métamorphose2
+Type=Application
+Terminal=false
+Categories=Utility;Filesystem;
+Icon=metamorphose2
+Exec=/usr/bin/metamorphose2
+Encoding=UTF-8
+StartupNotify=true
+X-AppInstall-Package=metamorphose2
+Comment=A mass renamer for files and folders
+Comment[de]=Ein Massenumbenenner für Dateien und Verzeichnisse
+Comment[el]=Εργαλείο μαζικής μετονομασίας αρχείων και φακέλων
+Comment[es]=Un renombrador masivo para archivos y carpetas
+Comment[fr]=Un renommeur massif pour fichiers et dossiers
+Comment[hu]=Egy tömeges fájl és mappa átnevező
+Comment[pl]=Narzędzie masowej zmiany nazw plików i folderów
+Comment[zh_CN]=文件和文件夹批量更名工具
+

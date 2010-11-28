@@ -1,0 +1,223 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Métamorphose Readme</title>
+<style type='text/css'>
+/* Text */
+.OSes{
+	color:#6B6FA1; /* light blue-mauve */
+	font-weight: 700;
+}
+.heading{color:#000099;
+	font-family: Courier, "Courier New", monospace;
+    font-size: 18px;
+}
+P.copyright{font-size:13px; color:darkgrey}
+.standOut{
+	color:#6E0601;
+	font-size:17;
+}
+.versionTxt{
+	color:#6E0601;
+	letter-spacing:1;
+	font-size:16;
+}
+A:link{color:blue;}
+A:visited{color:#330099;}
+A:hover{color:#CC3333; text-decoration:none;}
+
+/* List */
+ul{
+	margin-top:1px;
+	list-style-type: square;
+}
+li{
+    margin: 3px 0;
+}
+ol{list-style-type: decimal;}
+
+#content{
+    background-color: #eee;
+    border: 1px solid blue;
+    width: 980px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+</style>
+</head>
+
+<BODY bgcolor='white'>
+
+<div id="content">
+<center>
+<h2>Métamorphose-2 Readme</h2>
+<h3>Métamorphose-2 is currently in beta status.</h3>
+</center>
+
+<p>
+This readme file is for those that wish to install the most recent version from source.
+For binary (normal) installs, use the appropriate install file for your system (setup.exe, .deb, etc ...).
+</p>
+<p>
+Because Métamorphose is developed on Linux, there is more information available for that OS.
+Any non-specific information available here applies to all compatible operating systems.
+</p>
+
+<p>
+<b class='heading'>Requirements</b><br/>
+<ul>
+  <li><a href='http://www.python.org/'>Python</a>, version 2.6
+  <ul>
+    <li>Older versions of python are not supported !</li>
+    <li>Any recent Linux version will have this pre-installed.</li>
+  </ul>
+  <li><a href='http://www.wxpython.org'>wxPython</a>, version 2.8</li>
+  <ul>
+    <li>Deb based Linux : apt-get install <a href="http://packages.debian.org/python-wxgtk2.8">python-wxgtk2.8</a></li>
+    <li>RPM based Linux : <a href="http://rpmfind.net/linux/rpm2html/search.php?query=wxpython">Look here</a></li>
+  </ul>
+  <li><a href="http://www.pythonware.com/products/pil/">Python Imaging Library (PIL)</a>, version 1.1.6 or greater</li>
+  <ul>
+    <li>Deb based Linux : apt-get install <a href="http://packages.debian.org/python-imaging">python-imaging</a></li>
+    <li>RPM based Linux : <a href="http://rpmfind.net/linux/rpm2html/search.php?query=python-imaging">Look here</a></li>
+  </ul>
+  <li><a href="http://code.google.com/p/mutagen/">Mutagen</a>, version 1.15 or greater</li>
+  <ul>
+  	<li>Deb based Linux : apt-get install <a href="http://packages.debian.org/python-mutagen">python-mutagen</a></li>
+  	<li>RPM based Linux : <a href="http://rpmfind.net/linux/rpm2html/search.php?query=python-mutagen">Look here</a></li>
+  </ul>
+</ul>
+</p>
+
+<br/>
+<p>
+<b class='heading'>Obtaining the source files</b><br/>
+Easiest way is too download the latest <a href="http://sourceforge.net/project/showfiles.php?group_id=146403&package_id=211046">official releases</a>.
+<br/><br/>
+If you are a little adventurous or want to contribute code to the project, you can get the very latest sources directly from Subversion (SVN):
+<pre>
+$ svn co https://file-folder-ren.svn.sourceforge.net/svnroot/file-folder-ren/metamorphose2
+</pre>
+Please keep in mind the SVN snapshot changes on a weekly or daily basis - use at your own risk.<br/>
+</p>
+
+<br/>
+<p>
+<b class='heading'>Installing from source</b><br/>
+Unzip sources in desired location.<br/>
+If you are using Linux or freeBSD, navigate to the directory and type (as root):<br/>
+<pre>
+$ make all
+</pre>
+or:
+<pre>
+$ make build
+$ make install
+</pre>
+(<i>build</i> makes the directory structure, <i>install</i> copies the sources and byte-compiles them.)
+<br/>
+</p>
+
+<br/>
+<p>
+<b class='heading'>Launching the application</b><br/>
+Execute 'metamorphose2.py' with Python interpreter within the 'metamorphose2' folder.<br/>
+<br/>
+<b>Under Linux &amp; freeBSD:</b><br/>
+The makefile should take care of everything for you, it is architecture and distro independant.<br/>
+Métamorphose will be installed in <i>/usr/share/metamorphose2</i>, you can run it with
+<pre>$ metamorphose2</pre>
+and the man page with
+<pre>$ man metamorphose2</pre>
+If you are using a <a href="http://www.freedesktop.org/">freedesktop.org</a> compatible window manager
+(like Gnome or KDE), there should be an entry in 'Applications -> Accessories'.<br/>
+</p>
+
+<br/>
+<p>
+<b class='heading'>Command line options</b>
+<pre>
+Metamorphose is a graphical mass renaming program for files and folders.
+However, there are some command line options :
+
+-h,  --help       Show this screen and exit
+-t,  --timer      Show time taken to complete operations
+-d,  --debug      Show debugging information
+-p=, --path=      Specify a directory to load
+-c=, --config=    Specify a Metamorphose2 config file to load
+-a=, --auto=      Specify automatic mode level (when also using -c option) :
+                    0 = do not preview items (will overide preferences)
+                    1 = auto preview items (will overide preferences)
+                    2 = auto rename items
+                    3 = auto rename items and exit on success
+-l=, --language=  Overide prefered interface language :
+                    en_US
+                    fr
+
+If no other options are given, you may specify a path to open :
+$ metamorphose2 /srv/samba/Windows Likes Spaces
+</pre>
+</p>
+
+<br/>
+<p>
+<b class='heading'>Removing Métamorphose</b><br/>
+<b>Sources (all):</b>
+<ul>
+<li>Remove the user-specific files here :<br/>
+Windows: C:\Documents and Settings\USERNAME\Application Data\.metamorphose2<br/>
+Linux/BSD: ~/.metamorphose2<br/>
+Mac: /Library/Application Support/.metamorphose2</li>
+<li>Remove the manpage if you installed it.</li>
+<li>Remove the source files.</li>
+</ul>
+<b>In Linux &amp; BSD, if you have the sources:</b>
+<pre>
+$ make remove
+</pre>
+To remove all user files as well:
+<pre>
+$ make remove remusr=1
+</pre>
+</p>
+
+<br/>
+
+<p>
+<b class='heading'>Help the Métamorphose project</b>
+<ul>
+<li>Submit a <a href="http://sourceforge.net/tracker/?func=add&group_id=146403&atid=765158">patch</a></li>
+<li>Submit a <a href="http://sourceforge.net/tracker/?func=add&group_id=146403&atid=765156">Bug Report</a></li>
+<li>Submit a <a href="http://sourceforge.net/tracker/?func=add&group_id=146403&atid=765159">Feature Request</a></li>
+</ul>
+</p>
+
+<br/>
+<p>
+<b class='heading'>Known issues</b><br/>
+<b>Program locks up when 'walking' a large number of files/folders:</b><br/>
+Not really locked up, but the time it takes to process entries can be long if you
+are loading many items. During this process the application doesn't refresh, giving
+the appearance of being locked up but is actually working on stuff.<br/>
+The time in this state is dependent on your computer, whether the directory is on a local drive or a
+network share, and of course the number of items.
+<br/>
+This will be addressed in a future release.
+<br/><br/>
+
+<b>Unreadable picker items under Linux (possibly other GTK):</b><br/>
+There seems to be a bug in wxGTK, the list can become slow and unreadable when dealing with large number of
+items (over 10 000).
+<br/>
+A work around may be possible.
+<br/><br/>
+
+<b>Thumbnails fail:</b><br/>
+There seems to be some problems with python-imaging under windows. Sometimes the image will not load.
+</div>
+
+</body>
+</html>
+
