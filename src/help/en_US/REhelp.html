@@ -1,0 +1,443 @@
+<meta http-equiv="Content-Type" content="text/html"><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+   <style>
+    .heading{color:#000099;}
+    </style>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FEFEF6" LINK="#0000FF" VLINK="#0000FF" ALINK="#000088">
+
+<font color='blue'><b>
+How to use Regular Expressions in Métamorphose.
+</b></font>
+<br>
+<p>
+Regular expressions are a powerful way to search for patterns. In this case, the file or
+folder name will be searched for whatever pattern you put into the text box.
+<br>
+Métamorphose uses the Python syntax for regular expressions, which can be a little
+different from other forms of regular expressions.
+<br>
+In the text box, simply put in the expression to match for, do not put in '//'. You can set
+extra parameters with the <i><b>I</b></i> (case insensitive) and <i><b>U</b></i> (Unicode)
+checkboxes.
+</p>
+
+<p>
+<font color='blue'><b>
+From the Python manual (modified for Métamorphose):
+</b></font>
+
+<p>
+A brief explanation of the format of regular expressions follows. For further information and a
+gentler presentation, consult the Regular Expression HOWTO, accessible from
+<a href="http://www.amk.ca/python/howto/regex/">http://www.amk.ca/python/howto/regex/</a>
+</p>
+
+<p>
+Regular expressions can contain both special and ordinary characters.
+Most ordinary characters, like "<b>A</b>", "<b>a</b>", or
+"<b>0</b>", are the simplest regular expressions; they simply match
+themselves.  You can concatenate ordinary characters, so <b>last</b>
+
+matches the string <code>'last'</code>.  (In the rest of this section, we'll
+write RE's in <b>this special style</b>, usually without quotes, and
+strings to be matched <code>'in single quotes'</code>.)
+</p>
+
+<p>
+Some characters, like "<b>|</b>" or "<b>(</b>", are special.
+Special characters either stand for classes of ordinary characters, or
+affect how the regular expressions around them are interpreted.
+</p>
+
+<p>
+The special characters are:<br>
+
+<dl>
+<dt><b><font color='blue'>.</font></b></dt>
+<dd>(Dot)  This matches any character.
+<br></dd>
+
+<dt><b><font color='blue'>^</font></b></dt>
+<dd>(Caret)  Matches the start of the string.
+<br></dd>
+
+<dt><b><font color='blue'>$</font></b></dt>
+<dd>Matches the end of the string.  <b>foo</b> matches both 'foo' and
+'foobar', while the regular expression <b>foo$</b> matches only
+'foo'.
+<br></dd>
+
+<dt><b><font color='blue'>*</font></b></dt>
+<dd>Causes the resulting RE to
+match 0 or more repetitions of the preceding RE, as many repetitions
+as are possible.  <b>ab*</b> will
+match 'a', 'ab', or 'a' followed by any number of 'b's.
+<br></dd>
+
+<dt><b><font color='blue'>+</font></b></dt>
+<dd>Causes the
+resulting RE to match 1 or more repetitions of the preceding RE.
+<b>ab+</b> will match 'a' followed by any non-zero number of 'b's; it
+will not match just 'a'.
+<br></dd>
+
+<dt><b><font color='blue'>?</font></b></dt>
+<dd>Causes the resulting RE to
+match 0 or 1 repetitions of the preceding RE.  <b>ab?</b> will
+match either 'a' or 'ab'.
+<br></dd>
+
+
+<dt><b><font color='blue'>*?</code>, <code>+?</code>, <code>??</font></b></dt>
+
+<dd>The "<b>*</b>",
+"<b>+</b>", and "<b>?</b>" qualifiers are all <i>greedy</i>; they
+match as much text as possible.  Sometimes this behaviour isn't
+desired; if the RE <b>&lt;.*&gt;</b> is matched against
+<code>'&lt;H1&gt;title&lt;/H1&gt;'</code>, it will match the entire string,
+and not just <code>'&lt;H1&gt;'</code>.  Adding "<b>?</b>" after the qualifier makes it
+perform the match in <i>non-greedy</i> or <i>minimal</i> fashion; as
+<em>few</em> characters as possible will be matched.  Using <b>.*?</b>
+in the previous expression will match only <code>'&lt;H1&gt;'</code>.
+<br></dd>
+
+
+<dt><b><font color='blue'>{m}</font></b></dt>
+<dd>Specifies that exactly <var>m</var> copies of the previous RE should be
+matched; fewer matches cause the entire RE not to match.  For example,
+<b>a{6}</b> will match exactly six "<b>a</b>" characters, but
+not five.
+<br></dd>
+
+
+<dt><b><font color='blue'>{m,n}</font></b></dt>
+<dd>Causes the resulting RE to match from
+<var>m</var> to <var>n</var> repetitions of the preceding RE, attempting to
+match as many repetitions as possible.  For example, <b>a{3,5}</b>
+will match from 3 to 5 "<b>a</b>" characters.  Omitting <var>m</var>
+specifies a lower bound of zero, 
+and omitting <var>n</var> specifies an infinite upper bound.  As an
+example, <b>a{4,}b</b> will match <code>aaaab</code> or a thousand
+"<b>a</b>" characters followed by a <code>b</code>, but not <code>aaab</code>.
+The comma may not be omitted or the modifier would be confused with
+the previously described form.
+<br></dd>
+
+<dt><b><font color='blue'>{m,n}?</font></b></dt>
+<dd>Causes the resulting RE to
+match from <var>m</var> to <var>n</var> repetitions of the preceding RE,
+attempting to match as <em>few</em> repetitions as possible.  This is
+the non-greedy version of the previous qualifier.  For example, on the
+6-character string <code>'aaaaaa'</code>, <b>a{3,5}</b> will match 5
+"<b>a</b>" characters, while <b>a{3,5}?</b> will only match 3
+characters.
+<br></dd>
+
+
+<dt><b><font color='blue'>\</font></b></strong></dt>
+<dd>Either escapes special characters (permitting
+you to match characters like "<b>*</b>", "<b>?</b>", and so
+forth), or signals a special sequence; special sequences are discussed
+below.
+If you're not using a raw string to
+express the pattern, remember that Python also uses the
+backslash as an escape sequence in string literals; if the escape
+sequence isn't recognized by Python's parser, the backslash and
+subsequent character are included in the resulting string.  However,
+if Python would recognize the resulting sequence, the backslash should
+be repeated twice.  This is complicated and hard to understand, so
+it's highly recommended that you use raw strings for all but the
+simplest expressions.
+<br></dd>
+<br>
+
+<dt><b><font color='blue'>[]</font></b></dt>
+<dd>Used to indicate a set of characters.  Characters can
+be listed individually, or a range of characters can be indicated by
+giving two characters and separating them by a "<b>-</b>".  Special
+characters are not active inside sets.  For example, <b>[akm$]</b>
+will match any of the characters "<b>a</b>", "<b>k</b>",
+"<b>m</b>", or "<b>$</b>"; <b>[a-z]</b>
+will match any lowercase letter, and <code>[a-zA-Z0-9]</code> matches any
+letter or digit.  Character classes such as <code>\w</code> or <code>\S</code>
+
+(defined below) are also acceptable inside a range.  If you want to
+include a "<b>]</b>" or a "<b>-</b>" inside a set, precede it with a
+backslash, or place it as the first character.  The
+pattern <b>[]]</b> will match <code>']'</code>, for example.
+
+You can match the characters not within a range by <i>complementing</i>
+the set.  This is indicated by including a
+"<b>^</b>" as the first character of the set;
+"<b>^</b>" elsewhere will simply match the
+"<b>^</b>" character.  For example,
+
+<b>[^5]</b> will match
+any character except "<b>5</b>", and
+<b>[^<code>^</code>]</b> will match any character
+except "<b>^</b>".
+<br></dd>
+
+<dt><b><font color='blue'>|</font></b></strong></dt>
+
+<dd><code>A|B</code>, where A and B can be arbitrary REs,
+creates a regular expression that will match either A or B.  An
+arbitrary number of REs can be separated by the "<b>|</b>" in this
+way.  This can be used inside groups (see below) as well.  As the target
+string is scanned, REs separated by "<b>|</b>" are tried from left to
+right. When one pattern completely matches, that branch is accepted.
+This means that once <code>A</code> matches, <code>B</code> will not be tested further,
+even if it would produce a longer overall match.  In other words, the
+"<b>|</b>" operator is never greedy.  To match a literal "<b>|</b>",
+use <b>\|</b>, or enclose it inside a character class, as in <b>[|]</b>.
+<br></dd>
+
+<dt><b><font color='blue'>(...)</font></b></dt>
+<dd>Matches whatever regular expression is inside the
+parentheses, and indicates the start and end of a group; the contents
+of a group can be retrieved after a match has been performed, and can
+be matched later in the string with the <b>\<var>number</var></b> special
+sequence, described below.  To match the literals "<b>(</b>" or
+"<b>)</b>", use <b>\(</b> or <b>\)</b>, or enclose them
+inside a character class: <b>[(] [)]</b>.
+<br></dd>
+
+<dt><b><font color='blue'>(?...)</font></b></dt>
+<dd>This is an extension notation (a "<b>?</b>"
+following a "<b>(</b>" is not meaningful otherwise).  The first
+character after the "<b>?</b>"
+determines what the meaning and further syntax of the construct is.
+Extensions usually do not create a new group;
+<b>(?P&lt;<var>name</var>&gt;...)</b> is the only exception to this rule.
+Following are the currently supported extensions.
+<br></dd>
+
+
+<dt><b><font color='blue'>(?iLmsux)</font></b></dt>
+<dd>(One or more letters from the set "<b>i</b>",
+"<b>L</b>", "<b>m</b>", "<b>s</b>", "<b>u</b>",
+"<b>x</b>".)  The group matches the empty string; the letters set
+the corresponding flags (<b>re.I</b>, <b>re.L</b>,
+
+<b>re.M</b>, <b>re.S</b>, <b>re.U</b>, <b>re.X</b>)
+for the entire regular expression.  This is useful if you wish to
+include the flags as part of the regular expression, instead of
+passing a <var>flag</var> argument to the <b>compile()</b> function.
+
+Note that the <b>(?x)</b> flag changes how the expression is parsed.
+It should be used first in the expression string, or after one or more
+whitespace characters.  If there are non-whitespace characters before
+the flag, the results are undefined.
+<br></dd>
+
+
+<dt><b><font color='blue'>(?:...)</font></b></dt>
+<dd>A non-grouping version of regular parentheses.
+Matches whatever regular expression is inside the parentheses, but the
+substring matched by the
+group <em>cannot</em> be retrieved after performing a match or
+referenced later in the pattern.
+<br></dd>
+
+
+<dt><b><font color='blue'>(?P&lt;<var>name</var>&gt;...)</font></b></dt>
+<dd>Similar to regular parentheses, but
+the substring matched by the group is accessible via the symbolic group
+name <var>name</var>.  Group names must be valid Python identifiers, and
+each group name must be defined only once within a regular expression.  A
+symbolic group is also a numbered group, just as if the group were not
+named.  So the group named 'id' in the example above can also be
+referenced as the numbered group 1.
+
+For example, if the pattern is
+<b>(?P&lt;id&gt;[a-zA-Z_]\w*)</b>, the group can be referenced by its
+name in arguments to methods of match objects, such as
+<code>m.group('id')</code> or <code>m.end('id')</code>, and also by name in
+pattern text (for example, <b>(?P=id)</b>) and replacement text
+(such as <code>\g&lt;id&gt;</code>).
+<br></dd>
+
+
+<dt><b><font color='blue'>(?P=<var>name</var>)</font></b></dt>
+<dd>Matches whatever text was matched by the
+earlier group named <var>name</var>.
+<br></dd>
+
+
+<dt><b><font color='blue'>(?#...)</font></b></dt>
+<dd>A comment; the contents of the parentheses are
+simply ignored.
+<br></dd>
+
+<dt><b><font color='blue'>(?=...)</font></b></dt>
+<dd>Matches if <b>...</b> matches next, but doesn't
+consume any of the string.  This is called a lookahead assertion.  For
+example, <b>Isaac (?=Asimov)</b> will match <code>'Isaac&nbsp;'</code> only if it's
+followed by <code>'Asimov'</code>.
+<br></dd>
+
+<dt><b><font color='blue'>(?!...)</font></b></dt>
+<dd>Matches if <b>...</b> doesn't match next.  This
+is a negative lookahead assertion.  For example,
+<b>Isaac (?!Asimov)</b> will match <code>'Isaac&nbsp;'</code> only if it's <em>not</em>
+followed by <code>'Asimov'</code>.
+<br></dd>
+
+<dt><b><font color='blue'>(?&lt;=...)</font></b></dt>
+<dd>Matches if the current position in the string
+is preceded by a match for <b>...</b> that ends at the current
+position.  This is called a <i>positive lookbehind assertion</i>.
+<b>(?&lt;=abc)def</b> will find a match in "<b>abcdef</b>", since the
+lookbehind will back up 3 characters and check if the contained
+pattern matches.  The contained pattern must only match strings of
+some fixed length, meaning that <b>abc</b> or <b>a|b</b> are
+allowed, but <b>a*</b> and <b>a{3,4}</b> are not.  Note that
+patterns which start with positive lookbehind assertions will never
+match at the beginning of the string being searched.
+<br></dd>
+
+<dt><b><font color='blue'>(?&lt;!...)</font></b></dt>
+<dd>Matches if the current position in the string
+is not preceded by a match for <b>...</b>.  This is called a
+<i>negative lookbehind assertion</i>.  Similar to positive lookbehind
+assertions, the contained pattern must only match strings of some
+fixed length.  Patterns which start with negative lookbehind
+assertions may match at the beginning of the string being searched.
+<br></dd>
+
+<dt><b><font color='blue'>(?(<var>id/name</var>)yes-pattern|no-pattern)</font></b></dt>
+<dd>Will try to match
+with <b>yes-pattern</b> if the group with given <var>id</var> or <var>name</var>
+exists, and with <b>no-pattern</b> if it doesn't. <b>|no-pattern</b>
+
+is optional and can be omitted. For example, 
+<b>(&lt;)?(\w+@\w+(?:\.\w+)+)(?(1)&gt;)</b> is a poor email matching
+pattern, which will match with <code>'&lt;user@host.com&gt;'</code> as well as
+<code>'user@host.com'</code>, but not with <code>'&lt;user@host.com'</code>.
+<br></dd>
+</dl>
+
+<p>
+The special sequences consist of "<b>\</b>" and a character from the
+list below.  If the ordinary character is not on the list, then the
+resulting RE will match the second character.  For example,
+<b>\$</b> matches the character "$".
+<dl>
+<dt><b><font color='blue'>\number</font></b></dt>
+
+<dd>Matches the contents of the group of the
+same number.  Groups are numbered starting from 1.  For example,
+<b>(.+) \1</b> matches <code>'the the'</code> or <code>'55 55'</code>, but not
+<code>'the end'</code> (note
+the space after the group).  This special sequence can only be used to
+match one of the first 99 groups.  If the first digit of <var>number</var>
+is 0, or <var>number</var> is 3 octal digits long, it will not be interpreted
+as a group match, but as the character with octal value <var>number</var>.
+Inside the "<b>[</b>" and "<b>]</b>" of a character class, all numeric
+escapes are treated as characters.
+<br></dd>
+
+<dt><b><font color='blue'>\A</font></b></dt>
+<dd>Matches only at the start of the string.
+<br></dd>
+
+<dt><b><font color='blue'>\b</font></b></dt>
+<dd>Matches the empty string, but only at the
+beginning or end of a word.  A word is defined as a sequence of
+alphanumeric or underscore characters, so the end of a word is indicated by
+whitespace or a non-alphanumeric, non-underscore character.  Note that 
+<code>\b</code> is defined as the boundary between <code>\w</code> and <code>\
+W</code>, so the precise set of characters deemed to be alphanumeric depends on the
+values of the <code>UNICODE</code> and <code>LOCALE</code> flags.  Inside a character
+range, <b>\b</b> represents the backspace character, for compatibility
+with Python's string literals.
+<br></dd>
+
+<dt><b><font color='blue'>\B</font></b></dt>
+<dd>Matches the empty string, but only when it is <em>not</em>
+at the beginning or end of a word.  This is just the opposite of <code>\
+b</code>, so is also subject to the settings of <code>LOCALE</code> and <code>UNICODE</code>.
+<br></dd>
+
+<dt><b><font color='blue'>\d</font></b></dt>
+<dd>When the UNICODE flag is not specified, matches
+any decimal digit; this is equivalent to the set <b>[0-9]</b>. 
+With UNICODE, it will match whatever is classified as a digit
+in the Unicode character properties database.
+<br></dd>
+
+<dt><b><font color='blue'>\D</font></b></dt>
+<dd>When the UNICODE flag is not specified, matches
+any non-digit character; this is equivalent to the set 
+
+<b>[^0-9]</b>.  With UNICODE, it will match 
+anything other than character marked as digits in the Unicode character 
+properties database.
+<br></dd>
+
+<dt><b><font color='blue'>\s</font></b></dt>
+<dd>When the UNICODE flag is not specified, matches any whitespace
+character; this is equivalent to the set <b>[ \t\n\r\f\v]</b>.
+If UNICODE is set, this will match the characters <b>[ \t\n\r\f\v]</b> plus
+whatever is classified as space in the Unicode character properties
+database.
+<br></dd>
+
+<dt><b><font color='blue'>\S</font></b></dt>
+<dd>When the UNICODE flag is not specified, matches any
+non-whitespace character; this is equivalent to the set <b>[^ \t\n\r\f\v]</b>
+If UNICODE is set, this will match anything other than <b>[ \t\n\r\f\v]</b>
+and characters marked as space in the Unicode character properties database.
+<br></dd>
+
+
+<dt><b><font color='blue'>\w</font></b></dt>
+<dd>When the UNICODE
+flag is not specified, matches any alphanumeric character and the
+underscore; this is equivalent to the set
+<b>[a-zA-Z0-9_]</b>.  If UNICODE is set, this will match the
+characters <b>[0-9_]</b> plus whatever is classified as alphanumeric
+in the Unicode character properties database.
+<br></dd>
+
+<dt><b><font color='blue'>\W</font></b></dt>
+<dd>When the UNICODE flags are not specified, matches any
+non-alphanumeric character; this is equivalent to the set <b>[^a-zA-Z0-9_]</b>.
+If UNICODE is set, this will match anything other than
+<b>[0-9_]</b> and characters marked as alphanumeric in the Unicode
+character properties database.
+<br></dd>
+
+
+<dt><b><font color='blue'>\Z</font></b></dt>
+<dd>Matches only at the end of the string.
+<br></dd>
+</dl>
+
+
+<p>
+Most of the standard escapes supported by Python string literals are
+also accepted by the regular expression parser:
+</p>
+
+<p>
+<pre>
+\a      \b      \f      \n
+\r      \t      \v      \x
+\\
+</pre>
+</p>
+
+<p>
+Octal escapes are included in a limited form: If the first digit is a
+0, or if there are three octal digits, it is considered an octal
+escape. Otherwise, it is a group reference.  As for string literals,
+octal escapes are always at most three digits in length.
+</p>
+
+</BODY>
+</HTML>

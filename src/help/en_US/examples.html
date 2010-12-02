@@ -1,0 +1,104 @@
+<meta http-equiv="Content-Type" content="text/html"><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FEFEF6" LINK="#0000FF" VLINK="#0000FF" ALINK="#000088">
+
+<font color='blue'><b>
+Here are some examples which illustrate some of the things you can do with Métamorphose.</b></font>
+<br><br>
+Words in <i>italic</i> refer to buttons, fields, checkboxes, etc...<br>
+Unless specified otherwise, all the following examples assume you have already selected one or more
+items to be renamed from the <i>picker</i> tab.
+<br>
+If you leave <i>Auto Preview</i> checked, any changes made will instantly display results.
+Otherwise you will need to press the <i>Preview</i> button to display changes.
+
+<br><br><br>
+<b class=heading><i>- Main -</i> panel:</b>
+<p>
+<b>Insert numbering sequence at begining of existing filename:</b><br>
+Check the <i>prefix</i> checkbox. Click on the <i>numbering</i> button at top of panel.
+You should now have the text ':numb:' in the <i>prefix</i> box, and your items will
+have an auto-padded numbering sequence as a prefix.
+</p>
+
+<p>
+<b>Replace entire name like so: numbering sequence then text:</b><br>
+Check the <i>Search</i> checkbox. Leave the <i>Text (blank for all)</i> field blank.
+Click the <i>numbering</i> button, now type some text. The field should look like this:
+':numb: some text I typed in'.
+</p>
+
+<p>
+<b>Remove all spaces:</b><br>
+Check the <i>Search</i> checkbox. Click in the <i>Text (blank for all)</i> field, then
+press the spacebar on your keyboard. Leave the <i>Replace with (blank to delete):</i> field blank. 
+</p>
+
+<p>
+<b>Remove all non-alphabetical characters:</b><br>
+Check the <i>Search</i> checkbox. Click the <i>Character sets:</i> radio button. Check
+<i>Anything but:</i> and <i>[a-z]</i>.
+</p>
+
+<p>
+<b>Convert entire name to lowercase:</b><br>
+Check the <i>Search</i> checkbox. Leave blank the field <i>Text (blank for all)</i>.
+Click the <i>Modify</i> radio button, then select <i>lowercase</i> from the drop-down menu.
+</p>
+
+<p>
+<b>Convert file extension to lowercase:</b><br>
+Same as above but uncheck <I>name</I> and check <I>extension</I> for <I>Operations act on:</I>
+on the top left of the panel.
+</p>
+
+<p>
+<b>Move first 3 characters of name to end of name:</b><br>
+Check the <i>Search</i> checkbox, then the <I>Position</I> radio button. On the Position line,
+enter '3' in the <I>Length</I> field.
+Now check the <I>Move</I> radio button, and use '-1' as the <I>Position</I>.
+</p>
+
+<p>
+<b>Rename MP3 file like so: number_title:</b><br>
+Check the <i>Search</i> box. Leave blank the field <i>Text (blank for all)</i>.
+On the top of the panel, select <i>track</i> from the dropdown menu next to the <i>id3</i> button. Click the
+<i>id3</i> button, now type the _ character on the keyboard, then select <i>title</i> from the id3 dropdown menu,
+and click the <i>id3</i> button again. The field should now look like this: ':track:_:title:'. Alternatively
+you could use numbering instead of getting the track number from the file.
+</p>
+
+
+<br><br>
+<b class=heading><i>Numbering</i> panel:</b>
+<p>
+<b>Count like this: I, III, V, I, III, V ... :</b><br>
+Click on <i>Roman Numeral</i>, set the <i>Count by:</i> value to 2, and set the <i>Reset</i> value to 3.
+</p>
+
+<p>
+<b>Count like this: W, V, U, T, S, R ... :</b><br>
+Click on <i>Alphabetical</i>, select <i>Uppercase</i>, set starting number to 23, and set <i>Count:</i> to <i>down</i>
+</p>
+
+
+<br><br>
+<b class=heading>Bit more advanced stuff:</b>
+<p>
+<b>I want to renumber my .mp3's in a different order (good for mixes):</b><br>
+In <i>Picker</i> panel click on <i>browse</i> or hit F5, select folder, and press OK.
+Still in picker, set <i>Sorting</i> to <i>No Sorting</i>, then click on files in the order you want
+them renumbered. Go to <i>Main panel</i>, select <i>Prefix</i> and click the <i>numbering</i> button. Now
+select <i>Search</i>, then click on <i>Character Sets</i>, and finally choose <i>[0-9]</i>.<br>
+This only works if the song titles have no numbers in them. Other way is to select <i>Position</i> instead
+of <i>Character Sets</i> and set <i>Length</i> to however many characters are taken up by the track number,
+and <i>Position</i> to where they occur.
+</p>
+
+
+</BODY>
+</HTML>

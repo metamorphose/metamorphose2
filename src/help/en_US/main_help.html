@@ -1,0 +1,277 @@
+<HTML>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<BODY TEXT="#000000" BGCOLOR="#FEFEF6" LINK="#0000FF" VLINK="#0000FF" ALINK="#000088">
+
+<b><font color='red'>NOTE: This is the help page from Métamorphose 1, it is only
+provided here to give a general idea of usage, and the actual program WILL be
+different!!</font></b>
+<br><br>
+<font color='blue'>
+<b>The <I>Main</I> tab is where renaming operations are set.</b></font>
+<br>
+<font color='red'>You must make changes here to do any renaming.</font>
+<br>
+
+<br>
+[<a href='#buttons'>Buttons</a>]&nbsp;&nbsp;
+[<a href='#operations'>Order of Operations</a>]<br>
+[<a href='#fields'>Renaming Fields</a>:
+<a href='#search'>Search & Replace/Modify/Move</a> &nbsp;<a href='#insert'>Insert</a> &nbsp;<a href='#length'>Modify length</a>]
+<br>
+
+<a name='buttons'><P></a>
+<B>BUTTONS:</B><br>
+The buttons work by inserting a bit of text in a text field. When the <I>Preview</I>
+button is clicked, the text will be turned into an operation. For example, activating the
+<I>Prefix</I> field and clicking on the <I>date</I> button, makes the text ':date:' appear
+in the field, which is then turned into today's date when renaming the item(s). This
+allows for great flexability, as you can mix and match operations and text. So if you
+wanted to have a seperator between the prefix and the original filename, after pressing
+the button type '_', the field now contains ':date:_', and assuming today is
+august 6, 1223, the files will be renamed as such: 08-06-1223_file.ext<br>
+You may put as many operations and text as you want, so long as the item name doesn't go
+over 255 characters. So something like this is perfectly valid:<br>
+:numb:_some text_:date:_:time:_:track:-:performer:-:title:
+</P>
+<br>
+
+
+<p>
+<img src='images/numbering_btn.png' border='0'><br>
+The <I>numbering</I> button inserts an auto numbering sequence. By default,
+numbering starts at 1, increments by 1, and is 0 padded to the largest
+number (so if there's 100 items, will count 001, 002, etc..). You can change
+all these settings and more in the <I>Numbering</I> tab.
+</p>
+<br>
+
+<p>
+<img src='images/date_time_btn.png' border='0'><br>
+The <I>Date</I> and <I>Time</I> buttons insert a pre-formated date or time,
+respectively. Default formating for date is: MM-DD-YYYY, time is: HH.MM.SS
+(12 hour format). Both will use current date/time. To change settings use the
+<I>Date and Time</I> tab.
+</p>
+<br>
+
+<p>
+<img src='images/id3_btn.png' border='0'><br>
+The <I>ID3</I> button will insert ID3 information retrieved from the .mp3 file.
+I say 'the' file because it will look at each file and get its information. You
+can select which section you want by using the dropdown menu. If an mp3 file is missing
+the information you request, a blank space will be put in. Other file types and folders
+are ignored.
+</p>
+<HR width='50%' align='center'>
+
+<a name='operations'><P></a>
+<B>ORDER OF OPERATIONS:</B><br>
+The order in which the different operations are executed within the application. Different
+from the interface's order (but much more logical, no?), so I thought I would list it here.
+<OL>
+<LI>Length Modification
+<LI>Search and Replacement / Modification / Move
+<LI>Prefix
+<LI>Suffix
+<LI>File Extension
+<LI>Insertion
+</OL>
+</p>
+
+<HR width='50%' align='center'>
+
+<a name='fields'><P></a>
+<B>RENAMING FIELDS:</B><br>
+This is the inner heart of Métamorphose. You must make changes here to do any renaming. 
+</p>
+<P>
+<img src='images/operations.png' border='0'><br>
+These checkboxes let you specify which part of an item will be modifyed. If
+'name' is checked, the folder and file names will be acted upon. If extension
+is checked file extensions will be modified.
+</P>
+<br>
+
+<P>
+<img src='images/dir.png' border='0'><br>
+This allows to add a directory (folder) to place all the renamed items into. You can
+add sub-folders with the <I>'sub-dir'</I> button. You may use all the other buttons
+described above in this field as well.
+</P>
+<br>
+
+<P>
+<img src='images/prefix.png' border='0'><br>
+Add a prefix to the item.
+</P>
+<br>
+
+<P>
+<img src='images/suffix.png' border='0'><br>
+Add a suffix to the item.
+</P>
+<br>
+
+<br>
+<table border='1' cellpadding='10' width='100%'>
+<td bgcolor='#FFFFFF'>
+<a name='search'><P></a>
+<img src='images/search.png' border='0'><br>
+A very powerful tool to search names and then modify the match in some way. Most
+operations are done using this. You can search a name for a certain text, using a
+regular expression, or by position. You can then replace this text completly, change
+its case, or move it to another location.
+</P>
+
+<P>
+<img src='images/search_text.png' border='0'><br>
+The text to search for. You may enter in any character, so to seach for a space,
+simply press the spacebar. If this field is left blank than the entire name is matched.
+</P>
+
+<P>
+<img src='images/case_sensitive.png' border='0'><br>
+Makes the text search case-sensitive.
+</P>
+<br>
+<hr width=75% align='center'>
+
+<P>
+<img src='images/reg_exp.png' border='0'><br>
+Search for a regular expression. Every match will be acted upon. Having <i>I</i> checked
+makes the search case insensitive, <i>U</i> matches in Unicode mode (to match non-ascii
+characters such as 'é' with things like \w).
+</P>
+
+<P>
+<img src='images/reg_exp_charset.png' border='0'><br>
+Search for a regular expression character set. <i>^</i> will match any character NOT in the set,
+<i>[a-z]</i> matches all alpabetical characters (upper AND lower case), and <i>[0-9]</i> matches all
+numbers.
+<br>You may use these without defining a regular expression. Otherwise the RE is compiled as such:
+'(regular expression) <b>|</b> (character sets)'.<br>
+Also [a-z] is not really '[a-z]', it is '[^\W\d]' for proper matching in Unicode mode.
+</P>
+
+<P>
+<img src='images/reg_exp_help.png' border='0'><br>
+Click this to see a regular expression quick reference. You can keep the help window open and still
+access the main program.
+</P>
+<br>
+<hr width=75% align='center'>
+
+<P>
+<img src='images/pos.png' border='0'><br>
+Search by position. The first number is where to start searching from. 0 is always the first character
+in the name.
+</P>
+
+<P>
+<img src='images/pos_len.png' border='0'><br>
+How many characters to match. Don't worry if the amount of characters exceeds the length of the name.
+</P>
+
+<P>
+<img src='images/pos_start.png' border='0'><br>
+Determine wether to match from the <i>begining</i> of the name or the <i>end</i>. If by <i>end</i>, then
+the <i>Position</i> value is automatically changed according to the <i>Length</i>.
+</P>
+<br>
+<hr width=100% align='center'><br>
+
+<P>
+<img src='images/replace.png' border='0'><br>
+Replace each match with the specified text or operation. If using regular expressions, you can use
+backreferences (i.e. type in "\1" without the quotes).
+</P>
+<br>
+<hr width=75% align='center'>
+
+<P>
+<img src='images/modify.png' border='0'><br>
+Modify the case of each match.
+</P>
+<br>
+<hr width=75% align='center'>
+
+<P>
+<img src='images/move.png' border='0'><br>
+Move the first match to a position.
+</P>
+
+<P>
+<img src='images/move_pos.png' border='0'><br>
+Use a fixed position. 0 makes the match the first character of the name, -1 the last.
+</P>
+
+<P>
+<img src='images/move_txt.png' border='0'><br>
+Use a specified text as the location of the move. You can set wether to put the match <i>before</i> or
+<i>after</i>, or to <i>replace</i> this text. If no match is found, nothing is done. Use of regular expressions
+is also permited.
+</P>
+</td></table>
+<br>
+
+<br>
+<table border='1' cellpadding='10' width='100%'>
+<td bgcolor='#FFFFFF'>
+<a name='insert'><P></a>
+<img src='images/insert.png' border='0'><br>
+Use these to insert text or an operation at a specified point in the name.
+</p>
+
+<P>
+<img src='images/insert_pos.png' border='0'><br>
+Specify an absolute point to insert into. Starts at 0 and wraps around, so 0 = first character,
+1 = second character, -1 last character.
+</P><br>
+</td></table>
+
+<br><br>
+<table border='1' cellpadding='10' width='100%'>
+<td bgcolor='#FFFFFF'>
+<a name='length'><P></a>
+<img src='images/mod_length.png' border='0'><br>
+Change the length of the name in various ways.
+</p>
+
+<P>
+<img src='images/mod_length_op.png' border='0'><br>
+How to modify the length. <i>Pad</i> will increase the length up to a given size, <i>Cut</i> will shorten it,
+and <i>Both</i>, well, does both.
+</P>
+
+<P>
+<img src='images/mod_length_size.png' border='0'><br>
+Change the length to this size. If you are using only <i>Pad</i> and the name is this size or longer,
+or if a name is shorter than this and you are using <i>Cut</i>, then nothing is done. Using <i>Both</i>
+will make all names eactly this size, whatever the means.
+</P>
+
+<P>
+<img src='images/mod_length_direction.png' border='0'><br>
+Direction for the modification.
+</P>
+
+<P>
+<img src='images/mod_length_pad.png' border='0'><br>
+This is the character to use for the padding. You can use any character your computer can work with.
+</P>
+
+<P>
+<img src='images/mod_length_pad_pos.png' border='0'><br>
+Allows setting a specific point to insert the padding. If left at 0, then it will be the first character
+<b>of the chosen direction</b>. If anything other than 0, it will work just like <i>insert at position</i>
+(1 = second charcater, -1 = last character), ignoring the direction completly.
+</P>
+<br>
+</td></table>
+<br>
+<br>
+
+<BODY>
+</HTML>

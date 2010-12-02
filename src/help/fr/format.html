@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//FR">
+<HTML>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<BODY TEXT="#000000" BGCOLOR="#FEFEF6" LINK="#0000FF" VLINK="#0000FF" ALINK="#000088">
+
+<p>
+<b>Les caractères suivants sont utilisés pour spécifier le format de la date :</b>
+<br>
+<table border='0' cellpadding='1' cellspacing='8'>
+<tr><th valign='top'><b>%a</b></th><td>nom abrégé du jour de la semaine (local)</td></tr>
+<tr><th valign='top'><b>%A</b></th><td>nom complet du jour de la semaine (local)</td></tr>
+<tr><th valign='top'><b>%b</b></th><td>nom abrégé du mois (local)</td></tr>
+<tr><th valign='top'><b>%B</b></th><td>nom complet du mois (local)</td></tr>
+<tr><th valign='top'><b>%c</b></th><td>représentation préférée pour les dates et heures, en local</td></tr>
+<tr><th valign='top'><b>%C</b></th><td>numéro de siècle (l'année, divisée par 100 et arrondie entre 00 et 99)</td></tr>
+<tr><th valign='top'><b>%d</b></th><td>jour du mois en numérique (intervalle 01 à 31)</td></tr>
+<tr><th valign='top'><b>%D</b></th><td>identique à %m/%d/%y</td></tr>
+<tr><th valign='top'><b>%e</b></th><td>numéro du jour du mois. Les chiffres sont précédés d'un espace (de ' 1' à '31')</td></tr>
+<tr><th valign='top'><b>%g</b></th><td>identique à %G, sur 2 chiffres</td></tr>
+<tr><th valign='top'><b>%G</b></th><td>L'année sur 4 chiffres correspondant au numéro de semaine (voir %V). Même format et valeur que %Y, excepté que si le numéro de la semaine appartient à l'année précédente ou suivante, l'année courante sera utilisé à la place</td></tr>
+<tr><th valign='top'><b>%h</b></th><td>identique à %b</td></tr>
+<tr><th valign='top'><b>%H</b></th><td>heure de la journée en numérique, et sur 24-heures (intervalle de 00 à 23)</td></tr>
+<tr><th valign='top'><b>%I</b></th><td>heure de la journée en numérique, et sur 12- heures (intervalle 01 à 12)</td></tr>
+<tr><th valign='top'><b>%j</b></th><td>jour de l'année, en numérique (intervalle 001 à 366)</td></tr>
+<tr><th valign='top'><b>%m</b></th><td>mois en numérique (intervalle 1 à 12)</td></tr>
+<tr><th valign='top'><b>%M</b></th><td>minute en numérique</td></tr>
+<tr><th valign='top'><b>%n</b></th><td>caractère de nouvelle ligne</td></tr>
+<tr><th valign='top'><b>%p</b></th><td>soit `am' ou `pm' en fonction de l'heure absolue, ou en fonction des valeurs enregistrées en local</td></tr>
+<tr><th valign='top'><b>%r</b></th><td>l'heure au format a.m. et p.m</td></tr>
+<tr><th valign='top'><b>%R</b></th><td>l'heure au format 24h</td></tr>
+<tr><th valign='top'><b>%S</b></th><td>secondes en numérique</td></tr>
+<tr><th valign='top'><b>%t</b></th><td>tabulation</td></tr>
+<tr><th valign='top'><b>%T</b></th><td>l'heure actuelle (égal à %H:%M:%S)</td></tr>
+<tr><th valign='top'><b>%u</b></th><td>le numéro de jour dans la semaine, de 1 à 7. (1 représente Lundi)</td></tr>
+<tr><th valign='top'><b>%U</b></th><td>numéro de semaine dans l'année, en considérant le premier dimanche de l'année comme le premier jour de la première semaine</td></tr>
+<tr><th valign='top'><b>%V</b></th><td>le numéro de semaine comme défini dans l'ISO 8601:1988, sous forme décimale, de 01 à 53. La semaine 1 est la première semaine qui a plus de 4 jours dans l'année courante, et dont Lundi est le premier jour. (Utilisez %G ou %g pour les éléments de l'année qui correspondent au numéro de la semaine pour le timestamp donné.)</td></tr>
+<tr><th valign='top'><b>%W</b></th><td>numéro de semaine dans l'année, en considérant le premier lundi de l'année comme le premier jour de la première semaine</td></tr>
+<tr><th valign='top'><b>%w</b></th><td>jour de la semaine, numérique, avec Dimanche = 0</td></tr>
+<tr><th valign='top'><b>%x</b></th><td>format préféré de représentation de la date sans l'heure</td></tr>
+<tr><th valign='top'><b>%X</b></th><td>format préféré de représentation de l'heure sans la date</td></tr>
+<tr><th valign='top'><b>%y</b></th><td>l'année, numérique, sur deux chiffres (de 00 à 99)</td></tr>
+<tr><th valign='top'><b>%Y</b></th><td>l'année, numérique, sur quatre chiffres</td></tr>
+<tr><th valign='top'><b>%Z</b></th><td>fuseau horaire, ou nom ou abréviation</td></tr>
+<tr><th valign='top'><b>%%</b></th><td>un caractère `%' littéral</td></tr>
+</table>
+<br><br>
+
+<i>Voici un exemple:</i><br>
+<b>Entrée:</b> %a, %d %b %Y %H.%M.%S +0000<br>
+<b>Résultat:</b> mar, 06 fév 2007 17.53.55 +0000<br>
+
+<br>
+<b>NOTEZ:</b> Il n'est pas permit d'utiliser les deux-points « : » car ce charactère est utilisé par Métamorphose pour
+annoncer le commencement d'une opération spéciale.
+</body>
+</html>

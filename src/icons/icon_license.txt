@@ -1,0 +1,23 @@
+
+I did not make these icons, there are a mix and match of the following:
+
+256 color icons are part of the 'U-Bahn Station "Südstern" (Berlin)' desktop
+theme created by Barbara Kämper (brief@barbarakaemper.de).
+These icons are released under the terms of the
+GNU GENERAL PUBLIC LICENSE.
+If you like them then why not get the whole theme from:
+http://www.barbarakaemper.de/
+
+Alfa channel stuff from 'Buuf Iconset' set By Paul Davey A.K.A. Mattahan.
+Entire (1500 !) set of 128x128 pngs:
+http://www.deviantart.com/deviation/37966044/
+
+Flag icons part of set by Mark James.
+Available for free use for any purpose.
+http://www.famfamfam.com/
+
+
+Some were renamed to make assigning them to the code more logical, and some
+had to be converted to ico format from png.
+
+- Ianaré Sévi (ianare@gmail.com)

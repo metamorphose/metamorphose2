@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//PT">
+<HTML>
+<head>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+</head>
+<BODY TEXT="#000000" BGCOLOR="#FEFEF6" LINK="#0000FF" VLINK="#0000FF" ALINK="#000088">
+
+<p>
+<b>The following characters are recognized to create the formatting:</b>
+<br>
+<table border='0' cellpadding='1' cellspacing='8'>
+<tr><th valign='top'><b>%a</b></th><td>dia da semana abreviado de acordo com a localidade</td></tr>
+<tr><th valign='top'><b>%A</b></th><td>nome da semana completo de acordo com a localidade</td></tr>
+<tr><th valign='top'><b>%b</b></th><td>nome do mês abreviado de acordo com a localidade</td></tr>
+<tr><th valign='top'><b>%B</b></th><td>nome do mês completo de acordo com a localidade</td></tr>
+<tr><th valign='top'><b>%c</b></th><td>representação da data e hora preferida pela a localidade</td></tr>
+<tr><th valign='top'><b>%C</b></th><td>número do século (o ano dividido por 100 e truncado para um inteiro, de 00 até 99)</td></tr>
+<tr><th valign='top'><b>%d</b></th><td>dia do mês como um número decimal (de 01 até 31)</td></tr>
+<tr><th valign='top'><b>%D</b></th><td>mesmo que %m/%d/%y</td></tr>
+<tr><th valign='top'><b>%e</b></th><td>dia do mês como um número decimal, um simples dígito é precedido por espaço (de ' 1' até '31')</td></tr>
+<tr><th valign='top'><b>%g</b></th><td>como %G, mas sem o século.</td></tr>
+<tr><th valign='top'><b>%G</b></th><td>o 4-dígito do ano correspodendo as ISO week number (see %V). Este tem o mesmo formato e valor que %Y, exceto que se o ISO week number pertence ao prévio ou próximo ano, aquele ano é usado ao invés deste.</td></tr>
+<tr><th valign='top'><b>%h</b></th><td>mesmo que %b</td></tr>
+<tr><th valign='top'><b>%H</b></th><td>hora como um número decimal usando um relógio de 24-horas (de 00 até 23)</td></tr>
+<tr><th valign='top'><b>%I</b></th><td>hora como um número decimal usando um relógio de 12-hoas (de 01 até 12)</td></tr>
+<tr><th valign='top'><b>%j</b></th><td>dia do ano como número decimal (de 001 até 366)</td></tr>
+<tr><th valign='top'><b>%m</b></th><td>mês como número decimal (de 01 até 12)</td></tr>
+<tr><th valign='top'><b>%M</b></th><td>minuto como número decimal</td></tr>
+<tr><th valign='top'><b>%n</b></th><td>caracter novalinha</td></tr>
+<tr><th valign='top'><b>%p</b></th><td>um dos dois `am' ou `pm' de acordo com o valor da hora dada, ou as strings correspondentes para a localidade</td></tr>
+<tr><th valign='top'><b>%r</b></th><td>hora em a.m. e p.m. notação</td></tr>
+<tr><th valign='top'><b>%R</b></th><td>hora em notação de 24 horas</td></tr>
+<tr><th valign='top'><b>%S</b></th><td>segundo como um número decimal</td></tr>
+<tr><th valign='top'><b>%t</b></th><td>caracter tab</td></tr>
+<tr><th valign='top'><b>%T</b></th><td>hora corrente, igual a %H:%M:%S</td></tr>
+<tr><th valign='top'><b>%u</b></th><td>dia da semana como número decimal [1,7], com 1 representando Segunda-feira</td></tr>
+<tr><th valign='top'><b>%U</b></th><td>dia da semana do ano corrente como número decimal, começando com o primeiro domingo como o primeiro dia da primeira semana</td></tr>
+<tr><th valign='top'><b>%V</b></th><td>O número da semana corrente ISO 8601:1988 do ano corrente como um número decimal, de 01 até 53, onde semana 1 é a primeira semana que tem pelo menos 4 dias no ano corrente, e com segunda-feira como o primeiro dia da semana. (Use %G ou %g para o componente anual que corresponde ao dia da semana para o para o timestamp especificado.)</td></tr>
+<tr><th valign='top'><b>%W</b></th><td>dia da semana do ano corrente como número decimal, começando com o a segunda-feira como o primeiro dia da primera semana</td></tr>
+<tr><th valign='top'><b>%w</b></th><td>dia da semana como número decimal, domingo sendo 0</td></tr>
+<tr><th valign='top'><b>%x</b></th><td>representação preferida para a data para a localidade corrente sem a hora</td></tr>
+<tr><th valign='top'><b>%X</b></th><td>representação preferida para a hora para a localidade corrente sem a data</td></tr>
+<tr><th valign='top'><b>%y</b></th><td>ano como número decimal sem o século (de 00 até 99)</td></tr>
+<tr><th valign='top'><b>%Y</b></th><td>ano como número decimal incluindo o século</td></tr>
+<tr><th valign='top'><b>%Z</b></th><td>time zone ou nome or abreviação</td></tr>
+<tr><th valign='top'><b>%%</b></th><td>a literal `%' character</td></tr>
+</table>
+<br><br>
+
+<i>Here is an example:</i><br>
+<b>Input:</b> %a, %d %b %Y %H.%M.%S +0000<br>
+<b>Result:</b> Ter, 06 Fev 2007 20.58.17 +0000<br>
+
+<br>
+<b>NOTE:</b> You cannot use the colon « : » since it used by Métamorphose to denote the
+start of special operations.
+</body>
+</html>
