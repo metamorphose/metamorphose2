@@ -1,0 +1,71 @@
+# This specfile is part of the metamorphose2 package
+# Author: Gabriel Espinoza
+# Created: 20/ago/2010
+#
+[Meta]
+RootName: @file-folder-ren.sourceforge.net/metamorphose2:$SOFTWAREVERSION
+DisplayName: Métamorphose2
+ShortName: metamorphose2
+License: GNU General Public License, Version 3 or later
+SoftwareVersion: 0.7.2
+CPUArchitectures: all
+Maintainer: Ianaré Sévi <ianare@gmail.com>
+Packager: Gabriel Espinoza <virtuosonic@users.sourceforge.net>
+URL: http://file-folder-ren.sourceforge.net/
+Repository: http://file-folder-ren.sourceforge.net/metamorphose2.xml
+Summary: A mass renamer for files and folders
+Summary[de]: Ein Massenumbenenner für Dateien und Verzeichnisse
+Summary[el]: Εργαλείο μαζικής μετονομασίας αρχείων και φακέλων
+Summary[es]: Un renombrador masivo para archivos y carpetas
+Summary[fr]: Un renommeur massif pour fichiers et dossiers
+Summary[hu]: Egy tömeges fájl és mappa átnevező
+Summary[pl]: Narzędzie masowej zmiany nazw plików i folderów
+Summary[zh_CN]: 文件和文件夹批量更名工具
+
+# If you change the autopackage but not the software itself,
+# increment this number.
+
+# PackageVersion: 2
+AutopackageTarget: 1.4
+
+[Globals]
+export APKG_BUILD_ROOT=/tmp/APKG-$SHORTNAME-$SOFTWAREVERSION
+
+[BuildPrepare]
+make DESTDIR=$APKG_BUILD_ROOT
+
+[BuildUnprepare]
+#make DESTDIR=$APKG_BUILD_ROOT  remove
+#make clean
+#rm -rf $APKG_BUILD_ROOT
+
+[Imports]
+echo $APKG_BUILD_ROOT/*| import
+
+[Prepare]
+require @wxpython.org/wxpython 2.8
+
+# The user may have already installed the program from an RPM.
+# Let's try and uninstall it first. We only need one call if 3rd party
+# packages have split the program up into multiple packages.
+
+removeOwningPackage $PREFIX/bin/metamorphose2
+
+[Install]
+# Put your installation script here. See the quickstart guide on
+# the website for an API cheat-sheet
+installExe bin/*
+installData metamorphose2
+installMenuItem "Utility/Filesystem" $SHORTNAME.desktop
+#installIcon share/pixmaps/*
+installLocale share/locale/
+#copyFiles share/doc/metamorphose2/* $PREFIX/share/doc/metamorphose2
+#copyFile share/man/man1/metamorphose2.1.gz
+
+
+#TODO: change to installMan
+#TODO: test!!!
+
+[Uninstall]
+# Usually just the following line is enough to uninstall everything
+uninstallFromLog

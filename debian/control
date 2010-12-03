@@ -1,0 +1,25 @@
+Source: metamorphose2
+Section: utils
+Priority: optional
+Maintainer: ianaré sévi <ianare@gmail.com>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.8.0
+Homepage: http://file-folder-ren.sourceforge.net
+
+Package: metamorphose2
+Architecture: all
+Depends: python (>=2.6), python-wxgtk2.8 (>= 2.8), python-imaging (>=1.1.6), python-mutagen (>=1)
+Description: A mass renamer for files and folders (version 2).
+ A profesional renaming tool for almost any situation, it has many powerful
+ functions. Well suited for those that need to rename many files and/or folders
+ on a regular basis. In addition to general usage operations, it is useful for
+ photo and music collections, webmasters, programmers, legal and clerical, et
+ cetera.
+ .
+ Main Features:
+ * Renames files and folders at the same time.
+ * Preview every item to be renamed before committing changes.
+ * Load all files in directory and in subdirectories (recursive renaming).
+ * Undo renaming operation in case of mistakes.
+ * Retrieve audio and image metadata tags.
+ * Save all program settings to file for later use.

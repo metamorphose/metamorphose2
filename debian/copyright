@@ -1,0 +1,49 @@
+This package was debianized by:
+
+    ianaré sévi <ianare@gmail.com> on Sun, 16 Aug 2009 02:13:30 -0400
+
+It was downloaded from:
+
+    http://file-folder-ren.sourceforge.net/
+
+Upstream Author(s):
+
+    ianaré sévi <ianare@gmail.com>
+
+Copyright:
+
+    Copyright (C) 2006-2009 ianaré sévi
+
+License:
+
+### SELECT: ###
+    This package is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 3 of the License, or
+    (at your option) any later version.
+### OR ###
+   This package is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License version 3 as
+   published by the Free Software Foundation.
+##########
+
+    This package is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this package; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+On Debian systems, the complete text of the GNU General
+Public License can be found in `/usr/share/common-licenses/GPL'.
+
+The Debian packaging is:
+
+    Copyright C) 2009, ianaré sévi <ianare@gmail.com>
+
+and is licensed under the GPLv3, see above.
+
+
+Icons are released under different licenses, check icon_license.txt.
