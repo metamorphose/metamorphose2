@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-
-# This panel allows inserting text or operations.
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -19,7 +17,6 @@ import opButtons
 import regExpr
 import platform
 import sys
-from notebookOperation import NotebookPanel
 
 [wxID_PANEL, wxID_PANELAFTER, wxID_PANELBARE, wxID_PANELBAREI,
  wxID_PANELBAREU, wxID_PANELBATEXTMATCH, wxID_PANELBEFORE,
@@ -31,7 +28,9 @@ from notebookOperation import NotebookPanel
  wxID_PANELBTWREU, wxID_PANELSTATICTEXT6, wxID_PANELSTATICTEXT7
 ] = [wx.NewId() for __init_ctrls in range(24)]
 
-class Panel(NotebookPanel):
+class Panel(wx.Panel):
+    """This panel allows inserting text or operations."""
+    
     def __init_sizer(self):
         rowB = wx.BoxSizer(wx.HORIZONTAL)
         rowB.Add(self.prefix,0,wx.ALIGN_CENTRE|wx.LEFT,5)
@@ -77,7 +76,7 @@ class Panel(NotebookPanel):
 
         self.Text = wx.TextCtrl(id=wxID_PANELTEXT,
               name=u'Text', parent=self, style=wx.TE_PROCESS_ENTER, value=u'')
-        self.Text.Bind(wx.EVT_TEXT, self.enableNotebookTabs,
+        self.Text.Bind(wx.EVT_TEXT, main.show_preview,
               id=wxID_PANELTEXT)
 
         self.staticText4 = wx.StaticText(id=wxID_PANELSTATICTEXT4,
@@ -191,7 +190,6 @@ class Panel(NotebookPanel):
                 self.hack.Show(False)
 
     def __init__(self, parent, main_window):
-        NotebookPanel.__init__(self, main_window)
         global main
         main = main_window
         self.__init_ctrls(parent)

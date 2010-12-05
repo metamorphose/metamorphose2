@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -25,24 +25,23 @@ import os
 import re
 import sre_constants
 import time
-
 import wxPickerView
-# TODO need to make core independant of wxWidgets
-import wx
 
 
-### Handle loading parameters
 class Parameters(classes.Parameters):
+    """Handle loading of parameters."""
+    
     def __init__(self, Panel):
         # set the picker panel
-        self.Panel = Panel
+        self.view = Panel
         # define the operation type used to retrieve values
         self.set_value_method()
 
-    # load all needed panel values to instance
     def load(self):
-        root = self.getValue(self.Panel.path)
-        self.setRootPath(root)
+        """Load all needed panel values to instance."""
+
+        root = self.get_value(self.view.path)
+        self.set_root_path(root)
         widgets = (
             'foldersOn', # grab folders
             'filesOn', # grab files
@@ -56,8 +55,8 @@ class Parameters(classes.Parameters):
         )
         return self.set_parameters(widgets)
 
-    # determine if root path is usable
-    def setRootPath(self, root):
+    def set_root_path(self, root):
+        """Load all needed panel values to instance."""
         utils.debug_print(main, "Examining : %s"%root)
         
         self.root = False
@@ -73,10 +72,8 @@ class Parameters(classes.Parameters):
             self.root = root
 
 
-
 class Core():
     def __init__(self, parent, MainWindow):
-
         self.CommonSearches = (
                  ("" , ""),
                  ( _(u"- audio") , u"\.(mp3|wav|ogg|flac|wma|aiff|aac|m3u|mid|ra|ram)$" ),
@@ -94,8 +91,8 @@ class Core():
         global main
         main = MainWindow
 
-        self.Panel = wxPickerView.Panel(self, parent, MainWindow)
-        self.params = Parameters(self.Panel)
+        self.view = wxPickerView.Panel(self, parent, MainWindow)
+        self.params = Parameters(self.view)
         self.joinedItems = []
 
 
@@ -104,72 +101,64 @@ class Core():
     def set_status_msg(self, msg, ico):
         main.set_status_msg(msg, ico)
 
-    def addItemsToPanel(self, folders, files):
-        self.Panel.ItemList.add_items(self.params.root, folders, files)
+    def add_items_to_panel(self, folders, files):
+        self.view.ItemList.add_items(self.params.root, folders, files)
 
-    def getItemsInPanelCount(self):
-        return self.Panel.ItemList.GetItemCount()
+    def count_panel_items(self):
+        return self.view.ItemList.GetItemCount()
 
-    def selectAllItemsInPanel(self, event=True):
-        self.Panel.select_all(event)
+    def select_all(self, event=True):
+        self.view.select_all(event)
 
-    def selectNoItemsInPanel(self, event=True):
-        self.Panel.select_none(event)
+    def select_none(self, event=True):
+        self.view.select_none(event)
 
-    def browseForPath(self, event=True):
-        self.Panel.browse_for_path(event)
+    def browse_for_path(self, event=True):
+        self.view.browse_for_path(event)
 
     def walk_from_menu(self, event):
-        self.Panel.walk_from_menu()
+        self.view.walk_from_menu()
         self.refresh(True)
 
-    def enablePanelWidget(self, widget, state):
-        getattr(self.Panel, widget).Enable(state)
+    def enable_panel_widget(self, widget, state):
+        getattr(self.view, widget).Enable(state)
 
-    def deleteAllItemsInPanel(self):
-        self.Panel.ItemList.DeleteAllItems()
+    def remove_all_items(self):
+        self.view.ItemList.DeleteAllItems()
 
-    def setPanelPath(self, event):
-        self.Panel.set_path(event)
+    def set_path(self, event):
+        self.view.set_path(event)
         self.refresh(True)
 
     def enable_buttons(self):
-        self.Panel.enable_buttons()
+        self.view.enable_buttons()
+
+    def set_tree(self):
+        self.view.set_tree()
 
 
     # helpers
 
-    def clearJoinedItems(self):
+    def clear_joined_items(self):
         self.joinedItems = []
 
-    def returnSorted(self):
-        return main.sorting.sortItems(self.joinedItems)
+    def return_sorted(self):
+        return main.sorting.sort_items(self.joinedItems)
 
-    def clearALL(self):
-        self.clearJoinedItems()
-        self.deleteAllItemsInPanel()
+    def clear_all(self):
+        self.clear_joined_items()
+        self.remove_all_items()
 
-    def refreshDirTree(self):
+    def refresh_dir_tree(self):
         if main.prefs.get(u'useDirTree'):
-            dirPicker = self.Panel.dirPicker
-            itemId = self.Panel.dirPicker.GetTreeCtrl().GetSelection()
-            dirPicker.GetTreeCtrl().CollapseAndReset(itemId)
-            dirPicker.GetTreeCtrl().Expand(itemId)
-
+            self.view.refresh_dirpicker()
 
     def remove_items_by_name(self, itemNames):
     	for name in itemNames:
             displayedName = name.replace(self.params.root, '')
-
             if os.path.split(displayedName)[0] == os.sep:
                 displayedName = displayedName[1:]
-
-            ID = self.Panel.ItemList.FindItem(0,displayedName)
-            item = wx.ListItem()
-            item.SetId(ID)
-            item.SetBackgroundColour(utils.BackgroundClr)
-            item.SetTextColour(utils.TxtClr)
-            self.Panel.ItemList.SetItem(item)
+            self.view.remove_item_by_name(displayedName)
 
             # remove from item list
             IsFile = os.path.isfile(name)
@@ -179,50 +168,48 @@ class Core():
             self.enable_buttons()
 
 
-    def setInitial(self):
-        self.clearALL()
+    def _set_initial(self):
+        self.clear_all()
         main.recursiveFolderOn = False
         utils.set_busy(True)
-        self.enablePanelWidget('selectNone', False)
+        self.enable_panel_widget('selectNone', False)
         main.menuPicker.getNoneMenu.Enable(False)
         main.bottomWindow.go.Enable(False)
 
+    def _get_filter(self, params):
+        """Get the filter used when loading items from selected directory."""
+        filterSel = params.FilterSel
 
-    # get the filter used when loading items from selected directory
-    def getFilter(self, params):
-            filterSel = params.FilterSel
+        # are we using a built in filter ?
+        if filterSel != '' and self.view.get_in_searches(filterSel):
+            filter = self.view.get_in_searches(filterSel)
+        else:
+            filter = filterSel
 
-            # are we using a built in filter ?
-            if filterSel != '' and self.Panel.get_in_searches(filterSel):
-                filter = self.Panel.get_in_searches(filterSel)
-            else:
-                filter = filterSel
-
-            # are we searching by regular expression ?
-            if filter and params.filterByRE:
-                ignoreCase = params.ignoreCase
-                useLocale = params.useLocale
-                try:
-                    # compile according to options:
-                    if ignoreCase and useLocale:
-                        filter = re.compile(filter, re.IGNORECASE | re.UNICODE)
-                    elif ignoreCase:
-                        filter = re.compile(filter, re.IGNORECASE)
-                    elif useLocale:
-                        filter = re.compile(filter, re.UNICODE)
-                    else:
-                        filter = re.compile(filter)
-                except sre_constants.error as err:
-                    main.set_status_msg(_(u"Regular-Expression: %s")%err,u'warn')
-                    main.REmsg = True
-                    filter = re.compile(r'')
-                    pass
-                useRE = True
-            else:
-                filter = filter.lower()
-                useRE = False
-
-            return filter, useRE
+        # are we searching by regular expression ?
+        if filter and params.filterByRE:
+            ignoreCase = params.ignoreCase
+            useLocale = params.useLocale
+            try:
+                # compile according to options:
+                if ignoreCase and useLocale:
+                    filter = re.compile(filter, re.IGNORECASE | re.UNICODE)
+                elif ignoreCase:
+                    filter = re.compile(filter, re.IGNORECASE)
+                elif useLocale:
+                    filter = re.compile(filter, re.UNICODE)
+                else:
+                    filter = re.compile(filter)
+            except sre_constants.error as err:
+                main.set_status_msg(_(u"Regular-Expression: %s")%err,u'warn')
+                main.REmsg = True
+                filter = re.compile(r'')
+                pass
+            useRE = True
+        else:
+            filter = filter.lower()
+            useRE = False
+        return filter, useRE
 
     # core logic
 
@@ -242,67 +229,64 @@ class Core():
         params = self.params.load()
 
         if params.root is False:
-            self.deleteAllItemsInPanel()
+            self.clear_all()
         # OK, load items up:
         else:
-            self.setInitial()
+            self._set_initial()
 
             main.set_status_msg(_(u"Getting directory contents please wait ..."),u'wait')
 
             if main.show_times:
                 t = time.time()
 
-            filter, useRE = self.getFilter(params)
+            filter, useRE = self._get_filter(params)
 
             # create the search (filtering) operations ...
             notType = params.notType
 
             # normal filtering:
             if filter and not useRE:
-                def filterFolders(entry):
+                def _filter_folders(entry):
                     if filter in entry.lower() and not notType:
                         folders.append(entry)
                     if filter not in entry.lower() and notType:
                         folders.append(entry)
-                def filterFiles(entry):
+                def _filter_files(entry):
                     if filter in entry.lower() and not notType:
                         files.append(entry)
                     if filter not in entry.lower() and notType:
                         files.append(entry)
             # regular expression filtering
             elif filter and useRE:
-                def filterFolders(entry):
+                def _filter_folders(entry):
                     if filter.search(entry) and not notType:
                         folders.append(entry)
                     if not filter.search(entry) and notType:
                         folders.append(entry)
-                def filterFiles(entry):
+                def _filter_files(entry):
                     if filter.search(entry) and not notType:
                         files.append(entry)
                     if not filter.search(entry) and notType:
                         files.append(entry)
             # no filtering:
             else:
-                def filterFolders(entry):
+                def _filter_folders(entry):
                     folders.append(entry)
-                def filterFiles(entry):
+                def _filter_files(entry):
                     files.append(entry)
 
             # define here for speed boost
-            def isDir(entry):
+            def isdir(entry):
                     join = os.path.join(params.root, entry)
                     return os.path.isdir(join)
 
-            def getEncodedName(filename):
-                print("fdfdfdf")
+            def get_encoded_name(filename):
                 filename = filename.decode(sys.getfilesystemencoding(), 'replace')
                 return filename
 
             # Now to get the items according to operations defined above
 
-            #
             # retrieve items by walking
-            #
             if params.walkIt:
                 maxDepth = params.walkDepth
 
@@ -319,14 +303,14 @@ class Core():
                         if params.filesOn:
                             for entry in filenames:
                                 entry = os.path.join(base, entry)
-                                filterFiles(entry)
+                                _filter_files(entry)
 
                         # enable this when folder renaming is fixed
                         '''
                         if main.debug and params.foldersOn:
                             for entry in dirs:
                                 entry = os.path.join(base,entry)
-                                filterFolders(entry)
+                                _filter_folders(entry)
                         '''
                         main.set_status_msg(_(u"Retrieved %s items from directory")%len(files),u'wait')
 
@@ -343,9 +327,7 @@ class Core():
                     pass
                 else:
                     main.set_status_msg(_(u"Retrieved %s items from directory")%len(files),u'wait')
-            #
             # normal retrieval
-            #
             else:
                 encodingError = False
                 try:
@@ -358,28 +340,28 @@ class Core():
                     # loop through items in directory
                     for entry in listedDir:
                         try:
-                            isFolder = isDir(entry)
+                            isFolder = isdir(entry)
                         except UnicodeDecodeError:
                             entry = entry.decode(sys.getfilesystemencoding(), 'replace')
-                            isFolder = isDir(entry)
+                            isFolder = isdir(entry)
                             encodingError = True
                         # load folders if set:
                         if params.foldersOn and isFolder:
-                            filterFolders(entry)
+                            _filter_folders(entry)
                         # load files if set:
                         if params.filesOn and not isFolder:
-                            filterFiles(entry)
+                            _filter_files(entry)
                     if encodingError:
                         utils.make_err_msg(_("At least one item has an encoding error in its name. You will not be able to modify these."),
                         _("Encoding Error"))
 
             if error is not True:
-                self.addItemsToPanel(folders, files)
-                main.set_status_msg(_(u"Retrieved %s items from directory")%self.getItemsInPanelCount(),
+                self.add_items_to_panel(folders, files)
+                main.set_status_msg(_(u"Retrieved %s items from directory")%self.count_panel_items(),
                    u'complete')
 
                 # after retrieval:
-                self.enablePanelWidget('selectAll', True)
+                self.enable_panel_widget('selectAll', True)
                 main.menuPicker.getAllMenu.Enable(True)
 
             main.bottomWindow.display.DeleteAllItems()
@@ -388,7 +370,7 @@ class Core():
 
             # output time taken if set
             if main.show_times:
-                print( "%s items load : %s"%(self.getItemsInPanelCount(), (time.time() - t)) )
+                print( "%s items load : %s"%(self.count_panel_items(), (time.time() - t)) )
 
             if main.prefs.get(u'autoSelectAll'):
-                self.selectAllItemsInPanel()
+                self.select_all()

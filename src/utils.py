@@ -29,15 +29,9 @@ try:
 except:
     pass
 
-
-# Color definitions (get from system)
-try:
-    BackgroundClr = wx.SystemSettings_GetColour(wx.SYS_COLOUR_WINDOW)
-    HighlightClr = wx.SystemSettings_GetColour(wx.SYS_COLOUR_HIGHLIGHT)
-    HighlightTxtClr = wx.SystemSettings_GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT)
-    TxtClr = wx.SystemSettings_GetColour(wx.SYS_COLOUR_WINDOWTEXT)
-except:
-    pass
+homedir = 'metamorphose2'
+if os.sep == '/':
+    homedir = '.' + homedir
 
 
 def get_version():
@@ -110,17 +104,23 @@ def adjust_exact_buttons(parent, ignore=()):
             child.SetMinSize(size)
 
 
-def init_environment():
-    """Create necessary folders."""
-    if not os.path.exists(get_user_path('undo')):
+def safe_makedir(dir):
+    """Create a folder."""
+    if not os.path.exists(dir):
         try:
-            os.makedirs(get_user_path('undo'))
+            os.makedirs(dir)
         except OSError as error:
             if error[0] == 17:
                 pass
             else:
                 make_err_msg(unicode(error), u"Error")
                 pass
+
+def init_environment():
+    """Create necessary folders."""
+    dirs = ('undo', 'configs')
+    for d in dirs:
+        safe_makedir(get_user_path(d))
 
 
 def calc_slice_pos(s,l):
@@ -164,7 +164,7 @@ def make_warn_msg(msg, title):
 def get_user_path(file):
     """Return user's default Metamorphose config path."""
     base = wx.StandardPaths.Get().GetUserConfigDir()
-    return os.path.join(base,u'.metamorphose2',file)
+    return os.path.join(base,homedir,file)
 
 def get_real_path(file):
     """Return application path for file."""

@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-
-# this is the renamer panel, it allows displaying and controlling
-# all operation panels.
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -14,6 +11,10 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
+
+"""
+The renamer panel, it allows displaying and controlling all operation panels.
+"""
 
 import wx
 import operations
@@ -46,9 +47,11 @@ class OperationDropTarget(wx.TextDropTarget):
         self.prnt = object.GetParent()
         self.itemCount = 0
 
+    # overloads builtin method
     def HitTest(self, x, y):
         return self.object.HitTest(wx.Point(x,y))
 
+    # overloads builtin method
     def ResetHighlight(self, last=True):
         """
         set all items to deselected
@@ -62,6 +65,7 @@ class OperationDropTarget(wx.TextDropTarget):
             if not last:
                 self.object.SetItemState(pos,0,wx.LIST_STATE_SELECTED)
 
+    # overloads builtin method
     def OnLeave(self):
         self.itemCount = self.object.GetItemCount()
         self.ResetHighlight()
@@ -69,11 +73,13 @@ class OperationDropTarget(wx.TextDropTarget):
         if self.curSelected is not None:
             self.object.Select(self.curSelected)
 
+    # overloads builtin method
     def OnEnter(self, x, y, d):
         self.itemCount = self.prnt.usedOperations.GetItemCount()
         self.curSelected = self.prnt.getCurrentOperationNumber()
         return d
 
+    # overloads builtin method
     def OnDragOver(self, x, y, d):
         #print "OnDragOver: %d, %d, %d" % (x, y, d)
         pos = self.HitTest(x,y)[0]
@@ -88,6 +94,7 @@ class OperationDropTarget(wx.TextDropTarget):
             self.prnt.usedOperations.Refresh()
         return d
 
+    # overloads builtin method
     def OnDropText(self, x, y, data):
         pos = self.HitTest(x,y)[0]
         if pos < 0:
@@ -203,7 +210,7 @@ class Panel(wx.Panel):
         mainSizer.AddSizer(rightSizer,1,wx.EXPAND)
         self.SetSizerAndFit(mainSizer)
 
-    def initMenuItems(self, parent, n):
+    def __init_menu(self, parent, n):
         """
         The used operations' right click menu
         """
@@ -431,7 +438,7 @@ class Panel(wx.Panel):
         self.operationsMenu = wx.Menu()
         n = self.getCurrentOperationNumber()
         if n != None:
-            self.initMenuItems(self.operationsMenu, n)
+            self.__init_menu(self.operationsMenu, n)
             self.PopupMenu(self.operationsMenu)
 
     def getCurrentOperationNumber(self):

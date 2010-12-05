@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -31,13 +31,12 @@ class Parameters(classes.Parameters):
     """Handle loading parameters"""
 
     def __init__(self, Panel):
-        # set the picker panel
-        self.Panel = Panel
+        self.view = Panel
         # define the operation type used to retrieve values
         self.set_value_method()
 
-    # load all needed panel values to instance
     def load(self):
+        """Load all needed panel values to instance."""
         widgets = (
             'byPosition',
             'PosStart',
@@ -62,12 +61,12 @@ class Core():
         else:
             self.ctime = _(u"metadata change time")
 
-        self.Panel = wxSortingView.Panel(self, parent, main_window)
-        self.params = Parameters(self.Panel)
+        self.view = wxSortingView.Panel(self, parent, main_window)
+        self.params = Parameters(self.view)
 
 
-    # Get wanted Exif info from image for sorting
-    def get_from_exif(self, path, selection):
+    def _get_from_exif(self, path, selection):
+        """Get wanted Exif info from image for sorting."""
         ref = {7 : 'EXIF DateTimeOriginal', 8 : 'Image DateTime'}
         try:
             file=open(path, 'rb')
@@ -87,9 +86,8 @@ class Core():
                     datetime = datetime.replace(' ', ':')
                     return datetime
 
-
-    # do the sorting on given list of items
-    def sortItems(self, joinedItems):
+    def sort_items(self, joinedItems):
+        """Sorting the given list of items."""
         # load 'em up
         params = self.params.load()
 
@@ -100,26 +98,26 @@ class Core():
             s = params.PosStart
             l = params.PosLength
             frm,to = utils.calc_slice_pos(s,l)
-            def foldersKey(x):
+            def _folder_key(x):
                 return os.path.basename(x[0])[frm:to].lower()
-            def filesKey(x):
+            def _files_key(x):
                 dir, file = os.path.split(x[0])
                 return (dir, file[frm:to].lower())
 
         # inteligent number sorting
         elif params.intelySort:
             # return the number in the name
-            def getNumb(x):
+            def _get_numb(x):
                 try:
                     compare = float(re.sub('\D','',x[0]))
                 except ValueError:
                     compare = x[0]
                 return compare
             # sort by the number
-            def foldersKey(x):
-                return getNumb(x)
-            def filesKey(x):
-                compare = getNumb(x)
+            def _folder_key(x):
+                return _get_numb(x)
+            def _files_key(x):
+                compare = _get_numb(x)
                 return (os.path.dirname(x[0]), compare)
 
         # sort by item attributes
@@ -128,10 +126,10 @@ class Core():
 
             # retrieval from Exif tags
             if selection > 6:
-                def foldersKey(x):
+                def _folder_key(x):
                     return 0
-                def filesKey(x):
-                    return self.get_from_exif(x[0], selection)
+                def _files_key(x):
+                    return self._get_from_exif(x[0], selection)
 
             # retrieval from os.stat
             else:
@@ -139,18 +137,18 @@ class Core():
                 ref = ('st_ctime', 'st_mtime', 'st_atime', 'st_size', 'st_mode',
                        'st_uid', 'st_gid')
                 s = ref[selection]
-                def foldersKey(x):
+                def _folder_key(x):
                     stat = os.stat(x[0])
                     return getattr(stat, s)
-                def filesKey(x):
+                def _files_key(x):
                     stat = os.stat(x[0])
                     return getattr(stat, s)
 
         # normal sorting
         else:
-            def foldersKey(x):
+            def _folder_key(x):
                 return x[0].lower()
-            def filesKey(x):
+            def _files_key(x):
                 return (os.path.dirname(x[0]), x[0].lower())
 
         # Now apply created helper defs to sort
@@ -159,11 +157,11 @@ class Core():
         if not params.manually:
             main.currentItem = None
             self.fc = 0
-            def dirsTop(f):
+            def _dirs_top(f):
                 if f[1] == 0:
                     self.fc += 1
                 return f[1]
-            def dirsBottom(f):
+            def _dirs_bottom(f):
                 if f[1] == 0:
                     return 1
                 else:
@@ -172,17 +170,17 @@ class Core():
 
             # place directories where in list?
             if params.dirsPlace == 0:
-                joinedItems.sort(key=dirsTop)
+                joinedItems.sort(key=_dirs_top)
             if params.dirsPlace == 1:
-                joinedItems.sort(key=dirsBottom)
+                joinedItems.sort(key=_dirs_bottom)
 
             # separate files from folders
             folders = joinedItems[:self.fc]
             files = joinedItems[self.fc:]
 
             # sort both
-            folders.sort(key=foldersKey)
-            files.sort(key=filesKey)
+            folders.sort(key=_folder_key)
+            files.sort(key=_files_key)
 
             # join back together
             joinedItems[:self.fc] = folders
@@ -191,5 +189,4 @@ class Core():
             # reverse sort list?
             if params.descending:
                 joinedItems.reverse()
-
         return joinedItems

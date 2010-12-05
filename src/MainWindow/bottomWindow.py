@@ -29,43 +29,40 @@ wxID_THUMBSIZE, wxID_AUTOPREVIEW,
 wxID_IMGPREVIEW, wxID_UNDOREDO,
 ] = [wx.NewId() for _init_coll_menuEdit_Items in range(10)]
 
-# ------------ the bottom preview virtual listcrtl:
 class ListCtrl(wx.ListCtrl):
-    def __init__(self, parent, ID, pos=wx.DefaultPosition,
+    """Bottom preview virtual listcrtl."""
+
+    def __init__(self, parent, id, pos=wx.DefaultPosition,
                  size=wx.DefaultSize):
-        style = wx.LC_REPORT|wx.LC_VIRTUAL
-
         self.parent = parent.GetGrandParent()
-
-        wx.ListCtrl.__init__(self, parent, ID, pos, size, style)
-
+        wx.ListCtrl.__init__(self, parent, id, pos, size,
+            style=wx.LC_REPORT|wx.LC_VIRTUAL)
         self.InsertColumn(col=0, format=wx.LIST_FORMAT_LEFT,
               heading=_(u"Location"), width=225)
         self.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT,
               heading=_(u"Original Name"), width=245)
         self.InsertColumn(col=2, format=wx.LIST_FORMAT_LEFT,
               heading=_(u"New Name"), width=265)
-
         self.SetMinSize(wx.Size(-1,110))
-
         self.SetItemCount(0)
         self.showDirs = False
         self.mode = 'preview'
 
-        self.green = wx.ListItemAttr()
-        self.green.SetBackgroundColour('#97F27F')
-        self.light_green = wx.ListItemAttr()
-        self.light_green.SetBackgroundColour('#E5FFE5')
-        self.red = wx.ListItemAttr()
-        self.red.SetBackgroundColour('#FF1616')
-        self.yellow = wx.ListItemAttr()
-        self.yellow.SetBackgroundColour('#FDEB22')
+        prefs = parent.main.prefs
 
+        self.green = wx.ListItemAttr()
+        self.green.SetBackgroundColour(prefs.get(u'renamedColour'))
+        self.lightGreen = wx.ListItemAttr()
+        self.lightGreen.SetBackgroundColour(prefs.get(u'willChangeColour'))
+        self.red = wx.ListItemAttr()
+        self.red.SetBackgroundColour(prefs.get(u'errorColour'))
+        self.yellow = wx.ListItemAttr()
+        self.yellow.SetBackgroundColour(prefs.get(u'warnColour'))
+        
         self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self._on_right_click)
 
-
-    # right click menu
     def __init_menu(self, menu):
+        """Right click menu."""
         menu.edit = wx.MenuItem(menu, wxID_MENUEDIT, _(u"Manually Edit"))
         menu.edit.SetBitmap(wx.Bitmap(utils.icon_path(u'edit.png'),
             wx.BITMAP_TYPE_PNG))
@@ -129,7 +126,7 @@ class ListCtrl(wx.ListCtrl):
         self.dlg = editDialog.Dialog(self, item)
 
         if self.dlg.ShowModal() == wx.ID_OK:
-            self.set_name(self.dlg.item, self.dlg.getValue())
+            self.set_name(self.dlg.item, self.dlg.get_value())
 
     def _get_preview_attr(self, item):
         original, renamed = self.get_names(item)
@@ -141,7 +138,7 @@ class ListCtrl(wx.ListCtrl):
         # make items that will be renamed stand out
         elif self.parent.prefs.get('showPreviewHighlight') and\
           (original[0] != renamed[0]):
-            return self.light_green
+            return self.lightGreen
         else:
             return None
 
@@ -198,7 +195,7 @@ class ListCtrl(wx.ListCtrl):
 
     # overloads built in method
     def OnGetItemImage(self, item):
-        pickerList = self.parent.picker.Panel.ItemList
+        pickerList = self.parent.picker.view.ItemList
         original, renamed = self.get_names(item)
         if original[1]:
             # show preview if available
@@ -299,8 +296,8 @@ class MainPanel(wx.Panel):
 
     def __set_thumb_size(self, event):
         """Only re-preview if image preview is enabled and size has changed."""
-        if hasattr(self.main.picker.Panel.ItemList, 'thumbSize'):
-            thumbSize = self.main.picker.Panel.ItemList.thumbSize[0]
+        if hasattr(self.main.picker.view.ItemList, 'thumbSize'):
+            thumbSize = self.main.picker.view.ItemList.thumbSize[0]
         else:
             thumbSize = int(event.GetString())
         if self.imgPreview.GetValue() and int(event.GetString()) != thumbSize:

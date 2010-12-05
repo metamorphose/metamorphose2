@@ -146,7 +146,7 @@ class OpPanel(Operation):
 
     def rename_item(self, path, name, ext, original):
         """Change length of name."""
-        newName = self.joinExt(name,ext)
+        newName = self.join_ext(name,ext)
         if not newName:
             return path,name,ext
 
@@ -191,6 +191,6 @@ class OpPanel(Operation):
                 newName = truncate(newName)
 
         # apply to name and/or ext
-        name,ext = self.splitExt(newName,name,ext)
+        name,ext = self.split_ext(newName,name,ext)
 
         return path, name, ext

@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-
-# panel to hold move widgets and operations. Uses search
-# panel.
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -30,6 +27,11 @@ import regExpr
 ] = [wx.NewId() for __init_ctrls in range(9)]
 
 class OpPanel(Operation):
+    """
+    Panel to hold move widgets and operations.
+
+    Uses search panel.
+    """
     def __init_sizer(self):
         mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(self.search,0,wx.EXPAND|wx.BOTTOM|wx.TOP,10)
@@ -160,7 +162,7 @@ class OpPanel(Operation):
         main.show_preview(event)
 
     def rename_item(self, path, name, ext, original):
-        newName = self.joinExt(name,ext)
+        newName = self.join_ext(name,ext)
         if not newName:
             return path,name,ext
 
@@ -273,5 +275,5 @@ class OpPanel(Operation):
         else:
             newName = oldName
 
-        name,ext = self.splitExt(newName,name,ext)
+        name,ext = self.split_ext(newName,name,ext)
         return path,name,ext

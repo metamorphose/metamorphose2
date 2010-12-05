@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -29,10 +29,9 @@ class Core():
         global main
         main = MainWindow
         self.operations = [] # operations stack
-        self.Panel = wxRenamerView.Panel(self, parent, main)
-        self.Preview = preview.Core(main)
-        self.Engine = engine.Core(main)
-
+        self.view = wxRenamerView.Panel(self, parent, main)
+        self.__preview = preview.Core(main)
+        self.__engine = engine.Core(main)
 
     def create_operation(self, n, opName, params={}):
         """Create a new instance of the specified operation and returns it."""
@@ -40,7 +39,7 @@ class Core():
         # init operation object
         operation = getattr(operations, opName)
         # init operation panel object
-        opPanel = operation.OpPanel(self.Panel, main, params)
+        opPanel = operation.OpPanel(self.view, main, params)
 
         self.insert_operation(n, opPanel)
         return opPanel
@@ -69,17 +68,17 @@ class Core():
     ## == Renaming related methods == ##
 
     def preview(self, event):
-        self.Preview.setup()
-        self.Preview.generate_names(event)
+        self.__preview.setup()
+        self.__preview.generate_names(event)
 
     def error_check_items(self):
-        self.Preview.setup()
-        self.Preview.error_check_items()
+        self.__preview.setup()
+        self.__preview.error_check_items()
 
     def rename(self, event):
-        self.Engine.setup()
-        self.Engine.rename(event)
+        self.__engine.setup()
+        self.__engine.rename(event)
 
     def undo(self, event):
-        self.Engine.setup()
-        self.Engine.undo_last_rename(event)
+        self.__engine.setup()
+        self.__engine.undo_last_rename(event)

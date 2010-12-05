@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-
-# base classes used throughout application
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -14,14 +12,16 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
+"""Base classes used throughout the application."""
+
 import os
 import wx
 import utils
 
-# Load parameters from GUI to core
 class Parameters:
+    """Load parameters from GUI to core."""
     def set_value_method(self):
-        self.getValue = self.get_wx_value
+        self.get_value = self.get_wx_value
 
     # get a wxWidget value
     def get_wx_value(self, widget):
@@ -39,9 +39,9 @@ class Parameters:
     # set given widgets
     def set_parameters(self, widgets):
         for widgetName in widgets:
-            if hasattr(self.Panel, widgetName):
-                widget = getattr(self.Panel, widgetName)
-                setattr(self, widgetName, self.getValue(widget))
+            if hasattr(self.view, widgetName):
+                widget = getattr(self.view, widgetName)
+                setattr(self, widgetName, self.get_value(widget))
         return self
 
 
@@ -107,4 +107,3 @@ class ProgressDialog(wx.ProgressDialog):
         if self.active:
             self.Destroy()
             self = False
-

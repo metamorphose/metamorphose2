@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -60,7 +60,7 @@ class OpPanel(Operation):
 
     def rename_item(self, path, name, ext, original):
         """Insert into name."""
-        newName = self.joinExt(name,ext)
+        newName = self.join_ext(name,ext)
         if not newName:
             return path,name,ext
 
@@ -139,6 +139,6 @@ class OpPanel(Operation):
             if good2go:
                 newName = newName[:frm] + parsedText + newName[to:]
 
-        name,ext = self.splitExt(newName,name,ext)
+        name,ext = self.split_ext(newName,name,ext)
 
         return path,name,ext

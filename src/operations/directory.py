@@ -48,10 +48,10 @@ class OpPanel(Operation):
         Operation.__init__(self, params)
         global main
         main = main_window
-        self.setAsPathOnly()
+        self.set_as_path_only()
         self.__init_ctrls(parent)
         self.__init_sizer(parent)
-        self.updateParameters(self.dirTools.params)
+        self.update_parameters(self.dirTools.params)
 
     def on_config_load(self):
         """Update GUI elements, settings after config load."""
@@ -96,12 +96,12 @@ class OpPanel(Operation):
 
     def reset_counter(self, c):
         """Reset the numbering counter for the operation."""
-        utils.reset_counter(self, self.directoryToolsPanel, c)
+        utils.reset_counter(self, self.dirTools, c)
 
     def rename_item(self, path, name, ext, original):
         """Create the new path."""
         rejoin = False
-        operations = self.directoryToolsPanel.opButtonsPanel
+        operations = self.dirTools.opButtonsPanel
         newPath = self.dirTools.directoryText.GetValue()
         params = self.params
 

@@ -27,9 +27,9 @@ class Notebook(wx.Notebook):
     def __init__(self, parent, main_window):
         global main
         main = main_window
-        wx.Notebook.__init__(self, id=-1, name=u'notebook', parent=parent, style=wx.NB_BOTTOM|wx.NO_BORDER)
+        wx.Notebook.__init__(self, id=-1, name=u'notebook', parent=parent,
+            style=wx.NB_BOTTOM|wx.NO_BORDER)
         self.SetThemeEnabled(True)
-
         self.numbering = numbering.Panel(self, main)
         self.dateTime = dateTime.Panel(self, main)
 
@@ -39,8 +39,8 @@ class Notebook(wx.Notebook):
         # load and assign notebook page images
         il = wx.ImageList(16, 16)
         img0 = il.Add(wx.Bitmap(utils.icon_path(varIcon), wx.BITMAP_TYPE_ICO))
-        self.img1 = il.Add(wx.Bitmap(utils.icon_path(u'numbering.ico'), wx.BITMAP_TYPE_ICO))
-        self.img2 = il.Add(wx.Bitmap(utils.icon_path(u'date_time.ico'), wx.BITMAP_TYPE_ICO))
+        img1 = il.Add(wx.Bitmap(utils.icon_path(u'numbering.ico'), wx.BITMAP_TYPE_ICO))
+        img2 = il.Add(wx.Bitmap(utils.icon_path(u'date_time.ico'), wx.BITMAP_TYPE_ICO))
         self.AssignImageList(il)
 
         # required to make XP theme better:
@@ -48,25 +48,8 @@ class Notebook(wx.Notebook):
 
         self.AddPage(page=varPanel, text=varText, select=True,
               imageId=img0)
-    
-    def remove_page_by_type(self, type):
-        """removes a page by tab text"""
-        try:
-            self.RemovePage(self.tabs[type])
-            del self.tabs[type]
-        except KeyError:
-            pass
-
-    def add_numbering_page(self):
-        """adds a page by tab text"""
-        if 'numb' not in self.tabs:
-            id = self.AddPage(imageId=self.img1, page=self.numbering, select=False,
+        self.AddPage(imageId=img1, page=self.numbering, select=False,
               text=_(u"Numbering settings"))
-            self.tabs['numb'] = id
-
-    def add_datetime_page(self):
-        """adds a page by tab text"""
-        if 'datetime' not in self.tabs:
-            id = self.AddPage(imageId=self.img2, page=self.dateTime, select=False,
+        self.AddPage(imageId=img2, page=self.dateTime, select=False,
                   text=_(u"Date && Time settings"))
-            self.tabs['datetime'] = id
+

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -41,19 +41,18 @@ class Methods:
         self.header = u'Version=%s\n'%main.version
         self.prefs = False
 
-    def _find_pref_file(self):
+    def __find_pref_file(self):
         prefFile = utils.get_user_path(u'preferences.ini')
         return prefFile
     
-    def _open_pref_file(self,type):
-        prefFile = self._find_pref_file()
+    def __open_pref_file(self,type):
+        prefFile = self.__find_pref_file()
         utils.debug_print(main, "Opening as '%s' : %s"%(type,prefFile))
-        prefFile = codecs.open(prefFile,type, 'utf-8')
+        prefFile = codecs.open(prefFile, type, 'utf-8')
         return prefFile
 
-    def _create_new(self):
+    def __create_new(self):
         """Create default preferences file."""
-        prefFile = self._open_pref_file('w+')
         msg = _(u"Please take a moment to set your preferences.\n\n")
         title = _(u"Preferences")
         dlg = wx.MessageDialog(None, msg, title, wx.CAPTION|wx.OK|wx.ICON_EXCLAMATION)
@@ -64,35 +63,62 @@ class Methods:
         prefDiag.ShowModal()
         prefDiag.Destroy()
 
-    def _load_preferences(self):
+    def __read_file(self):
+        """Process file and return preferences dictionary."""
+        prefFile = self.__open_pref_file('r')
+
+        prefFile.seek(0)
+        version = prefFile.readline().strip()[8:]
+        # preferences are from prior version, create new file
+        if version[:4] != main.version[:4]:
+            prefs = self.__create_new()
+        prefFile.seek(0)
+        prefs = {}
+        for line in prefFile:
+            if line.find('=') > 0:
+                line = line.replace(u'\n','')
+                split = line.split('=')
+                try:
+                    prefs[split[0]] = int(split[1])
+                except KeyError:
+                    pass
+                except ValueError:
+                    prefs[split[0]] = unicode(split[1])
+                    pass
+        return prefs
+
+    def __load_preferences(self):
         """Get values from file (one way or another)"""
-        prefFile = self._find_pref_file()
+        prefFile = self.__find_pref_file()
         # make sure the file exist and is filled:
         if not os.path.exists(prefFile) or os.path.getsize(prefFile) < 5:
-            prefs = self._create_new()
-        else:
-            prefFile = self._open_pref_file('r')
-            prefFile.seek(0)
-            version = prefFile.readline().strip()[8:]
-            # preferences are from prior version, create new file
-            if version[:4] != main.version[:4]:
-                prefs = self._create_new()
-            else:
-                prefs = self.read_file(prefFile)
-        # use windows-compatible filenames?
+            self.__create_new()
+        prefs = self.__read_file()
+        
+        # windows-compatible ?
         if prefs[u'useWinChars']:
             prefs[u'bad_chars'] = (u'\\',u'/',u':',u'*',u'?',u'"',u'>',u'<',u'|')
-
         if prefs[u'useWinNames']:
             prefs[u'bad_win_words'] = (u'con', u'prn', u'aux', u'clock$',
               u'nul', u'com1', u'com2', u'com3', u'com4', u'com5', u'com6', u'com7',
               u'com8', u'com9', u'lpt1', u'lpt2', u'lpt3', u'lpt4', u'lpt5',u'lpt6',
               u'lpt7', u'lpt8', u'lpt9')
+
+        prefs[u'backgroundColour'] = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)
+        prefs[u'highlightColour'] = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT)
+        prefs[u'highlightTextColour'] = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT)
+        prefs[u'textColour'] = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT)
+
+        prefs[u'renamedColour'] = '#97F27F'
+        prefs[u'willChangeColour'] = '#E5FFE5'
+        prefs[u'errorColour'] = '#FF1616'
+        prefs[u'warnColour'] = '#FDEB22'
+
         self.prefs = prefs
         
     def set_prefs(self, prefDialog):
         """Get values from panels and set to file."""
-        prefFile = self._open_pref_file('w')
+        prefFile = self.__open_pref_file('w')
         options = self.header
         # get all pages in notebook
         for i in range(prefDialog.notebook.GetPageCount()):
@@ -127,29 +153,14 @@ class Methods:
                     options += u'%s=%s\n'%(name,value)
                     utils.debug_print(main, "%s (%s) = %s"%(name,type,value))
         prefFile.write(options)
-        return self.read_file(prefFile)
-
-    def read_file(self, prefFile):
-        """Process file and assign results to prefs dictionary."""
-        prefFile.seek(0)
-        prefs = {}
-        for line in prefFile:
-            if line.find('=') > 0:
-                line = line.replace(u'\n','')
-                split = line.split('=')
-                try:
-                    prefs[split[0]] = int(split[1])
-                except KeyError:
-                    pass
-                except ValueError:
-                    prefs[split[0]] = unicode(split[1])
-                    pass
-        return prefs
 
     def get(self, preference, strict=True):
-        """Attempt to load a preference setting, recreate pref file if needed."""
+        """Attempt to load a preference setting
+        
+        Load or recreate preference file if needed.
+        """
         if not self.prefs:
-            self._load_preferences()
+            self.__load_preferences()
         try:
             return self.prefs[preference]
         except KeyError:
@@ -159,9 +170,18 @@ class Methods:
                 msg = _(u"\nThe preferences file is outdated or corrupt.")
                 msg += _(u"\nWill now recreate the preferences file.")
                 utils.make_err_msg(msg, _(u"Problem with preferences"))
-                self._create_new()
-                self._load_preferences()
+                self.__create_new()
+                self.__load_preferences()
                 return self.get(preference)
+
+    def get_all(self):
+        """Get all preferences.
+
+        Will attempt to load from file if no preferences are defined.
+        """
+        if not self.prefs:
+            self.__load_preferences()
+        return self.prefs
 
 
 class Dialog(wx.Dialog):
@@ -180,7 +200,6 @@ class Dialog(wx.Dialog):
         parent.AddWindow(self.close, 0, border=0, flag=0)
 
     def __init_sizers(self):
-        # generated method, don't edit
         self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
 
         self.buttons = wx.BoxSizer(orient=wx.HORIZONTAL)
@@ -191,7 +210,6 @@ class Dialog(wx.Dialog):
         self.SetSizer(self.mainSizer)
 
     def __init_ctrls(self, prnt):
-        # generated method, don't edit
         wx.Dialog.__init__(self, id=wxID_DIALOG, name=u'dialog', parent=prnt,
               style=wx.CAPTION | wx.RESIZE_BORDER, title=u'Preferences')
 
@@ -218,10 +236,9 @@ class Dialog(wx.Dialog):
                      wx.BITMAP_TYPE_ICO))
         self.notebook.SetBackgroundColour(self.notebook.GetThemeBackgroundColour())
 
-        self.prefMethods = Methods(main)
-        if not initial:
-            prefs = self.prefMethods
-        else:
+        self.prefs = Methods(main)
+
+        if initial:
             self.close.Enable(False)
             self.apply.Enable(False)
 
@@ -238,46 +255,42 @@ class Dialog(wx.Dialog):
             self.notebook.AddPage(page(self.notebook), pane[1])
             notebookPage = self.notebook.GetPage(i)
             if not initial:
-                self._load_prefs(notebookPage, prefs)
+                self._load_prefs(notebookPage)
             if hasattr(notebookPage, 'init_enabled'):
                 notebookPage.init_enabled()
             i += 1
 
-        #utils.set_min_size(self)
-        utils.set_min_size(self,ignoreClasses=(wx.TextCtrl,wx.Button,wx.Choice,
-                                               wx.SpinCtrl))
-        # set the window size
+        utils.set_min_size(self,ignoreClasses=(
+                wx.TextCtrl,wx.Button,wx.Choice, wx.SpinCtrl))
         self.Fit()
         self.CentreOnScreen()
 
         # to see if these change when applying
         if not initial:
-            self.oldDirTree = prefs.get(u'useDirTree')
-            self.oldSHowHiddenDirs = prefs.get(u'showHiddenDirs')
+            self.oldDirTree = self.prefs.get(u'useDirTree')
+            self.oldSHowHiddenDirs = self.prefs.get(u'showHiddenDirs')
 
     def _on_apply_button(self, event):
-        self.prefMethods.set_prefs(self)
-        prefs = main.prefs = self.prefMethods
+        self.prefs.set_prefs(self)
+        prefs = main.prefs = self.prefs
 
-        #if self.prefs.get(u'autoPreviewPicker'):
-        #    self.OnPreviewButton(0)
         if not self.initial:
             if prefs.get(u'useDirTree') != self.oldDirTree:
-                main.notebook.GetPage(0).set_tree()
+                main.picker.set_tree()
             if prefs.get(u'showHiddenDirs') != self.oldSHowHiddenDirs:
-                main.notebook.GetPage(0).dirPicker.ShowHidden(prefs.get(u'showHiddenDirs'))
+                main.picker.dirPicker.ShowHidden(prefs.get(u'showHiddenDirs'))
 
             self.oldDirTree = prefs.get(u'useDirTree')
             self.oldSHowHiddenDirs = prefs.get(u'showHiddenDirs')
 
             main.show_preview(event)
 
-    def _load_prefs(self, panel, prefs):
-        """load preferences from file and apply them to all panels."""
+    def _load_prefs(self, panel):
+        """load preferences from file and apply them to a panel."""
         utils.debug_print(main, 'Loading %s preferences ...'%panel.GetName())
         for child in panel.GetChildren():
             try:
-                v = prefs.get(child.GetName(), False)
+                v = self.prefs.get(child.GetName(), False)
             except KeyError:
                 pass
             else:
@@ -289,7 +302,6 @@ class Dialog(wx.Dialog):
                     child.SetValue(unicode(v))
                 elif isinstance(child, wx.Choice):
                     child.SetSelection(v)
-
 
     def _close_diag(self, event):
         self.Close()

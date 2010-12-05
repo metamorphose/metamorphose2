@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -13,9 +13,18 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
-# All translations also Copyright (c) Ianaré Sévi, under GPL v3
+# All translations also Copyright (c) Ianaré Sévi, under the BSD license
+#
 
 """
+Métamorphose is a free, open source program to mass rename files and folders.
+
+A profesional renaming tool, it has many powerful functions.
+Well suited for those that need to rename many files and/or folders on a regular basis.
+
+In addition to general usage operations, it is useful for photo and music
+collections, webmasters, programmers, legal and clerical, et cetera. 
+
 This is what you should run to start the program.
 """
 
@@ -41,13 +50,13 @@ if not hasattr(sys, "frozen"):
 import wx
 import os
 import platform
+import MainWindow
 
 # wxversion changes path
 sys.path[0] = path
 
 class BoaApp(wx.App):
     def OnInit(self):
-        import MainWindow
         wx.InitAllImageHandlers()
         self.main = MainWindow.create(None)
         self.main.Show()

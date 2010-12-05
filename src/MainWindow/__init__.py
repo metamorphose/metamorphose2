@@ -50,8 +50,8 @@ def create(parent):
 
 
 [wxID_MAIN_WINDOW, wxID_MAIN_WINDOWDISPLAY,
-wxID_MAIN_WINDOWNOTEBOOK, wxID_MAIN_WINDOWSTATUSBAR1, wxID_MAIN_WINDOWSTATUSIMAGE,
- wxID_SELECTIONAREA,
+wxID_MAIN_WINDOWNOTEBOOK, wxID_MAIN_WINDOWSTATUSBAR1,
+wxID_MAIN_WINDOWSTATUSIMAGE,
 
 wxID_MENURENAMER_DESTROY, wxID_MENURENAMER_DESTROYALL,
 
@@ -62,7 +62,7 @@ wxID_MENUHELP_FORMATHELP,
 wxID_MENUFILE_EXIT, wxID_MENUFILE_PREVIEW,
 wxID_MENUFILE_GO, wxID_MENUFILE_LOADINI,
 wxID_MENUFILE_SAVEINI, wxID_MENUFILE_SAVELOG,
-wxID_MENUFILE_IMPORT,
+wxID_MENUFILE_IMPORT, wxID_MENUFILE_RESET,
 
 wxID_MENUPICKER_ALL, wxID_MENUPICKER_NONE,
 wxID_MENUPICKER_WALK, wxID_MENUPICKER_BROWSE,
@@ -70,21 +70,21 @@ wxID_MENUPICKER_OK,
 
 wxID_MENUSETTINGS_PREFERENCES, wxID_MENUSETTINGS_LANG,
 
-] = [wx.NewId() for init_menu_edit in range(27)]
+] = [wx.NewId() for __init_menu_edit in range(27)]
 
 
 class MySplitter(wx.SplitterWindow):
     """Main splitter"""
     
-    def __init__(self, parent, id):
-        wx.SplitterWindow.__init__(self, parent, id,
-                        style=wx.SP_LIVE_UPDATE|wx.SP_3DSASH|wx.SP_NO_XP_THEME)
+    def __init__(self, parent):
+        wx.SplitterWindow.__init__(self, parent,
+            style=wx.SP_LIVE_UPDATE|wx.SP_3DSASH|wx.SP_NO_XP_THEME)
 
 
 class MainWindow(wx.Frame):
     """Main application class"""
     
-    def init_menubar(self, parent):
+    def __init_menubar(self, parent):
         parent.Append(menu=self.menuFile, title=_(u"File"))
         parent.Append(menu=self.menuPicker, title=_(u"Picker"))
         parent.Append(menu=self.menuRenamer, title=_(u"Renamer"))
@@ -95,7 +95,7 @@ class MainWindow(wx.Frame):
         self.menuFile.GoMenu.Enable(False)
 
 
-    def init_menu_file(self, parent):
+    def __init_menu_file(self, parent):
         parent.LoadIniMenu = wx.MenuItem(parent, wxID_MENUFILE_LOADINI,
             _(u"&Load Config\tctrl+L"),
             self.make_space(_(u"Load configuration from file")))
@@ -117,6 +117,11 @@ class MainWindow(wx.Frame):
          wxID_MENUFILE_IMPORT, _(u"&Import from log file"),
          self.make_space(_(u"Load a snapshot")))
         parent.Import.SetBitmap(wx.Bitmap(utils.icon_path(u'CSVfrom.png'),
+            wx.BITMAP_TYPE_PNG))
+
+        parent.resetApp = wx.MenuItem(parent, wxID_MENUFILE_RESET,
+            _(u"&Reset"), self.make_space(_(u"Reset all settings")))
+        parent.resetApp.SetBitmap(wx.Bitmap(utils.icon_path(u'preview.png'),
             wx.BITMAP_TYPE_PNG))
 
         parent.PreviewMenu = wx.MenuItem(parent, wxID_MENUFILE_PREVIEW,
@@ -144,6 +149,7 @@ class MainWindow(wx.Frame):
         parent.AppendItem(parent.PreviewMenu)
         parent.AppendItem(parent.GoMenu)
         parent.AppendSeparator()
+        parent.AppendItem(parent.resetApp)
         parent.AppendItem(parent.exitMenu)
 
         self.Bind(wx.EVT_MENU, self.save_items_as_text,
@@ -158,11 +164,13 @@ class MainWindow(wx.Frame):
               id=wxID_MENUFILE_PREVIEW)
         self.Bind(wx.EVT_MENU, self.rename_items,
               id=wxID_MENUFILE_GO)
-        self.Bind(wx.EVT_MENU, self.on_menu_file_exit,
+        self.Bind(wx.EVT_MENU, self.on_menu_reset,
+              id=wxID_MENUFILE_RESET)
+        self.Bind(wx.EVT_MENU, self.on_menu_exit,
               id=wxID_MENUFILE_EXIT)
 
 
-    def init_menu_renamer(self, parent):
+    def __init_menu_renamer(self, parent):
         parent.destroyMenu = wx.MenuItem(parent, wxID_MENURENAMER_DESTROY,
             _(u"Destroy operation"),
             self.make_space(_(u"Destroy visible operation")))
@@ -178,13 +186,13 @@ class MainWindow(wx.Frame):
         parent.AppendItem(parent.destroyMenu)
         parent.AppendItem(parent.destroyAllMenu)
 
-        self.Bind(wx.EVT_MENU, self.renamer.Panel.delete_operation,
+        self.Bind(wx.EVT_MENU, self.renamer.view.delete_operation,
               id=wxID_MENURENAMER_DESTROY)
-        self.Bind(wx.EVT_MENU, self.renamer.Panel.destroyAllGUIOperations,
+        self.Bind(wx.EVT_MENU, self.renamer.view.destroy_all_operations,
               id=wxID_MENURENAMER_DESTROYALL)
 
 
-    def init_menu_picker(self, parent):
+    def __init_menu_picker(self, parent):
         parent.browseMenu = wx.MenuItem(parent, wxID_MENUPICKER_BROWSE,
             _(u"&Browse...\tF4"),
             self.make_space(_(u"Browse for path")))
@@ -219,19 +227,19 @@ class MainWindow(wx.Frame):
         parent.AppendItem(parent.getNoneMenu)
         parent.AppendItem(parent.walkMenu)
 
-        self.Bind(wx.EVT_MENU, self.picker.browseForPath,
+        self.Bind(wx.EVT_MENU, self.picker.browse_for_path,
               id=wxID_MENUPICKER_BROWSE)
-        self.Bind(wx.EVT_MENU, self.picker.setPanelPath,
+        self.Bind(wx.EVT_MENU, self.picker.set_path,
               id=wxID_MENUPICKER_OK)
-        self.Bind(wx.EVT_MENU, self.picker.selectNoItemsInPanel,
+        self.Bind(wx.EVT_MENU, self.picker.select_none,
               id=wxID_MENUPICKER_NONE)
-        self.Bind(wx.EVT_MENU, self.picker.selectAllItemsInPanel,
+        self.Bind(wx.EVT_MENU, self.picker.select_all,
               id=wxID_MENUPICKER_ALL)
         self.Bind(wx.EVT_MENU, self.picker.walk_from_menu,
               id=wxID_MENUPICKER_WALK)
 
 
-    def init_menu_edit(self, parent):
+    def __init_menu_edit(self, parent):
         parent.PrefsMenu = wx.MenuItem(parent,
          wxID_MENUSETTINGS_PREFERENCES, _(u"Preferences"),
          self.make_space(_(u"Change your preferences")))
@@ -254,7 +262,7 @@ class MainWindow(wx.Frame):
               id=wxID_MENUSETTINGS_LANG)
 
 
-    def init_menu_help(self, parent):
+    def __init_menu_help(self, parent):
         parent.aboutMenu = wx.MenuItem(parent,
          wxID_MENUHELP_ABOUT, _(u"About"),
          self.make_space(_(u"Display general information about Metamorphose")))
@@ -303,7 +311,7 @@ class MainWindow(wx.Frame):
               id=wxID_MENUHELP_REHELP)
 
 
-    def init_notebook(self):
+    def __init_notebook(self):
         parent = self.notebook
 
         # init Core classes
@@ -325,10 +333,10 @@ class MainWindow(wx.Frame):
         parent.AssignImageList(il)
 
         # add notebook pages to notebook
-        parent.AddPage(self.picker.Panel, _(u"Picker"), True, img0)
-        parent.AddPage(self.renamer.Panel, _(u"- Renamer -"), False, img1)
-        parent.AddPage(self.sorting.Panel, _(u"Sorting"), False, img2)
-        parent.AddPage(self.errors.Panel, _(u"Errors/Warnings: %s")%0, False, img3)
+        parent.AddPage(self.picker.view, _(u"Picker"), True, img0)
+        parent.AddPage(self.renamer.view, _(u"- Renamer -"), False, img1)
+        parent.AddPage(self.sorting.view, _(u"Sorting"), False, img2)
+        parent.AddPage(self.errors.view, _(u"Errors/Warnings: %s")%0, False, img3)
 
         # required to make XP theme colours ok
         self.notebook.SetBackgroundColour(self.notebook.GetThemeBackgroundColour())
@@ -338,23 +346,23 @@ class MainWindow(wx.Frame):
         mainSizer.Add(self.splitter,1,wx.EXPAND|wx.ALL, 5)
         self.SetSizerAndFit(mainSizer)
 
-    def init_utils(self):
+    def __init_utils(self):
         self.menuFile = wx.Menu()
         self.menuPicker = wx.Menu()
         self.menuEdit = wx.Menu()
         self.menuHelp = wx.Menu()
         self.menuBar = wx.MenuBar()
         self.menuRenamer = wx.Menu()
-        self.init_menu_file(self.menuFile)
-        self.init_menu_picker(self.menuPicker)
-        self.init_menu_renamer(self.menuRenamer)
-        self.init_menu_edit(self.menuEdit)
-        self.init_menu_help(self.menuHelp)
-        self.init_menubar(self.menuBar)
+        self.__init_menu_file(self.menuFile)
+        self.__init_menu_picker(self.menuPicker)
+        self.__init_menu_renamer(self.menuRenamer)
+        self.__init_menu_edit(self.menuEdit)
+        self.__init_menu_help(self.menuHelp)
+        self.__init_menubar(self.menuBar)
         self.SetMenuBar(self.menuBar)
 
-    # get fonts from system or specify own
-    def init_fonts(self):
+    def __init_fonts(self):
+        """Get fonts from system or specify own."""
         if wx.Platform == '__WXGTK__':
             sysFont = wx.SystemSettings.GetFont(wx.SYS_SYSTEM_FONT)
             self.fontParams = {
@@ -388,7 +396,7 @@ class MainWindow(wx.Frame):
         self.SetStatusBarPane(0)
         self.SetIcon(wx.Icon(utils.icon_path(u'metamorphose.ico'), wx.BITMAP_TYPE_ICO))
         self.SetThemeEnabled(True)
-        self.init_fonts()
+        self.__init_fonts()
 
         self.statusBar1 = ESB.EnhancedStatusBar(id=wxID_MAIN_WINDOWSTATUSBAR1,
               name=u'statusBar1', parent=self)
@@ -399,7 +407,7 @@ class MainWindow(wx.Frame):
               parent=self.statusBar1, size=wx.Size(-1, 16), style=0)
         self.statusBar1.AddWidget(self.statusImage, ESB.ESB_ALIGN_LEFT)
 
-        self.splitter = MySplitter(self, wxID_SELECTIONAREA)
+        self.splitter = MySplitter(self)
 
         # notebook
         self.notebook = wx.Notebook(id=wxID_MAIN_WINDOWNOTEBOOK,
@@ -456,7 +464,7 @@ class MainWindow(wx.Frame):
         print("Command line error :")
         print(message)
         print()
-        sys.exit()
+        sys.exit(1)
 
     def strip_leading(self, a):
         """remove a leading '=' from CLI options"""
@@ -464,7 +472,7 @@ class MainWindow(wx.Frame):
             a = a.lstrip('=')
         return a
 
-    def get_cli_options(self):
+    def __get_cli_options(self):
         """Get options passed in at the command line"""
         shortOptions = "htdp:vc:va:vl:v"
         longOptions = ["help", "timer", "debug", "path=", "config=", "auto=", "language="]
@@ -612,7 +620,7 @@ class MainWindow(wx.Frame):
         self.show_times = False # show processing times
         self.debug = False # show debug info
 
-        path, configFilePath = self.get_cli_options()
+        path, configFilePath = self.__get_cli_options()
 
         wx.Frame.__init__(self, id=wxID_MAIN_WINDOW, name=u'MainWindow',
               parent=prnt, style=wx.DEFAULT_FRAME_STYLE)
@@ -671,8 +679,8 @@ class MainWindow(wx.Frame):
                 pass
 
         # construct rest of GUI:
-        self.init_notebook()
-        self.init_utils()
+        self.__init_notebook()
+        self.__init_utils()
         self.__init_sizer()
         # call this after sizer to place properly:
         self.Center(wx.HORIZONTAL|wx.VERTICAL)
@@ -684,8 +692,8 @@ class MainWindow(wx.Frame):
         # Set root directory from command line arguments:
         if path:
             path = path.rstrip()
-            self.picker.Panel.path.SetValue(path)
-            self.picker.setPanelPath(True)
+            self.picker.view.path.SetValue(path)
+            self.picker.set_path(True)
 
 
 ##### MISC STUFF: ##############################################################
@@ -758,8 +766,15 @@ class MainWindow(wx.Frame):
 
 
 ##### MENU ACTIONS: ############################################################
-    def on_menu_file_exit(self, event):
+    def on_menu_exit(self, event):
         self.Close()
+
+    def on_menu_reset(self, event):
+        yes = utils.make_yesno_dlg(_(u'Are you sure you want to reset?'), _(u'Are you sure?'))
+        if yes:
+            configs.load(self, utils.get_real_path('default.cfg'))
+            self.picker.view.path.SetValue(u'')
+            self.picker.clear_all()
 
     def save_config(self, event):
         configs.save(self)
@@ -838,7 +853,6 @@ class MainWindow(wx.Frame):
             else:
                 o = 0
                 r = 1
-
             f = codecs.open(f, 'r', 'utf_8')
             i = 0
             for line in f.readlines():
@@ -853,8 +867,8 @@ class MainWindow(wx.Frame):
 
             # set up for display
             self.toRename = zip(original,renamed)
-            self.picker.Panel.path.SetValue('')
-            self.picker.clearALL()
+            self.picker.view.path.SetValue('')
+            self.picker.clear_all()
 
             # only allow rename if there are items
             if len(self.toRename) != i:
@@ -913,10 +927,10 @@ class MainWindow(wx.Frame):
         """
         self.errors.clear()
 
-        pickerList = self.picker.Panel.ItemList
+        pickerList = self.picker.view.ItemList
         display = self.bottomWindow.display
         #display.Enable(False)
-        usedOperations = self.renamer.Panel.usedOperations
+        usedOperations = self.renamer.view.usedOperations
         # show complete path in new name
         if not showDirs:
             for i in range(usedOperations.GetItemCount()):

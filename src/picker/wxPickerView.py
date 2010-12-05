@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-
-# wxWidgets picker panel and associated classes.
-# Only responsible for views, All interactions must be handled by picker Core
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,6 +12,11 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
+"""
+wxWidgets picker panel and associated classes.
+Only responsible for views, All interactions must be handled by picker Core
+"""
+
 import wx
 import utils
 import os
@@ -23,7 +25,6 @@ try:
 except:
     utils.make_err_msg(_("Python Imaging Library (PIL) not found.\nRefer to readme file for install instructions.\n\nYou will not be able to preview images."),
                      _("PIL needed"))
-
 
 [wxID_PICKERPANEL, wxID_PICKERPANELBROWSE, wxID_SELECTIONAREADIRPICKER,
  wxID_PICKERPANELDIVIDER1, wxID_PICKERPANELFILESON,
@@ -77,10 +78,15 @@ class DirectoryList(wx.GenericDirCtrl):
     def bind(self):
         self.Bind(wx.EVT_TREE_SEL_CHANGED, self.dir_change)
 
+    def refresh_tree(self):
+        itemId = self.GetTreeCtrl().GetSelection()
+        self.GetTreeCtrl().CollapseAndReset(itemId)
+        self.GetTreeCtrl().Expand(itemId)
 
 
-# picker list and associated functions
 class ItemList(wx.ListCtrl):
+    """Picker list and associated functions."""
+
     def __init__(self, parent, id, name, MainWindow):
         self.pickerPanel = parent.GetParent()
 
@@ -177,13 +183,13 @@ class ItemList(wx.ListCtrl):
         if self.totalSelected != 1:
             # add to list / show selected:
             if fullItem not in self.pickerPanel.Core.joinedItems:
-                item.SetBackgroundColour(utils.HighlightClr)
-                item.SetTextColour(utils.HighlightTxtClr)
+                item.SetBackgroundColour(main.prefs.get(u'highlightColour'))
+                item.SetTextColour(main.prefs.get(u'highlightTextColour'))
                 self.pickerPanel.Core.joinedItems.append(fullItem)
             # remove from list / show deselected:
             else:
-                item.SetBackgroundColour(utils.BackgroundClr)
-                item.SetTextColour(utils.TxtClr)
+                item.SetBackgroundColour(main.prefs.get(u'backgroundColour'))
+                item.SetTextColour(main.prefs.get(u'textColour'))
                 self.pickerPanel.Core.joinedItems.remove(fullItem)
             # apply highlighting
             self.SetItem(item)
@@ -325,7 +331,7 @@ class Panel(wx.Panel):
 
         self.path = wx.TextCtrl(id=wxID_PICKERPANELPATH, name=u'path',
               parent=self, style=wx.TE_PROCESS_ENTER, value='')
-        self.path.Bind(wx.EVT_TEXT_ENTER, self.Core.setPanelPath,
+        self.path.Bind(wx.EVT_TEXT_ENTER, self.Core.set_path,
               id=wxID_PICKERPANELPATH)
 
         self.OK = wx.Button(id=wxID_PICKERPANELOK, label=_(u"Refresh"), name=u'OK',
@@ -335,7 +341,7 @@ class Panel(wx.Panel):
         #      parent=self, style=wx.BU_AUTODRAW)
         self.OK.Enable(True)
         self.OK.SetToolTipString(_(u"Load or reload current path"))
-        self.OK.Bind(wx.EVT_BUTTON, self.Core.setPanelPath, id=wxID_PICKERPANELOK)
+        self.OK.Bind(wx.EVT_BUTTON, self.Core.set_path, id=wxID_PICKERPANELOK)
 
         self.BROWSE = wx.Button(id=wxID_PICKERPANELBROWSE, label=_(u"Browse"),
           name=u'BROWSE', parent=self, style=wx.BU_EXACTFIT)
@@ -391,7 +397,7 @@ class Panel(wx.Panel):
               name=u'filterByRE', parent=self, style=0)
         self.filterByRE.SetValue(False)
         self.filterByRE.SetToolTipString(_(u"Evaluate filter as a regular expression"))
-        self.filterByRE.Bind(wx.EVT_CHECKBOX, self._regex_options,
+        self.filterByRE.Bind(wx.EVT_CHECKBOX, self.__regex_options,
               id=wxID_PICKERPANELFILTERBYRE)
 
         self.ignoreCase = wx.CheckBox(id=wxID_PICKERPANELIGNORECASE, label=_(u"I"),
@@ -414,7 +420,7 @@ class Panel(wx.Panel):
               name=u'walkIt', parent=self, style=0)
         self.walkIt.SetValue(False)
         self.walkIt.SetToolTipString(_(u"Get all files in directory and sub-directories, but no folders"))
-        self.walkIt.Bind(wx.EVT_CHECKBOX, self._on_recursive_checkbox,
+        self.walkIt.Bind(wx.EVT_CHECKBOX, self.__on_recursive_checkbox,
               id=wxID_PICKERPANELWALKIT)
 
         self.staticText2 = wx.StaticText(id=wxID_PICKERPANELSTATICTEXT2,
@@ -444,7 +450,7 @@ class Panel(wx.Panel):
 
         # directory picker:
         if main.prefs.get(u'useDirTree'):
-            self._create_dir_tree()
+            self.__create_dir_tree()
 
         # file picker:
         self.ItemList = ItemList(id=wxID_SELECTIONAREAFPICKER, name=u'picker',
@@ -468,7 +474,7 @@ class Panel(wx.Panel):
         self.__init_ctrls(parent)
         self.__init_sizer()
         
-    def _create_dir_tree(self):
+    def __create_dir_tree(self):
         """Create the directory tree."""
         self.dirPicker = DirectoryList(
                 self.selectionArea,
@@ -478,7 +484,7 @@ class Panel(wx.Panel):
             )
         self.dirPicker.bind()
 
-    def _on_recursive_checkbox(self, event):
+    def __on_recursive_checkbox(self, event):
         if self.walkIt.GetValue():
             self.foldersOn.Enable(False)
             self.filesOn.Enable(False)
@@ -492,7 +498,7 @@ class Panel(wx.Panel):
         if event:
             self._refresh_items(event)
 
-    def _regex_options(self, event):
+    def __regex_options(self, event):
         """Enable display regexp options."""
         if self.filterByRE.GetValue():
             self.ignoreCase.Enable(True)
@@ -539,27 +545,37 @@ class Panel(wx.Panel):
 
     def on_config_load(self,):
         """Adjustments after loading config."""
-        self._regex_options(False)
+        self.__regex_options(False)
+
+    def remove_item_by_name(self, displayedName):
+        ID = self.ItemList.FindItem(0,displayedName)
+        item = wx.ListItem()
+        item.SetId(ID)
+        item.SetBackgroundColour(main.prefs.get(u'backgroundColour'))
+        item.SetTextColour(main.prefs.get(u'textColour'))
+        self.Panel.ItemList.SetItem(item)
     
-    def reset_dir_picker_on_config_load(self):
+    def reset_dirpicker_on_config_load(self):
         """Used when a config is loaded to ensure dirpicker behaves correctly."""
         if main.prefs.get('useDirTree') and \
         self.dirPicker.GetPath() != self.path.GetValue():
             self.dirPicker.unbind()
             self.dirPicker.SetPath(self.path.GetValue())
             self.dirPicker.bind()
-        main.picker.refresh(True)
+        self._refresh_items(True)
 
     def set_tree(self):
         """Hide or show directory tree."""
         if main.prefs.get(u'useDirTree'):
-            self._create_dir_tree()
+            self.__create_dir_tree()
             self.dirPicker.SetPath(self.path.GetValue())
         else:
             self.selectionArea.Unsplit(self.dirPicker)
             self.dirPicker.Destroy()
         self.__init_splitter()
 
+    def refresh_dirpicker(self):
+        self.dirPicker.refresh_tree()
 
     def browse_for_path(self, event):
         """Get and set path."""
@@ -570,7 +586,7 @@ class Panel(wx.Panel):
             if dlg.ShowModal() == wx.ID_OK:
                 dir = dlg.GetPath()
                 self.path.SetValue(dir)
-                self.Core.setPanelPath(event)
+                self.Core.set_path(event)
         finally: dlg.Destroy()
 
 
@@ -595,7 +611,7 @@ class Panel(wx.Panel):
     def select_all(self, event):
         """Add all items to renaming list."""
         # clear list
-        self.Core.clearJoinedItems()
+        self.Core.clear_joined_items()
         for i in range(self.ItemList.GetItemCount()):
             # add to list
             self.Core.joinedItems.append(self.ItemList._get_item_info(i))
@@ -603,8 +619,8 @@ class Panel(wx.Panel):
             item = wx.ListItem()
             item.SetId(i)
             #item.SetState(wx.LIST_STATE_SELECTED|wx.LIST_STATE_FOCUSED)
-            item.SetBackgroundColour(utils.HighlightClr)
-            item.SetTextColour(utils.HighlightTxtClr)
+            item.SetBackgroundColour(main.prefs.get(u'highlightColour'))
+            item.SetTextColour(main.prefs.get(u'highlightTextColour'))
             self.ItemList.SetItem(item)
         # enable buttons
         self.ItemList.Refresh()
@@ -620,13 +636,13 @@ class Panel(wx.Panel):
         """Remove all items from renaming list."""
         total_items = self.ItemList.GetItemCount()
         # clear list
-        self.Core.clearJoinedItems()
+        self.Core.clear_joined_items()
         # show deselected in picker
         for i in range(total_items):
             item = wx.ListItem()
             item.SetId(i)
-            item.SetBackgroundColour(utils.BackgroundClr)
-            item.SetTextColour(utils.TxtClr)
+            item.SetBackgroundColour(main.prefs.get(u'backgroundColour'))
+            item.SetTextColour(main.prefs.get(u'textColour'))
             self.ItemList.SetItem(item)
         # enable buttons
         self.selectAll.Enable(True)
@@ -634,7 +650,7 @@ class Panel(wx.Panel):
         self.selectNone.Enable(False)
         main.menuPicker.getNoneMenu.Enable(False)
         main.currentItem = None
-        main.notebook.GetPage(3).clear()
+        main.errors.clear()
         main.set_status_msg(_(u"All items were deselected"), 'eyes')
         main.show_preview(event)
 
@@ -663,5 +679,5 @@ class Panel(wx.Panel):
             self.walkIt.SetValue(True)
         else:
             self.walkIt.SetValue(False)
-        self._on_recursive_checkbox(True)
+        self.__on_recursive_checkbox(True)
 

@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-
-# This is the panel in charge of replacing matches with text or operations.
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -24,6 +22,8 @@ import sre_constants
 [wxID_PANEL] = [wx.NewId() for __init_ctrls in range(1)]
 
 class OpPanel(Operation):
+    """Panel in charge of replacing matches with text or operations."""
+
     def __init_sizer(self, parent):
         #smallestSize = parent.rightSizer.GetSize() - parent.rightTopSizer.GetSize() - (10,10)
         mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -61,7 +61,7 @@ class OpPanel(Operation):
 
     def rename_item(self, path, name, ext, original):
         operations = self.ReplaceToolsPanel.opButtonsPanel
-        newName = self.joinExt(name,ext)
+        newName = self.join_ext(name,ext)
         if not newName:
             return path,name,ext
 
@@ -126,5 +126,5 @@ class OpPanel(Operation):
             parsedText = operations.parse_input(text,original,self)
             newName = newName[:frm] + parsedText + tail
 
-        name,ext = self.splitExt(newName,name,ext)
+        name,ext = self.split_ext(newName,name,ext)
         return path,name,ext

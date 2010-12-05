@@ -1,10 +1,10 @@
-# -*- coding: cp1252 -*-
+# -*- coding: utf-8 -*-
 # I modified this module a little bit:
 # - disabled unused stuff.
-# - added encoding so i could put the accents on my name, LOL.
+# - added encoding for consistency with Métamorphose
 # - added _() function for translations.
 #
-# ianar� s�vi
+# ianaré sévi
 
 """Convert to and from Roman numerals
 

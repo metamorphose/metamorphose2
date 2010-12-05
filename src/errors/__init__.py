@@ -38,12 +38,12 @@ class Core():
     def __init__(self, parent, MainWindow):
         global main
         main = MainWindow
-        self.Panel = wxErrorsView.Panel(self, parent, main)
+        self.view = wxErrorsView.Panel(self, parent, main)
 
     def show(self):
         """Show errors."""
-        self.Panel.display_errors(main.errorLog, main.warn, main.bad)
+        self.view.display_errors(main.errorLog, main.warn, main.bad)
 
     def clear(self):
         """Clear all errors"""
-        self.Panel.clear_errors()
+        self.view.clear_errors()

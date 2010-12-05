@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -35,6 +35,9 @@ _hextochr = dict(('%02x' % i, chr(i)) for i in range(256))
 _hextochr.update(('%02X' % i, chr(i)) for i in range(256))
 
 class OpPanel(Operation):
+    """
+    Operation panel for modification.
+    """
 
     def __init_sizer(self):
         mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -55,7 +58,6 @@ class OpPanel(Operation):
         self.SetSizerAndFit(mainSizer)
 
     def __init_ctrls(self, prnt):
-        # generated method, don't edit
         wx.Panel.__init__(self, id=-1, name=u'modificationPanel', parent=prnt,
               style=wx.TAB_TRAVERSAL)
 
@@ -278,7 +280,7 @@ class OpPanel(Operation):
 
 
     def rename_item(self, path, name, ext, original):
-        newName = newName = self.joinExt(name,ext)
+        newName = newName = self.join_ext(name,ext)
         if not newName:
             return path,name,ext
 
@@ -334,6 +336,6 @@ class OpPanel(Operation):
         else:
             newName = self.comds[self.op](newName)
 
-        name,ext = self.splitExt(newName,name,ext)
+        name,ext = self.split_ext(newName,name,ext)
         return path,name,ext
 

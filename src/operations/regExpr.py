@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-
-# Panel to hold regular expression stuff
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -24,6 +22,8 @@ import sre_constants
 ] = [wx.NewId() for __init_ctrls in range(7)]
 
 class Panel(wx.Panel):
+    """Panel to hold regular expression stuff."""
+    
     def __init_sizer(self):
         regExprSizer = wx.BoxSizer(wx.HORIZONTAL)
         regExprSizer.Add(self.regExpr,0,wx.ALIGN_CENTER|wx.RIGHT,3)

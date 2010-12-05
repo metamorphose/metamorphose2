@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-
-# Preview Generator
-# Takes user settings and generates new names based on them
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -14,6 +11,12 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
+
+"""
+Preview generator.
+
+Takes user settings and generates new names based on them.
+"""
 
 from __future__ import print_function
 import utils
@@ -215,7 +218,7 @@ class Core():
 
         if run:
             # make sure we have items
-            main.items = main.picker.returnSorted()
+            main.items = main.picker.return_sorted()
             if main.items == []:
                 self.stopPreview()
             # generate preview

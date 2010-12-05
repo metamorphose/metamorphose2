@@ -31,23 +31,17 @@ class Panel(wx.Panel):
     The numbering panel that goes into an operation's notebook.
     """
     
-    def _init_coll_num1Sizer_items(self, parent):
-        # generated method, don't edit
-
+    def __init_num1_sizer(self, parent):
         parent.AddWindow(self.digit, 0, border=0, flag=0)
         parent.AddWindow(self.digit_pad, 0, border=0, flag=0)
         parent.AddWindow(self.pad_char, 0, border=0, flag=0)
 
-    def __init_mainsizer_items(self, parent):
-        # generated method, don't edit
-
+    def __init_main_sizer(self, parent):
         parent.AddSizer(self.styleSizer, 0, border=10, flag=wx.LEFT | wx.TOP)
         parent.AddSpacer(wx.Size(30, 8), border=0, flag=0)
         parent.AddSizer(self.countSizer, 0, border=10, flag=wx.TOP)
 
-    def _init_coll_styleSizer_items(self, parent):
-        # generated method, don't edit
-
+    def __init_style_sizer(self, parent):
         parent.AddSizer(self.num1Sizer, 0, border=8, flag=wx.TOP | wx.LEFT)
         parent.AddSpacer(wx.Size(8, 5), border=0, flag=0)
         parent.AddWindow(self.digit_autopad, 0, border=24, flag=wx.LEFT)
@@ -60,33 +54,23 @@ class Panel(wx.Panel):
         parent.AddSpacer(wx.Size(8, 10), border=0, flag=0)
         parent.AddSizer(self.romanSizer, 0, border=10, flag=wx.ALL)
 
-    def _init_coll_resetBySizer_items(self, parent):
-        # generated method, don't edit
-
+    def __init_resetby_sizer(self, parent):
         parent.AddWindow(self.resetDir, 0, border=0, flag=0)
         parent.AddWindow(self.incrementOnDiff, 0, border=2, flag=wx.BOTTOM)
 
 
-    def _init_coll_num2Sizer_items(self, parent):
-        # generated method, don't edit
-
+    def __init_num2_sizer(self, parent):
         parent.AddWindow(self.digitSetpad, 0, border=0, flag=0)
         parent.AddWindow(self.padWidth, 0, border=0, flag=0)
 
-    def _init_coll_alpha1Sizer_items(self, parent):
-        # generated method, don't edit
-
+    def __init_alpha1_sizer(self, parent):
         parent.AddWindow(self.alpha, 0, border=0, flag=0)
         parent.AddWindow(self.alphaUc, 0, border=0, flag=0)
 
-    def _init_coll_countSizer_items(self, parent):
-        # generated method, don't edit
-
+    def __init_count_sizer(self, parent):
         parent.AddSizer(self.countOpSizer, 0, border=8, flag=wx.ALL)
 
-    def _init_coll_countOpSizer_items(self, parent):
-        # generated method, don't edit
-
+    def __init_countop_sizer(self, parent):
         parent.AddWindow(self.staticText5, 0, border=0,
               flag=wx.ALIGN_CENTER_VERTICAL)
         parent.AddWindow(self.start, 0, border=0, flag=0)
@@ -108,7 +92,7 @@ class Panel(wx.Panel):
         parent.AddWindow(self.reset, 0, border=0, flag=wx.ALIGN_CENTER_VERTICAL)
         parent.AddSizer(self.resetBySizer, 0, border=5, flag=wx.RIGHT|wx.LEFT)
 
-    def initCollRomanSizerItems(self, parent):
+    def __init_roman_sizer(self, parent):
         parent.AddWindow(self.roman, 0, border=0, flag=0)
         parent.AddWindow(self.roman_uc, 0, border=0, flag=0)
 
@@ -123,15 +107,15 @@ class Panel(wx.Panel):
         self.romanSizer = wx.BoxSizer(orient=wx.HORIZONTAL)
         self.countOpSizer = wx.FlexGridSizer(cols=3, hgap=8, rows=0, vgap=8)
 
-        self._init_coll_num1Sizer_items(self.num1Sizer)
-        self._init_coll_num2Sizer_items(self.num2Sizer)
-        self._init_coll_alpha1Sizer_items(self.alpha1Sizer)
-        self.initCollRomanSizerItems(self.romanSizer)
-        self._init_coll_countOpSizer_items(self.countOpSizer)
-        self.__init_mainsizer_items(self.mainSizer)
-        self._init_coll_styleSizer_items(self.styleSizer)
-        self._init_coll_countSizer_items(self.countSizer)
-        self._init_coll_resetBySizer_items(self.resetBySizer)
+        self.__init_num1_sizer(self.num1Sizer)
+        self.__init_num2_sizer(self.num2Sizer)
+        self.__init_alpha1_sizer(self.alpha1Sizer)
+        self.__init_roman_sizer(self.romanSizer)
+        self.__init_countop_sizer(self.countOpSizer)
+        self.__init_main_sizer(self.mainSizer)
+        self.__init_style_sizer(self.styleSizer)
+        self.__init_count_sizer(self.countSizer)
+        self.__init_resetby_sizer(self.resetBySizer)
 
         self.SetSizer(self.mainSizer)
 

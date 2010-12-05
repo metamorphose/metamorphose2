@@ -22,48 +22,39 @@ import wx
 ] = [wx.NewId() for __init_ctrls in range(10)]
 
 class Panel(wx.Panel):
-    def __init_mainsizer_items(self, parent):
+    def __init_mainsizer(self, parent):
         # generated method, don't edit
 
         parent.AddWindow(self.showPreviewIcons, 0, border=10, flag=wx.ALL)
         parent.AddWindow(self.onlyShowChangedItems, 0, border=10, flag=wx.ALL)
         parent.AddWindow(self.showPreviewHighlight, 0, border=10, flag=wx.ALL)
         parent.AddWindow(self.staticText2, 0, border=10, flag=wx.ALL)
-        parent.AddSizer(self.boxSizer1, 0, border=25, flag=wx.LEFT)
+        parent.AddSizer(self.boxsizer1, 0, border=25, flag=wx.LEFT)
         parent.AddSpacer(wx.Size(8,8), border=0, flag=0)
         parent.AddWindow(self.showProgressDialog, 0, border=10, flag=wx.ALL)
-        parent.AddSizer(self.boxSizer2, 0, border=25, flag=wx.LEFT)
+        parent.AddSizer(self.boxsizer2, 0, border=25, flag=wx.LEFT)
 
-    def _init_coll_boxSizer1_items(self, parent):
-        # generated method, don't edit
-
+    def _init_boxsizer1(self, parent):
         parent.AddWindow(self.staticText1, 0, border=8,
               flag=wx.ALIGN_CENTER | wx.RIGHT)
         parent.AddWindow(self.renRefreshMin, 0, border=0, flag=wx.ALIGN_CENTER)
 
-    def _init_coll_boxSizer2_items(self, parent):
-        # generated method, don't edit
-
+    def _init_boxsizer2(self, parent):
         parent.AddWindow(self.staticText3, 0, border=10,
               flag=wx.RIGHT | wx.ALIGN_CENTER)
         parent.AddWindow(self.itemCountForProgDialog, 0, border=0, flag=0)
 
     def __init_sizers(self):
-        # generated method, don't edit
         self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
-
-        self.boxSizer1 = wx.BoxSizer(orient=wx.HORIZONTAL)
-
-        self.boxSizer2 = wx.BoxSizer(orient=wx.HORIZONTAL)
-
-        self.__init_mainsizer_items(self.mainSizer)
-        self._init_coll_boxSizer1_items(self.boxSizer1)
-        self._init_coll_boxSizer2_items(self.boxSizer2)
+        self.boxsizer1 = wx.BoxSizer(orient=wx.HORIZONTAL)
+        self.boxsizer2 = wx.BoxSizer(orient=wx.HORIZONTAL)
+        self.__init_mainsizer(self.mainSizer)
+        self._init_boxsizer1(self.boxsizer1)
+        self._init_boxsizer2(self.boxsizer2)
 
         self.SetSizer(self.mainSizer)
 
     def __init_ctrls(self, prnt):
-        # generated method, don't edit
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'Display', parent=prnt,
               pos=wx.Point(708, 488), size=wx.Size(424, 369),
               style=wx.TAB_TRAVERSAL)

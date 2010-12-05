@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-
-# This is the panel in charge of replacing matches with text or operations.
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -17,12 +15,13 @@
 import wx
 import opButtons
 import search
-from notebookOperation import NotebookPanel
 
 [wxID_PANEL, wxID_PANELREPL_TXT, wxID_PANELSTATICTEXT1, wxID_PANELSTATICBOX1
 ] = [wx.NewId() for __init_ctrls in range(4)]
 
-class Panel(NotebookPanel):
+class Panel(wx.Panel):
+    """This is the panel in charge of replacing matches with text or operations."""
+    
     def __init_sizer(self):
         mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -62,11 +61,10 @@ class Panel(NotebookPanel):
               name=u'repl_txt', parent=self,
               style=wx.TE_PROCESS_ENTER, value=u'')
         self.repl_txt.SetToolTipString(_(u"Keep blank to delete."))
-        self.repl_txt.Bind(wx.EVT_TEXT, self.enableNotebookTabs)
-        self.repl_txt.Bind(wx.EVT_TEXT_ENTER, self.enableNotebookTabs)
+        self.repl_txt.Bind(wx.EVT_TEXT, main.show_preview)
+        self.repl_txt.Bind(wx.EVT_TEXT_ENTER, main.show_preview)
 
     def __init__(self, parent, main_window, params={}):
-        NotebookPanel.__init__(self, main_window)
         global main
         main = main_window
         self.__init_ctrls(parent)

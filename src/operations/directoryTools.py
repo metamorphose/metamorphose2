@@ -19,7 +19,6 @@ import opButtons
 import os
 import re
 import utils
-from notebookOperation import NotebookPanel
 
 [wxID_PANEL, wxID_DIRECTORYTEXT, wxID_RADIOBUTTON1,
  wxID_RADIOBUTTON2, wxID_STATICTEXT1,
@@ -28,7 +27,7 @@ from notebookOperation import NotebookPanel
  wxID_USEFILEEXT, wxID_USEFILENAME
 ] = [wx.NewId() for __init_ctrls in range(14)]
 
-class Panel(NotebookPanel):
+class Panel(wx.Panel):
     def __init_sizer(self):
         pathSizer = wx.BoxSizer(wx.HORIZONTAL)
         pathSizer.Add(self.browse,0,wx.TOP|wx.LEFT|wx.ALIGN_CENTER,5)
@@ -88,7 +87,7 @@ class Panel(NotebookPanel):
               label=_(u"Copy Path Structure"), name=u'addCurrent', parent=self,
               style=0)
         self.addCurrent.SetToolTipString(_(u"For best results, use with absolute paths."))
-        self.addCurrent.Bind(wx.EVT_BUTTON, self.onAddCurrentButton,
+        self.addCurrent.Bind(wx.EVT_BUTTON, self.on_add_current_button,
               id=wxID_ADDCURRENT)
 
         self.staticText2 = wx.StaticText(id=wxID_STATICTEXT2,
@@ -120,7 +119,7 @@ class Panel(NotebookPanel):
               label=_(u"Copy File Name"), name=u'addByFileName', parent=self,
               style=0)
         self.addByFileName.SetToolTipString(_(u"Add a directory with the same name as the file."))
-        self.addByFileName.Bind(wx.EVT_BUTTON, self.onAddByFileNameButton,
+        self.addByFileName.Bind(wx.EVT_BUTTON, self.on_add_by_filename_button,
               id=wxID_ADDBYFILENAME)
 
         self.useFileName = wx.CheckBox(id=wxID_USEFILENAME, label=_(u"Name"),
@@ -136,7 +135,6 @@ class Panel(NotebookPanel):
         self.useFileExt.Bind(wx.EVT_CHECKBOX, main.show_preview)
 
     def __init__(self, parent, main_window):
-        NotebookPanel.__init__(self, main_window)
         global main
         main = main_window
         self.__init_ctrls(parent)
@@ -149,22 +147,22 @@ class Panel(NotebookPanel):
             'nameTxt' : ':'+_(u"File-Name")+':'
             }
 
-    # add file name
-    def onAddByFileNameButton(self, event):
-        self.writeToDirectoryText(self.params['nameTxt'])
+    def on_add_by_filename_button(self, event):
+        """Add file name."""
+        self.write_to_directory_text(self.params['nameTxt'])
 
-    # add current directory
-    def onAddCurrentButton(self, event):
-        self.writeToDirectoryText(self.params['pathStructTxt'])
+    def on_add_current_button(self, event):
+        """Add current directory."""
+        self.write_to_directory_text(self.params['pathStructTxt'])
 
-    def writeToDirectoryText(self, text):
+    def write_to_directory_text(self, text):
         iPoint = self.directoryText.GetInsertionPoint()
         self.directoryText.WriteText(text)
         self.directoryText.SetFocus()
         self.directoryText.SetInsertionPoint(iPoint + len(text))
 
-    # browse for directory
     def browse_for_dir(self, event):
+        """Browse for directoryrowse for directory."""
         dlg = wx.DirDialog(self,_(u"Choose a directory:"),
             style=wx.DD_DEFAULT_STYLE)
         dlg.SetPath(self.directoryText.GetValue())
@@ -172,7 +170,7 @@ class Panel(NotebookPanel):
             if dlg.ShowModal() == wx.ID_OK:
                 self.directoryText.SetValue('')
                 dir = dlg.GetPath()
-                self.writeToDirectoryText(dir)
+                self.write_to_directory_text(dir)
         finally: dlg.Destroy()
 
 
@@ -204,9 +202,8 @@ class Panel(NotebookPanel):
     -- Dmitry Borysov
     """
 
-
-    # fix/detect separator issues
     def fix_separator(self):
+        """fix/detect separator issuesfix/detect separator issues."""
         # remove dupe path seperators and make sure
         # only valid path seperators are used
         if os.sep == "/":
@@ -229,7 +226,7 @@ class Panel(NotebookPanel):
         # apply
         self.directoryText.SetBackgroundColour(u'#FFFFFF')
         self.directoryText.Refresh()
-        self.enableNotebookTabs(event)
+        self.enable_notebook_tabs(event)
 
     # user types, warning shown
     def correct_path_type(self, event):
@@ -245,7 +242,7 @@ class Panel(NotebookPanel):
             self.staticText3.Show(True)
         # apply
         else:
-            self.enableNotebookTabs(event)
+            main.show_preview(event)
 
 
 

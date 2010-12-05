@@ -17,7 +17,6 @@
 
 import wx
 import os
-import utils
 
 class Operation(wx.Panel):
     def __init__(self, params={}):
@@ -28,9 +27,9 @@ class Operation(wx.Panel):
             'applyName' : True,
             'applyExtension' : False,
         }
-        self.updateParameters(params)
+        self.update_parameters(params)
 
-    def updateParameters(self, params):
+    def update_parameters(self, params):
         """
         Allow passed-in parameters to overide defaults or add additional
         parameters
@@ -38,14 +37,14 @@ class Operation(wx.Panel):
         for k in params.keys():
             self.params[k] = params[k]
 
-    # Operations that only modify the path (e.g. 'directory')
-    def setAsPathOnly(self):
+    def set_as_path_only(self):
+        """Operations that only modify the path (e.g. 'directory')."""
         self.params['applyPathOnly'] = True
         self.params['applyName'] = False
         self.params['applyExtension'] = False
 
-    # join extensions
-    def joinExt(self, name, ext):
+    def join_ext(self, name, ext):
+        """Join extensions."""
         if self.params['applyName'] and not self.params['applyExtension']:
             newName = name
         elif self.params['applyExtension'] and not self.params['applyName']:
@@ -59,8 +58,8 @@ class Operation(wx.Panel):
             newName = False
         return newName
 
-    # split extensions
-    def splitExt(self, newName, name, ext):
+    def split_ext(self, newName, name, ext):
+        """Split extensions."""
         if self.params['applyName'] and not self.params['applyExtension']:
             name = newName
         elif self.params['applyExtension'] and not self.params['applyName']:

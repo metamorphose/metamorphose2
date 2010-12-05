@@ -36,7 +36,7 @@ def save(main):
     """Get values, write configuration file."""
     # save dialog
     dlg = wx.FileDialog(None, message=_(u"Save configuration as ..."),
-          defaultDir=utils.get_real_path(u'configs'), defaultFile=u'.cfg',
+          defaultDir=utils.get_user_path(u'configs'), defaultFile=u'.cfg',
           wildcard=_(u"Configuration file (*.cfg)")+u'|*.cfg',
           style=wx.SAVE|wx.OVERWRITE_PROMPT
           )
@@ -58,7 +58,7 @@ def load(main, configFilePath=False):
     else:
         dlg = wx.FileDialog(None,
           message=_(u"Load a configuration file"),
-          defaultDir=utils.get_real_path(u'configs'), defaultFile=u'',
+          defaultDir=utils.get_user_path('configs'), defaultFile=u'',
           wildcard=_(u"Configuration file (*.cfg)")+u'|*.cfg',
           style=wx.OPEN
           )
@@ -72,13 +72,12 @@ class SaveConfig():
     Save the current configuration.
     Instanciating the class saves the configuration.
     """
-
     def __init__(self, mainWindow):
         global main
         main = mainWindow
-        self.cfgFile = self.create_file()
+        self.cfgFile = self.__create_file()
 
-    def _get_child_values(self, child):
+    def __get_child_values(self, child):
         """Get correct values depending on child type."""
         value = None
         if isinstance(child, wx.CheckBox) or isinstance(child, wx.RadioButton):
@@ -116,7 +115,7 @@ class SaveConfig():
         # others get values
         else:
             try:
-                id, widgetType, value = self._get_child_values(child)
+                id, widgetType, value = self.__get_child_values(child)
             except TypeError:
                 pass
             else:
@@ -130,7 +129,7 @@ class SaveConfig():
         widget values.
         """
         cfg = ''
-        operationList = main.renamer.Panel.usedOperations
+        operationList = main.renamer.view.usedOperations
         operationStack = main.renamer.operations
 
         for i in range(operationList.GetItemCount()):
@@ -149,7 +148,7 @@ class SaveConfig():
             cfg += u'\t\t</operation>\n'
         return cfg
 
-    def create_file(self):
+    def __create_file(self):
         """Create an XML configuration file."""
         datetime = utils.udate(main, '%Y-%m-%d %H:%M:%S', time.localtime())
         cfgFile = u'<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -161,11 +160,9 @@ class SaveConfig():
         for i in (0,2,3):
             # section header is page name
             cfgFile += u'\t<page id="%s" name="%s">\n'%(i,pages[i].GetName())
-
-            # TODO needs work - doesn't do tree, use _all_child_params_to_xml?
             for child in pages[i].GetChildren():
                 try:
-                    id,type,value = self._get_child_values(child)
+                    id,type,value = self.__get_child_values(child)
                 except TypeError:
                     pass
                 else:
@@ -181,20 +178,17 @@ class SaveConfig():
         return cfgFile
 
 
-
-
 class LoadConfig():
     """
     Load a configuration file and apply settings to the interface.
     This is done on class initialization.
     """
-    
     def __init__(self, mainWindow, configFilePath):
         global main
         main = mainWindow
-        self.load_file(configFilePath)
+        self.__load_file(configFilePath)
 
-    def _set_widget_value(self, id, type, value):
+    def __set_widget_value(self, id, type, value):
         """Set widget's value correctly depending on type."""
         if value == None:
             value = ''
@@ -207,7 +201,7 @@ class LoadConfig():
         elif type == 'wxChoice':
             id.SetSelection(int(value))
 
-    def _apply_values(self, parent, node):
+    def __apply_values(self, parent, node):
         """
         Get widget values recursively through XML tree,
         apply setings to operation,
@@ -225,7 +219,7 @@ class LoadConfig():
             except AttributeError:
                 pass
             else:
-                self._set_widget_value(widget, wtype, value)
+                self.__set_widget_value(widget, wtype, value)
         # notebook, cycle through pages
         elif node.tagName == 'wxNotebook':
             notebook = getattr(parent, id)
@@ -235,17 +229,17 @@ class LoadConfig():
             for child in node.getElementsByTagName('wxPanel'):
                 childname = child.attributes['id'].value
                 if childname in names:
-                    self._apply_values(parent, child)
+                    self.__apply_values(parent, child)
         # panel, cycle through panels and values
         elif node.tagName == 'wxPanel':
             #print parent, id
             parent = getattr(parent, id)
             for child in node.childNodes:
                 if child.nodeType == 1:
-                    self._apply_values(parent, child)
+                    self.__apply_values(parent, child)
 
 
-    def _get_operation_params(self, op):
+    def __get_operation_params(self, op):
         """Get operation parameters from XML, return dict."""
         params = {}
         try:
@@ -264,7 +258,7 @@ class LoadConfig():
         return params
 
 
-    def _load_config_xml(self, config):
+    def __load_config_xml(self, config):
         pages = utils.get_notebook_page_names(main)
         configVersion = config.attributes['version'].value
 
@@ -290,7 +284,7 @@ class LoadConfig():
                         value = node.childNodes[0].nodeValue
                     except IndexError:
                         value = None
-                    self._set_widget_value(id, type, value)
+                    self.__set_widget_value(id, type, value)
                     # adjustments if needed
                     if hasattr(pages[page_id], 'on_config_load'):
                         pages[page_id].on_config_load()
@@ -298,7 +292,7 @@ class LoadConfig():
             else:
                 utils.debug_print(main, "loading renamer config")
                 # cleanup before loading
-                main.renamer.Panel.destroy_all_operations()
+                main.renamer.view.destroy_all_operations()
 
                 # load values
                 for op in page.getElementsByTagName('operation'):
@@ -312,21 +306,21 @@ class LoadConfig():
                     id = op.attributes['id'].value
 
                     # initialise object, passing parameters
-                    params = self._get_operation_params(op)
-                    main.renamer.Panel.addOperationToStack(type, id, params)
+                    params = self.__get_operation_params(op)
+                    main.renamer.view.addOperationToStack(type, id, params)
 
                     # apply node values to widgets
                     operation = main.renamer.operations[int(id)]
                     for node in op.childNodes:
                         if node.nodeType == 1 and node.nodeName != "parameters":
-                            self._apply_values(operation, node)
+                            self.__apply_values(operation, node)
 
                     # apply each operation's post load routine
                     if hasattr(operation, 'on_config_load'):
                         operation.on_config_load()
 
 
-    def load_file(self, configFilePath):
+    def __load_file(self, configFilePath):
         """Read file and apply settings."""
         utils.debug_print(main, "loading config file : %s"%configFilePath)
         # attempt to open config file
@@ -347,17 +341,17 @@ class LoadConfig():
             main.bottomWindow.autoPreview.SetValue(False)
 
             # get original path
-            oldPath = main.picker.Panel.path.GetValue()
+            oldPath = main.picker.view.path.GetValue()
 
-            self._load_config_xml(config)
+            self.__load_config_xml(config)
 
             # Do not replace a set path if one is not set in the config
-            newPath = main.picker.Panel.path.GetValue()            
+            newPath = main.picker.view.path.GetValue()            
             if oldPath and not newPath:
-                main.picker.Panel.path.SetValue(oldPath)
+                main.picker.view.path.SetValue(oldPath)
 
             # preview
             main.bottomWindow.autoPreview.SetValue(v)
             if main.autoModeLevel != 0 or\
              (main.prefs.get('previewOnConfig') and main.autoModeLevel is False):
-                main.picker.Panel.reset_dir_picker_on_config_load()
+                main.picker.view.reset_dirpicker_on_config_load()

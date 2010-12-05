@@ -196,7 +196,7 @@ class Core():
         main.currentItem = None
         main.bottomWindow.display.mode = 'rename'
         utils.set_busy(True)
-        main.picker.Panel.path.SetEditable(False)
+        main.picker.view.path.SetEditable(False)
 
         ##### BEGIN HEAVY TESTING ##############################################
 
@@ -308,7 +308,7 @@ class Core():
             if self.prefs.get('reloadAfterRename') and event != u'undo':
                 main.picker.refresh(event)
             else:
-                main.picker.clearALL()
+                main.picker.clear_all()
             if self.prefs.get(u'alwaysMakeLog'):
                 main.save_items_as_text(False)
         elif error == 'cancelled':
@@ -325,13 +325,13 @@ class Core():
             print(_(u"Renaming for %s items completed")%itemsRenamed)
             sys.exit()
 
-        main.picker.refreshDirTree()
+        main.picker.refresh_dir_tree()
 
         main.bottomWindow.go.Enable(False)
         main.menuFile.GoMenu.Enable(False)
         if event != 'undo':
             main.bottomWindow.set_undo_redo_type('undo')
-        main.picker.Panel.path.SetEditable(True)
+        main.picker.view.path.SetEditable(True)
 
 
     def undo_last_rename(self, event):
@@ -361,8 +361,8 @@ class Core():
             def get_name(x): return x[0]
             commonPrefix = os.path.commonprefix(map(get_name,original)).rstrip(os.sep)
             if os.path.exists(commonPrefix):
-                main.picker.Panel.path.SetValue(commonPrefix)
-                main.picker.Panel.dirPicker.SetPath(commonPrefix)
+                main.picker.view.path.SetValue(commonPrefix)
+                main.picker.view.dirPicker.SetPath(commonPrefix)
 
             if not len(original) == 0:
                 main.toRename = zip(renamed,original)#reverse order from original rename!
