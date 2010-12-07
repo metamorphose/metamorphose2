@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-# This is the main panel for directory manipulations, it holds the
-# notebook holding all directory panels.
-
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,9 +19,11 @@ import directoryTools
 import utils
 import os.path
 
-[wxID_PANEL] = [wx.NewId() for __init_ctrls in range(1)]
-
 class OpPanel(Operation):
+    """This is the main panel for directory manipulations.
+
+    It holds the notebook holding all directory panels.
+    """
 
     def __init_sizer(self, parent):
         #smallestSize = parent.rightSizer.GetSize() - parent.rightTopSizer.GetSize() - (10,10)
@@ -34,7 +33,7 @@ class OpPanel(Operation):
         self.SetSizerAndFit(superSizer)
 
     def __init_ctrls(self, prnt):
-        wx.Panel.__init__(self, id=wxID_PANEL, name=u'Panel', parent=prnt,
+        wx.Panel.__init__(self, id=-1, name=u'Panel', parent=prnt,
               style=wx.TAB_TRAVERSAL)
         self.notebook = Notebook(self, main)
         self.dirTools = directoryTools.Panel(self.notebook, main)

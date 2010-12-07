@@ -107,8 +107,7 @@ class Panel(wx.Panel):
 
         self.positionPos = wx.SpinCtrl(id=wxID_PANELPOSITIONPOS, initial=0,
               max=255, min=-255, name=u'positionPos', parent=self,
-              pos=wx.Point(136, 120), size=wx.Size(56, -1),
-              style=wx.SP_ARROW_KEYS, value='0')
+              size=wx.Size(56, -1), style=wx.SP_ARROW_KEYS, value='0')
         self.positionPos.SetToolTipString(_(u"Use negative values to start from the end of the name."))
         self.positionPos.Enable(False)
         self.positionPos.Bind(wx.EVT_SPINCTRL, main.show_preview,
@@ -132,8 +131,8 @@ class Panel(wx.Panel):
         self.staticText5.Enable(False)
 
         self.BAtextMatch = wx.TextCtrl(id=wxID_PANELBATEXTMATCH,
-              name=u'BAtextMatch', parent=self, pos=wx.Point(200, 176),
-              style=wx.TE_PROCESS_ENTER, value=u'')
+            name=u'BAtextMatch', parent=self, style=wx.TE_PROCESS_ENTER,
+            value=u'')
         self.BAtextMatch.Enable(False)
         self.BAtextMatch.Bind(wx.EVT_SET_FOCUS, self.regExpPanel.set_activated_field,
               id=wxID_PANELBATEXTMATCH)

@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-
-# panel to hold swap widgets and operations.
-# Uses search panel.
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -28,6 +25,10 @@ import utils
 ] = [wx.NewId() for __init_ctrls in range(12)]
 
 class OpPanel(Operation):
+    """
+    Panel to hold swap widgets and operations.
+    Uses search panel.
+    """
     def __init_sizer(self):
         mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(self.searchFrom,0,wx.EXPAND|wx.BOTTOM,5)

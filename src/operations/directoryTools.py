@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-
-# This is the panel in charge of directory manipulations.
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -21,13 +19,13 @@ import re
 import utils
 
 [wxID_PANEL, wxID_DIRECTORYTEXT, wxID_RADIOBUTTON1,
- wxID_RADIOBUTTON2, wxID_STATICTEXT1,
- wxID_ADDCURRENT, wxID_STATICTEXT2, wxID_PATHRECUR,
- wxID_INVERSE, wxID_BROWSE, wxID_STATICTEXT3, wxID_ADDBYFILENAME,
+ wxID_RADIOBUTTON2, wxID_ADDCURRENT, wxID_PATHRECUR,
+ wxID_INVERSE, wxID_BROWSE, wxID_ADDBYFILENAME,
  wxID_USEFILEEXT, wxID_USEFILENAME
-] = [wx.NewId() for __init_ctrls in range(14)]
+] = [wx.NewId() for __init_ctrls in range(11)]
 
 class Panel(wx.Panel):
+    """This is the panel in charge of directory manipulations."""
     def __init_sizer(self):
         pathSizer = wx.BoxSizer(wx.HORIZONTAL)
         pathSizer.Add(self.browse,0,wx.TOP|wx.LEFT|wx.ALIGN_CENTER,5)
@@ -59,45 +57,41 @@ class Panel(wx.Panel):
 
 
     def __init_ctrls(self, prnt):
-        wx.Panel.__init__(self, id=wxID_PANEL, name=u'directoryToolsPanel', parent=prnt,
-              size=wx.Size(457, 334), style=wx.TAB_TRAVERSAL)
+        wx.Panel.__init__(self, id=wxID_PANEL, name=u'directoryToolsPanel',
+            parent=prnt, style=wx.TAB_TRAVERSAL)
 
         self.opButtonsPanel = opButtons.Panel(self, main)
 
-        self.staticText1 = wx.StaticText(id=wxID_STATICTEXT1,
-              label=_(u"Name (absolute paths allowed):"), name='staticText1', parent=self,
-              style=0)
+        self.staticText1 = wx.StaticText(id=-1,
+            label=_(u"Name (absolute paths allowed):"), name='staticText1',
+            parent=self, style=0)
 
-        self.browse = wx.Button(id=wxID_BROWSE,
-              label=_(u"Browse"), name=u'browse', parent=self,
-              style=0)
+        self.browse = wx.Button(id=wxID_BROWSE, label=_(u"Browse"),
+            name=u'browse', parent=self, style=0)
         self.browse.SetToolTipString(_(u"Browse for path"))
         self.browse.Bind(wx.EVT_BUTTON, self.browse_for_dir,
               id=wxID_BROWSE)
 
         self.directoryText = wx.TextCtrl(id=wxID_DIRECTORYTEXT,
-              name=u'directoryText', parent=self, pos=wx.Point(32, 72),
-              style=wx.TE_PROCESS_ENTER, value=u'')
+            name=u'directoryText', parent=self, value=u'',
+            style=wx.TE_PROCESS_ENTER)
         self.directoryText.Bind(wx.EVT_TEXT, self.correct_path_type,
               id=wxID_DIRECTORYTEXT)
         self.directoryText.Bind(wx.EVT_TEXT_ENTER, self.correct_path_enter,
                   id=wxID_DIRECTORYTEXT)
 
         self.addCurrent = wx.Button(id=wxID_ADDCURRENT,
-              label=_(u"Copy Path Structure"), name=u'addCurrent', parent=self,
-              style=0)
+            label=_(u"Copy Path Structure"), name=u'addCurrent', parent=self,
+            style=0)
         self.addCurrent.SetToolTipString(_(u"For best results, use with absolute paths."))
         self.addCurrent.Bind(wx.EVT_BUTTON, self.on_add_current_button,
               id=wxID_ADDCURRENT)
 
-        self.staticText2 = wx.StaticText(id=wxID_STATICTEXT2,
-              label=_(u"Path depth to copy:"), name='staticText2', parent=self,
-              style=0)
+        self.staticText2 = wx.StaticText(id=-1, label=_(u"Path depth to copy:"),
+            name='staticText2', parent=self, style=0)
 
-        self.staticText3 = wx.StaticText(id=wxID_STATICTEXT3,
-              label=_(u""),
-              name='staticText3', parent=self,
-              style=0)
+        self.staticText3 = wx.StaticText(id=-1, label=_(u""), name='staticText3',
+            parent=self, style=0)
 
         self.pathRecur = wx.SpinCtrl(id=wxID_PATHRECUR, initial=1, max=255,
               min=-255, name=u'pathRecur', parent=self, size=wx.Size(65, -1),

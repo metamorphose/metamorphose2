@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-
-# This is the about dialog.
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -31,6 +29,7 @@ def create(parent):
 ] = [wx.NewId() for __init_ctrls in range(11)]
 
 class About(wx.Dialog):
+    """The about dialog."""
     def __init_sizer(self):
         bottomRow = wx.BoxSizer(wx.HORIZONTAL)
         bottomRow.Add(self.bugReport,0,wx.ALIGN_CENTER|wx.RIGHT,15)
@@ -52,13 +51,13 @@ class About(wx.Dialog):
         mainSizer.Add(buttonsRow,0,wx.ALIGN_CENTER|wx.BOTTOM,15)
         self.SetSizerAndFit(mainSizer)
 
-    def __init_ctrls(self, prnt):
-        wx.Dialog.__init__(self, id=wxID_ABOUT, name=u'About', parent=prnt,
-              size=wx.Size(306, 400), style=wx.DEFAULT_DIALOG_STYLE,
+    def __init_ctrls(self):
+        wx.Dialog.__init__(self, id=wxID_ABOUT, name=u'About', parent=main,
+              style=wx.DEFAULT_DIALOG_STYLE,
               title=_(u"About Metamorphose"))
         self.SetIcon(wx.Icon(utils.icon_path(u'about.ico'),wx.BITMAP_TYPE_ICO))
 
-        fontParams = prnt.fontParams
+        fontParams = main.fontParams
         fontSize = fontParams['size']
         fontFamily = fontParams['family']
         fontStyle = fontParams['style']
@@ -83,7 +82,7 @@ class About(wx.Dialog):
         self.copyright.SetFont(wx.Font(fontSize+2, fontFamily, fontStyle, wx.BOLD, False))
 
         self.version = wx.StaticText(id=wxID_ABOUTVERSION,
-              label=_(u"Version: %s")%prnt.version, name=u'version', parent=self)
+              label=_(u"Version: %s")%main.version, name=u'version', parent=self)
         self.version.SetFont(wx.Font(fontSize+2, fontFamily, fontStyle, wx.BOLD, False))
 
         self.wxVersion = wx.StaticText(id=wxID_ABOUTWXVERSION,
@@ -124,9 +123,9 @@ class About(wx.Dialog):
               id=wxID_PANELCREDITSBUTTON)
 
     def __init__(self, parent):
-        global main_window
-        main_window = parent
-        self.__init_ctrls(parent)
+        global main
+        main = parent
+        self.__init_ctrls()
         self.__init_sizer()
 
     def on_close_button(self, event):
@@ -143,7 +142,7 @@ class About(wx.Dialog):
             title=_(u"License")
             icon=u'examples'
             size=False
-        return classes.SmallHelp(self,main_window,helpFile,title,icon,size).ShowModal()
+        return classes.SmallHelp(self,main,helpFile,title,icon,size).ShowModal()
 
     def on_donate_button(self, event):
         self.donate.GotoURL("http://sourceforge.net/donate/index.php?group_id=146403")

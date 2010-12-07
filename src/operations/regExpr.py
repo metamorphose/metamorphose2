@@ -38,9 +38,9 @@ class Panel(wx.Panel):
         self.SetSizerAndFit(regExprSizer)
         #mainSizer.Add(regExprSizer,0,wx.EXPAND|wx.TOP,5)
 
-    def __init_ctrls(self, prnt, Name):
-        wx.Panel.__init__(self, id=wxID_PANEL, name=Name, parent=prnt,
-              size=wx.Size(457, 334), style=wx.TAB_TRAVERSAL)
+    def __init_ctrls(self, prnt, name):
+        wx.Panel.__init__(self, id=wxID_PANEL, name=name, parent=prnt,
+              style=wx.TAB_TRAVERSAL)
 
         self.regExpr = wx.CheckBox(id=wxID_PANELREG_EXPR,
               label=_(u"Evaluate as regular expression"), name=u'regExpr', parent=self,

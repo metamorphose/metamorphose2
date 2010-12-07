@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-
-# base class for all operations
-# TODO - a lot !
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -19,6 +16,11 @@ import wx
 import os
 
 class Operation(wx.Panel):
+    """"
+    Base class for all operations.
+
+    TODO - a lot !
+    """
     def __init__(self, params={}):
         # default parameters
         # need to define here due to python's handling of class instances

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -90,6 +90,8 @@ class Panel(wx.Panel):
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'dateTimePanel',
               parent=prnt, style=wx.TAB_TRAVERSAL)
 
+        fontSize = main.fontParams['size']
+
         self.staticBox1 = wx.StaticBox(id=wxID_PANELSTATICBOX1,
               label=_(u"Date Settings:"), name=u'staticBox1', parent=self,
               style=0)
@@ -179,12 +181,12 @@ class Panel(wx.Panel):
         self.staticText5 = wx.StaticText(id=wxID_PANELSTATICTEXT5,
               label=_(u"Date Preview:"), name=u'staticText5', parent=self,
               style=0)
-        self.staticText5.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+        self.staticText5.SetFont(wx.Font(fontSize+1, wx.DEFAULT, wx.NORMAL, wx.BOLD))
 
         self.staticText6 = wx.StaticText(id=wxID_PANELSTATICTEXT6,
               label=_(u"Time Preview:"), name=u'staticText6', parent=self,
               style=0)
-        self.staticText6.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+        self.staticText6.SetFont(wx.Font(fontSize+1, wx.DEFAULT, wx.NORMAL, wx.BOLD))
 
         self.getFromItem = wx.CheckBox(id=wxID_PANELGETFROMITEM,
               label=_(u"Get date && time from item, using:"), name=u'getFromItem',

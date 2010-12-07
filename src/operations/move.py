@@ -114,8 +114,8 @@ class OpPanel(Operation):
               id=wxID_PANELREPL_MOVE_TXT_MOD)
 
         self.staticText6 = wx.StaticText(id=wxID_PANELSTATICTEXT6,
-              label=_(u"text:"), name=u'staticText6', parent=self,
-              pos=wx.Point(376, 216), style=0)
+            label=_(u"text:"), name=u'staticText6', parent=self,
+            style=0)
         self.staticText6.Enable(False)
 
         # grotesque hack for win2000

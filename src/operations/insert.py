@@ -18,8 +18,6 @@ from notebook import Notebook
 import insertTools
 import utils
 
-[wxID_PANEL] = [wx.NewId() for __init_ctrls in range(1)]
-
 class OpPanel(Operation):
     """This panel controls inserts."""
     
@@ -31,7 +29,7 @@ class OpPanel(Operation):
         self.SetSizerAndFit(mainSizer)
 
     def __init_ctrls(self, prnt):
-        wx.Panel.__init__(self, id=wxID_PANEL, name=u'Panel', parent=prnt,
+        wx.Panel.__init__(self, id=-1, name=u'Panel', parent=prnt,
               style=wx.TAB_TRAVERSAL)
         self.notebook = Notebook(self, main)
         self.InsertToolsPanel = insertTools.Panel(self.notebook, main)
