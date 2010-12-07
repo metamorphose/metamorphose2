@@ -148,7 +148,7 @@ class IntroTextPanel(wx.Panel):
         fontStyle = fontParams['style']
 
         # adjust vertical spacing for top bar
-        gap = prnt.moveDown.GetSizeTuple()[1] + (fontSize * 1.5)
+        gap = prnt.moveDown.GetSizeTuple()[1]
 
         self.staticText1 = wx.StaticText(id=-1,
               label=_(u"You don't have any operations defined."),
