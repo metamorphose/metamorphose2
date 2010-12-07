@@ -20,6 +20,7 @@ import utils
 import general
 import automation
 import display
+import colors
 import errorCheck
 import logging
 
@@ -27,9 +28,8 @@ def create_dialog(parent, initial=False):
     """Create and return the preferences dialog."""
     return Dialog(parent,initial)
 
-[wxID_DIALOG, wxID_DIALOGAPPLY, wxID_DIALOGCLOSE, wxID_DIALOGNOTEBOOK,
- wxID_DIALOGOK,
-] = [wx.NewId() for __init_ctrls in range(5)]
+[wxID_DIALOGAPPLY, wxID_DIALOGCLOSE, wxID_DIALOGOK,
+] = [wx.NewId() for __init_ctrls in range(3)]
 
 class Methods:
     """
@@ -104,15 +104,10 @@ class Methods:
               u'com8', u'com9', u'lpt1', u'lpt2', u'lpt3', u'lpt4', u'lpt5',u'lpt6',
               u'lpt7', u'lpt8', u'lpt9')
 
-        prefs[u'backgroundColour'] = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)
-        prefs[u'highlightColour'] = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT)
-        prefs[u'highlightTextColour'] = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT)
-        prefs[u'textColour'] = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT)
-
-        prefs[u'renamedColour'] = '#97F27F'
-        prefs[u'willChangeColour'] = '#E5FFE5'
-        prefs[u'errorColour'] = '#FF1616'
-        prefs[u'warnColour'] = '#FDEB22'
+        prefs[u'backgroundColor'] = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)
+        prefs[u'highlightColor'] = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT)
+        prefs[u'highlightTextColor'] = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT)
+        prefs[u'textColor'] = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT)
 
         self.prefs = prefs
         
@@ -153,6 +148,7 @@ class Methods:
                     options += u'%s=%s\n'%(name,value)
                     utils.debug_print(main, "%s (%s) = %s"%(name,type,value))
         prefFile.write(options)
+        self.__load_preferences()
 
     def get(self, preference, strict=True):
         """Attempt to load a preference setting
@@ -201,19 +197,16 @@ class Dialog(wx.Dialog):
 
     def __init_sizers(self):
         self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
-
         self.buttons = wx.BoxSizer(orient=wx.HORIZONTAL)
-
         self.__init_mainsizer_items(self.mainSizer)
         self.__init_buttons_items(self.buttons)
-
         self.SetSizer(self.mainSizer)
 
     def __init_ctrls(self, prnt):
-        wx.Dialog.__init__(self, id=wxID_DIALOG, name=u'dialog', parent=prnt,
+        wx.Dialog.__init__(self, id=-1, name=u'dialog', parent=prnt,
               style=wx.CAPTION | wx.RESIZE_BORDER, title=u'Preferences')
 
-        self.notebook = wx.Notebook(id=wxID_DIALOGNOTEBOOK, name=u'notebook',
+        self.notebook = wx.Notebook(id=-1, name=u'notebook',
               parent=self, pos=wx.Point(5, 5), size=wx.Size(590, 40), style=0)
 
         self.apply = wx.Button(id=wx.ID_APPLY, name=u'apply', parent=self, style=0)
@@ -245,6 +238,7 @@ class Dialog(wx.Dialog):
         # the panels to add to the notebook
         self.panels = ((general,_(u'General')),
                        (display, _(u'Display')),
+                       (colors, _(u'Colors')),
                        (automation, _(u'Automate')),
                        (logging, _(u'Logging')),
                        (errorCheck, _(u'Error Checks')))
@@ -262,6 +256,7 @@ class Dialog(wx.Dialog):
 
         utils.set_min_size(self,ignoreClasses=(
                 wx.TextCtrl,wx.Button,wx.Choice, wx.SpinCtrl))
+        self.SetMinSize(wx.Size(460, -1))
         self.Fit()
         self.CentreOnScreen()
 

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-#Boa:FramePanel:panel
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,9 +21,7 @@ import wx
 ] = [wx.NewId() for __init_ctrls in range(10)]
 
 class Panel(wx.Panel):
-    def __init_mainsizer(self, parent):
-        # generated method, don't edit
-
+    def __init_main_sizer(self, parent):
         parent.AddWindow(self.showPreviewIcons, 0, border=10, flag=wx.ALL)
         parent.AddWindow(self.onlyShowChangedItems, 0, border=10, flag=wx.ALL)
         parent.AddWindow(self.showPreviewHighlight, 0, border=10, flag=wx.ALL)
@@ -48,7 +45,7 @@ class Panel(wx.Panel):
         self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
         self.boxsizer1 = wx.BoxSizer(orient=wx.HORIZONTAL)
         self.boxsizer2 = wx.BoxSizer(orient=wx.HORIZONTAL)
-        self.__init_mainsizer(self.mainSizer)
+        self.__init_main_sizer(self.mainSizer)
         self._init_boxsizer1(self.boxsizer1)
         self._init_boxsizer2(self.boxsizer2)
 
@@ -56,7 +53,6 @@ class Panel(wx.Panel):
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'Display', parent=prnt,
-              pos=wx.Point(708, 488), size=wx.Size(424, 369),
               style=wx.TAB_TRAVERSAL)
         self.SetClientSize(wx.Size(416, 335))
 
@@ -71,7 +67,7 @@ class Panel(wx.Panel):
               style=0)
         self.onlyShowChangedItems.SetValue(False)
         self.onlyShowChangedItems.Bind(wx.EVT_CHECKBOX,
-              self.onOnlyShowChangedItemsCheckbox,
+              self.show_changed_items_checkbox,
               id=wxID_PANELONLYSHOWCHANGEDITEMS)
 
         self.showPreviewHighlight = wx.CheckBox(id=wxID_PANELSHOWPREVIEWHIGHLIGHT,
@@ -101,7 +97,7 @@ class Panel(wx.Panel):
               size=wx.Size(267, 13), style=0)
         self.showProgressDialog.SetValue(True)
         self.showProgressDialog.Bind(wx.EVT_CHECKBOX,
-              self.onShowProgressDialogCheckbox,
+              self.show_progress_dialog_checkbox,
               id=wxID_PANELSHOWPROGRESSDIALOG)
 
         self.staticText3 = wx.StaticText(id=wxID_PANELSTATICTEXT3,
@@ -121,8 +117,8 @@ class Panel(wx.Panel):
 
 
     def init_enabled(self):
-        self.onShowProgressDialogCheckbox(False)
-        self.onOnlyShowChangedItemsCheckbox(False)
+        self.show_progress_dialog_checkbox(False)
+        self.show_changed_items_checkbox(False)
 
     '''
     def on_browse_button(self, event):
@@ -136,13 +132,13 @@ class Panel(wx.Panel):
         finally: dlg.Destroy()
     '''
 
-    def onOnlyShowChangedItemsCheckbox(self, event):
+    def show_changed_items_checkbox(self, event):
         if self.onlyShowChangedItems.GetValue():
             self.showPreviewHighlight.Enable(False)
         else:
             self.showPreviewHighlight.Enable(True)
 
-    def onShowProgressDialogCheckbox(self, event):
+    def show_progress_dialog_checkbox(self, event):
         if self.showProgressDialog.GetValue():
             self.itemCountForProgDialog.Enable(True)
             self.staticText3.Enable(True)

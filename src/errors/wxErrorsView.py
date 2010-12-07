@@ -43,14 +43,16 @@ class ErrorList(wx.ListCtrl, ListCtrlAutoWidthMixin):
     def get_item(self, item):
         return self.parent.errorLog[int(item)]
 
-    def on_get_item_text(self, item, col):
+    # overloads built in method
+    def OnGetItemText(self, item, col):
         item = self.get_item(item)
         if col == 0:
             return item[2]
         else:
             return item[1]
 
-    def on_get_item_image(self, item):
+    # overloads built in method
+    def OnGetItemImage(self, item):
         item = self.get_item(item)
         if item[3] == 'warn':
             return 0

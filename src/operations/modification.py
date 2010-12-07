@@ -63,7 +63,7 @@ class OpPanel(Operation):
 
         self.case_operation_value = wx.Choice(choices=[_(u"UPPERCASE"),
               _(u"lowercase"), _(u"SWAP case"),
-              _(u"capitalize first"), _(u"Title Style"), _(u"DoRkIfY")],
+              _(u"Capitalize first"), _(u"Title Style"), _(u"DoRkIfY")],
               id=wxID_PANELCASE_OPERATION_VALUE, name=u'case_operation_value',
               parent=self, size=wx.Size(235, -1), style=0)
         self.case_operation_value.SetSelection(0)

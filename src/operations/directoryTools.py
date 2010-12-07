@@ -103,7 +103,7 @@ class Panel(wx.Panel):
               min=-255, name=u'pathRecur', parent=self, size=wx.Size(65, -1),
               style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER, value='1')
         self.pathRecur.SetValue(1)
-        self.pathRecur.SetToolTipString(_(u"negative values allowed"))
+        self.pathRecur.SetToolTipString(_(u"Negative values allowed"))
         self.pathRecur.Bind(wx.EVT_TEXT_ENTER, main.show_preview,
               id=wxID_PATHRECUR)
         self.pathRecur.Bind(wx.EVT_SPINCTRL, main.show_preview,
@@ -124,13 +124,13 @@ class Panel(wx.Panel):
 
         self.useFileName = wx.CheckBox(id=wxID_USEFILENAME, label=_(u"Name"),
               name=u'inverse', parent=self, style=0)
-        self.useFileName.SetToolTipString(_(u"Add the file name."))
+        self.useFileName.SetToolTipString(_(u"Add the file name"))
         self.useFileName.SetValue(True)
         self.useFileName.Bind(wx.EVT_CHECKBOX, main.show_preview)
 
         self.useFileExt = wx.CheckBox(id=wxID_USEFILEEXT, label=_(u"Extension"),
               name=u'useFileExt', parent=self, style=0)
-        self.useFileExt.SetToolTipString(_(u"Add the file extension."))
+        self.useFileExt.SetToolTipString(_(u"Add the file extension"))
         self.useFileExt.SetValue(False)
         self.useFileExt.Bind(wx.EVT_CHECKBOX, main.show_preview)
 

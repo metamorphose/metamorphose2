@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-#Boa:FramePanel:panel
-
-# Error checking preferences panel
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,6 +12,8 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
+"""Error checking preferences panel."""
+
 import wx
 import platform
 
@@ -25,17 +24,11 @@ import platform
 
 class Panel(wx.Panel):
     def __init_sizers(self):
-        # generated method, don't edit
         self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
-
         self.__init_mainsizer_items(self.mainSizer)
-
         self.SetSizer(self.mainSizer)
 
-
     def __init_mainsizer_items(self, parent):
-        # generated method, don't edit
-
         parent.AddSpacer(wx.Size(8, 8), border=0, flag=0)
         parent.AddWindow(self.useWinChars, 0, border=15, flag=wx.LEFT)
         parent.AddSpacer(wx.Size(8, 4), border=0, flag=0)
@@ -53,9 +46,7 @@ class Panel(wx.Panel):
         parent.AddSpacer(wx.Size(8, 16), border=0, flag=0)
 
     def __init_ctrls(self, prnt):
-        # generated method, don't edit
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'ErrorCheck', parent=prnt,
-              pos=wx.Point(684, 464), size=wx.Size(312, 277),
               style=wx.TAB_TRAVERSAL)
         self.SetClientSize(wx.Size(312, 277))
 
@@ -64,7 +55,7 @@ class Panel(wx.Panel):
               name=u'useWinChars', parent=self, pos=wx.Point(15, 8),
               size=wx.Size(280, 22), style=0)
         self.useWinChars.SetValue(True)
-        self.useWinChars.Bind(wx.EVT_CHECKBOX, self.allowWinChars,
+        self.useWinChars.Bind(wx.EVT_CHECKBOX, self.allow_winchars,
               id=wxID_PANELUSEWINCHARS)
 
         self.markWarning = wx.RadioButton(id=wxID_PANELMARKWARNING,
@@ -87,7 +78,7 @@ class Panel(wx.Panel):
               parent=self, pos=wx.Point(15, 136), size=wx.Size(264, 22),
               style=0)
         self.useWinNames.SetHelpText(u'')
-        self.useWinNames.Bind(wx.EVT_CHECKBOX, self.allowWinNames,
+        self.useWinNames.Bind(wx.EVT_CHECKBOX, self.allow_winnames,
               id=wxID_PANELUSEWINNAMES)
 
         self.winNamesWarn = wx.RadioButton(id=wxID_PANELWINNAMESWARN,
@@ -100,8 +91,8 @@ class Panel(wx.Panel):
               label=_(u'Mark name as bad'), name=u'winNamesBad', parent=self,
               pos=wx.Point(38, 196), size=wx.Size(160, 22), style=0)
 
-
         self.__init_sizers()
+
 
     def __init__(self, parent):
         self.__init_ctrls(parent)
@@ -115,16 +106,13 @@ class Panel(wx.Panel):
             self.winNamesBad.SetValue(True)
             self.deleteBadChars.SetValue(True)
 
-        self.init_enabled()
-
-
-    # enable/disable options
     def init_enabled(self):
-        self.allowWinChars(1)
-        self.allowWinNames(1)
+        """Enable or disable options."""
+        self.allow_winchars(1)
+        self.allow_winnames(1)
 
-    # enable/disable windows compatible characters options
-    def allowWinChars(self, event):
+    def allow_winchars(self, event):
+        """Enable or disable windows compatible characters options."""
         if self.useWinChars.GetValue():
             allow = True
         else:
@@ -137,8 +125,8 @@ class Panel(wx.Panel):
         for i in widgets:
             i.Enable(allow)
 
-    # enable/disable windows compatible names options
-    def allowWinNames(self, event):
+    def allow_winnames(self, event):
+        """Enable or disable windows compatible names options."""
         if self.useWinNames.GetValue():
             allow = True
         else:

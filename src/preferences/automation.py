@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-#Boa:FramePanel:panel
-
-# Automation preferences panel
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -23,9 +20,9 @@ import wx
 ] = [wx.NewId() for __init_ctrls in range(6)]
 
 class Panel(wx.Panel):
-    def __init_mainsizer_items(self, parent):
-        # generated method, don't edit
+    """Automation preferences panel."""
 
+    def __init_mainsizer_items(self, parent):
         parent.AddWindow(self.autoSelectAll, 0, border=10, flag=wx.ALL)
         parent.AddWindow(self.reloadAfterRename, 0, border=10, flag=wx.ALL)
         parent.AddWindow(self.previewOnConfig, 0, border=10, flag=wx.ALL)
@@ -34,17 +31,12 @@ class Panel(wx.Panel):
         parent.AddSpacer(wx.Size(5, 5), border=0, flag=0)
 
     def __init_sizers(self):
-        # generated method, don't edit
         self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
-
         self.__init_mainsizer_items(self.mainSizer)
-
         self.SetSizer(self.mainSizer)
 
     def __init_ctrls(self, prnt):
-        # generated method, don't edit
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'Automation', parent=prnt,
-              pos=wx.Point(921, 392), size=wx.Size(416, 335),
               style=wx.TAB_TRAVERSAL)
         self.SetClientSize(wx.Size(416, 335))
 

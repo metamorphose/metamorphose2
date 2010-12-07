@@ -47,19 +47,19 @@ class ListCtrl(wx.ListCtrl):
         self.SetItemCount(0)
         self.showDirs = False
         self.mode = 'preview'
-
-        prefs = parent.main.prefs
-
-        self.green = wx.ListItemAttr()
-        self.green.SetBackgroundColour(prefs.get(u'renamedColour'))
-        self.lightGreen = wx.ListItemAttr()
-        self.lightGreen.SetBackgroundColour(prefs.get(u'willChangeColour'))
-        self.red = wx.ListItemAttr()
-        self.red.SetBackgroundColour(prefs.get(u'errorColour'))
-        self.yellow = wx.ListItemAttr()
-        self.yellow.SetBackgroundColour(prefs.get(u'warnColour'))
-        
         self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self._on_right_click)
+        self.set_preferences()
+
+    def set_preferences(self):
+        prefs = self.parent.prefs
+        self.green = wx.ListItemAttr()
+        self.green.SetBackgroundColour(prefs.get(u'renamedColor'))
+        self.lightGreen = wx.ListItemAttr()
+        self.lightGreen.SetBackgroundColour(prefs.get(u'willChangeColor'))
+        self.red = wx.ListItemAttr()
+        self.red.SetBackgroundColour(prefs.get(u'errorColor'))
+        self.yellow = wx.ListItemAttr()
+        self.yellow.SetBackgroundColour(prefs.get(u'warnColor'))
 
     def __init_menu(self, menu):
         """Right click menu."""
@@ -273,7 +273,6 @@ class MainPanel(wx.Panel):
             self.imgPreview.Enable(False)
             self.thumbSize.Enable(False)
 
-
         self.autoPreview = wx.CheckBox(id=wxID_AUTOPREVIEW,
           label=_(u"Automatic Preview"), name=u'autoPreview', parent=self,
           style=0)
@@ -325,3 +324,6 @@ class MainPanel(wx.Panel):
                 self.__create_undo_redo(_("Undo"))
         elif op == 'undo':
             self.__create_undo_redo(_("Undo"))
+
+    def set_preferences(self):
+        self.display.set_preferences()

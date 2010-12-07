@@ -183,13 +183,13 @@ class ItemList(wx.ListCtrl):
         if self.totalSelected != 1:
             # add to list / show selected:
             if fullItem not in self.pickerPanel.Core.joinedItems:
-                item.SetBackgroundColour(main.prefs.get(u'highlightColour'))
-                item.SetTextColour(main.prefs.get(u'highlightTextColour'))
+                item.SetBackgroundColour(main.prefs.get(u'highlightColor'))
+                item.SetTextColour(main.prefs.get(u'highlightTextColor'))
                 self.pickerPanel.Core.joinedItems.append(fullItem)
             # remove from list / show deselected:
             else:
-                item.SetBackgroundColour(main.prefs.get(u'backgroundColour'))
-                item.SetTextColour(main.prefs.get(u'textColour'))
+                item.SetBackgroundColour(main.prefs.get(u'backgroundColor'))
+                item.SetTextColour(main.prefs.get(u'textColor'))
                 self.pickerPanel.Core.joinedItems.remove(fullItem)
             # apply highlighting
             self.SetItem(item)
@@ -551,8 +551,8 @@ class Panel(wx.Panel):
         ID = self.ItemList.FindItem(0,displayedName)
         item = wx.ListItem()
         item.SetId(ID)
-        item.SetBackgroundColour(main.prefs.get(u'backgroundColour'))
-        item.SetTextColour(main.prefs.get(u'textColour'))
+        item.SetBackgroundColour(main.prefs.get(u'backgroundColor'))
+        item.SetTextColour(main.prefs.get(u'textColor'))
         self.Panel.ItemList.SetItem(item)
     
     def reset_dirpicker_on_config_load(self):
@@ -619,8 +619,8 @@ class Panel(wx.Panel):
             item = wx.ListItem()
             item.SetId(i)
             #item.SetState(wx.LIST_STATE_SELECTED|wx.LIST_STATE_FOCUSED)
-            item.SetBackgroundColour(main.prefs.get(u'highlightColour'))
-            item.SetTextColour(main.prefs.get(u'highlightTextColour'))
+            item.SetBackgroundColour(main.prefs.get(u'highlightColor'))
+            item.SetTextColour(main.prefs.get(u'highlightTextColor'))
             self.ItemList.SetItem(item)
         # enable buttons
         self.ItemList.Refresh()
@@ -641,8 +641,8 @@ class Panel(wx.Panel):
         for i in range(total_items):
             item = wx.ListItem()
             item.SetId(i)
-            item.SetBackgroundColour(main.prefs.get(u'backgroundColour'))
-            item.SetTextColour(main.prefs.get(u'textColour'))
+            item.SetBackgroundColour(main.prefs.get(u'backgroundColor'))
+            item.SetTextColour(main.prefs.get(u'textColor'))
             self.ItemList.SetItem(item)
         # enable buttons
         self.selectAll.Enable(True)

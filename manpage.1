@@ -2,7 +2,7 @@
 .\" First parameter, NAME, should be all caps
 .\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
 .\" other parameters are allowed: see man(7), man(1)
-.TH METAMORPHOSE2 1 "2010-02-22"
+.TH METAMORPHOSE2 1 "2010-12-05"
 .\" Please adjust this date whenever revising the manpage.
 .\"
 .\" Some roff macros, for reference:
@@ -35,18 +35,19 @@ that need to rename many files and/or folders on a regular basis. In addition to
 general usage operations, it is useful for photo and music collections,
 webmasters, programmers, legal and clerical, et cetera.
 
-There is support for automating GUI tasks via command line, using the options described
-below.
+There is support for automating GUI tasks via command line, using the options
+described below.
 
 .SH OPTIONS
 .B There are two modes for options.
 
-In the fist mode, the only available option is a path to open. It is simply added
-to the end of the command line, and spaces may be used.
+In the first mode, the only available option is a path to open. It is simply passed
+as the only argument to the command, spaces may be used.
 This mode cannot be used with any other options.
 
-In the second mode, all options can be used. A path to open must be specified using the '-p'
-argument, and spaces must be escaped.
+In the second mode, all options can be used but the option type must be declared.
+This is similar to almost all Unix type commands.
+A path to open would be specified using '-p', and spaces must be escaped.
 
 Modes are switched automatically, based on the structure of the options.
 
@@ -68,18 +69,24 @@ Modes are switched automatically, based on the structure of the options.
                     2 = auto rename items
                     3 = auto rename items and exit on success
 .TP
--l, --language   Overide prefered language.
+-l, --language   Override the preferred language.
 
 .SH FILES
 .B ~/.metamorphose2/
 .P
-User-specific preference files are found here. Do not edit these files directly, use the preferences menu.
+User-specific preference files are found here. Do not edit these files directly,
+use the preferences menu.
 .P
-If there are problems with the application that persist after reinstalling it, try deleting this folder.
+If there are problems with the application that persist after reinstalling it,
+try deleting this folder.
 
 .B ~/.metamorphose2/undo/
 .P
-Undo logs are found here by default (change in preferences).
+Undo logs are stored here by default, this can be changed in preferences.
+
+.B ~/.metamorphose2/configs/
+.P
+Configuration files are stored here by default.
 
 
 .SH RESOURCES

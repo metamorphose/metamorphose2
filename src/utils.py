@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -75,7 +75,8 @@ def debug_print(main, msg):
 
 
 def set_min_size(parent, ignoreCtrls=(), ignoreClasses=()):
-    """Set all sizes to platform defaults (modified from Boa-Constructor)"""
+    """Recursively set all sizes to platform defaults
+    (modified from Boa-Constructor)"""
     # need this for some cases in linux, otherwise cuts off text
     if wx.Platform == '__WXGTK__' and isinstance(parent, wx.StaticText):
         textSize = parent.GetTextExtent(parent.GetLabel())

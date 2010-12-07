@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-#Boa:FramePanel:panel
-
-# Logging preferences panel
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -25,23 +22,24 @@ import utils
 ] = [wx.NewId() for __init_ctrls in range(11)]
 
 class Panel(wx.Panel):
-    def __init_mainsizer_items(self, parent):
+    """Logging preferences panel."""
+    def __init_main_sizer(self, parent):
         parent.AddSpacer(wx.Size(8, 8), border=0, flag=0)
         parent.AddWindow(self.staticText5, 0, border=5, flag=wx.ALL)
         parent.AddSpacer(wx.Size(8, 8), border=0, flag=0)
         parent.AddWindow(self.staticText1, 0, border=5, flag=wx.ALL)
-        parent.AddSizer(self.dirBrowse, 0, border=3, flag=wx.BOTTOM | wx.EXPAND)
+        parent.AddSizer(self.dirBrowse, 0, border=3, flag=wx.BOTTOM|wx.RIGHT|wx.EXPAND)
         parent.AddSizer(self.logOptionsSizer, 0, border=20,
               flag=wx.ALIGN_CENTER_VERTICAL | wx.LEFT)
         parent.AddSpacer(wx.Size(5, 5), border=0, flag=0)
 
-    def __init_dirbrowse_items(self, parent):
+    def __init_dirbrowse_sizer(self, parent):
         parent.AddWindow(self.logLocation, 1, border=20,
               flag=wx.ALIGN_CENTER | wx.LEFT)
         parent.AddWindow(self.browse, 0, border=5,
               flag=wx.ALIGN_CENTER | wx.ALL)
 
-    def __init_logoptions_sizer_items(self, parent):
+    def __init_logoptions_sizer(self, parent):
         parent.AddWindow(self.staticText2, 0, border=10,
               flag=wx.RIGHT | wx.ALIGN_CENTER_VERTICAL)
         parent.AddWindow(self.logSeparator, 0, border=0, flag=0)
@@ -56,17 +54,15 @@ class Panel(wx.Panel):
         self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
         self.dirBrowse = wx.BoxSizer(orient=wx.HORIZONTAL)
         self.logOptionsSizer = wx.FlexGridSizer(cols=2, hgap=0, rows=1, vgap=3)
-        self.__init_mainsizer_items(self.mainSizer)
-        self.__init_dirbrowse_items(self.dirBrowse)
-        self.__init_logoptions_sizer_items(self.logOptionsSizer)
+        self.__init_main_sizer(self.mainSizer)
+        self.__init_dirbrowse_sizer(self.dirBrowse)
+        self.__init_logoptions_sizer(self.logOptionsSizer)
         self.SetSizer(self.mainSizer)
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'Logging', parent=prnt,
-              pos=wx.Point(981, 684), size=wx.Size(416, 335),
               style=wx.TAB_TRAVERSAL)
-        self.SetClientSize(wx.Size(416, 335))
-
+              
         self.staticText1 = wx.StaticText(id=wxID_PANELSTATICTEXT1,
               label=_(u'Folder to keep log files in:'), name='staticText1',
               parent=self, style=0)

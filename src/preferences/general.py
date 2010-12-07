@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-#Boa:FramePanel:panel
-
+#
 # Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,9 +21,7 @@ import utils
 ] = [wx.NewId() for __init_ctrls in range(9)]
 
 class Panel(wx.Panel):
-    def __init_mainsizer_items(self, parent):
-        # generated method, don't edit
-
+    def __init_main_sizer(self, parent):
         parent.AddSpacer(wx.Size(8, 15), border=0, flag=0)
         parent.AddWindow(self.clearUndo, 0, border=15, flag=wx.LEFT)
         parent.AddSpacer(wx.Size(8, 15), border=0, flag=0)
@@ -35,9 +32,7 @@ class Panel(wx.Panel):
         parent.AddSizer(self.encodingSizer, 0, border=15, flag=wx.LEFT)
         parent.AddSpacer(wx.Size(8, 15), border=0, flag=0)
 
-    def _init_coll_encodingSizer_items(self, parent):
-        # generated method, don't edit
-
+    def _init_encodingsizer(self, parent):
         parent.AddSpacer(wx.Size(8, 8), border=0, flag=0)
         parent.AddWindow(self.staticText1, 0, border=5, flag=wx.ALL)
         parent.AddWindow(self.encodingGroup, 0, border=5, flag=wx.LEFT|wx.RIGHT)
@@ -47,14 +42,11 @@ class Panel(wx.Panel):
               flag=wx.BOTTOM | wx.LEFT|wx.RIGHT)
 
     def __init_sizers(self):
-        # generated method, don't edit
         self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
-
         self.encodingSizer = wx.StaticBoxSizer(box=self.staticBox1,
               orient=wx.VERTICAL)
-
-        self.__init_mainsizer_items(self.mainSizer)
-        self._init_coll_encodingSizer_items(self.encodingSizer)
+        self.__init_main_sizer(self.mainSizer)
+        self._init_encodingsizer(self.encodingSizer)
 
         self.SetSizer(self.mainSizer)
 
@@ -105,7 +97,7 @@ class Panel(wx.Panel):
               name=u'encodingGroup', parent=self, pos=wx.Point(25, 173),
               size=wx.Size(246, -1), style=0)
         self.encodingGroup.SetSelection(0)
-        self.encodingGroup.Bind(wx.EVT_CHOICE, self.setEncodingOptions,
+        self.encodingGroup.Bind(wx.EVT_CHOICE, self._set_encoding_options,
               id=wxID_PANELENCODINGGROUP)
 
         self.encodingSelect = wx.ComboBox(choices=[], id=wxID_PANELENCODINGSELECT,
@@ -121,7 +113,7 @@ class Panel(wx.Panel):
     def _make_encoding_select(self, choicesList):
         self.encodingSelect = wx.ComboBox(choices=choicesList,
               id=wxID_PANELENCODINGSELECT, name=u'encodingSelect', parent=self,
-              size=wx.Size(246, -1), style=wx.CB_READONLY)
+              style=wx.CB_READONLY)
         self.encodingSizer.AddWindow(self.encodingSelect, 0, border=5, flag=wx.BOTTOM|wx.LEFT|wx.RIGHT|wx.EXPAND)
         self.Layout()
 
@@ -132,10 +124,10 @@ class Panel(wx.Panel):
         self.Fit()
 
     def init_enabled(self):
-        self.setEncodingOptions(1)
+        self._set_encoding_options(1)
         self.dirTreeEnabled(1)
 
-    def setEncodingOptions(self, event):
+    def _set_encoding_options(self, event):
         Value = self.encodingGroup.GetStringSelection()
         enable = True
         if self.encodingSelect:

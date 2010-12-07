@@ -917,6 +917,8 @@ class MainWindow(wx.Frame):
         prefDiag = preferences.create_dialog(self)
         prefDiag.ShowModal()
         prefDiag.Destroy()
+        # to reinit color definitions
+        self.bottomWindow.set_preferences()
 
 
 #### DISPLAY RESULTS ###########################################################
