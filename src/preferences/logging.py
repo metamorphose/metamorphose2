@@ -28,16 +28,13 @@ class Panel(wx.Panel):
         parent.AddWindow(self.staticText5, 0, border=5, flag=wx.ALL)
         parent.AddSpacer(wx.Size(8, 8), border=0, flag=0)
         parent.AddWindow(self.staticText1, 0, border=5, flag=wx.ALL)
-        parent.AddSizer(self.dirBrowse, 0, border=3, flag=wx.BOTTOM|wx.RIGHT|wx.EXPAND)
+        #parent.AddSizer(self.dirBrowse, 0, border=3, flag=wx.BOTTOM|wx.RIGHT|wx.EXPAND)
+        parent.AddWindow(self.logLocation, 0, border=10,
+              flag=wx.ALIGN_CENTER|wx.RIGHT|wx.LEFT|wx.EXPAND)
+        parent.AddSpacer(wx.Size(8, 8), border=0, flag=0)
         parent.AddSizer(self.logOptionsSizer, 0, border=20,
               flag=wx.ALIGN_CENTER_VERTICAL | wx.LEFT)
         parent.AddSpacer(wx.Size(5, 5), border=0, flag=0)
-
-    def __init_dirbrowse_sizer(self, parent):
-        parent.AddWindow(self.logLocation, 1, border=20,
-              flag=wx.ALIGN_CENTER | wx.LEFT)
-        parent.AddWindow(self.browse, 0, border=5,
-              flag=wx.ALIGN_CENTER | wx.ALL)
 
     def __init_logoptions_sizer(self, parent):
         parent.AddWindow(self.staticText2, 0, border=10,
@@ -52,10 +49,8 @@ class Panel(wx.Panel):
 
     def __init_sizers(self):
         self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
-        self.dirBrowse = wx.BoxSizer(orient=wx.HORIZONTAL)
         self.logOptionsSizer = wx.FlexGridSizer(cols=2, hgap=0, rows=1, vgap=3)
         self.__init_main_sizer(self.mainSizer)
-        self.__init_dirbrowse_sizer(self.dirBrowse)
         self.__init_logoptions_sizer(self.logOptionsSizer)
         self.SetSizer(self.mainSizer)
 
@@ -67,23 +62,17 @@ class Panel(wx.Panel):
               label=_(u'Folder to keep log files in:'), name='staticText1',
               parent=self, style=0)
 
-        self.logLocation = wx.TextCtrl(id=wxID_PANELLOGLOCATION,
-              name=u'logLocation', parent=self, size=wx.Size(275, -1),
-              style=0, value=u'')
-
-        self.browse = wx.Button(id=wxID_PANELBROWSE, label='...',
-              name=u'browse', parent=self, size=wx.Size(50, -1),
-              style=0)
-        self.browse.Bind(wx.EVT_BUTTON, self.on_browse_button,
-              id=wxID_PANELBROWSE)
+        self.logLocation = wx.DirPickerCtrl(self, -1,
+            style=wx.DIRP_USE_TEXTCTRL|wx.DIRP_DIR_MUST_EXIST, name=u'logLocation',
+            size=wx.Size(275, -1))
 
         self.staticText2 = wx.StaticText(id=wxID_PANELSTATICTEXT2,
               label=_(u'Separate values with:'), name='staticText2',
               parent=self, style=0)
 
         self.logSeparator = wx.TextCtrl(id=wxID_PANELLOGSEPARATOR,
-              name=u'logSeparator', parent=self, pos=wx.Point(179, 114),
-              size=wx.Size(50, -1), style=0, value=u':::')
+              name=u'logSeparator', parent=self, size=wx.Size(50, -1),
+              style=0, value=u':::')
 
         self.staticText3 = wx.StaticText(id=wxID_PANELSTATICTEXT3,
               label=_(u'Enclose values in:'), name='staticText3', parent=self,
@@ -110,14 +99,13 @@ class Panel(wx.Panel):
     def __init__(self, parent):
         self.__init_ctrls(parent)
         self.SetSizerAndFit(self.mainSizer)
-        #self.allowLogOptions(1)
-        if self.logLocation.GetValue() == '':
-            self.logLocation.SetValue(utils.get_user_path('undo'))
+        if self.logLocation.GetPath() == '':
+            self.logLocation.SetPath(utils.get_user_path('undo'))
 
     #def init_enabled(self):
-    #    self.allowLogOptions(1)
+    #    self.__allow_log_options(1)
 
-    def allowLogOptions(self, event):
+    def __allow_log_options(self, event):
         if self.alwaysMakeLog.GetValue():
            allow = True
         else:
@@ -126,13 +114,3 @@ class Panel(wx.Panel):
                   self.staticText3,self.staticText4,self.logEnclose,
                   self.logSeparator,self.logFextension):
             i.Enable(allow)
-
-    def on_browse_button(self, event):
-        dlg = wx.DirDialog(self,_(u"Choose a directory:"),
-            style=wx.DD_DEFAULT_STYLE)
-        dlg.SetPath(self.logLocation.GetValue())
-        try:
-            if dlg.ShowModal() == wx.ID_OK:
-                dir = dlg.GetPath()
-                self.logLocation.SetValue(dir)
-        finally: dlg.Destroy()

@@ -28,9 +28,6 @@ def create_dialog(parent, initial=False):
     """Create and return the preferences dialog."""
     return Dialog(parent,initial)
 
-[wxID_DIALOGAPPLY, wxID_DIALOGCLOSE, wxID_DIALOGOK,
-] = [wx.NewId() for __init_ctrls in range(3)]
-
 class Methods:
     """
     Preference methods.
@@ -142,6 +139,12 @@ class Methods:
                 elif isinstance(child, wx.Choice):
                     value = int(child.GetSelection())
                     type = 'Choice'
+                elif isinstance(child, wx.DirPickerCtrl):
+                    value = child.GetPath()
+                    type = 'DirPickerCtrl'
+                elif isinstance(child, wx.FilePickerCtrl):
+                    value = child.GetPath()
+                    type = 'FilePickerCtrl'
                 
                 if value is not None:
                     name = child.GetName()
@@ -190,6 +193,7 @@ class Dialog(wx.Dialog):
         parent.AddSizer(self.buttons, 0, border=5, flag=wx.ALL | wx.EXPAND)
 
     def __init_buttons_items(self, parent):
+        parent.AddSpacer((105,8), 0, border=0, flag=0)
         parent.AddWindow(self.apply, 0, border=20, flag=wx.RIGHT)
         parent.AddWindow(self.ok, 0, border=105, flag=wx.RIGHT)
         parent.AddSpacer((10,8), 1, border=0, flag=0)
@@ -202,85 +206,79 @@ class Dialog(wx.Dialog):
         self.__init_buttons_items(self.buttons)
         self.SetSizer(self.mainSizer)
 
-    def __init_ctrls(self, prnt):
-        wx.Dialog.__init__(self, id=-1, name=u'dialog', parent=prnt,
-              style=wx.CAPTION | wx.RESIZE_BORDER, title=u'Preferences')
-
-        self.notebook = wx.Notebook(id=-1, name=u'notebook',
-              parent=self, pos=wx.Point(5, 5), size=wx.Size(590, 40), style=0)
-
-        self.apply = wx.Button(id=wx.ID_APPLY, name=u'apply', parent=self, style=0)
-        self.apply.Bind(wx.EVT_BUTTON, self._on_apply_button)
-
-        self.ok = wx.Button(id=wx.ID_OK, name=u'ok', parent=self, style=0)
-        self.ok.Bind(wx.EVT_BUTTON, self._on_ok_button)
-
-        self.close = wx.Button(id=wx.ID_CANCEL, name=u'close', parent=self, style=0)
-        self.close.Bind(wx.EVT_BUTTON, self._close_diag)
-
-        self.__init_sizers()
-
-    def __init__(self, parent, initial):
-        global main
-        main = parent
-        self.initial = initial
-        self.__init_ctrls(parent)
-        self.SetIcon(wx.Icon(utils.icon_path(u'preferences.ico'),
-                     wx.BITMAP_TYPE_ICO))
-        self.notebook.SetBackgroundColour(self.notebook.GetThemeBackgroundColour())
-
-        self.prefs = Methods(main)
-
-        if initial:
-            self.close.Enable(False)
-            self.apply.Enable(False)
-
-        # the panels to add to the notebook
+    def __init_notebook(self):
         self.panels = ((general,_(u'General')),
                        (display, _(u'Display')),
                        (colors, _(u'Colors')),
                        (automation, _(u'Automate')),
                        (logging, _(u'Logging')),
                        (errorCheck, _(u'Error Checks')))
-        # add panel to notebook
         i = 0
         for pane in self.panels:
             page = getattr(pane[0], 'Panel')
             self.notebook.AddPage(page(self.notebook), pane[1])
             notebookPage = self.notebook.GetPage(i)
-            if not initial:
-                self._load_prefs(notebookPage)
+            if not self.initial:
+                self.__load_prefs(notebookPage)
             if hasattr(notebookPage, 'init_enabled'):
                 notebookPage.init_enabled()
             i += 1
 
+    def __init_ctrls(self, prnt):
+        wx.Dialog.__init__(self, id=-1, name=u'dialog', parent=prnt,
+              style=wx.CAPTION | wx.RESIZE_BORDER, title=u'Preferences')
+        self.SetIcon(wx.Icon(utils.icon_path(u'preferences.ico'),
+                     wx.BITMAP_TYPE_ICO))
+
+        self.notebook = wx.Notebook(id=-1, name=u'notebook',
+              parent=self, style=wx.BK_LEFT)
+        # make XP theme look better
+        self.notebook.SetBackgroundColour(main.notebook.GetThemeBackgroundColour())
+
+        self.apply = wx.Button(id=wx.ID_APPLY, name=u'apply', parent=self, style=0)
+        self.apply.Bind(wx.EVT_BUTTON, self.__on_apply_button)
+
+        self.ok = wx.Button(id=wx.ID_OK, name=u'ok', parent=self, style=0)
+        self.ok.Bind(wx.EVT_BUTTON, self.__on_ok_button)
+
+        self.close = wx.Button(id=wx.ID_CANCEL, name=u'close', parent=self, style=0)
+        self.close.Bind(wx.EVT_BUTTON, self.__close_diag)
+
+        self.__init_notebook()
+        self.__init_sizers()
+
+    def __init__(self, parent, initial):
+        global main
+        main = parent
+        self.initial = initial
+        self.prefs = Methods(main)
+        self.__init_ctrls(parent)
+        if initial:
+            self.close.Enable(False)
+            self.apply.Enable(False)
         utils.set_min_size(self,ignoreClasses=(
-                wx.TextCtrl,wx.Button,wx.Choice, wx.SpinCtrl))
-        self.SetMinSize(wx.Size(460, -1))
+                wx.TextCtrl,wx.Button,wx.Choice,wx.SpinCtrl,
+                wx.FilePickerCtrl, wx.DirPickerCtrl))
         self.Fit()
         self.CentreOnScreen()
-
         # to see if these change when applying
         if not initial:
             self.oldDirTree = self.prefs.get(u'useDirTree')
             self.oldSHowHiddenDirs = self.prefs.get(u'showHiddenDirs')
 
-    def _on_apply_button(self, event):
+    def __on_apply_button(self, event):
         self.prefs.set_prefs(self)
         prefs = main.prefs = self.prefs
-
         if not self.initial:
             if prefs.get(u'useDirTree') != self.oldDirTree:
                 main.picker.set_tree()
             if prefs.get(u'showHiddenDirs') != self.oldSHowHiddenDirs:
                 main.picker.dirPicker.ShowHidden(prefs.get(u'showHiddenDirs'))
-
             self.oldDirTree = prefs.get(u'useDirTree')
             self.oldSHowHiddenDirs = prefs.get(u'showHiddenDirs')
-
             main.show_preview(event)
 
-    def _load_prefs(self, panel):
+    def __load_prefs(self, panel):
         """load preferences from file and apply them to a panel."""
         utils.debug_print(main, 'Loading %s preferences ...'%panel.GetName())
         for child in panel.GetChildren():
@@ -297,10 +295,12 @@ class Dialog(wx.Dialog):
                     child.SetValue(unicode(v))
                 elif isinstance(child, wx.Choice):
                     child.SetSelection(v)
+                elif isinstance(child, wx.DirPickerCtrl) or isinstance(child, wx.FilePickerCtrl):
+                    child.SetPath(unicode(v))
 
-    def _close_diag(self, event):
+    def __close_diag(self, event):
         self.Close()
 
-    def _on_ok_button(self, event):
-        self._on_apply_button(event)
+    def __on_ok_button(self, event):
+        self.__on_apply_button(event)
         self.Close()
