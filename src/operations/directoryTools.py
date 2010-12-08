@@ -143,13 +143,13 @@ class Panel(wx.Panel):
 
     def on_add_by_filename_button(self, event):
         """Add file name."""
-        self.write_to_directory_text(self.params['nameTxt'])
+        self.__to_directory_text(self.params['nameTxt'])
 
     def on_add_current_button(self, event):
         """Add current directory."""
-        self.write_to_directory_text(self.params['pathStructTxt'])
+        self.__to_directory_text(self.params['pathStructTxt'])
 
-    def write_to_directory_text(self, text):
+    def __to_directory_text(self, text):
         iPoint = self.directoryText.GetInsertionPoint()
         self.directoryText.WriteText(text)
         self.directoryText.SetFocus()
@@ -164,7 +164,7 @@ class Panel(wx.Panel):
             if dlg.ShowModal() == wx.ID_OK:
                 self.directoryText.SetValue('')
                 dir = dlg.GetPath()
-                self.write_to_directory_text(dir)
+                self.__to_directory_text(dir)
         finally: dlg.Destroy()
 
 

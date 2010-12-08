@@ -33,8 +33,8 @@ class OpPanel(Operation):
         wx.Panel.__init__(self, id=-1, name=u'Panel', parent=prnt,
               style=wx.TAB_TRAVERSAL)
         self.notebook = Notebook(self, main)
-        self.ReplaceToolsPanel = replaceTools.Panel(self.notebook, main)
-        self.notebook.init_pages(self.ReplaceToolsPanel,
+        self.replaceToolsPanel = replaceTools.Panel(self.notebook, main)
+        self.notebook.init_pages(self.replaceToolsPanel,
                           _(u"Replace settings"), u'replace.ico')
         self.numberingPanel = self.notebook.numbering
         self.dateTimePanel = self.notebook.dateTime
@@ -49,24 +49,24 @@ class OpPanel(Operation):
 
     def on_config_load(self):
         """Update GUI elements, settings after config load."""
-        self.ReplaceToolsPanel.on_load()
+        self.replaceToolsPanel.on_load()
         self.numberingPanel.on_config_load()
         self.dateTimePanel.get_from_item_checkbox(False)
 
     def reset_counter(self, c):
         """Reset the numbering counter for the operation."""
-        utils.reset_counter(self, self.ReplaceToolsPanel, c)
+        utils.reset_counter(self, self.replaceToolsPanel, c)
 
     def rename_item(self, path, name, ext, original):
-        operations = self.ReplaceToolsPanel.opButtonsPanel
+        operations = self.replaceToolsPanel.opButtonsPanel
         newName = self.join_ext(name,ext)
         if not newName:
             return path,name,ext
 
         # basic settings
-        search = self.notebook.GetPage(0).search
+        search = self.replaceToolsPanel.search
         searchValues = search.searchValues
-        text = self.notebook.GetPage(0).repl_txt.GetValue()
+        text = self.replaceToolsPanel.repl_txt.GetValue()
 
         #- do nothing
         if searchValues[0] == u"text" and not searchValues[2] and not text:

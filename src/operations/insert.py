@@ -32,8 +32,8 @@ class OpPanel(Operation):
         wx.Panel.__init__(self, id=-1, name=u'Panel', parent=prnt,
               style=wx.TAB_TRAVERSAL)
         self.notebook = Notebook(self, main)
-        self.InsertToolsPanel = insertTools.Panel(self.notebook, main)
-        self.notebook.init_pages(self.InsertToolsPanel,
+        self.insertToolsPanel = insertTools.Panel(self.notebook, main)
+        self.notebook.init_pages(self.insertToolsPanel,
                           _(u"Insert settings"), u'insert.ico')
         self.numberingPanel = self.notebook.numbering
         self.dateTimePanel = self.notebook.dateTime
@@ -48,13 +48,13 @@ class OpPanel(Operation):
 
     def on_config_load(self):
         """Update GUI elements, settings after config load."""
-        self.InsertToolsPanel.activate_options(False)
+        self.insertToolsPanel.activate_options(False)
         self.numberingPanel.on_config_load()
         self.dateTimePanel.get_from_item_checkbox(False)
 
     def reset_counter(self, c):
         """Reset the numbering counter for the operation."""
-        utils.reset_counter(self, self.InsertToolsPanel, c)
+        utils.reset_counter(self, self.insertToolsPanel, c)
 
     def rename_item(self, path, name, ext, original):
         """Insert into name."""
@@ -62,7 +62,7 @@ class OpPanel(Operation):
         if not newName:
             return path,name,ext
 
-        insert = self.InsertToolsPanel
+        insert = self.insertToolsPanel
         operations = insert.opButtonsPanel
         parsedText = operations.parse_input(insert.Text.GetValue(),original,self)
         # prefix

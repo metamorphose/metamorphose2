@@ -57,7 +57,7 @@ class OpPanel(Operation):
         self.numberingPanel.on_config_load()
         self.dateTimePanel.get_from_item_checkbox(False)
 
-    def _add_path_structure(self, newPath, path):
+    def __add_path(self, newPath, path):
         """Extra operation for absolute paths."""
         recurPath = ''
         recur = self.dirTools.pathRecur.GetValue()
@@ -80,9 +80,11 @@ class OpPanel(Operation):
         newPath = newPath.replace(self.params['pathStructTxt'], recurPath)
         return newPath
 
-    def _add_file_name(self, newPath, name, ext):
+    def __add_file_name(self, newPath, name, ext):
         if self.dirTools.useFileExt.GetValue() and self.dirTools.useFileName.GetValue():
-            parsedName = name + '.' + ext
+            if ext:
+                ext = '.' + ext
+            parsedName = name + ext
         elif self.dirTools.useFileName.GetValue():
             parsedName = name
         elif self.dirTools.useFileExt.GetValue():
@@ -112,11 +114,11 @@ class OpPanel(Operation):
 
         # add path structure
         if params['pathStructTxt'] in newPath:
-            newPath = self._add_path_structure(newPath, path)
+            newPath = self.__add_path(newPath, path)
 
         # add filename
         if params['nameTxt'] in newPath:
-            newPath = self._add_file_name(newPath, name, ext)
+            newPath = self.__add_file_name(newPath, name, ext)
 
         newPath = operations.parse_input(newPath,original,self)
 

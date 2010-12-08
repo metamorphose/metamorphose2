@@ -307,7 +307,7 @@ class LoadConfig():
 
                     # initialise object, passing parameters
                     params = self.__get_operation_params(op)
-                    main.renamer.view.addOperationToStack(type, id, params)
+                    main.renamer.view.stack_operation(type, id, params)
 
                     # apply node values to widgets
                     operation = main.renamer.operations[int(id)]

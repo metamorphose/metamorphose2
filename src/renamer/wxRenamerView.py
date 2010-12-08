@@ -47,15 +47,8 @@ class OperationDropTarget(wx.TextDropTarget):
         self.prnt = object.GetParent()
         self.itemCount = 0
 
-    # overloads builtin method
-    def HitTest(self, x, y):
-        return self.object.HitTest(wx.Point(x,y))
-
-    # overloads builtin method
-    def ResetHighlight(self, last=True):
-        """
-        set all items to deselected
-        """
+    def __reset_highlight(self, last=True):
+        """set all items to deselected"""
         for pos in range(self.itemCount):
             item = wx.ListItem()
             item.SetId(pos)
@@ -66,9 +59,13 @@ class OperationDropTarget(wx.TextDropTarget):
                 self.object.SetItemState(pos,0,wx.LIST_STATE_SELECTED)
 
     # overloads builtin method
+    def HitTest(self, x, y):
+        return self.object.HitTest(wx.Point(x,y))
+
+    # overloads builtin method
     def OnLeave(self):
         self.itemCount = self.object.GetItemCount()
-        self.ResetHighlight()
+        self.__reset_highlight()
         self.prnt.usedOperations.Refresh()
         if self.curSelected is not None:
             self.object.Select(self.curSelected)
@@ -76,7 +73,7 @@ class OperationDropTarget(wx.TextDropTarget):
     # overloads builtin method
     def OnEnter(self, x, y, d):
         self.itemCount = self.prnt.usedOperations.GetItemCount()
-        self.curSelected = self.prnt.getCurrentOperationNumber()
+        self.curSelected = self.prnt.get_current_operation_numb()
         return d
 
     # overloads builtin method
@@ -84,7 +81,7 @@ class OperationDropTarget(wx.TextDropTarget):
         #print "OnDragOver: %d, %d, %d" % (x, y, d)
         pos = self.HitTest(x,y)[0]
         if pos != -1:
-            self.ResetHighlight(False)
+            self.__reset_highlight(False)
             item = wx.ListItem()
             item.SetId(pos)
             item.SetBackgroundColour(HighlightClr)
@@ -104,8 +101,8 @@ class OperationDropTarget(wx.TextDropTarget):
             moveBy = (pos - n) + 1
             self.prnt.move_operations(moveBy, n-1)
         else:
-            self.prnt.addOperationToStack(data, pos)
-        self.ResetHighlight()
+            self.prnt.stack_operation(data, pos)
+        self.__reset_highlight()
 
 
 class UsedOperations(wx.ListCtrl):
@@ -122,9 +119,9 @@ class IntroTextPanel(wx.Panel):
     """
     Show intro text, set app size
     """
-    def __init__(self, prnt, ID):
-        wx.Panel.__init__(self, id=ID, name=u'IntroTextPanel',
-              parent=prnt, size=wx.DefaultSize, style=wx.TAB_TRAVERSAL)
+    def __init__(self, prnt, id):
+        wx.Panel.__init__(self, id=id, name=u'IntroTextPanel',
+              parent=prnt, style=wx.TAB_TRAVERSAL)
 
         # create info text of available operations
         # Find largest panel, use it to set this panel size
@@ -180,7 +177,7 @@ class IntroTextPanel(wx.Panel):
 
 
 class Panel(wx.Panel):
-    def sizers(self):
+    def __init_sizers(self):
         mainSizer = self.mainSizer = wx.BoxSizer(wx.HORIZONTAL)
 
         leftSizer = wx.BoxSizer(wx.VERTICAL)
@@ -224,9 +221,9 @@ class Panel(wx.Panel):
         applyTo.AppendItem(applyTo.name)
         applyTo.AppendItem(applyTo.extension)
 
-        self.Bind(wx.EVT_MENU, self.setOperationsApplyMenu,
+        self.Bind(wx.EVT_MENU, self.__set_operations_apply_menu,
               id=wxID_MENUAPPLYNAME)
-        self.Bind(wx.EVT_MENU, self.setOperationsApplyMenu,
+        self.Bind(wx.EVT_MENU, self.__set_operations_apply_menu,
               id=wxID_MENUAPPLYEXTENSION)
 
         opPanel = self.Core.operations[n]
@@ -282,17 +279,17 @@ class Panel(wx.Panel):
         parent.AppendItem(parent.destroy)
         parent.AppendItem(parent.destroyAll)
 
-        self.Bind(wx.EVT_MENU, self.onMoveUpButton,
+        self.Bind(wx.EVT_MENU, self.__move_up_button,
               id=wxID_MENUUP)
-        self.Bind(wx.EVT_MENU, self.onMoveDownButton,
+        self.Bind(wx.EVT_MENU, self.__move_down_button,
               id=wxID_MENUDOWN)
-        self.Bind(wx.EVT_MENU, self.onOperationTogglebutton,
+        self.Bind(wx.EVT_MENU, self.__operation_toggle_btn,
               id=wxID_MENUDISABLE)
-        self.Bind(wx.EVT_MENU, self.resetOperation,
+        self.Bind(wx.EVT_MENU, self.__reset_operation,
               id=wxID_MENURESET)
         self.Bind(wx.EVT_MENU, self.delete_operation,
               id=wxID_MENUDESTROY)
-        self.Bind(wx.EVT_MENU, self.destroyAllGUIOperations,
+        self.Bind(wx.EVT_MENU, self.__destroy_all_gui_operations,
               id=wxID_MENUDESTROYALL)
 
 
@@ -308,7 +305,7 @@ class Panel(wx.Panel):
               name=u'availableOperations', parent=self,
               style=wx.LC_REPORT | wx.LC_NO_HEADER | wx.LC_SINGLE_SEL)
         self.availableOperations.Bind(wx.EVT_LIST_ITEM_ACTIVATED,
-              self.addOperationToStack, id=wxID_AVAILABLEOPERATIONS)
+              self.stack_operation, id=wxID_AVAILABLEOPERATIONS)
 
         self.availableOperations.InsertColumn(0, '', format=wx.LIST_FORMAT_LEFT, width=-1)
 
@@ -339,7 +336,7 @@ class Panel(wx.Panel):
         self.usedOperations = UsedOperations(wxID_USEDOPERATIONS,
               u'usedOperations', self, w, scrollBarSize)
         self.usedOperations.Bind(wx.EVT_LIST_ITEM_SELECTED,
-            self.onUsedOperationsListbox, id=wxID_USEDOPERATIONS)
+            self.__used_operations_listbox, id=wxID_USEDOPERATIONS)
 
         self.staticText2 = wx.StaticText(id=wxID_STATICTEXT2,
               label=_(u"Used:"), name='staticText2', parent=self,
@@ -349,14 +346,14 @@ class Panel(wx.Panel):
               wx.BITMAP_TYPE_PNG), id=wxID_MOVEDOWN, name=u'moveDown',
               parent=self, style=wx.BU_AUTODRAW)
         self.moveDown.SetToolTipString(_(u"Move current operation down by 1"))
-        self.moveDown.Bind(wx.EVT_BUTTON, self.onMoveDownButton,
+        self.moveDown.Bind(wx.EVT_BUTTON, self.__move_down_button,
               id=wxID_MOVEDOWN)
 
         self.moveUp = wx.BitmapButton(bitmap=wx.Bitmap(utils.icon_path(u'up.png'),
               wx.BITMAP_TYPE_PNG), id=wxID_MOVEUP, name=u'moveUp',
               parent=self, style=wx.BU_AUTODRAW)
         self.moveUp.SetToolTipString(_(u"Move current operation up by 1"))
-        self.moveUp.Bind(wx.EVT_BUTTON, self.onMoveUpButton,
+        self.moveUp.Bind(wx.EVT_BUTTON, self.__move_up_button,
               id=wxID_MOVEUP)
 
         self.enableOperation = wx.ToggleButton(id=wxID_ENABLEOPERATION,
@@ -365,19 +362,19 @@ class Panel(wx.Panel):
         self.enableOperation.SetToolTipString(_(u"Enable or Disable current operation"))
         self.enableOperation.SetValue(False)
         self.enableOperation.Bind(wx.EVT_TOGGLEBUTTON,
-              self.onOperationTogglebutton, id=wxID_ENABLEOPERATION)
+              self.__operation_toggle_btn, id=wxID_ENABLEOPERATION)
 
         self.deleteOperations = wx.Choice(choices=[_(u"Destroy"), _(u"Destroy All")],
               id=wxID_DELETEOPERATIONS, name=u'actions', parent=self)
         self.deleteOperations.SetSelection(0)
         self.deleteOperations.SetToolTipString(_(u"Do Stuff"))
-        self.deleteOperations.Bind(wx.EVT_CHOICE, self.onActionsChoice, id=wxID_DELETEOPERATIONS)
+        self.deleteOperations.Bind(wx.EVT_CHOICE, self.__actions_choice, id=wxID_DELETEOPERATIONS)
 
         self.resetOperationButton = wx.Button(id=wxID_RESETOPERATIONBUTTON,
               label=_(u"Reset"), name=u'resetOperationButton', parent=self,
               style=wx.BU_EXACTFIT)
         self.resetOperationButton.SetToolTipString(_(u"Reset the current operation"))
-        self.resetOperationButton.Bind(wx.EVT_BUTTON, self.resetOperation,
+        self.resetOperationButton.Bind(wx.EVT_BUTTON, self.__reset_operation,
               id=wxID_RESETOPERATIONBUTTON)
 
         self.staticText3 = wx.StaticText(id=wxID_STATICTEXT3,
@@ -388,13 +385,13 @@ class Panel(wx.Panel):
               label=_(u"extension"), name=u'applyExtension', parent=self,
               style=0)
         self.applyExtension.SetValue(False)
-        self.applyExtension.Bind(wx.EVT_CHECKBOX, self.setOperationsApply,
+        self.applyExtension.Bind(wx.EVT_CHECKBOX, self.__set_operations_apply,
               id=wxID_APPLYEXTENSION)
 
         self.applyName = wx.CheckBox(id=wxID_APPLYNAME,
               label=_(u"name"), name='applyName', parent=self, style=0)
         self.applyName.SetValue(True)
-        self.applyName.Bind(wx.EVT_CHECKBOX, self.setOperationsApply,
+        self.applyName.Bind(wx.EVT_CHECKBOX, self.__set_operations_apply,
               id=wxID_APPLYNAME)
 
         self.staticText4 = wx.StaticText(id=wxID_STATICTEXT4,
@@ -407,9 +404,9 @@ class Panel(wx.Panel):
         self.usedOperations.SetDropTarget(dt)
 
         wx.EVT_LIST_BEGIN_DRAG(self.availableOperations, self.availableOperations.GetId(),
-            self.onAvailableDragInit)
+            self.__available_drag_init)
         wx.EVT_LIST_BEGIN_DRAG(self.usedOperations, self.usedOperations.GetId(),
-            self.onUsedDragInit)
+            self.__used_drag_init)
 
 
     def __init__(self, Core, parent, main_window):
@@ -417,47 +414,39 @@ class Panel(wx.Panel):
         main = main_window
         self.Core = Core
         self.__init_ctrls(parent)
-        self.sizers()
-        self.setButtonState()
+        self.__init_sizers()
+        self.__set_button_state()
         # capture right clicks in several areas
         for area in (self, self.usedOperations):
             # for wxMSW
-            area.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self._on_right_click)
+            area.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.__on_right_click)
             # for wxGTK
-            area.Bind(wx.EVT_RIGHT_UP, self._on_right_click)
+            area.Bind(wx.EVT_RIGHT_UP, self.__on_right_click)
 
     def __reassign_numbers(self):
         for i in range(self.usedOperations.GetItemCount()):
             original = self.usedOperations.GetItemText(i)
             self.usedOperations.SetItemText(i,str(i+1)+":"+original.split(":")[1])
 
-    def _on_right_click(self, event):
+    def __on_right_click(self, event):
         """
         Popup the menu
         """
         self.operationsMenu = wx.Menu()
-        n = self.getCurrentOperationNumber()
+        n = self.get_current_operation_numb()
         if n != None:
             self.__init_menu(self.operationsMenu, n)
             self.PopupMenu(self.operationsMenu)
 
-    def getCurrentOperationNumber(self):
-        """
-        currently selected operation number
-        """
-        usedOps = self.usedOperations
-        if usedOps.GetSelectedItemCount() > 0:
-            return usedOps.GetNextItem(-1, state=wx.LIST_STATE_SELECTED)
-
-    def getCurrentOperationPanel(self):
+    def __current_operation_panel(self):
         """
         currently selected operation panel
         """
-        n = self.getCurrentOperationNumber()
+        n = self.get_current_operation_numb()
         if n != None:
             return self.Core.operations[n]
 
-    def onAvailableDragInit(self, event):
+    def __available_drag_init(self, event):
         """
         Start dragging from available operations, for adding
         """
@@ -467,7 +456,7 @@ class Panel(wx.Panel):
         tds.SetData(tdo)
         tds.DoDragDrop(True)
 
-    def onUsedDragInit(self, event):
+    def __used_drag_init(self, event):
         """
         Start dragging from used operations, for re-aranging
         """
@@ -477,16 +466,161 @@ class Panel(wx.Panel):
         tds.SetData(tdo)
         tds.DoDragDrop(True)
 
-    def addOperationToSizer(self, opPanel):
+    def __add_operation_to_sizer(self, opPanel):
         self.rightSizer.Detach(self.staticText5)
         self.staticText5.Show(False)
         self.rightSizer.Add(opPanel,1,wx.EXPAND|wx.RIGHT,5)
         self.mainSizer.Layout()
 
-    def addOperationToList(self, pos, opName):
+    def __add_operation_to_list(self, pos, opName):
         self.usedOperations.InsertStringItem(pos,unicode(pos+1)+u": "+ opName)
 
-    def addOperationToStack(self, event, pos=-1, params={}):
+    def __set_operations_apply_menu(self, event):
+        """
+        Set 'apply to' from menu.
+        """
+        id = event.GetId()
+        if id == wxID_MENUAPPLYNAME:
+            checked = self.operationsMenu.applyTo.name.IsChecked()
+            self.applyName.SetValue(checked)
+        else:
+            checked = self.operationsMenu.applyTo.extension.IsChecked()
+            self.applyExtension.SetValue(checked)
+        self.__set_operations_apply(event)
+
+    def __set_operations_apply(self,event):
+        """
+        set to which part of name operation applies to
+        """
+        operation = self.__current_operation_panel()
+        if operation is not False:
+            operation.params['applyName'] = self.applyName.GetValue()
+            operation.params['applyExtension'] = self.applyExtension.GetValue()
+            main.show_preview(event)
+
+    def __show_apply_checkboxes(self, show):
+        """Enable or disable apply_to checkboxes."""
+        chkbx = (self.applyName, self.applyExtension)
+        if show:
+            for box in chkbx:
+                box.Enable(True)
+            self.applyName.SetValue(True)
+            self.applyExtension.SetValue(False)
+        else:
+            for box in chkbx:
+                box.SetValue(False)
+                box.Enable(False)
+
+    def __set_button_state(self):
+        """Enable/disable delete and enable buttons."""
+        opButtons = (self.enableOperation, self.resetOperationButton,
+                     self.deleteOperations,
+                     self.moveUp, self.moveDown)
+        if len(self.Core.operations) < 1:
+            for i in opButtons:
+                i.Enable(False)
+            for i in (self.applyName, self.applyExtension):
+                i.Enable(False)
+        else:
+            for i in opButtons:
+                i.Enable(True)
+
+    def __show_operation(self, n):
+        """Show a specific operation."""
+        # need to hide other operations first
+        for opPanel in self.Core.operations:
+            opPanel.Show(False)
+            self.rightSizer.Detach(opPanel)
+
+        # now show selected one
+        opPanel = self.Core.operations[n]
+        opPanel.Show(True)
+        self.__add_operation_to_sizer(opPanel)
+
+        if not opPanel.params['applyPathOnly']:
+            # show if name and/or extension is operated on:
+            self.applyName.SetValue(opPanel.params['applyName'])
+            self.applyExtension.SetValue(opPanel.params['applyExtension'])
+
+            self.applyName.Enable(True)
+            self.applyExtension.Enable(True)
+        else:
+            self.__show_apply_checkboxes(False)
+
+        # show operation button as enabled/disabled
+        if opPanel.IsEnabled():
+            self.enableOperation.SetLabel(_(u"Disable"))
+            self.enableOperation.SetValue(False)
+        else:
+            self.enableOperation.SetLabel(_(u"Enable"))
+            self.enableOperation.SetValue(True)
+        self.mainSizer.Layout()
+
+
+    def __used_operations_listbox(self, event):
+        """show operation from box."""
+        n = self.get_current_operation_numb()
+        if n != None:
+            self.__show_operation(n)
+
+    def __operation_toggle_btn(self, event):
+        """Enable or disable the currently selected operation."""
+        opPanel = self.__current_operation_panel()
+        if opPanel != None:
+            if opPanel is not False:
+                if opPanel.IsEnabled():
+                    opPanel.Enable(False)
+                    self.enableOperation.SetLabel(_(u"Enable"))
+                else:
+                    opPanel.Enable(True)
+                    self.enableOperation.SetLabel(_(u"Disable"))
+                self.mainSizer.Layout()
+                main.show_preview(event)
+
+    def __reset_operation(self, event):
+        """Destroy, then recreate operation (reset)."""
+        n = self.get_current_operation_numb()
+        if n != None:
+            text = self.usedOperations.GetItemText(n)
+            text = re.search("(?<=: ).+$", text)
+            op = text.group()
+            dlg = wx.MessageDialog(self, _("Really reset this '%s' operation?")%op,
+                _("Are You Sure?"), wx.YES_NO|wx.YES_DEFAULT|wx.ICON_WARNING)
+            if dlg.ShowModal() == wx.ID_YES:
+                # delete operation:
+                self.Core.delete_operation(n)
+
+                # create new of same type/position
+                opPanel = self.create_operation(n, op)
+
+                # add it to the window properly
+                self.__add_operation_to_sizer(opPanel)
+                main.show_preview(event)
+
+    def __move_down_button(self, event):
+        self.move_operations(+1)
+
+    def __move_up_button(self, event):
+        self.move_operations(-1)
+
+    def __destroy_all_gui_operations(self, event):
+        """Destroy all operations from GUI."""
+        if self.Core.operations:
+            msg = _("Really destroy all operations?")
+            title = _("Are You Sure?")
+            if utils.make_yesno_dlg(msg, title):
+                self.destroy_all_operations()
+                main.show_preview(event)
+
+    def __actions_choice(self, event):
+        """Execute correct function based on user selected action."""
+        selected = self.deleteOperations.GetSelection()
+        result = {0 : self.delete_operation,
+                  1 : self.__destroy_all_gui_operations,
+                 }[selected](event)
+        self.deleteOperations.SetSelection(0)
+    
+    def stack_operation(self, event, pos=-1, params={}):
         if type(event) == type(u''):
             op = event
             #event = False
@@ -504,138 +638,52 @@ class Panel(wx.Panel):
             pos += 1
 
         # add requested operation
-        self.addOperationToList(pos, op)
+        self.__add_operation_to_list(pos, op)
         opPanel = self.create_operation(pos, op, params)
         self.__reassign_numbers()
 
         # add window to sizer:
-        self.addOperationToSizer(opPanel)
+        self.__add_operation_to_sizer(opPanel)
 
         self.usedOperations.Select(pos)
-        self.setButtonState()
+        self.__set_button_state()
         main.show_preview(event)
 
     def create_operation(self, n, op, params={}):
         opPanel = self.Core.create_operation(n, op, params)
         return opPanel
 
-    def setOperationsApplyMenu(self, event):
+    def move_operations(self, To, n=None):
         """
-        set 'apply to' from menu
+        Change the placement of an operation, adjusting others as needed.
         """
-        id = event.GetId()
-        if id == wxID_MENUAPPLYNAME:
-            checked = self.operationsMenu.applyTo.name.IsChecked()
-            self.applyName.SetValue(checked)
-        else:
-            checked = self.operationsMenu.applyTo.extension.IsChecked()
-            self.applyExtension.SetValue(checked)
-        self.setOperationsApply(event)
-
-    def setOperationsApply(self,event):
-        """
-        set to which part of name operation applies to
-        """
-        operation = self.getCurrentOperationPanel()
-        if operation is not False:
-            operation.params['applyName'] = self.applyName.GetValue()
-            operation.params['applyExtension'] = self.applyExtension.GetValue()
-            main.show_preview(event)
-
-    def showApplyCheckBoxes(self, show):
-        """
-        enable/disable apply_to checkboxes
-        """
-        chkbx = (self.applyName, self.applyExtension)
-        if show:
-            for box in chkbx:
-                box.Enable(True)
-            self.applyName.SetValue(True)
-            self.applyExtension.SetValue(False)
-        else:
-            for box in chkbx:
-                box.SetValue(False)
-                box.Enable(False)
-
-    def setButtonState(self):
-        """
-        Enable/disable delete and enable buttons
-        """
-        opButtons = (self.enableOperation, self.resetOperationButton,
-                     self.deleteOperations,
-                     self.moveUp, self.moveDown)
-        if len(self.Core.operations) < 1:
-            for i in opButtons:
-                i.Enable(False)
-            for i in (self.applyName, self.applyExtension):
-                i.Enable(False)
-        else:
-            for i in opButtons:
-                i.Enable(True)
-
-    def _show_operation(self, n):
-        """
-        Show a specific operation
-        """
-        # need to hide other operations first
-        for opPanel in self.Core.operations:
-            opPanel.Show(False)
-            self.rightSizer.Detach(opPanel)
-
-        # now show selected one
-        opPanel = self.Core.operations[n]
-        opPanel.Show(True)
-        self.addOperationToSizer(opPanel)
-
-        if not opPanel.params['applyPathOnly']:
-            # show if name and/or extension is operated on:
-            self.applyName.SetValue(opPanel.params['applyName'])
-            self.applyExtension.SetValue(opPanel.params['applyExtension'])
-
-            self.applyName.Enable(True)
-            self.applyExtension.Enable(True)
-        else:
-            self.showApplyCheckBoxes(False)
-
-        # show operation button as enabled/disabled
-        if opPanel.IsEnabled():
-            self.enableOperation.SetLabel(_(u"Disable"))
-            self.enableOperation.SetValue(False)
-        else:
-            self.enableOperation.SetLabel(_(u"Enable"))
-            self.enableOperation.SetValue(True)
-        self.mainSizer.Layout()
-
-
-    def onUsedOperationsListbox(self, event):
-        """
-        show operation from box
-        """
-        n = self.getCurrentOperationNumber()
+        if n == None:
+            n = self.get_current_operation_numb()
         if n != None:
-            self._show_operation(n)
+            moveTo = n + To
+            if self.usedOperations.GetItemCount() > moveTo and moveTo > -1:
+                oldText = self.usedOperations.GetItemText(n)
 
-    def onOperationTogglebutton(self, event):
+                self.usedOperations.DeleteItem(n)
+                self.usedOperations.InsertStringItem(moveTo,oldText)
+                self.__reassign_numbers()
+                self.Core.move_operations(n, moveTo)
+                self.usedOperations.Select(moveTo)
+            main.show_preview(True)
+
+    def get_current_operation_numb(self):
         """
-        Enable or disable the currently selected operation
+        currently selected operation number
         """
-        opPanel = self.getCurrentOperationPanel()
-        if opPanel != None:
-            if opPanel is not False:
-                if opPanel.IsEnabled():
-                    opPanel.Enable(False)
-                    self.enableOperation.SetLabel(_(u"Enable"))
-                else:
-                    opPanel.Enable(True)
-                    self.enableOperation.SetLabel(_(u"Disable"))
-                self.mainSizer.Layout()
-                main.show_preview(event)
+        usedOps = self.usedOperations
+        if usedOps.GetSelectedItemCount() > 0:
+            return usedOps.GetNextItem(-1, state=wx.LIST_STATE_SELECTED)
 
     def delete_operation(self, event):
         """
-        Delete an operation, then reasign numbers to remaining ones
+        Delete an operation, then reasign numbers to remaining ones.
         """
-        n = self.getCurrentOperationNumber()
+        n = self.get_current_operation_numb()
         if n != None:
             type = self.usedOperations.GetItemText(n)
             type = re.sub("\d{1,}: ", '', type)
@@ -653,86 +701,18 @@ class Panel(wx.Panel):
                     # there is a preceding operation
                     if n-1 > -1:
                         n = n-1
-                    self._show_operation(n)
+                    self.__show_operation(n)
                     self.usedOperations.Select(n)
                 # otherwise show text
                 else:
                     self.staticText5.Show(True)
-                self.setButtonState()
-                main.show_preview(event)
-
-    def resetOperation(self, event):
-        """
-        Destroy, then recreate operation (reset)
-        """
-        n = self.getCurrentOperationNumber()
-        if n != None:
-            text = self.usedOperations.GetItemText(n)
-            text = re.search("(?<=: ).+$", text)
-            op = text.group()
-            dlg = wx.MessageDialog(self, _("Really reset this '%s' operation?")%op,
-                _("Are You Sure?"), wx.YES_NO|wx.YES_DEFAULT|wx.ICON_WARNING)
-            if dlg.ShowModal() == wx.ID_YES:
-                # delete operation:
-                self.Core.delete_operation(n)
-
-                # create new of same type/position
-                opPanel = self.create_operation(n, op)
-
-                # add it to the window properly
-                self.addOperationToSizer(opPanel)
+                self.__set_button_state()
                 main.show_preview(event)
 
     def destroy_all_operations(self):
-        """
-        destroy all operations in stack
-        """
+        """Destroy all operations in stack."""
         self.Core.destroy_all_operations()
         self.usedOperations.DeleteAllItems()
         self.staticText5.Show(True)
-        self.setButtonState()
+        self.__set_button_state()
 
-    def destroyAllGUIOperations(self, event):
-        """
-        Destroy all operations from GUI
-        """
-        if self.Core.operations:
-            msg = _("Really destroy all operations?")
-            title = _("Are You Sure?")
-            if utils.make_yesno_dlg(msg, title):
-                self.destroy_all_operations()
-                main.show_preview(event)
-
-    def onActionsChoice(self, event):
-        """
-        execute correct function based on user selected action
-        """
-        selected = self.deleteOperations.GetSelection()
-        result = {0 : self.delete_operation,
-                  1 : self.destroyAllGUIOperations,
-                 }[selected](event)
-        self.deleteOperations.SetSelection(0)
-
-    def move_operations(self, To, n=None):
-        """
-        CHANGE THE ORDER OF OPERATIONS
-        """
-        if n == None:
-            n = self.getCurrentOperationNumber()
-        if n != None:
-            moveTo = n + To
-            if self.usedOperations.GetItemCount() > moveTo and moveTo > -1:
-                oldText = self.usedOperations.GetItemText(n)
-
-                self.usedOperations.DeleteItem(n)
-                self.usedOperations.InsertStringItem(moveTo,oldText)
-                self.__reassign_numbers()
-                self.Core.move_operations(n, moveTo)
-                self.usedOperations.Select(moveTo)
-            main.show_preview(True)
-
-    def onMoveDownButton(self, event):
-        self.move_operations(+1)
-
-    def onMoveUpButton(self, event):
-        self.move_operations(-1)

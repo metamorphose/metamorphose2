@@ -34,18 +34,18 @@ path = sys.path[0]
 
 # Prefer wxpython 2.8
 if not hasattr(sys, "frozen"):
+    msg = "\nwxPython 2.8 is required!\nRefer to 'readme_xx.html'",\
+              " for installation instructions.\n"
     try:
         import wxversion
     except:
-        print("\nwxPython 2.8 is required!\nRefer to 'readme_xx.html'",
-              " for installation instructions.\n")
+        print(msg)
         sys.exit()
     else:
         try:
             wxversion.select('2.8')
         except:
-            print("\nwxPython 2.8 is required!\nRefer to 'readme_xx.html'",\
-                  " for installation instructions.\n")
+            print(msg)
             sys.exit()
 import wx
 import os
