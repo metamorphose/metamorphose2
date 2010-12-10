@@ -145,7 +145,7 @@ class IntroTextPanel(wx.Panel):
         fontStyle = fontParams['style']
 
         # adjust vertical spacing for top bar
-        gap = prnt.moveDown.GetSizeTuple()[1]
+        gap = prnt.moveDown.GetSizeTuple()[1] + 24
 
         self.staticText1 = wx.StaticText(id=-1,
               label=_(u"You don't have any operations defined."),
@@ -192,17 +192,18 @@ class Panel(wx.Panel):
         rightTopSizer.AddWindow(self.staticText3,0,wx.ALIGN_CENTRE|wx.LEFT,5)
         rightTopSizer.AddWindow(self.moveDown,0,wx.ALIGN_CENTRE|wx.LEFT,3)
         rightTopSizer.AddWindow(self.moveUp,0,wx.ALIGN_CENTRE|wx.RIGHT,25)
-        rightTopSizer.AddSpacer((-1,-1),1)
+        rightTopSizer.AddSpacer((-1,1),1)
         rightTopSizer.AddWindow(self.staticText4,0,wx.ALIGN_CENTRE|wx.RIGHT,5)
         rightTopSizer.AddWindow(self.applyName,0,wx.ALIGN_CENTRE|wx.RIGHT,3)
         rightTopSizer.AddWindow(self.applyExtension,0,wx.ALIGN_CENTRE|wx.RIGHT,15)
-        rightTopSizer.AddSpacer((-1,-1),5)
+        rightTopSizer.AddSpacer((-1,1),5)
         rightTopSizer.AddWindow(self.enableOperation,0,wx.ALIGN_CENTRE|wx.RIGHT,5)
         rightTopSizer.AddWindow(self.resetOperationButton,0,wx.ALIGN_CENTRE|wx.RIGHT,10)
         rightTopSizer.AddWindow(self.deleteOperations,0,wx.ALIGN_CENTRE|wx.RIGHT,5)
-        rightTopSizer.AddSpacer((-1,-1),5)
+        rightTopSizer.AddSpacer((-1,1),5)
         rightSizer.AddSizer(rightTopSizer,0,wx.TOP|wx.BOTTOM|wx.EXPAND,3)
-        rightSizer.AddWindow(self.staticText5,0,wx.TOP|wx.LEFT,20)
+        rightTopSizer.AddSpacer((1,10),0)
+        rightSizer.AddWindow(self.staticText5,0,flag=wx.LEFT,border=20)
 
         mainSizer.AddSizer(rightSizer,1,wx.EXPAND)
         self.SetSizerAndFit(mainSizer)

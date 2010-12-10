@@ -28,7 +28,7 @@ class Notebook(wx.Notebook):
         global main
         main = main_window
         wx.Notebook.__init__(self, id=-1, name=u'notebook', parent=parent,
-            style=wx.NB_BOTTOM|wx.NO_BORDER)
+            style=wx.NB_BOTTOM|wx.BORDER_NONE)
         self.SetThemeEnabled(True)
         self.numbering = numbering.Panel(self, main)
         self.dateTime = dateTime.Panel(self, main)

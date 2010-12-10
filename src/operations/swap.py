@@ -31,7 +31,7 @@ class OpPanel(Operation):
     """
     def __init_sizer(self):
         mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
-        mainSizer.Add(self.searchFrom,0,wx.EXPAND|wx.BOTTOM,5)
+        mainSizer.Add(self.searchFrom,0,wx.EXPAND|wx.BOTTOM,3)
         mainSizer.Add(self.searchTo,0,wx.EXPAND)
         self.SetSizerAndFit(mainSizer)
 

@@ -34,21 +34,21 @@ class Panel(wx.Panel):
         replaceWithSizer.Add(self.opButtonsPanel,0,wx.EXPAND|wx.TOP|wx.BOTTOM,2)
 
         mainSizer.Add(self.search,0,wx.EXPAND|wx.LEFT|wx.RIGHT|wx.TOP,5)
-        mainSizer.Add(wx.Size(1,15))
+        mainSizer.AddSpacer((1,5))
         mainSizer.AddSizer(replaceWithSizer,0,wx.EXPAND|wx.ALL,5)
         self.SetSizerAndFit(mainSizer)
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'ReplaceToolsPanel', parent=prnt,
               style=wx.TAB_TRAVERSAL)
+              
+        self.search = search.Panel(self, main, _(u"Search for what to replace, by:"))
 
         self.staticBox1 = wx.StaticBox(id=wxID_PANELSTATICBOX1,
               label=_("Replace with:"), name='staticBox1', parent=self, style=0)
 
         # sub operation buttons ------------------------------------------- #
         self.opButtonsPanel = opButtons.Panel(self, main)
-
-        self.search = search.Panel(self, main, _(u"Search for what to replace, by:"))
 
         txt = _(u"Text (blank to delete):")
         self.staticText1 = wx.StaticText(id=wxID_PANELSTATICTEXT1,

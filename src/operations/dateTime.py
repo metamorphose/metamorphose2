@@ -102,7 +102,7 @@ class Panel(wx.Panel):
 
         self.cal = wx.calendar.CalendarCtrl(date=wx.DateTime.Now(),
               id=wxID_PANELCAL, name=u'cal', parent=self,
-              style=wx.calendar.CAL_SHOW_SURROUNDING_WEEKS  | wx.calendar.CAL_MONDAY_FIRST | wx.calendar.CAL_SHOW_HOLIDAYS)
+              style=wx.calendar.CAL_SHOW_SURROUNDING_WEEKS|wx.calendar.CAL_MONDAY_FIRST|wx.calendar.CAL_SHOW_HOLIDAYS)
         self.cal.Bind(wx.calendar.EVT_CALENDAR_SEL_CHANGED, self._test_date,
               id=wxID_PANELCAL)
 
