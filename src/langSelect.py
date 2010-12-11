@@ -20,15 +20,30 @@ import utils
 def create(parent, Title, event):
     return LangSelect(parent, Title, event)
 
-[wxID_LANGSELECT,
-] = [wx.NewId() for __init_ctrls in range(1)]
-
 languages = (
-    ('en_US', u'English', u'American English (en_US)'),
-    ('es', u'Español', u'Español (es)'),
-    ('fr', u'Français', u'Français (fr)'),
+    #('ar', u'العربية', 'sa'),
+    #('ca', u'Català', 'es_ct'),
+    #('da', u'Dansk', 'dk'),
+    #('de', u'Deutsch', 'de'),
+    #('el', u'Ελληνικά', 'gr'),
+    ('en_US', u'US English', 'us'),
+    ('es', u'Español', 'es'),
+    ('fr', u'Français', 'fr'),
+    #('he', u'עברית', 'il'),
+    #('hi', u'हिन्दी', 'in'),
+    #('hu', u'Magyar', 'hu'),
+    #('it', u'Italiano', 'it'),
+    #('ja', u'日本語', 'jp'),
+    #('ko', u'한국어', 'kr'),
+    #('nl', u'Nederlands', 'nl'),
+    #('pl', u'Polski', 'pl'),
+    #('pt_BR', u'Português do Brasil', 'br'),
+    #('tr', u'Türkçe', 'tr'),
+    #('ru', u'Русский', 'ru'),
+    #('sk', u'Slovenčina', 'si'),
+    #('sv', u'Svenska', 'se'),
+    #('zh_CN', u'中文', 'cn'),
 )
-
 
 class LangSelect(wx.Dialog):
     def __init_sizer(self):
@@ -53,24 +68,22 @@ class LangSelect(wx.Dialog):
 
 
     def __init_ctrls(self, prnt, Title):
-        # generated method, don't edit
-        wx.Dialog.__init__(self, id=wxID_LANGSELECT, name=u'langSelect',
+        wx.Dialog.__init__(self, id=-1, name=u'langSelect',
               parent=prnt, size=wx.Size(281, 292),
               style=wx.DEFAULT_DIALOG_STYLE, title=Title)
         self.SetIcon(wx.Icon(utils.icon_path(u'language.png'), wx.BITMAP_TYPE_PNG))
 
         def getBitmap(lang):
-            fLang = lang.replace('_*', '')
-            return wx.Bitmap(utils.icon_path(u'flags/%s.png'%fLang), wx.BITMAP_TYPE_PNG)
+            return wx.Bitmap(utils.icon_path(u'flags/%s.png'%lang), wx.BITMAP_TYPE_PNG)
 
         # add languages selection to interface
         for lang_info in languages:
             lang = lang_info[0]
             setattr(self, lang, wx.RadioButton(id=-1, label=lang_info[1],
                                 name=lang, parent=self, style=0))
-            getattr(self, lang).SetToolTipString(lang_info[2])
+            getattr(self, lang).SetToolTipString(u"%s (%s)"%(lang_info[1], lang))
             setattr(self, '%s_flag'%lang, wx.StaticBitmap(parent=self, id=-1,
-                                          bitmap=getBitmap(lang)))
+                                          bitmap=getBitmap(lang_info[2])))
 
         self.ok = wx.Button(id=wx.ID_OK, name=u'ok',
               parent=self, pos=wx.Point(20, 300), style=0)
