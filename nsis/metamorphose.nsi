@@ -11,7 +11,7 @@
 ;General
 
   ;Name and file
-  !define VERSION "0.7.1"
+  !define VERSION "0.8.0"
 
   Name "Métamorphose2"
   OutFile "metamorphose2_${VERSION}_setup.exe"
@@ -26,7 +26,7 @@
   ;Default installation folder
   InstallDir "$PROGRAMFILES\metamorphose2"
 
-  VIProductVersion "2.0.7.1"
+  VIProductVersion "2.0.8.0"
   VIAddVersionKey "ProductName" "Métamorphose2"
   VIAddVersionKey "CompanyName" "Ianaré Sévi"
   VIAddVersionKey "LegalCopyright" "(C) 2006-2009 Ianaré Sévi"

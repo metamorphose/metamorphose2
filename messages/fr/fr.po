@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: metamorphose\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-12-05 23:54+0100\n"
+"PO-Revision-Date: 2010-12-12 01:56+0100\n"
 "Last-Translator: ianaré sévi <ianare.gmail.com>\n"
 "Language-Team: ianaré sévi\n"
 "Language: \n"
@@ -2381,11 +2381,11 @@ msgstr "Classer sur une section du nom :"
 
 #: sorting/wxSortingView.py:207
 msgid "last access time"
-msgstr "temps du dernier accès"
+msgstr "heure du dernier accès"
 
 #: sorting/wxSortingView.py:207
 msgid "last modification time"
-msgstr "temps de la dernière modification"
+msgstr "heure de dernière modification"
 
 #: sorting/wxSortingView.py:208
 msgid "file size"

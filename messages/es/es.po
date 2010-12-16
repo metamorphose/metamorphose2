@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: metamorphose\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-12-05 23:38+0100\n"
+"PO-Revision-Date: 2010-12-12 01:30+0100\n"
 "Last-Translator: ianaré sévi <ianare.gmail.com>\n"
 "Language-Team: ianaré sévi\n"
 "Language: \n"
@@ -76,14 +76,12 @@ msgid "Load a snapshot"
 msgstr "Cargar una captura"
 
 #: MainWindow/__init__.py:123
-#, fuzzy
 msgid "&Reset"
-msgstr "Reiniciar"
+msgstr "&Reiniciar"
 
 #: MainWindow/__init__.py:123
-#, fuzzy
 msgid "Reset all settings"
-msgstr "Ajustes de Inserción"
+msgstr "Reiniciar todos los parámetros"
 
 #: MainWindow/__init__.py:128
 msgid "&Preview\tF7"
@@ -175,9 +173,8 @@ msgid "Preferences"
 msgstr "Preferencias"
 
 #: MainWindow/__init__.py:245
-#, fuzzy
 msgid "Change your preferences"
-msgstr "Cambiar preferencias"
+msgstr "Cambiar sus preferencias"
 
 #: MainWindow/__init__.py:248
 #: MainWindow/__init__.py:725
@@ -239,7 +236,7 @@ msgstr "Orden"
 
 #: MainWindow/__init__.py:339
 msgid "Errors/Warnings: %s"
-msgstr "Errores/Advertencias : %s"
+msgstr "Errores/Advertencias: %s"
 
 #: MainWindow/__init__.py:677
 msgid ""
@@ -284,7 +281,7 @@ msgstr "Cambiar el Idioma"
 
 #: MainWindow/__init__.py:773
 msgid "Are you sure you want to reset?"
-msgstr ""
+msgstr "¿Estáis seguros que queréis reiniciar ?"
 
 #: MainWindow/__init__.py:773
 msgid "Are you sure?"
@@ -295,9 +292,8 @@ msgid "Save current items as ..."
 msgstr "Guardar los objetos actuales como ..."
 
 #: MainWindow/__init__.py:807
-#, fuzzy
 msgid "CSV file (*.%s)"
-msgstr "Fichero log (*.%s)"
+msgstr "Fichero CSV (*.%s)"
 
 #: MainWindow/__init__.py:834
 msgid "Log file"
@@ -316,7 +312,7 @@ msgid ""
 "These items could not be loaded, it doesn't look like they exist :\n"
 "\n"
 msgstr ""
-"Imposible cargar estos objetos; parece que no existen :\n"
+"Imposible cargar estos objetos; parece que no existen:\n"
 "\n"
 
 #: MainWindow/__init__.py:896
@@ -403,12 +399,10 @@ msgid "Redo"
 msgstr "Rehacer"
 
 #: MainWindow/editDialog.py:55
-#, fuzzy
 msgid "Manually edit name, use with care."
 msgstr "Editar un nombre manualmente, usar cuidadosamente."
 
 #: MainWindow/editDialog.py:59
-#, fuzzy
 msgid ""
 "Use the up and down keys to save changes to the name and \n"
 "move to another item."
@@ -430,11 +424,11 @@ msgstr "Clic aquí para salir"
 
 #: about.py:86
 msgid "Version: %s"
-msgstr "Versión : %s"
+msgstr "Versión: %s"
 
 #: about.py:90
 msgid "Using Python %s, wxPython %s"
-msgstr "Usando : Python %s, wxPython %s"
+msgstr "Usando: Python %s, wxPython %s"
 
 #: about.py:94
 msgid "Metamorphose Home Page"
@@ -482,7 +476,7 @@ msgstr "Cargar un archivo de configuración"
 
 #: configs.py:332
 msgid "Invalid XML in config file : %s"
-msgstr "XML inválido en este fichero de configuración : %s"
+msgstr "XML inválido en este fichero de configuración: %s"
 
 #: configs.py:333
 msgid "Invalid Configuration"
@@ -490,16 +484,15 @@ msgstr "Configuración no válida"
 
 #: errors/wxErrorsView.py:91
 msgid "items with:"
-msgstr "Elementos con :"
+msgstr "Elementos con:"
 
 #: errors/wxErrorsView.py:94
 msgid "Save errors to log"
-msgstr ""
+msgstr "Guardar los errores a un log"
 
 #: errors/wxErrorsView.py:95
-#, fuzzy
 msgid "Save errors to a log file."
-msgstr "Guardar la captura actual a un fichero log"
+msgstr "Guardar los errores a un fichero log."
 
 #: errors/wxErrorsView.py:100
 msgid "Remove"
@@ -531,7 +524,7 @@ msgstr "Los elementos de arriba."
 
 #: errors/wxErrorsView.py:150
 msgid "Errors: %s - Warnings: %s"
-msgstr "Errores : %s Advertencias : %s"
+msgstr "Errores: %s Advertencias: %s"
 
 #: errors/wxErrorsView.py:153
 msgid "Ready to rename %s items, but with %s warnings"
@@ -543,12 +536,11 @@ msgstr "%s elementos en total, %s tienen problemas"
 
 #: errors/wxErrorsView.py:164
 msgid "Errors/Warnings: 0"
-msgstr "Errores/Advertencias : 0"
+msgstr "Errores/Advertencias: 0"
 
 #: errors/wxErrorsView.py:190
-#, fuzzy
 msgid "Save error list as ..."
-msgstr "Guardar los objetos actuales como ..."
+msgstr "Guardar los errores como ..."
 
 #: errors/wxErrorsView.py:192
 msgid "Log file (*.csv)"
@@ -667,7 +659,7 @@ msgstr "Rellenar con este caracter:"
 
 #: operations/changeLength.py:107
 msgid "Position for padding:"
-msgstr "Rellenar en la posición :"
+msgstr "Rellenar en la posición:"
 
 #: operations/changeLength.py:117
 msgid "(0 = first character)"
@@ -831,7 +823,7 @@ msgstr "Configuración de Directorios"
 
 #: operations/directoryTools.py:68
 msgid "Name (absolute paths allowed):"
-msgstr "Nombre (Ruta completa permitida) :"
+msgstr "Nombre (Ruta completa permitida):"
 
 #: operations/directoryTools.py:72
 #: picker/wxPickerView.py:346
@@ -848,7 +840,7 @@ msgstr "Para mejor resultado, usar ruta completas."
 
 #: operations/directoryTools.py:94
 msgid "Path depth to copy:"
-msgstr "Profundidad de la ruta a copiar :"
+msgstr "Profundidad de la ruta a copiar:"
 
 #: operations/directoryTools.py:106
 msgid "negative values allowed"
@@ -864,7 +856,7 @@ msgstr "Iniciar desde principio o fin de la  ruta"
 
 #: operations/directoryTools.py:119
 msgid "Copy File Name"
-msgstr ""
+msgstr "Copiar Nombre de Archivo"
 
 #: operations/directoryTools.py:121
 msgid "Add a directory with the same name as the file."
@@ -876,9 +868,8 @@ msgid "Name"
 msgstr "al Nombre"
 
 #: operations/directoryTools.py:127
-#, fuzzy
 msgid "Add the file name."
-msgstr "Nombre de fichero vacío"
+msgstr "Añadir el nombre del fichero."
 
 #: operations/directoryTools.py:131
 #: renamer/wxRenamerView.py:222
@@ -886,18 +877,16 @@ msgid "Extension"
 msgstr "a la extensión"
 
 #: operations/directoryTools.py:133
-#, fuzzy
 msgid "Add the file extension."
-msgstr "Extensión del fichero:"
+msgstr "Añadir la extensión del fichero."
 
 #: operations/directoryTools.py:146
 msgid "Path-Structure"
-msgstr "Estructura-Path"
+msgstr "Estructura-Ruta"
 
 #: operations/directoryTools.py:147
-#, fuzzy
 msgid "File-Name"
-msgstr "Archivo"
+msgstr "Nombre-Archivo"
 
 #: operations/directoryTools.py:166
 #: picker/wxPickerView.py:582
@@ -1007,7 +996,7 @@ msgstr "Cambiar los caracteres:"
 
 #: operations/modification.py:89
 msgid "Convert from Encoding:"
-msgstr "Conversión del Códec :"
+msgstr "Conversión del Códec:"
 
 #: operations/modification.py:95
 #: preferences/general.py:97
@@ -1139,7 +1128,7 @@ msgstr "Buscar caracteres a modificar, por:"
 #: operations/replace.py:100
 #: picker/__init__.py:204
 msgid "Regular-Expression: %s"
-msgstr "Expresión regular : %s"
+msgstr "Expresión regular: %s"
 
 #: operations/move.py:68
 msgid "Search for what to move, by:"
@@ -1270,7 +1259,7 @@ msgstr "Disminuir la cuenta"
 
 #: operations/numbering.py:243
 msgid "Count:"
-msgstr "Cuenta :"
+msgstr "Cuenta:"
 
 #: operations/numbering.py:249
 msgid "Starting value"
@@ -1333,7 +1322,7 @@ msgstr "album"
 #: operations/opButtons.py:56
 #: operations/opButtons.py:155
 msgid "track number"
-msgstr "Nº Pista"
+msgstr "Nº de pista"
 
 #: operations/opButtons.py:57
 #: operations/opButtons.py:152
@@ -1371,7 +1360,7 @@ msgstr "compositor"
 #: operations/opButtons.py:63
 #: operations/opButtons.py:162
 msgid "conductor"
-msgstr "Director de Orquesta"
+msgstr "Director de orquesta"
 
 #: operations/opButtons.py:64
 #: operations/opButtons.py:163
@@ -1416,7 +1405,7 @@ msgstr "exposición"
 #: operations/opButtons.py:77
 #: operations/opButtons.py:186
 msgid "F-stop"
-msgstr "ouverture"
+msgstr "apertura"
 
 #: operations/opButtons.py:78
 #: operations/opButtons.py:187
@@ -1436,7 +1425,7 @@ msgstr "ISO"
 #: operations/opButtons.py:81
 #: operations/opButtons.py:190
 msgid "shutter-speed"
-msgstr "velocidad-obturación"
+msgstr "velocidad de obturación"
 
 #: operations/opButtons.py:82
 #: operations/opButtons.py:191
@@ -1490,7 +1479,7 @@ msgstr "software"
 
 #: operations/opButtons.py:129
 msgid "Insert a special operation:"
-msgstr "Insertar una operación especial :"
+msgstr "Insertar una operación especial:"
 
 #: operations/opButtons.py:133
 msgid "numbering"
@@ -1509,7 +1498,7 @@ msgid ""
 "Insert date. Use the 'Date / Time settings' panel to\n"
 "change settings"
 msgstr ""
-"Insertar una fecha. El panel 'Ajustes : fecha / hora'\n"
+"Insertar una fecha. El panel 'Ajustes: fecha / hora'\n"
 "contiene las opciones."
 
 #: operations/opButtons.py:144
@@ -1523,7 +1512,7 @@ msgid ""
 "Insert time. Use the 'Date / Time settings' panel to\n"
 "change settings"
 msgstr ""
-"Insertar una hora. El panel  'Ajustes : fecha / hora'\n"
+"Insertar una hora. El panel  'Ajustes: fecha / hora'\n"
 "contiene las opciones."
 
 #: operations/opButtons.py:151
@@ -1650,18 +1639,16 @@ msgid "Replace settings"
 msgstr "Ajustes de Reemplazo"
 
 #: operations/replaceTools.py:46
-#, fuzzy
 msgid "Replace with:"
-msgstr "Ajustes de Reemplazo"
+msgstr "Reemplazar por:"
 
 #: operations/replaceTools.py:51
 msgid "Search for what to replace, by:"
-msgstr "Buscar caracteres a reemplazar, por :"
+msgstr "Buscar caracteres a reemplazar, por:"
 
 #: operations/replaceTools.py:53
-#, fuzzy
 msgid "Text (blank to delete):"
-msgstr "Reemplazar por ( en blanco para borrar ) :"
+msgstr "Texto (vacío para borrar):"
 
 #: operations/replaceTools.py:63
 msgid "Keep blank to delete."
@@ -1677,7 +1664,7 @@ msgstr "No es entero"
 
 #: operations/search.py:78
 msgid "Text (Keep blank to match entire name):"
-msgstr "Texto ( Dejar en blanco para reemplazar todo el nombre ):"
+msgstr "Texto (Dejar en blanco para reemplazar todo el nombre):"
 
 #: operations/search.py:139
 msgid "Fixed position"
@@ -1709,7 +1696,7 @@ msgstr "Esta es una cadena traducida"
 #: picker/__init__.py:325
 #: picker/__init__.py:336
 msgid "Cannot read path!"
-msgstr "¡Imposible leer la ruta!"
+msgstr "¡Imposible de leer la ruta!"
 
 #: picker/__init__.py:79
 msgid "- audio"
@@ -1758,7 +1745,6 @@ msgid "Retrieved %s items from directory"
 msgstr "%s elementos recuperados de la carpeta"
 
 #: picker/__init__.py:319
-#, fuzzy
 msgid ""
 "The item '%s' has an encoding error.\n"
 "Unable to process this path in recursive mode, please correct the name and try again."
@@ -1771,12 +1757,10 @@ msgid "Unable to load item"
 msgstr "Imposible cargar este elemento"
 
 #: picker/__init__.py:355
-#, fuzzy
 msgid "At least one item has an encoding error in its name. You will not be able to modify these."
 msgstr "Al menos un elemento tiene un error de codificación en su nombre. No le sera posible modificar esto."
 
 #: picker/__init__.py:356
-#, fuzzy
 msgid "Encoding Error"
 msgstr "Error de Codificación"
 
@@ -1788,7 +1772,7 @@ msgid ""
 "You will not be able to preview images."
 msgstr ""
 "No se encuentra la Python Imaging Library (PIL).\n"
-"Lea el archivo 'readme' para para obtener instrucciones de instalacion.\n"
+"Lea el archivo 'readme' para para obtener instrucciones de instalación.\n"
 "\n"
 "No será posible mostrar miniaturas."
 
@@ -1806,7 +1790,7 @@ msgstr "Refrescar"
 
 #: picker/wxPickerView.py:353
 msgid "Input/Paste path and press OK, or BROWSE for path:"
-msgstr "Escribir/Pegar un path y tocar OK, o EXPLORAR para el path :"
+msgstr "Escribir/Pegar una ruta y tocar OK, o EXPLORAR para la ruta:"
 
 #: picker/wxPickerView.py:356
 msgid "Select:"
@@ -1830,7 +1814,7 @@ msgstr "Archivos"
 
 #: picker/wxPickerView.py:387
 msgid "Names containing (Use menu or enter text)"
-msgstr "Nombres conteniendo ( use el menú o introduzca texto )"
+msgstr "Nombres conteniendo (use el menú o introduzca texto)"
 
 #: picker/wxPickerView.py:394
 msgid "Contaning:"
@@ -1866,7 +1850,7 @@ msgstr "nivel:"
 
 #: picker/wxPickerView.py:434
 msgid "Number of levels to descend, 0 = unlimited"
-msgstr "Número de niveles a descender; 0 = ilimitado"
+msgstr "Número de niveles a descender, 0 = ilimitado"
 
 #: picker/wxPickerView.py:437
 msgid "Not"
@@ -2050,7 +2034,7 @@ msgstr "Opciones para cargar y guardar ficheros de registro."
 
 #: renamer/engine.py:51
 msgid "Renaming Failed : %s"
-msgstr "La operación fracasó : %s"
+msgstr "La operación fracasó: %s"
 
 #: renamer/engine.py:52
 msgid ""
@@ -2086,7 +2070,7 @@ msgid ""
 "This name already exists:\n"
 "%s"
 msgstr ""
-"Este nombra ya existe :\n"
+"Este nombra ya existe:\n"
 "%s"
 
 #: renamer/engine.py:140
@@ -2100,18 +2084,18 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Puedo crear un subdirectorio llamado  't_e_m_p' y renombrar los elelmentos en él.\n"
+"Puedo crear un subdirectorio llamado  't_e_m_p' y renombrar los elementos en él.\n"
 "Una vez renombrado, podéis moverlos a su lugar inicial.\n"
 "\n"
 "¿¿ Hacemos esto ??"
 
 #: renamer/engine.py:205
 msgid "Adjusting %s recursive paths, please wait ..."
-msgstr "Ajustando %%% direcciones recursivas, tened paciencia ..."
+msgstr "Ajustando %%% rutas recursivas, tened paciencia ..."
 
 #: renamer/engine.py:208
 msgid "Adjusting %%% recursive paths, please wait ..."
-msgstr "Ajustando %%% direcciones recursivas, tened paciencia ..."
+msgstr "Ajustando %%% rutas recursivas, tened paciencia ..."
 
 #: renamer/engine.py:284
 msgid "Renaming in progress, please wait ..."
@@ -2181,7 +2165,7 @@ msgstr "Completamente vacío"
 
 #: renamer/preview.py:174
 msgid "Name length over 255 characters"
-msgstr "Tamaño de nombre mayor de  255 Caracteres"
+msgstr "Tamaño de nombre mayor de  255 caracteres"
 
 #: renamer/preview.py:190
 msgid "Blank file name"
@@ -2201,7 +2185,7 @@ msgstr "No hay ninguna operación definida."
 
 #: renamer/wxRenamerView.py:159
 msgid "Double-click or drag && drop an operation in the 'Available' box to add one."
-msgstr "Doble clic o arrastrar y soltar una operación de la caja 'Aplicables' para añadirla."
+msgstr "Doble clic o arrastrar y soltar una operación de la caja 'Disponibles' para añadirla."
 
 #: renamer/wxRenamerView.py:160
 msgid ""
@@ -2251,15 +2235,15 @@ msgstr "Activar/Desactivar"
 
 #: renamer/wxRenamerView.py:277
 msgid "Apply to"
-msgstr "Aplicar"
+msgstr "Aplicar a"
 
 #: renamer/wxRenamerView.py:304
 msgid "Available:"
-msgstr "Aplicables :"
+msgstr "Disponibles:"
 
 #: renamer/wxRenamerView.py:345
 msgid "Used:"
-msgstr "Utilizados :"
+msgstr "Utilizados:"
 
 #: renamer/wxRenamerView.py:351
 msgid "Move current operation down by 1"
@@ -2283,7 +2267,7 @@ msgstr "Reiniciar la operación actual"
 
 #: renamer/wxRenamerView.py:384
 msgid "Order:"
-msgstr "Orden :"
+msgstr "Orden:"
 
 #: renamer/wxRenamerView.py:388
 msgid "extension"
@@ -2333,11 +2317,11 @@ msgstr "Opciones Avanzadas"
 
 #: sorting/wxSortingView.py:100
 msgid "Ascending (0 - 9)"
-msgstr "Creciente ( 0 - 9 )"
+msgstr "Creciente (0 - 9)"
 
 #: sorting/wxSortingView.py:106
 msgid "Descending (9 - 0)"
-msgstr "Decreciente ( 9 - 0 )"
+msgstr "Decreciente (9 - 0)"
 
 #: sorting/wxSortingView.py:112
 msgid "Manually Adjust"
@@ -2390,7 +2374,7 @@ msgstr ""
 
 #: sorting/wxSortingView.py:181
 msgid "Sort on a section of the name:"
-msgstr "Ordenar por una característica del nombre :"
+msgstr "Ordenar por una característica del nombre:"
 
 #: sorting/wxSortingView.py:207
 msgid "last access time"
@@ -2418,11 +2402,11 @@ msgstr "ID del usuario"
 
 #: sorting/wxSortingView.py:210
 msgid "Exif : picture taken"
-msgstr "Exif : foto tomada"
+msgstr "Exif: foto tomada"
 
 #: sorting/wxSortingView.py:211
 msgid "Exif : image modified"
-msgstr "Exif : imagen modificada"
+msgstr "Exif: imagen modificada"
 
 #: sorting/wxSortingView.py:220
 msgid "Sort by item attributes, using:"

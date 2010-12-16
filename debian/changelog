@@ -1,5 +1,15 @@
-metamorphose2 (0.7.2-1) unstable; urgency=low
+metamorphose2 (0.8.0-1) unstable; urgency=low
 
-  * Refer to changelog.html for complete list of changes.
+  * Miscellaneous minor bug fixes.
+  * Track numbers are now auto-padded with 0 when needed.
+  * Speed and memory usage improvements to error panel.
+  * Configs folder now defaults to user home (ticket 2803288).
+  * Home folder in Windows no longer has leading period.
+  * MAJOR rewrite of method names and code documentation, this makes contributing to Métamorphose2 much easier and more pleasant than before.
+  * Begin setting some methods to 'private' for clearer view of modularity.
+  * Allow changing highlight colors (ticket 2783757)
+  * Copy file name in directory (ticket 3019859).
+  * Save list of errors to file.
+  * 'Reset' menu item to clear all settings.
 
- -- ianaré sévi <ianare@gmail.com>  Sun, 13 Jun 2010 08:38:03 -0400
+ -- ianaré sévi <ianare@gmail.com>  Thu, 16 Dec 2010 00:37:11 +0100
