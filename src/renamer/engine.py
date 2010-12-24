@@ -147,8 +147,8 @@ class Core():
 
             # set correct path if in dupe error mode
             if warn == 'duplicate_name':
-                if not path.endswith(sep):
-                    path = path+sep
+                if not path.endswith(os.sep):
+                    path = path+os.sep
                 renamed[0] = renamed[0].replace(path,u'')
                 renamed[0] = join(path, u't_e_m_p', renamed[0])
 
