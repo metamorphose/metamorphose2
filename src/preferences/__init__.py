@@ -41,7 +41,7 @@ class Methods:
     def __find_pref_file(self):
         prefFile = utils.get_user_path(u'preferences.ini')
         return prefFile
-    
+
     def __open_pref_file(self,type):
         prefFile = self.__find_pref_file()
         utils.debug_print(main, "Opening as '%s' : %s"%(type,prefFile))
@@ -82,6 +82,7 @@ class Methods:
                 except ValueError:
                     prefs[split[0]] = unicode(split[1])
                     pass
+        prefFile.close()
         return prefs
 
     def __load_preferences(self):
@@ -91,7 +92,7 @@ class Methods:
         if not os.path.exists(prefFile) or os.path.getsize(prefFile) < 5:
             self.__create_new()
         prefs = self.__read_file()
-        
+
         # windows-compatible ?
         if prefs[u'useWinChars']:
             prefs[u'bad_chars'] = (u'\\',u'/',u':',u'*',u'?',u'"',u'>',u'<',u'|')
@@ -107,7 +108,7 @@ class Methods:
         prefs[u'textColor'] = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT)
 
         self.prefs = prefs
-        
+
     def set_prefs(self, prefDialog):
         """Get values from panels and set to file."""
         prefFile = self.__open_pref_file('w')
@@ -145,17 +146,18 @@ class Methods:
                 elif isinstance(child, wx.FilePickerCtrl):
                     value = child.GetPath()
                     type = 'FilePickerCtrl'
-                
+
                 if value is not None:
                     name = child.GetName()
                     options += u'%s=%s\n'%(name,value)
                     utils.debug_print(main, "%s (%s) = %s"%(name,type,value))
         prefFile.write(options)
+        prefFile.close()
         self.__load_preferences()
 
     def get(self, preference, strict=True):
         """Attempt to load a preference setting
-        
+
         Load or recreate preference file if needed.
         """
         if not self.prefs:

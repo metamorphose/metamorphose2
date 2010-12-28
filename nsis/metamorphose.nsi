@@ -29,7 +29,7 @@
   VIProductVersion "2.0.8.0"
   VIAddVersionKey "ProductName" "Métamorphose2"
   VIAddVersionKey "CompanyName" "Ianaré Sévi"
-  VIAddVersionKey "LegalCopyright" "(C) 2006-2009 Ianaré Sévi"
+  VIAddVersionKey "LegalCopyright" "(C) 2006-2010 Ianaré Sévi"
   VIAddVersionKey "FileDescription" "Installer for Métamorphose 2.${VERSION}"
   VIAddVersionKey "FileVersion" "${VERSION}"
 
@@ -40,6 +40,8 @@
   
   ;Request application privileges for Windows Vista / 7
   RequestExecutionLevel admin
+  
+  ShowInstDetails show
 
 ;--------------------------------
 ;Variables
@@ -85,7 +87,6 @@
 ;--------------------------------
 ;Installer Sections
 
-
 ; win2000 needs GdiPlus.dll
 Function win2000
   ReadRegStr $R0 HKLM "SOFTWARE\Microsoft\Windows NT\CurrentVersion" CurrentVersion
@@ -100,9 +101,9 @@ Section "Métamorphose2" Application
   SectionIn RO
   SetOutPath "$INSTDIR"
 
-  File /r _win_bin\*
-  File gdiplus.dll
-  File msvcp71.dll
+  File /r ..\..\..\_win_bin\*
+  File ..\..\..\dll\gdiplus.dll
+  File ..\..\..\dll\MSVCP71.DLL
   
   ;Install for all users
   SetShellVarContext all
