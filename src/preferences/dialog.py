@@ -81,7 +81,13 @@ class Dialog(wx.Dialog):
         self.buttons = wx.BoxSizer(orient=wx.HORIZONTAL)
         self.__init_mainsizer_items(self.mainSizer)
         self.__init_buttons_items(self.buttons)
-        self.SetSizer(self.mainSizer)
+        
+        
+        utils.set_min_size(self, ignoreClasses=(
+                           wx.TextCtrl, wx.Button, wx.Choice, wx.SpinCtrl,
+                           wx.FilePickerCtrl, wx.DirPickerCtrl))
+        self.SetSizerAndFit(self.mainSizer)
+        
 
     def __init_ctrls(self, parent):
         wx.Dialog.__init__(self, name=u'dialog', parent=parent,
@@ -113,11 +119,8 @@ class Dialog(wx.Dialog):
         if initial:
             self.close.Enable(False)
             self.apply.Enable(False)
-        utils.set_min_size(self, ignoreClasses=(
-                           wx.TextCtrl, wx.Button, wx.Choice, wx.SpinCtrl,
-                           wx.FilePickerCtrl, wx.DirPickerCtrl))
-        self.Fit()
-        self.CentreOnScreen()
+        
+        self.CentreOnParent()
         # to see if these change when applying
         if not initial:
             self.oldDirTree = self.prefs.get(u'useDirTree')

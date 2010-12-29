@@ -141,7 +141,7 @@ def calc_slice_pos(s,l):
 
 
 def make_yesno_dlg(msg, title):
-    """Show a generic yes / no choice message."""
+    """Show a generic yes / no choice message dialog."""
     dlg = wx.MessageDialog(None, msg, title, wx.YES_NO | wx.YES_DEFAULT | wx.ICON_WARNING)
     if dlg.ShowModal() == wx.ID_YES:
         returnValue = True
@@ -151,19 +151,25 @@ def make_yesno_dlg(msg, title):
     return returnValue
 
 def make_err_msg(msg, title):
-    """Make a generic error message."""
+    """Make a generic error message dialog."""
     dlg = wx.MessageDialog(None, msg, title, wx.ICON_ERROR)
     dlg.ShowModal()
     dlg.Destroy()
 
 def make_warn_msg(msg, title):
-    """Make a generic warning message."""
+    """Make a generic warning message dialog."""
     dlg = wx.MessageDialog(None, msg, title, wx.ICON_WARNING)
     dlg.ShowModal()
     dlg.Destroy()
 
+def make_info_msg(msg, title):
+    """Make a generic info message dialog."""
+    dlg = wx.MessageDialog(None, msg, title, wx.ICON_INFORMATION)
+    dlg.ShowModal()
+    dlg.Destroy()
+
 def get_user_path(file):
-    """Return user's default Metamorphose config path."""
+    """Return user's default config path."""
     base = wx.StandardPaths.Get().GetUserConfigDir()
     return os.path.join(base,homedir,file)
 

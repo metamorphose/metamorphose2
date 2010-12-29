@@ -53,9 +53,7 @@ class Methods:
         """Create default preferences file."""
         msg = _(u"Please take a moment to set your preferences.\n\n")
         title = _(u"Preferences")
-        dlg = wx.MessageDialog(None, msg, title, wx.CAPTION|wx.OK|wx.ICON_EXCLAMATION)
-        dlg.ShowModal()
-        dlg.Destroy()
+        utils.make_warn_msg(msg, title)
         # show preferences
         prefDiag = Dialog(main, initial=True)
         prefDiag.ShowModal()

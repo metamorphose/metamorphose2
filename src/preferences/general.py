@@ -30,7 +30,7 @@ class Panel(wx.Panel):
         parent.AddWindow(self.showHiddenDirs, 0, border=25, flag=wx.LEFT)
         parent.AddSpacer(wx.Size(-1, 20), border=0, flag=0)
         parent.AddSizer(self.encodingSizer, 0, border=15, flag=wx.LEFT)
-        parent.AddSpacer(wx.Size(8, 15), border=0, flag=0)
+        parent.AddSpacer(wx.Size(8, 35), border=0, flag=0)
 
     def _init_encodingsizer(self, parent):
         parent.AddSpacer(wx.Size(8, 8), border=0, flag=0)
@@ -53,37 +53,30 @@ class Panel(wx.Panel):
     def __init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'General', parent=prnt,
-              pos=wx.Point(954, 446), size=wx.Size(440, 288),
               style=wx.TAB_TRAVERSAL)
-        self.SetClientSize(wx.Size(440, 288))
 
         self.staticBox1 = wx.StaticBox(id=wxID_PANELSTATICBOX1,
               label=_(u'Encoding used in audio tags:'), name='staticBox1',
-              parent=self, pos=wx.Point(15, 121), size=wx.Size(266, 158),
-              style=0)
+              parent=self)
 
         self.clearUndo = wx.CheckBox(id=wxID_PANELCLEARUNDO,
               label=_(u'Clear out undo on start up'), name=u'clearUndo',
-              parent=self, pos=wx.Point(15, 15), size=wx.Size(208, 22),
-              style=0)
+              parent=self)
 
         self.useDirTree = wx.CheckBox(id=wxID_PANELUSEDIRTREE,
               label=_(u'Use directory tree view'), name=u'useDirTree',
-              parent=self, pos=wx.Point(15, 52), size=wx.Size(200, 22),
-              style=0)
+              parent=self)
         self.useDirTree.Bind(wx.EVT_CHECKBOX, self.dirTreeEnabled,
               id=wxID_PANELUSEDIRTREE)
         self.useDirTree.SetValue(True)
 
         self.showHiddenDirs = wx.CheckBox(id=wxID_PANELSHOWHIDDENDIRS,
               label=_(u'Show Hidden directories in tree view'),
-              name=u'showHiddenDirs', parent=self, pos=wx.Point(25, 79),
-              size=wx.Size(272, 22), style=0)
+              name=u'showHiddenDirs', parent=self)
 
         self.staticText1 = wx.StaticText(id=wxID_PANELSTATICTEXT1,
               label=_(u'Select language group:'), name='staticText1',
-              parent=self, pos=wx.Point(25, 151), size=wx.Size(160, 17),
-              style=0)
+              parent=self)
 
         self.encodingGroup = wx.Choice(choices=[_(u"Use System Default"),
               _(u'All Languages / Unicode'), _(u'Western Europe'),
@@ -94,19 +87,18 @@ class Panel(wx.Panel):
               _(u'Vietnamese'), _(u'Traditional Chinese'),
               _(u'Simplified Chinese'), _(u'Unified Chinese'), _(u'Korean'),
               _(u'Japanese'), ], id=wxID_PANELENCODINGGROUP,
-              name=u'encodingGroup', parent=self, pos=wx.Point(25, 173),
-              size=wx.Size(246, -1), style=0)
+              name=u'encodingGroup', parent=self,
+              size=wx.Size(260, -1))
         self.encodingGroup.SetSelection(0)
         self.encodingGroup.Bind(wx.EVT_CHOICE, self._set_encoding_options,
               id=wxID_PANELENCODINGGROUP)
 
         self.encodingSelect = wx.ComboBox(choices=[], id=wxID_PANELENCODINGSELECT,
-              name=u'encodingSelect', parent=self, pos=wx.Point(25, 242),
-              size=wx.Size(246, -1))
+              name=u'encodingSelect', parent=self,
+              size=wx.Size(260, -1))
 
         self.staticText2 = wx.StaticText(id=wxID_PANELSTATICTEXT2,
-              label=_(u'Select encoding:'), name='staticText2', parent=self,
-              pos=wx.Point(25, 220), size=wx.Size(106, 17), style=0)
+              label=_(u'Select encoding:'), name='staticText2', parent=self)
 
         self.__init_sizers()
 
@@ -114,7 +106,8 @@ class Panel(wx.Panel):
         self.encodingSelect = wx.ComboBox(choices=choicesList,
               id=wxID_PANELENCODINGSELECT, name=u'encodingSelect', parent=self,
               style=wx.CB_READONLY)
-        self.encodingSizer.AddWindow(self.encodingSelect, 0, border=5, flag=wx.BOTTOM|wx.LEFT|wx.RIGHT|wx.EXPAND)
+        self.encodingSizer.AddWindow(self.encodingSelect, 0, border=5,
+            flag=wx.BOTTOM|wx.LEFT|wx.RIGHT|wx.EXPAND)
         self.Layout()
 
     def __init__(self, parent):
