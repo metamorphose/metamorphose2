@@ -534,16 +534,6 @@ class MainWindow(wx.Frame):
         or neither.
         Apply language to interface.
         """
-        # get language from file if not specified from command line
-        if self.language == '':
-            try:# see if language file exist
-                langIni = codecs.open(utils.get_user_path(u'language.ini'),'r', 'utf-8')
-            except IOError:# have user choose language
-                language = self.language_select(0)
-            else:# get language from file
-                language = langIni.read().strip()
-        else:
-            language = self.language
 
         # reference:
         locales = {
@@ -568,6 +558,21 @@ class MainWindow(wx.Frame):
 
         # right-to-left languages:
         rightToLeftLanguages = ('ar','dv','fa','ha','he','ps','ur','yi')
+        '''
+        syslang = locale.getdefaultlocale()[0]
+        if syslang in locales:
+            language = syslang
+        '''
+        # get language from file if not specified from command line
+        if self.language == '':
+            try:# see if language file exist
+                langIni = codecs.open(utils.get_user_path(u'language.ini'),'r', 'utf-8')
+            except IOError:# have user choose language
+                language = self.language_select(0)
+            else:# get language from file
+                language = langIni.read().strip()
+        else:
+            language = self.language
 
         try:
             locales[language]
