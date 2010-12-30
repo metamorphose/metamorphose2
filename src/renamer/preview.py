@@ -19,6 +19,7 @@ Takes user settings and generates new names based on them.
 """
 
 from __future__ import print_function
+import app
 import utils
 import os
 import time
@@ -35,7 +36,7 @@ class Core():
 
     # should be called before running to intialise
     def setup(self):
-        self.prefs = main.prefs
+        self.prefs = app.prefs
 
     def getOperations(self):
         def getActive(x):
@@ -279,7 +280,7 @@ class Core():
                               _(u"Generating %%% new names, please wait ..."))
 
         # define here for faster access
-        onlyShowChangedItems = main.prefs.get('onlyShowChangedItems')
+        onlyShowChangedItems = app.prefs.get('onlyShowChangedItems')
 
         for itemToRename, isFile in main.items:
             # clear stuff out
@@ -291,7 +292,7 @@ class Core():
             newName = splitName[0]
             newExt = splitName[1][1:]
 
-            utils.debug_print(main, itemToRename)
+            utils.debug_print(itemToRename)
 
             if hasNumbering: main.curDir = newPath
 
@@ -323,7 +324,7 @@ class Core():
               main.ec in main.warn:
                 self.items_ren.append(newItem)
 
-            utils.debug_print(main, "%s\n"%newItem)
+            utils.debug_print("%s\n"%newItem)
 
             # increment item position counters
             main.ec += 1 # for error/warn assignment

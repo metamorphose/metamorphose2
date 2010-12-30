@@ -27,7 +27,7 @@ from xml.dom import minidom
 from xml.sax.saxutils import escape
 from xml.sax.saxutils import unescape
 
-
+import app
 import utils
 import operations
 
@@ -245,9 +245,7 @@ class LoadConfig():
         try:
             paramNode = op.getElementsByTagName('parameters')[0]
         except IndexError:
-            utils.debug_print(main,
-                u"warning : could not load all parameters for '%s' operation." % op.attributes['type'].value
-            )
+            utils.debug_print(u"warning : could not load all parameters for '%s' operation." % op.attributes['type'].value)
         else:
             for node in paramNode.childNodes:
                 if node.nodeType == 1:
@@ -262,7 +260,7 @@ class LoadConfig():
         pages = utils.get_notebook_page_names(main)
         configVersion = config.attributes['version'].value
 
-        utils.debug_print(main, "config version : %s"%configVersion)
+        utils.debug_print("config version : %s"%configVersion)
 
         for page in config.getElementsByTagName('page'):
             page_name = page.attributes['name'].value
@@ -270,7 +268,7 @@ class LoadConfig():
 
             # normal pages
             if page_name != 'mainPanel':
-                utils.debug_print(main, "loading config page : %s"%page_name)
+                utils.debug_print("loading config page : %s"%page_name)
 
                 for node in page.getElementsByTagName('value'):
                     id = node.attributes['id'].value
@@ -290,7 +288,7 @@ class LoadConfig():
                         pages[page_id].on_config_load()
             # main page
             else:
-                utils.debug_print(main, "loading renamer config")
+                utils.debug_print("loading renamer config")
                 # cleanup before loading
                 main.renamer.view.destroy_all_operations()
 
@@ -298,7 +296,7 @@ class LoadConfig():
                 for op in page.getElementsByTagName('operation'):
                     type = op.attributes['type'].value
                     type = operations.get_translated_name(type)
-                    utils.debug_print(main, "loading operation type : %s"%type)
+                    utils.debug_print("loading operation type : %s"%type)
 
                     # make sure it's a valid type
                     if type == False:
@@ -322,7 +320,7 @@ class LoadConfig():
 
     def __load_file(self, configFilePath):
         """Read file and apply settings."""
-        utils.debug_print(main, "loading config file : %s"%configFilePath)
+        utils.debug_print("loading config file : %s"%configFilePath)
         # attempt to open config file
         try:
             xmldoc = codecs.open(configFilePath,'r', 'utf-8')
@@ -353,5 +351,5 @@ class LoadConfig():
             # preview
             main.bottomWindow.autoPreview.SetValue(v)
             if main.autoModeLevel != 0 or\
-             (main.prefs.get('previewOnConfig') and main.autoModeLevel is False):
+             (app.prefs.get('previewOnConfig') and main.autoModeLevel is False):
                 main.picker.view.reset_dirpicker_on_config_load()

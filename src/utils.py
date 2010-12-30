@@ -24,6 +24,7 @@ import sys
 import codecs
 import locale
 import time
+import app
 try:
     import Image
 except:
@@ -32,7 +33,6 @@ except:
 homedir = 'metamorphose2'
 if os.sep == '/':
     homedir = '.' + homedir
-
 
 def get_version():
     """Get current version from file."""
@@ -54,7 +54,6 @@ def get_wxversion():
     wxVer = wxVer.rstrip(".")
     return wxVer
 
-
 def is_pil_loaded():
     """Determine if the python imaging library is loaded."""
     try:
@@ -64,15 +63,13 @@ def is_pil_loaded():
     else:
         return True
 
-
-def debug_print(main, msg):
+def debug_print(msg):
     """Print debug messages to screen, if debugging is enabled."""
-    if main.debug:
+    if app.debug:
         try:
             print(msg)
         except:
             print('invalid char in msg')
-
 
 def set_min_size(parent, ignoreCtrls=(), ignoreClasses=()):
     """Recursively set all sizes to platform defaults
@@ -91,7 +88,6 @@ def set_min_size(parent, ignoreCtrls=(), ignoreClasses=()):
         if child not in ignoreCtrls and not isinstance(child, ignoreClasses):
             set_min_size(child, ignoreCtrls, ignoreClasses)
 
-
 def adjust_exact_buttons(parent, ignore=()):
     """
     Adjust button sizes when using BU_EXACTFIT
@@ -103,7 +99,6 @@ def adjust_exact_buttons(parent, ignore=()):
             txt = child.GetLabel()
             size = wx.Size(child.GetTextExtent(txt)[0] + 18,-1)
             child.SetMinSize(size)
-
 
 def safe_makedir(dir):
     """Create a folder."""
@@ -123,7 +118,6 @@ def init_environment():
     for d in dirs:
         safe_makedir(get_user_path(d))
 
-
 def calc_slice_pos(s,l):
     """Calculate the correct start and end positions for slices."""
     if s == -1 and l == 1:
@@ -138,7 +132,6 @@ def calc_slice_pos(s,l):
         frm = s
         to = s+l
     return frm,to
-
 
 def make_yesno_dlg(msg, title):
     """Show a generic yes / no choice message dialog."""
@@ -219,13 +212,11 @@ def add_to_errors(main, path, msg):
         main.bad.append(ec)
         main.errorLog.insert(0, (ec, path, msg, u'bad'))
 
-
 def reset_counter(parent, tools, c):
     """Reset a numbering counter."""
     tools.opButtonsPanel.counter = c
     tools.opButtonsPanel.auxCount = 0
     parent.numberingPanel.set_number_params(True)
-
 
 def write_file(path, data):
     """Write to a file."""
@@ -241,7 +232,6 @@ def write_file(path, data):
     else:
         fp.write(unicode(data))
         fp.close()
-
 
 def get_notebook_page_names(parent):
     """

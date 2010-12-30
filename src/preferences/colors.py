@@ -14,7 +14,7 @@
 
 import wx
 import utils
-import main
+import app
 
 class Panel(wx.Panel):
     """Color preferences panel."""
@@ -158,7 +158,7 @@ class Panel(wx.Panel):
         #if color[0] != -1:
         color = color.GetAsString(wx.C2S_HTML_SYNTAX)
         #else:
-        #    color = main.prefs[name]
+        #    color = app.prefs[name]
         textCtrl.SetValue(color)
         textCtrl.SetBackgroundColour(color)
         

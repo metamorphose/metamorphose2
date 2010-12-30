@@ -18,6 +18,7 @@ Only responsible for views, All interactions must be handled by picker Core
 """
 
 import wx
+import app
 import utils
 import os
 try:
@@ -183,13 +184,13 @@ class ItemList(wx.ListCtrl):
         if self.totalSelected != 1:
             # add to list / show selected:
             if fullItem not in self.pickerPanel.Core.joinedItems:
-                item.SetBackgroundColour(main.prefs.get(u'highlightColor'))
-                item.SetTextColour(main.prefs.get(u'highlightTextColor'))
+                item.SetBackgroundColour(app.prefs.get(u'highlightColor'))
+                item.SetTextColour(app.prefs.get(u'highlightTextColor'))
                 self.pickerPanel.Core.joinedItems.append(fullItem)
             # remove from list / show deselected:
             else:
-                item.SetBackgroundColour(main.prefs.get(u'backgroundColor'))
-                item.SetTextColour(main.prefs.get(u'textColor'))
+                item.SetBackgroundColour(app.prefs.get(u'backgroundColor'))
+                item.SetTextColour(app.prefs.get(u'textColor'))
                 self.pickerPanel.Core.joinedItems.remove(fullItem)
             # apply highlighting
             self.SetItem(item)
@@ -449,7 +450,7 @@ class Panel(wx.Panel):
           name=u'selectionArea', style=wx.SP_LIVE_UPDATE)
 
         # directory picker:
-        if main.prefs.get(u'useDirTree'):
+        if app.prefs.get(u'useDirTree'):
             self.__create_dir_tree()
 
         # file picker:
@@ -461,7 +462,7 @@ class Panel(wx.Panel):
 
     def __init_splitter(self):
         """Initialise split window based on preferences."""
-        if main.prefs.get('useDirTree'):
+        if app.prefs.get('useDirTree'):
             self.selectionArea.SplitVertically(self.dirPicker, self.ItemList, 280)
         else:
             self.selectionArea.Initialize(self.ItemList)
@@ -480,7 +481,7 @@ class Panel(wx.Panel):
                 self.selectionArea,
                 wxID_SELECTIONAREADIRPICKER,
                 u'dirPicker',
-                main.prefs.get('showHiddenDirs')
+                app.prefs.get('showHiddenDirs')
             )
         self.dirPicker.bind()
 
@@ -551,13 +552,13 @@ class Panel(wx.Panel):
         ID = self.ItemList.FindItem(0,displayedName)
         item = wx.ListItem()
         item.SetId(ID)
-        item.SetBackgroundColour(main.prefs.get(u'backgroundColor'))
-        item.SetTextColour(main.prefs.get(u'textColor'))
-        self.Panel.ItemList.SetItem(item)
+        item.SetBackgroundColour(app.prefs.get(u'backgroundColor'))
+        item.SetTextColour(app.prefs.get(u'textColor'))
+        self.ItemList.SetItem(item)
     
     def reset_dirpicker_on_config_load(self):
         """Used when a config is loaded to ensure dirpicker behaves correctly."""
-        if main.prefs.get('useDirTree') and \
+        if app.prefs.get('useDirTree') and \
         self.dirPicker.GetPath() != self.path.GetValue():
             self.dirPicker.unbind()
             self.dirPicker.SetPath(self.path.GetValue())
@@ -566,7 +567,7 @@ class Panel(wx.Panel):
 
     def set_tree(self):
         """Hide or show directory tree."""
-        if main.prefs.get(u'useDirTree'):
+        if app.prefs.get(u'useDirTree'):
             self.__create_dir_tree()
             self.dirPicker.SetPath(self.path.GetValue())
         else:
@@ -592,7 +593,7 @@ class Panel(wx.Panel):
 
     def set_path(self, event):
         """Set the picker path."""
-        if main.prefs.get(u'useDirTree'):
+        if app.prefs.get(u'useDirTree'):
             # keep a record of the original path
             path = self.path.GetValue()
             # need to temporarily unbind to avoid showing picker twice
@@ -619,8 +620,8 @@ class Panel(wx.Panel):
             item = wx.ListItem()
             item.SetId(i)
             #item.SetState(wx.LIST_STATE_SELECTED|wx.LIST_STATE_FOCUSED)
-            item.SetBackgroundColour(main.prefs.get(u'highlightColor'))
-            item.SetTextColour(main.prefs.get(u'highlightTextColor'))
+            item.SetBackgroundColour(app.prefs.get(u'highlightColor'))
+            item.SetTextColour(app.prefs.get(u'highlightTextColor'))
             self.ItemList.SetItem(item)
         # enable buttons
         self.ItemList.Refresh()
@@ -641,8 +642,8 @@ class Panel(wx.Panel):
         for i in range(total_items):
             item = wx.ListItem()
             item.SetId(i)
-            item.SetBackgroundColour(main.prefs.get(u'backgroundColor'))
-            item.SetTextColour(main.prefs.get(u'textColor'))
+            item.SetBackgroundColour(app.prefs.get(u'backgroundColor'))
+            item.SetTextColour(app.prefs.get(u'textColor'))
             self.ItemList.SetItem(item)
         # enable buttons
         self.selectAll.Enable(True)
@@ -680,4 +681,3 @@ class Panel(wx.Panel):
         else:
             self.walkIt.SetValue(False)
         self.__on_recursive_checkbox(True)
-

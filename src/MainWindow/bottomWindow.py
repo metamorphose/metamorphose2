@@ -21,6 +21,7 @@ import os
 import wx.lib.buttons as buttons
 import editDialog
 import utils
+import app
 
 [
 wxID_BOTTOM_WINDOW, wxID_AUTOPREVIEW, wxID_GO,
@@ -51,7 +52,7 @@ class ListCtrl(wx.ListCtrl):
         self.set_preferences()
 
     def set_preferences(self):
-        prefs = self.parent.prefs
+        prefs = app.prefs
         self.green = wx.ListItemAttr()
         self.green.SetBackgroundColour(prefs.get(u'renamedColor'))
         self.lightGreen = wx.ListItemAttr()
@@ -136,7 +137,7 @@ class ListCtrl(wx.ListCtrl):
         elif item in self.parent.warn:
             return self.yellow
         # make items that will be renamed stand out
-        elif self.parent.prefs.get('showPreviewHighlight') and\
+        elif app.prefs.get('showPreviewHighlight') and\
           (original[0] != renamed[0]):
             return self.lightGreen
         else:
@@ -199,7 +200,7 @@ class ListCtrl(wx.ListCtrl):
         original, renamed = self.get_names(item)
         if original[1]:
             # show preview if available
-            if self.parent.prefs.get('showPreviewIcons') and\
+            if app.prefs.get('showPreviewIcons') and\
               pickerList.thumbnails.has_key(original[0]):
                 img = pickerList.thumbnails[original[0]]
             else:

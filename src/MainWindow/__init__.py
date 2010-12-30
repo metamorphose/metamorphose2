@@ -31,6 +31,8 @@ import gettext
 import locale
 import getopt
 
+import app
+
 # notebok windows:
 import sorting
 import errors
@@ -387,7 +389,7 @@ class MainWindow(wx.Frame):
         )
 
     def __init_ctrls(self, prnt):
-        if self.debug:
+        if app.debug:
             self.SetTitle(u"Métamorphose 2 v. %s -- DEBUG MODE"%self.version)
         else:
             self.SetTitle(u"Métamorphose 2 (beta)")
@@ -499,7 +501,7 @@ class MainWindow(wx.Frame):
                 print("Showing processing times")
             # show debug messages
             elif o in ("-d", "--debug"):
-                self.debug = True
+                app.debug = True
                 print("Running in debug mode")
                 print("Version : " + self.version)
                 print("Python %s, wxPython %s"%(platform.python_version(), utils.get_wxversion()))
@@ -620,10 +622,8 @@ class MainWindow(wx.Frame):
         self.REmsg = False # regular expression error
         self.recursiveFolderOn = False # if true, will need to sort items before renaming
         self.language = '' # to be set later
-        self.prefs = {} # preferences, to be set later
         self.autoModeLevel = False # automatic mode level
         self.show_times = False # show processing times
-        self.debug = False # show debug info
 
         path, configFilePath = self.__get_cli_options()
 
@@ -635,7 +635,7 @@ class MainWindow(wx.Frame):
 
         self.set_language()
 
-        if self.debug:
+        if app.debug:
             print("Operating System :", platform.system())
             print("System encoding :", self.encoding)
             print("Interface language :", self.language)
@@ -651,7 +651,7 @@ class MainWindow(wx.Frame):
         import bottomWindow
 
         # initialise preferences
-        self.prefs = preferences.Methods(self)
+        app.prefs = preferences.Methods(self)
 
         # icons used for status bar messages
         self.statusImages = {
@@ -670,7 +670,7 @@ class MainWindow(wx.Frame):
         self.__init_ctrls(prnt)
 
         # clear undo (if set in preferences):
-        if self.prefs.get(u'clearUndo'):
+        if app.prefs.get(u'clearUndo'):
             try:
                 originalFile = codecs.open(utils.get_user_path(u'undo/original.bak'),
                                            'w', "utf-8")
@@ -765,7 +765,7 @@ class MainWindow(wx.Frame):
         """Set status bar text and image."""
         self.statusImage.SetBitmap(self.statusImages[img])
         self.SetStatusText(self.make_space(msg))
-        if self.debug:
+        if app.debug:
             print(u"status message : '%s'" %msg)
 
 
@@ -791,9 +791,9 @@ class MainWindow(wx.Frame):
         """Export current selection as CSV file."""
         if hasattr(self,'toRename'):
             CSVfile = ""
-            q = self.prefs.get('logEnclose')
-            sep = self.prefs.get('logSeparator')
-            ext = self.prefs.get('logFextension')
+            q = app.prefs.get('logEnclose')
+            sep = app.prefs.get('logSeparator')
+            ext = app.prefs.get('logFextension')
 
             if self.show_times:
                 t = time.time()
@@ -819,22 +819,22 @@ class MainWindow(wx.Frame):
             # auto logging, generate file name
             else:
                 file = time.strftime("undo_%Y-%m-%d_%Hh%Mm%Ss",
-                       time.localtime())+'.'+self.prefs.get('logFextension')
-                path = os.path.join(self.prefs.get(u'logLocation'), file)
+                       time.localtime())+'.'+app.prefs.get('logFextension')
+                path = os.path.join(app.prefs.get(u'logLocation'), file)
                 utils.write_file(path, CSVfile)
 
 
     def import_items_from_text(self, event):
         """Import item selection from text file."""
-        if self.prefs.get('logLocation') != '':
-            path = self.prefs.get('logLocation')
+        if app.prefs.get('logLocation') != '':
+            path = app.prefs.get('logLocation')
         else:
             path = utils.get_user_path(u'undo')
 
         # settings from preferences
-        ext = self.prefs.get('logFextension')
-        q = self.prefs.get('logEnclose')
-        sep = self.prefs.get('logSeparator')
+        ext = app.prefs.get('logFextension')
+        q = app.prefs.get('logEnclose')
+        sep = app.prefs.get('logSeparator')
 
         wildOnes = _(u"Log file") + u" (*.%s)|*.%s|"%(ext,ext) +\
                    _(u"All files") + "(*.*)|*.*"
@@ -949,7 +949,7 @@ class MainWindow(wx.Frame):
         display.mode = 'preview'
 
         # set the image list
-        if self.prefs.get('showPreviewIcons'):
+        if app.prefs.get('showPreviewIcons'):
             display.imgs = pickerList.imgs
         else:
             display.imgs = wx.ImageList(16,16)

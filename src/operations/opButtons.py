@@ -28,6 +28,7 @@ import roman
 import time
 import locale
 import calendar
+import app
 import utils
 
 from mutagen.asf import ASF
@@ -513,7 +514,7 @@ class Panel(wx.Panel):
             except:
                 utils.add_to_errors(main,filename,_(u"Could not read audio metadata"))
                 return None
-            if main.debug:
+            if app.debug:
                 print(audioMetadata)
             return audioMetadata
         else:
@@ -527,7 +528,7 @@ class Panel(wx.Panel):
         path = audioMetadata.filename
         if audioMetadata.has_key(tag):
             value = audioMetadata[tag][0]
-            encoding = main.prefs.get('encodingSelect')
+            encoding = app.prefs.get('encodingSelect')
             if str(encoding) != str(locale.getlocale()[1]):
                 try:
                     # incorrect encodings should default to latin-1

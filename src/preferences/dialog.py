@@ -20,16 +20,14 @@ import colors
 import display
 import errorCheck
 import general
+import app
 import utils
 import wx
 
 class Notebook(wx.Toolbook):
     """Notebook for preferences."""
     def __init__(self, parent, id, name):
-        wx.Toolbook.__init__(self, parent, id, name=name, style=
-                             wx.BK_TOP
-                             #wx.BK_LEFT
-                             )
+        wx.Toolbook.__init__(self, parent, id, name=name, style=wx.BK_TOP)
 
         il = wx.ImageList(22, 22)
         imgGeneral = il.Add(wx.Bitmap(utils.icon_path(u'22/general.png'), wx.BITMAP_TYPE_PNG))
@@ -128,7 +126,7 @@ class Dialog(wx.Dialog):
 
     def __on_apply_button(self, event):
         self.prefs.set_prefs(self)
-        prefs = main.prefs = self.prefs
+        prefs = app.prefs = self.prefs
         if not self.initial:
             if prefs.get(u'useDirTree') != self.oldDirTree:
                 main.picker.set_tree()
@@ -140,14 +138,14 @@ class Dialog(wx.Dialog):
 
     def load_prefs(self, panel):
         """load preferences from file and apply them to a panel."""
-        utils.debug_print(main, 'Loading %s preferences ...' % panel.GetName())
+        utils.debug_print('Loading %s preferences ...' % panel.GetName())
         for child in panel.GetChildren():
             try:
                 v = self.prefs.get(child.GetName(), False)
             except KeyError:
                 pass
             else:
-                utils.debug_print(main, "   %s = %s" % (child.GetName(), v))
+                utils.debug_print("   %s = %s" % (child.GetName(), v))
                 if isinstance(child, wx.CheckBox) or isinstance(child, wx.RadioButton)\
                     or isinstance(child, wx.SpinCtrl):
                         child.SetValue(v)

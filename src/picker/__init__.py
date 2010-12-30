@@ -18,6 +18,7 @@ Supports direct selection, regular expression filters, and attribute filters.
 """
 
 from __future__ import print_function
+import app
 import utils
 import classes
 import sys
@@ -57,7 +58,7 @@ class Parameters(classes.Parameters):
 
     def set_root_path(self, root):
         """Load all needed panel values to instance."""
-        utils.debug_print(main, "Examining : %s"%root)
+        utils.debug_print("Examining : %s"%root)
         
         self.root = False
         # don't do anything for blank path
@@ -150,7 +151,7 @@ class Core():
         self.remove_all_items()
 
     def refresh_dir_tree(self):
-        if main.prefs.get(u'useDirTree'):
+        if app.prefs.get(u'useDirTree'):
             self.view.refresh_dirpicker()
 
     def remove_items_by_name(self, itemNames):
@@ -291,7 +292,7 @@ class Core():
                 maxDepth = params.walkDepth
 
                 # remove debug only when folder renaming is fixed
-                if main.debug and params.foldersOn:
+                if app.debug and params.foldersOn:
                     main.recursiveFolderOn = True
 
                 try:
@@ -307,7 +308,7 @@ class Core():
 
                         # enable this when folder renaming is fixed
                         '''
-                        if main.debug and params.foldersOn:
+                        if app.debug and params.foldersOn:
                             for entry in dirs:
                                 entry = os.path.join(base,entry)
                                 _filter_folders(entry)
@@ -372,5 +373,5 @@ class Core():
             if main.show_times:
                 print( "%s items load : %s"%(self.count_panel_items(), (time.time() - t)) )
 
-            if main.prefs.get(u'autoSelectAll'):
+            if app.prefs.get(u'autoSelectAll'):
                 self.select_all()

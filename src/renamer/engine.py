@@ -13,6 +13,7 @@
 # GNU General Public License for more details.
 
 from __future__ import print_function
+import app
 import utils
 import os
 import time
@@ -63,7 +64,7 @@ class Core():
         try:
             shutil1.move(original[0], renamed[0], True)
         except IOError as (errNumb, err):
-            if main.debug:
+            if app.debug:
                 print("IOError : %s, %s"%(errNumb, err))
             # may need to create dirs first
             if errNumb == 2 and not os.path.exists(os.path.dirname(renamed[0])):
@@ -78,7 +79,7 @@ class Core():
                 self._show_rename_error(i, err, original, renamed)
                 return True
         except OSError as (errNumb, err):
-            if main.debug:
+            if app.debug:
                 print("OSError : %s, %s"%(errNumb, err))
             # don't stop for a read-only error if the renamed item exists
             if not (errNumb == 30 and os.path.exists(renamed[0])):
@@ -164,15 +165,11 @@ class Core():
 
             i += 1
 
-            if main.debug:
+            if app.debug:
                 try:
-                    print(original[0])
-                    print(renamed[0])
-                    print()
+                    print("%s\n%s\n"%(original[0], renamed[0]) )
                 except:
-                    print('could not display name on this terminal')
-                    print()
-
+                    print("could not display name on this terminal\n")
         return error, i
 
 
@@ -183,7 +180,7 @@ class Core():
 
     def setup(self):
         """Should be called before running to intialise."""
-        self.prefs = main.prefs
+        self.prefs = app.prefs
 
     def rename(self, event):
         """

@@ -16,6 +16,7 @@ from __future__ import print_function
 import wx
 import os
 import codecs
+import app
 import utils
 import general
 import automation
@@ -45,7 +46,7 @@ class Methods:
 
     def __open_pref_file(self,type):
         prefFile = self.__find_pref_file()
-        utils.debug_print(main, "Opening as '%s' : %s"%(type,prefFile))
+        utils.debug_print("Opening as '%s' : %s"%(type,prefFile))
         prefFile = codecs.open(prefFile, type, 'utf-8')
         return prefFile
 
@@ -149,7 +150,7 @@ class Methods:
                 if value is not None:
                     name = child.GetName()
                     options += u'%s=%s\n'%(name,value)
-                    utils.debug_print(main, "%s (%s) = %s"%(name,type,value))
+                    utils.debug_print("%s (%s) = %s"%(name,type,value))
         prefFile.write(options)
         prefFile.close()
         self.__load_preferences()
