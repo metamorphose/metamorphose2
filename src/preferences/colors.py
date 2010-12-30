@@ -13,6 +13,8 @@
 # GNU General Public License for more details.
 
 import wx
+import utils
+import main
 
 class Panel(wx.Panel):
     """Color preferences panel."""
@@ -43,7 +45,7 @@ class Panel(wx.Panel):
 
         self.mainSizer.AddSpacer(wx.Size(8, 8), border=0, flag=0)
         self.mainSizer.AddWindow(self.renameColorSizer, 0,
-            flag=wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, border=15)
+            flag=wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, border=10)
         self.mainSizer.AddWindow(self.setDefaultsBtn, 0,
             flag=wx.ALIGN_CENTER_HORIZONTAL|wx.TOP, border=5)
         self.SetSizer(self.mainSizer)
@@ -118,7 +120,15 @@ class Panel(wx.Panel):
     def hex_to_rgb(self, value):
         value = value.lstrip('#')
         lv = len(value)
-        return tuple(int(value[i:i+lv/3], 16) for i in range(0, lv, lv/3))
+        try:
+            rgb = tuple(int(value[i:i+lv/3], 16) for i in range(0, lv, lv/3))
+        except ValueError:
+            msg = _(u"Invalid color specified.")
+            title = _(u"Error")
+            utils.make_err_msg(msg, title)
+            return False
+        else:
+            return rgb
 
     def set_defaults(self, event):
         defaults = {
@@ -145,9 +155,10 @@ class Panel(wx.Panel):
         colorDialog.ShowModal()
         colorData = colorDialog.GetColourData()
         color = colorData.GetColour()
+        #if color[0] != -1:
         color = color.GetAsString(wx.C2S_HTML_SYNTAX)
-
-        
+        #else:
+        #    color = main.prefs[name]
         textCtrl.SetValue(color)
         textCtrl.SetBackgroundColour(color)
         

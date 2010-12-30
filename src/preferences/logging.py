@@ -23,7 +23,7 @@ import utils
 
 class Panel(wx.Panel):
     """Logging preferences panel."""
-    def __init_main_sizer(self, parent):
+    def __init_itemsizer_items(self, parent):
         parent.AddSpacer(wx.Size(8, 8), border=0, flag=0)
         parent.AddWindow(self.staticText5, 0, border=5, flag=wx.ALL)
         parent.AddSpacer(wx.Size(8, 8), border=0, flag=0)
@@ -48,10 +48,13 @@ class Panel(wx.Panel):
         parent.AddWindow(self.logFextension, 0, border=0, flag=0)
 
     def __init_sizers(self):
-        self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
         self.logOptionsSizer = wx.FlexGridSizer(cols=2, hgap=0, rows=1, vgap=3)
-        self.__init_main_sizer(self.mainSizer)
         self.__init_logoptions_sizer(self.logOptionsSizer)
+        self.itemSizer = wx.BoxSizer(orient=wx.VERTICAL)
+        self.__init_itemsizer_items(self.itemSizer)
+        self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
+        self.mainSizer.AddSizer(self.itemSizer, 1, border=10,
+            flag=wx.ALIGN_CENTER_HORIZONTAL|wx.ALL|wx.EXPAND)
         self.SetSizer(self.mainSizer)
 
     def __init_ctrls(self, prnt):
@@ -60,7 +63,7 @@ class Panel(wx.Panel):
               
         self.staticText1 = wx.StaticText(id=wxID_PANELSTATICTEXT1,
               label=_(u'Folder to keep log files in:'), name='staticText1',
-              parent=self, style=0)
+              parent=self)
 
         self.logLocation = wx.DirPickerCtrl(self, -1,
             style=wx.DIRP_USE_TEXTCTRL|wx.DIRP_DIR_MUST_EXIST, name=u'logLocation',
@@ -68,31 +71,28 @@ class Panel(wx.Panel):
 
         self.staticText2 = wx.StaticText(id=wxID_PANELSTATICTEXT2,
               label=_(u'Separate values with:'), name='staticText2',
-              parent=self, style=0)
+              parent=self)
 
         self.logSeparator = wx.TextCtrl(id=wxID_PANELLOGSEPARATOR,
               name=u'logSeparator', parent=self, size=wx.Size(50, -1),
-              style=0, value=u':::')
+              value=u':::')
 
         self.staticText3 = wx.StaticText(id=wxID_PANELSTATICTEXT3,
-              label=_(u'Enclose values in:'), name='staticText3', parent=self,
-              style=0)
+              label=_(u'Enclose values in:'), name='staticText3', parent=self)
 
         self.logEnclose = wx.TextCtrl(id=wxID_PANELLOGENCLOSE,
-              name=u'logEnclose', parent=self, pos=wx.Point(179, 144),
-              size=wx.Size(50, -1), style=0, value=u'')
+              name=u'logEnclose', parent=self, size=wx.Size(50, -1), value=u'')
 
         self.staticText4 = wx.StaticText(id=wxID_PANELSTATICTEXT4,
-              label=_(u'File extension:'), name='staticText4', parent=self,
-              style=0)
+              label=_(u'File extension:'), name='staticText4', parent=self)
 
         self.logFextension = wx.TextCtrl(id=wxID_PANELLOGFEXTENSION,
               name=u'logFextension', parent=self, size=wx.Size(50, -1),
-              style=0, value=u'log')
+              value=u'log')
 
         self.staticText5 = wx.StaticText(id=wxID_PANELSTATICTEXT5,
               label=_(u'These settings apply to loading and saving of log files.'),
-              name='staticText5', parent=self, style=0)
+              name='staticText5', parent=self)
 
         self.__init_sizers()
 

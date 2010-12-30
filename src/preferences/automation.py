@@ -22,7 +22,7 @@ import wx
 class Panel(wx.Panel):
     """Automation preferences panel."""
 
-    def __init_mainsizer_items(self, parent):
+    def __init_itemsizer_items(self, parent):
         parent.AddWindow(self.autoSelectAll, 0, border=10, flag=wx.ALL)
         parent.AddWindow(self.reloadAfterRename, 0, border=10, flag=wx.ALL)
         parent.AddWindow(self.previewOnConfig, 0, border=10, flag=wx.ALL)
@@ -31,41 +31,38 @@ class Panel(wx.Panel):
         parent.AddSpacer(wx.Size(5, 5), border=0, flag=0)
 
     def __init_sizers(self):
+        self.itemSizer = wx.BoxSizer(orient=wx.VERTICAL)
+        self.__init_itemsizer_items(self.itemSizer)
         self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
-        self.__init_mainsizer_items(self.mainSizer)
+        self.mainSizer.AddSizer(self.itemSizer, 0, border=10,
+            flag=wx.ALIGN_CENTER_HORIZONTAL|wx.ALL)
         self.SetSizer(self.mainSizer)
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'Automation', parent=prnt,
               style=wx.TAB_TRAVERSAL)
-        self.SetClientSize(wx.Size(416, 335))
 
         self.autoSelectAll = wx.CheckBox(id=wxID_PANELAUTOSELECTALL,
               label=_(u'Select all items when loading a directory'),
-              name=u'autoSelectAll', parent=self, pos=wx.Point(10, 10),
-              style=0)
+              name=u'autoSelectAll', parent=self)
         self.autoSelectAll.SetValue(True)
 
         self.reloadAfterRename = wx.CheckBox(id=wxID_PANELRELOADAFTERRENAME,
               label=_(u'Re-load directory contents after renaming'),
-              name=u'reloadAfterRename', parent=self, pos=wx.Point(10, 52),
-              style=0)
+              name=u'reloadAfterRename', parent=self)
 
         self.alwaysMakeLog = wx.CheckBox(id=wxID_PANELALWAYSMAKELOG,
               label=_(u'Keep a log of all renaming operations'),
-              name=u'alwaysMakeLog', parent=self, pos=wx.Point(10, 136),
-              style=0)
+              name=u'alwaysMakeLog', parent=self)
 
         self.previewOnConfig = wx.CheckBox(id=wxID_PANELPREVIEWONCONFIG,
               label=_(u'Preview selection when loading a configuration'),
-              name=u'previewOnConfig', parent=self, pos=wx.Point(10, 94),
-              style=0)
+              name=u'previewOnConfig', parent=self)
         self.previewOnConfig.SetValue(True)
 
         self.autoShowError = wx.CheckBox(id=wxID_PANELAUTOSHOWERROR,
               label=_(u'Automatically show errors after preview'),
-              name=u'autoShowError', parent=self, pos=wx.Point(15, 234),
-              size=wx.Size(288, 22), style=0)
+              name=u'autoShowError', parent=self)
 
         self.__init_sizers()
 

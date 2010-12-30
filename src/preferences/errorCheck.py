@@ -24,11 +24,14 @@ import platform
 
 class Panel(wx.Panel):
     def __init_sizers(self):
+        self.itemSizer = wx.BoxSizer(orient=wx.VERTICAL)
+        self.__init_itemsizer_items(self.itemSizer)
         self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
-        self.__init_mainsizer_items(self.mainSizer)
+        self.mainSizer.AddSizer(self.itemSizer, 0, border=10,
+            flag=wx.ALIGN_CENTER_HORIZONTAL|wx.ALL)
         self.SetSizer(self.mainSizer)
 
-    def __init_mainsizer_items(self, parent):
+    def __init_itemsizer_items(self, parent):
         parent.AddSpacer(wx.Size(8, 8), border=0, flag=0)
         parent.AddWindow(self.useWinChars, 0, border=15, flag=wx.LEFT)
         parent.AddSpacer(wx.Size(8, 4), border=0, flag=0)
@@ -52,44 +55,37 @@ class Panel(wx.Panel):
 
         self.useWinChars = wx.CheckBox(id=wxID_PANELUSEWINCHARS,
               label=_(u'Use Windows compatible characters'),
-              name=u'useWinChars', parent=self, pos=wx.Point(15, 8),
-              size=wx.Size(280, 22), style=0)
+              name=u'useWinChars', parent=self)
         self.useWinChars.SetValue(True)
         self.useWinChars.Bind(wx.EVT_CHECKBOX, self.allow_winchars,
               id=wxID_PANELUSEWINCHARS)
 
         self.markWarning = wx.RadioButton(id=wxID_PANELMARKWARNING,
               label=_(u'Mark name as warning'), name=u'markWarning',
-              parent=self, pos=wx.Point(38, 38), size=wx.Size(186, 22),
-              style=wx.RB_GROUP)
+              parent=self, style=wx.RB_GROUP)
         self.markWarning.Enable(False)
 
         self.markBadChars = wx.RadioButton(id=wxID_PANELMARKBADCHARS,
-              label=_(u'Mark name as bad'), name=u'markBadChars', parent=self,
-              pos=wx.Point(38, 68), size=wx.Size(160, 22), style=0)
+              label=_(u'Mark name as bad'), name=u'markBadChars', parent=self)
 
         self.deleteBadChars = wx.RadioButton(id=wxID_PANELDELETEBADCHARS,
               label=_(u'Fix names (remove bad characters)'),
-              name=u'deleteBadChars', parent=self, pos=wx.Point(38, 98),
-              size=wx.Size(264, 22), style=0)
+              name=u'deleteBadChars', parent=self)
 
         self.useWinNames = wx.CheckBox(id=wxID_PANELUSEWINNAMES,
               label=_(u'Use Windows compatible names'), name=u'useWinNames',
-              parent=self, pos=wx.Point(15, 136), size=wx.Size(264, 22),
-              style=0)
+              parent=self)
         self.useWinNames.SetHelpText(u'')
         self.useWinNames.Bind(wx.EVT_CHECKBOX, self.allow_winnames,
               id=wxID_PANELUSEWINNAMES)
 
         self.winNamesWarn = wx.RadioButton(id=wxID_PANELWINNAMESWARN,
               label=_(u'Mark name as warning'), name=u'winNamesWarn',
-              parent=self, pos=wx.Point(38, 166), size=wx.Size(186, 22),
-              style=wx.RB_GROUP)
+              parent=self, style=wx.RB_GROUP)
         self.winNamesWarn.Enable(False)
 
         self.winNamesBad = wx.RadioButton(id=wxID_PANELWINNAMESBAD,
-              label=_(u'Mark name as bad'), name=u'winNamesBad', parent=self,
-              pos=wx.Point(38, 196), size=wx.Size(160, 22), style=0)
+              label=_(u'Mark name as bad'), name=u'winNamesBad', parent=self)
 
         self.__init_sizers()
 

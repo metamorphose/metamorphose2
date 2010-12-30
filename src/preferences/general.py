@@ -21,7 +21,7 @@ import utils
 ] = [wx.NewId() for __init_ctrls in range(9)]
 
 class Panel(wx.Panel):
-    def __init_main_sizer(self, parent):
+    def __init_itemsizer_items(self, parent):
         parent.AddSpacer(wx.Size(8, 15), border=0, flag=0)
         parent.AddWindow(self.clearUndo, 0, border=15, flag=wx.LEFT)
         parent.AddSpacer(wx.Size(8, 15), border=0, flag=0)
@@ -42,12 +42,15 @@ class Panel(wx.Panel):
               flag=wx.BOTTOM | wx.LEFT|wx.RIGHT)
 
     def __init_sizers(self):
-        self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
         self.encodingSizer = wx.StaticBoxSizer(box=self.staticBox1,
               orient=wx.VERTICAL)
-        self.__init_main_sizer(self.mainSizer)
         self._init_encodingsizer(self.encodingSizer)
+        self.itemSizer = wx.BoxSizer(orient=wx.VERTICAL)
+        self.__init_itemsizer_items(self.itemSizer)
 
+        self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
+        self.mainSizer.AddSizer(self.itemSizer, 0, border=10,
+            flag=wx.ALIGN_CENTER_HORIZONTAL|wx.ALL)
         self.SetSizer(self.mainSizer)
 
     def __init_ctrls(self, prnt):

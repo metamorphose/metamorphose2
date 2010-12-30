@@ -21,7 +21,7 @@ import wx
 ] = [wx.NewId() for __init_ctrls in range(10)]
 
 class Panel(wx.Panel):
-    def __init_main_sizer(self, parent):
+    def __init_itemsizer_items(self, parent):
         parent.AddWindow(self.showPreviewIcons, 0, border=10, flag=wx.ALL)
         parent.AddWindow(self.onlyShowChangedItems, 0, border=10, flag=wx.ALL)
         parent.AddWindow(self.showPreviewHighlight, 0, border=10, flag=wx.ALL)
@@ -42,29 +42,29 @@ class Panel(wx.Panel):
         parent.AddWindow(self.itemCountForProgDialog, 0, border=0, flag=0)
 
     def __init_sizers(self):
-        self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
         self.boxsizer1 = wx.BoxSizer(orient=wx.HORIZONTAL)
         self.boxsizer2 = wx.BoxSizer(orient=wx.HORIZONTAL)
-        self.__init_main_sizer(self.mainSizer)
+        self.itemSizer = wx.BoxSizer(orient=wx.VERTICAL)
         self._init_boxsizer1(self.boxsizer1)
         self._init_boxsizer2(self.boxsizer2)
-
+        self.__init_itemsizer_items(self.itemSizer)
+        self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
+        self.mainSizer.AddSizer(self.itemSizer, 0, border=10,
+            flag=wx.ALIGN_CENTER_HORIZONTAL|wx.ALL)
         self.SetSizer(self.mainSizer)
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'Display', parent=prnt,
               style=wx.TAB_TRAVERSAL)
-        self.SetClientSize(wx.Size(416, 335))
 
         self.showPreviewIcons = wx.CheckBox(id=wxID_PANELSHOWPREVIEWICONS,
               label=_(u'Show thumbnails in preview'), name=u'showPreviewIcons',
-              parent=self, pos=wx.Point(10, 10), style=0)
+              parent=self)
         self.showPreviewIcons.SetValue(True)
 
         self.onlyShowChangedItems = wx.CheckBox(id=wxID_PANELONLYSHOWCHANGEDITEMS,
               label=_(u'Only preview items that will change'),
-              name=u'onlyShowChangedItems', parent=self, pos=wx.Point(10, 52),
-              style=0)
+              name=u'onlyShowChangedItems', parent=self)
         self.onlyShowChangedItems.SetValue(False)
         self.onlyShowChangedItems.Bind(wx.EVT_CHECKBOX,
               self.show_changed_items_checkbox,
@@ -72,37 +72,33 @@ class Panel(wx.Panel):
 
         self.showPreviewHighlight = wx.CheckBox(id=wxID_PANELSHOWPREVIEWHIGHLIGHT,
               label=_(u'Highlight changed items in preview'),
-              name=u'showPreviewHighlight', parent=self, pos=wx.Point(10, 52),
-              style=0)
+              name=u'showPreviewHighlight', parent=self)
         self.showPreviewHighlight.SetValue(True)
 
         self.staticText2 = wx.StaticText(id=wxID_PANELSTATICTEXT2,
               label=_(u"Change the refresh rate of the renaming operation:"),
-              name='staticText2', parent=self, pos=wx.Point(10, 99), style=0)
+              name='staticText2', parent=self)
 
         self.staticText1 = wx.StaticText(id=wxID_PANELSTATICTEXT1,
               label=_(u"Refresh rate maximum:"), name='staticText1',
-              parent=self, pos=wx.Point(10, 99), style=0)
+              parent=self)
 
         self.renRefreshMin = wx.SpinCtrl(id=wxID_PANELRENREFRESHMIN, initial=80,
               max=300, min=1, name=u'renRefreshMin', parent=self,
-              pos=wx.Point(145, 99), size=wx.Size(55, -1),
-              style=wx.SP_ARROW_KEYS, value='80')
+              size=wx.Size(55, -1), style=wx.SP_ARROW_KEYS, value='80')
         self.renRefreshMin.SetValue(80)
         self.renRefreshMin.SetToolTipString(_(u"Higher = faster ; Lower = more feedback"))
 
         self.showProgressDialog = wx.CheckBox(id=wxID_PANELSHOWPROGRESSDIALOG,
               label=_(u"Show progress dialog when previewing many items"),
-              name=u'showProgressDialog', parent=self, pos=wx.Point(10, 138),
-              size=wx.Size(267, 13), style=0)
+              name=u'showProgressDialog', parent=self)
         self.showProgressDialog.SetValue(True)
         self.showProgressDialog.Bind(wx.EVT_CHECKBOX,
               self.show_progress_dialog_checkbox,
               id=wxID_PANELSHOWPROGRESSDIALOG)
 
         self.staticText3 = wx.StaticText(id=wxID_PANELSTATICTEXT3,
-              label=_(u"Number of items:"), name='staticText3', parent=self,
-              pos=wx.Point(25, 165), style=0)
+              label=_(u"Number of items:"), name='staticText3', parent=self)
 
         self.itemCountForProgDialog = wx.SpinCtrl(id=wxID_PANELITEMCOUNTFORPROGDIALOG,
               initial=3000, max=1000000, min=0, name=u'itemCountForProgDialog',
