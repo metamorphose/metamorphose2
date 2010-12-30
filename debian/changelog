@@ -1,3 +1,15 @@
+metamorphose2 (0.8.1-1) unstable; urgency=low
+
+  * Fix bug with duplicate rename (ticket 3095633).
+  * Fix bug with config file load/save (ticket 3148071).
+  * Fix bug with removing items from error panel.
+  * Preferences dialog now uses toolbar.
+  * Start using better centralized variable storage.
+  * Minor bugfixes.
+  * Translation updates.
+
+ -- ianaré sévi <ianare@gmail.com>  Thu, 30 Dec 2010 14:56:08 +0100 
+
 metamorphose2 (0.8.0-1) unstable; urgency=low
 
   * Miscellaneous minor bug fixes.
