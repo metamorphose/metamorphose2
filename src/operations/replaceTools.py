@@ -39,7 +39,7 @@ class Panel(wx.Panel):
         self.SetSizerAndFit(mainSizer)
 
     def __init_ctrls(self, prnt):
-        wx.Panel.__init__(self, id=wxID_PANEL, name=u'ReplaceToolsPanel', parent=prnt,
+        wx.Panel.__init__(self, id=wxID_PANEL, name=u'replaceToolsPanel', parent=prnt,
               style=wx.TAB_TRAVERSAL)
               
         self.search = search.Panel(self, main, _(u"Search for what to replace, by:"))

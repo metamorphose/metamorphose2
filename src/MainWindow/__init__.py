@@ -692,7 +692,7 @@ class MainWindow(wx.Frame):
 
         # Load config from command line
         if configFilePath:
-            configs.loadConfig(self, configFilePath)
+            configs.LoadConfig(self, configFilePath)
 
         # Set root directory from command line arguments:
         if path:

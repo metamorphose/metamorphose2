@@ -186,6 +186,7 @@ class LoadConfig():
     def __init__(self, mainWindow, configFilePath):
         global main
         main = mainWindow
+        self.loadError = False
         self.__load_file(configFilePath)
 
     def __set_widget_value(self, id, type, value):
@@ -233,10 +234,15 @@ class LoadConfig():
         # panel, cycle through panels and values
         elif node.tagName == 'wxPanel':
             #print parent, id
-            parent = getattr(parent, id)
-            for child in node.childNodes:
-                if child.nodeType == 1:
-                    self.__apply_values(parent, child)
+            try:
+            	parent = getattr(parent, id)
+            except AttributeError:
+            	self.loadError = True
+            	pass
+            else:
+                for child in node.childNodes:
+                    if child.nodeType == 1:
+                        self.__apply_values(parent, child)
 
 
     def __get_operation_params(self, op):
@@ -342,6 +348,9 @@ class LoadConfig():
             oldPath = main.picker.view.path.GetValue()
 
             self.__load_config_xml(config)
+            
+            if self.loadError:
+            	utils.make_warn_msg(_(u"Not all settings could be loaded."))
 
             # Do not replace a set path if one is not set in the config
             newPath = main.picker.view.path.GetValue()            
@@ -353,3 +362,4 @@ class LoadConfig():
             if main.autoModeLevel != 0 or\
              (app.prefs.get('previewOnConfig') and main.autoModeLevel is False):
                 main.picker.view.reset_dirpicker_on_config_load()
+

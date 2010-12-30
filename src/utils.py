@@ -143,20 +143,26 @@ def make_yesno_dlg(msg, title):
     dlg.Destroy()
     return returnValue
 
-def make_err_msg(msg, title):
+def make_err_msg(msg, title=None):
     """Make a generic error message dialog."""
+    if not title:
+        title = _(u"Error")
     dlg = wx.MessageDialog(None, msg, title, wx.ICON_ERROR)
     dlg.ShowModal()
     dlg.Destroy()
 
-def make_warn_msg(msg, title):
+def make_warn_msg(msg, title=None):
     """Make a generic warning message dialog."""
+    if not title:
+        title = _(u"Warning")
     dlg = wx.MessageDialog(None, msg, title, wx.ICON_WARNING)
     dlg.ShowModal()
     dlg.Destroy()
 
-def make_info_msg(msg, title):
+def make_info_msg(msg, title=None):
     """Make a generic info message dialog."""
+    if not title:
+        title = _(u"Information")
     dlg = wx.MessageDialog(None, msg, title, wx.ICON_INFORMATION)
     dlg.ShowModal()
     dlg.Destroy()

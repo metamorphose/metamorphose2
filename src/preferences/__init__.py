@@ -28,7 +28,7 @@ from dialog import Dialog
 
 def create_dialog(parent, initial=False):
     """Create and return the preferences dialog."""
-    return Dialog(parent, initial, Methods(parent))
+    return Dialog(parent, Methods(parent), initial)
 
 class Methods:
     """
@@ -56,7 +56,7 @@ class Methods:
         title = _(u"Preferences")
         utils.make_warn_msg(msg, title)
         # show preferences
-        prefDiag = Dialog(main, initial=True)
+        prefDiag = Dialog(main, self, initial=True)
         prefDiag.ShowModal()
         prefDiag.Destroy()
 

@@ -108,7 +108,7 @@ class Dialog(wx.Dialog):
 
         self.__init_sizers()
 
-    def __init__(self, parent, initial, prefs):
+    def __init__(self, parent, prefs, initial):
         global main
         main = parent
         self.initial = initial
@@ -118,7 +118,7 @@ class Dialog(wx.Dialog):
             self.close.Enable(False)
             self.apply.Enable(False)
         
-        self.CentreOnParent()
+        self.CentreOnScreen()
         # to see if these change when applying
         if not initial:
             self.oldDirTree = self.prefs.get(u'useDirTree')

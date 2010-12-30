@@ -65,7 +65,7 @@ class Panel(wx.Panel):
         self.SetSizerAndFit(superSizer)
 
     def __init_ctrls(self, prnt):
-        wx.Panel.__init__(self, id=wxID_PANEL, name=u'InsertToolsPanel',
+        wx.Panel.__init__(self, id=wxID_PANEL, name=u'insertToolsPanel',
                           parent=prnt, style=wx.TAB_TRAVERSAL)
 
         # regular expressions --------------------------------------------- #
