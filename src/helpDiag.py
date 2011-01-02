@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
+# Copyright (C) 2006-2011 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 import wx
 import os
 import wx.html
+import app
 import utils
 
 def create(parent):
@@ -29,7 +30,7 @@ def create(parent):
 ] = [wx.NewId() for __init_ctrls in range(7)]
 
 class Dialog(wx.Dialog):
-    def initCollNotebook1Pages(self, parent):
+    def __init_notebook_pages(self, parent):
         parent.AddPage(imageId=-1, page=self.htmlWindow1, select=True,
               text=_(u"General"))
         parent.AddPage(imageId=-1, page=self.htmlWindow2, select=False,
@@ -41,9 +42,9 @@ class Dialog(wx.Dialog):
         parent.AddPage(imageId=-1, page=self.htmlWindow5, select=False,
               text=_(u"Date and Time"))
 
-    def __init_ctrls(self, prnt):
-        wx.Dialog.__init__(self, id=wxID_HELP, name=u'help', parent=prnt,
-              pos=wx.Point(323, 54), size=wx.Size(591, 600),
+    def __init_ctrls(self, parent):
+        wx.Dialog.__init__(self, id=wxID_HELP, name=u'help', parent=parent,
+              size=wx.Size(591, 600),
               style= wx.DEFAULT_DIALOG_STYLE | wx.MAXIMIZE_BOX | wx.RESIZE_BORDER,
               title=_(u"Help"))
         self.SetMinSize(wx.Size(350, 200))
@@ -52,8 +53,7 @@ class Dialog(wx.Dialog):
         self.SetIcon(wx.Icon(utils.icon_path(u'help.ico'),wx.BITMAP_TYPE_ICO))
 
         self.notebook1 = wx.Notebook(id=wxID_HELPNOTEBOOK1, name=u'notebook1',
-              parent=self, pos=wx.Point(0, 0), size=wx.Size(600, 571),
-              style=wx.SUNKEN_BORDER)
+              parent=self, size=wx.Size(600, 571), style=wx.SUNKEN_BORDER)
 
         self.htmlWindow1 = wx.html.HtmlWindow(id=wxID_HELPHTMLWINDOW1,
               name=u'htmlWindow1', parent=self.notebook1, style=wx.html.HW_SCROLLBAR_AUTO)
@@ -70,7 +70,7 @@ class Dialog(wx.Dialog):
         self.htmlWindow5 = wx.html.HtmlWindow(id=wxID_HELPHTMLWINDOW5,
               name=u'htmlWindow5', parent=self.notebook1, style=wx.html.HW_SCROLLBAR_AUTO)
 
-        self.initCollNotebook1Pages(self.notebook1)
+        self.__init_notebook_pages(self.notebook1)
 
     def __init__(self, parent):
         self.__init_ctrls(parent)
@@ -94,8 +94,8 @@ class Dialog(wx.Dialog):
         # try to load the right file for the language, on fail default to US english
         i = 0
         for helpfile in helpFiles:
-            if os.path.isfile(os.path.join(docspath,parent.language,helpfile)):
-                helpFiles[i] = os.path.join(docspath,parent.language,helpfile)
+            if os.path.isfile(os.path.join(docspath,app.language,helpfile)):
+                helpFiles[i] = os.path.join(docspath,app.language,helpfile)
             else:
                 helpFiles[i] = os.path.join(docspath,u'en_US',helpfile)
             i += 1

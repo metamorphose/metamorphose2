@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
+# Copyright (C) 2006-2011 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -103,7 +103,7 @@ class OpPanel(Operation):
               _(u'Japanese'), ], id=wxID_PANELENCODINGGROUP,
               name=u'encodingGroup', parent=self, style=0)
         self.encodingGroup.SetSelection(0)
-        self.encodingGroup.Bind(wx.EVT_CHOICE, self._encoding_options,
+        self.encodingGroup.Bind(wx.EVT_CHOICE, self.__encoding_options,
               id=wxID_PANELENCODINGGROUP)
 
 
@@ -125,11 +125,11 @@ class OpPanel(Operation):
 
     def on_config_load(self):
         """Update GUI elements, settings after config load."""
-        self._encoding_options(False)
+        self.__encoding_options(False)
         self.create_operation(False)
         self.search.on_load(0)
 
-    def _make_encoding_select(self, choicesList):
+    def __make_encoding_select(self, choicesList):
         self.encodingSelect = wx.Choice(choices=choicesList,
               id=wxID_PANELENCODINGSELECT, name=u'encodingSelect', parent=self)
         self.encodingSelect.Bind(wx.EVT_CHOICE, self.create_operation,
@@ -137,21 +137,21 @@ class OpPanel(Operation):
         self.encodeSizer.Add(self.encodingSelect, 0, border=5, flag=wx.LEFT)
         self.Layout()
 
-    def _encoding_options(self, event):
+    def __encoding_options(self, event):
         Value = self.encodingGroup.GetStringSelection()
         try:
             self.encodingSelect.Destroy()
         except AttributeError:
             pass
         choicesList = utils.get_encoding_choices(Value)
-        self._make_encoding_select(choicesList)
+        self.__make_encoding_select(choicesList)
         self.encodingSelect.SetSelection(0)
         self.create_operation(event)
 
 
-    def unquote(self, s):
+    def __unquote(self, s):
         """
-        unquote('abc%20def') -> 'abc def'.
+        __unquote('abc%20def') -> 'abc def'.
 
         Taken from urllib standard python library.
         """
@@ -227,7 +227,7 @@ class OpPanel(Operation):
         def _url_decode(match):
             if isRegExp:
                 match = match.group()
-            return self.unquote(match)
+            return self.__unquote(match)
         def _to_l337(match):
             if isRegExp:
                 match = match.group()
@@ -301,12 +301,12 @@ class OpPanel(Operation):
             except (sre_constants.error,AttributeError) as err:
                 main.set_status_msg(_(u"Regular-Expression: %s")%err,u'warn')
                 # so we know not to change status text after RE error msg:
-                main.REmsg = True
+                app.REmsg = True
                 pass
             # show RE error message from search, if any
             if search.REmsg:
                 main.set_status_msg(search.REmsg,u'warn')
-                main.REmsg = True
+                app.REmsg = True
         # text
         elif searchValues[0] == u"text" and searchValues[2]:
             find = searchValues[2]

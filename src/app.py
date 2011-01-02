@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
+# Copyright (C) 2006-2011 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,7 +12,9 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-"""Important variables needed throughout the application classes."""
+"""Application wide access and storage."""
+
+# Variables
 
 version = False
 warn = [] # warnings
@@ -23,7 +25,15 @@ spacer = u" " * 6 # spacer for status messages (to clear image)
 REmsg = False # regular expression error
 recursiveFolderOn = False # if true, will need to sort items before renaming
 language = '' # to be set later
-prefs = {} # preferences, to be set later
 autoModeLevel = False # automatic mode level
-show_times = False # show processing times
+showTimes = False # show processing times
 debug = False # show debug info
+fontParams = {}
+
+# objects
+
+# preferences object to be set later
+prefs = False
+
+
+# Links

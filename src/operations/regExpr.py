@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
+# Copyright (C) 2006-2011 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -136,7 +136,7 @@ class Panel(wx.Panel):
             self.parent.REmsg = _(u"Regular-Expression: %s")%err
 
             # so we know not to change status text after re error msg
-            main.REmsg = True
+            app.REmsg = True
             pass
         else:
             # reset status message for when items are not loaded

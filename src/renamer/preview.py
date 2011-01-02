@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
+# Copyright (C) 2006-2011 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ class Core():
 
         # good, no errors no warnings:
         if len(main.bad) == 0 and len(main.warn) == 0:
-            if not main.REmsg:
+            if not app.REmsg:
                 main.set_status_msg(_(u"Previewed %s items with no errors")\
                                   %len(main.toRename),u'complete')
         # problems:
@@ -244,7 +244,7 @@ class Core():
         main.Update()
         main.set_status_msg(_(u"Generating %s new names, please wait ...")%len(main.items),u'wait')
 
-        if main.show_times:
+        if app.showTimes:
             t = time.time()
 
         main.counter = 0
@@ -253,7 +253,7 @@ class Core():
         main.ec = 0
         main.errorLog = []
         self.items_ren = []
-        main.REmsg = False # regular expression warn message
+        app.REmsg = False # regular expression warn message
 
         # define here for faster processing
         def split(item):
@@ -348,7 +348,7 @@ class Core():
         main.menuFile.SaveLog.Enable(True)
 
         # output time taken if set
-        if main.show_times:
+        if app.showTimes:
             print("%s items preview : %s"%(len(main.toRename), (time.time() - t)))
 
         self.setStatusMessage()

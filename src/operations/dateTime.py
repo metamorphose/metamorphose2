@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
+# Copyright (C) 2006-2011 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@ import wx
 import wx.lib.masked.timectrl
 import wx.calendar
 import sys
+import app
 
 [wxID_PANEL, wxID_PANELCAL, wxID_PANELDATESEPERATOR,
  wxID_PANELDATETESTDISPLAY, wxID_PANELDATE_FORMAT,
@@ -90,7 +91,7 @@ class Panel(wx.Panel):
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'dateTimePanel',
               parent=prnt, style=wx.TAB_TRAVERSAL)
 
-        fontSize = main.fontParams['size']
+        fontSize = app.fontParams['size']
 
         self.staticBox1 = wx.StaticBox(id=wxID_PANELSTATICBOX1,
               label=_(u"Date Settings:"), name=u'staticBox1', parent=self,

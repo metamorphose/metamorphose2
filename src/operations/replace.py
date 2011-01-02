@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
+# Copyright (C) 2006-2011 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -97,7 +97,7 @@ class OpPanel(Operation):
             except (sre_constants.error,AttributeError) as err:
                 main.set_status_msg(_(u"Regular-Expression: %s")%err,u'warn')
                 # so we know not to change status text after RE error msg:
-                main.REmsg = True
+                app.REmsg = True
                 pass
             else:
                 newName = operations.parse_input(replaced, original, self)
@@ -105,7 +105,7 @@ class OpPanel(Operation):
             # show RE error message from search, if any
             if search.REmsg:
                 main.set_status_msg(search.REmsg,u'warn')
-                main.REmsg = True
+                app.REmsg = True
 
         #- replace in between
         elif searchValues[0] == u"between":

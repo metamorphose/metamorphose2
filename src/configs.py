@@ -2,7 +2,7 @@
 
 # Handles writing and loading XML configuration files
 
-# Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
+# Copyright (C) 2006-2011 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -154,7 +154,7 @@ class SaveConfig():
         cfgFile = u'<?xml version="1.0" encoding="UTF-8"?>\n'
         cfgFile += u'<configuration application="Métamorphose-2" '+\
                    'version="%s" datetime="%s">\n'\
-                   %(main.version, datetime)
+                   %(app.version, datetime)
         # get info for 'normal' notebook tabs
         pages = utils.get_notebook_page_names(main)
         for i in (0,2,3):

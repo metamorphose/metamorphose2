@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
+# Copyright (C) 2006-2011 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -198,13 +198,13 @@ class Core():
         ##### BEGIN HEAVY TESTING ##############################################
 
         # adjust and sort items when recursively renaming folders
-        if main.recursiveFolderOn and event != u'undo':
+        if app.recursiveFolderOn and event != u'undo':
             main.set_status_msg(_(u"Adjusting %s recursive paths, please wait ...")%len(main.toRename),u'wait')
 
             progressDialog = classes.ProgressDialog(main, self.prefs, main.items,
                              _(u"Adjusting %%% recursive paths, please wait ..."))
 
-            if main.show_times:
+            if app.showTimes:
                 t = time.time()
 
             # define these here for faster processing
@@ -268,7 +268,7 @@ class Core():
 
             progressDialog.destroy()
 
-            if main.show_times:
+            if app.showTimes:
                 print("%s items recursive adjust : %s"%(len(main.toRename), (time.time() - t)))
 
             #self._print_list(foldersToAdjust)
@@ -293,7 +293,7 @@ class Core():
 
         # enough checking, DO IT !!
         if not error:
-            if main.show_times:
+            if app.showTimes:
                 t = time.time()
             # rename the item list
             error, itemsRenamed = self._rename_item_list(event)
@@ -314,7 +314,7 @@ class Core():
         utils.set_busy(False)
         self._set_display(len(main.toRename)-1)
 
-        if main.show_times:
+        if app.showTimes:
             print("%s items renamed : %s"%(itemsRenamed, (time.time() - t)))
 
         # auto

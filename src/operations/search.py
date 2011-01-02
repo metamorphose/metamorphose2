@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
+# Copyright (C) 2006-2011 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -223,7 +223,6 @@ class Panel(wx.Panel):
             else:
                 return (frm, to)
 
-
     def define_text(self, event):
         """Set necessary variables for text search."""
         if self.regExpPanel.regExpr.GetValue():
@@ -267,8 +266,7 @@ class Panel(wx.Panel):
                     found.append(newName[x:index])
         return found
 
-
-    def _define_position(self, event):
+    def __define_position(self, event):
         """Create the positions and define variables."""
         self.searchValues = (u"position", 0, 0)
         main.show_preview(event)
@@ -318,7 +316,7 @@ class Panel(wx.Panel):
             for option in repl_pos_tup:
                 option.Enable(True)
             # define the position
-            self._define_position(0)
+            self.__define_position(0)
             self.regExpPanel.regExpr.Enable(False)
         else:
             for option in repl_pos_tup:

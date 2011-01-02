@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
+# Copyright (C) 2006-2011 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@ The renamer panel, it allows displaying and controlling all operation panels.
 import wx
 import operations
 import re
+import app
 import utils
 
 [wxID_, wxID_APPLYEXTENSION, wxID_APPLYNAME,
@@ -139,7 +140,7 @@ class IntroTextPanel(wx.Panel):
                 txtSize = size
             opPanel.Destroy()
 
-        fontParams = main.fontParams
+        fontParams = app.fontParams
         fontSize = fontParams['size']
         fontFamily = fontParams['family']
         fontStyle = fontParams['style']
@@ -326,7 +327,7 @@ class Panel(wx.Panel):
         
         # set horizontal size
         longest = operations.get_longest_name_length()
-        w = main.fontParams['size'] * longest
+        w = app.fontParams['size'] * longest
 
         scrollBarSize = wx.SystemSettings.GetMetric(wx.SYS_VSCROLL_X)
         Size = (w,h)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
+# Copyright (C) 2006-2011 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ class Methods:
     def __init__(self, MainWindow=False):
         global main
         main = MainWindow
-        self.header = u'Version=%s\n'%main.version
+        self.header = u'Version=%s\n'%app.version
         self.prefs = False
 
     def __find_pref_file(self):
@@ -49,6 +49,9 @@ class Methods:
         utils.debug_print("Opening as '%s' : %s"%(type,prefFile))
         prefFile = codecs.open(prefFile, type, 'utf-8')
         return prefFile
+
+    def __upgrade_file(self):
+        pass
 
     def __create_new(self):
         """Create default preferences file."""
@@ -67,7 +70,7 @@ class Methods:
         prefFile.seek(0)
         version = prefFile.readline().strip()[8:]
         # preferences are from prior version, create new file
-        if version[:4] != main.version[:4]:
+        if version[:4] != app.version[:4]:
             prefs = self.__create_new()
         prefFile.seek(0)
         prefs = {}

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
+# Copyright (C) 2006-2011 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
 
 import os
 import wx
+import app
 import utils
 
 class Parameters:
@@ -48,7 +49,7 @@ class Parameters:
 # display single page help dialog
 class SmallHelp(wx.Dialog):
 
-    def __init__(self, prnt, main, helpFile, title, icon, size=False):
+    def __init__(self, prnt, helpFile, title, icon, size=False):
 
         if size == False:
             size = wx.Size(610, 531)
@@ -67,8 +68,8 @@ class SmallHelp(wx.Dialog):
 
         docspath = utils.get_real_path(u'help')
 
-        if os.path.isfile(os.path.join(docspath,main.language,helpFile)):
-            helpFile = os.path.join(docspath,main.language,helpFile)
+        if os.path.isfile(os.path.join(docspath,app.language,helpFile)):
+            helpFile = os.path.join(docspath,app.language,helpFile)
         else:
             helpFile = os.path.join(docspath,u'en_US',helpFile)
 

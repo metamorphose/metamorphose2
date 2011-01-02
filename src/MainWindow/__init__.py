@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
+# Copyright (C) 2006-2011 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,8 +31,6 @@ import gettext
 import locale
 import getopt
 
-import app
-
 # notebok windows:
 import sorting
 import errors
@@ -44,6 +42,7 @@ import about
 import langSelect
 
 # utilities
+import app
 import utils
 import classes
 
@@ -367,30 +366,30 @@ class MainWindow(wx.Frame):
         """Get fonts from system or specify own."""
         if wx.Platform == '__WXGTK__':
             sysFont = wx.SystemSettings.GetFont(wx.SYS_SYSTEM_FONT)
-            self.fontParams = {
+            app.fontParams = {
                 'size' : sysFont.GetPixelSize()[0],
                 'style' : sysFont.GetStyle(),
                 'family' : sysFont.GetFamily(),
                 'weight' : sysFont.GetWeight(),
             }
         else:
-            self.fontParams = {
+            app.fontParams = {
                 'size' : 9,
                 'style' : wx.NORMAL,
                 'family' : wx.DEFAULT,
                 'weight' : wx.NORMAL,
             }
-        #print self.fontParams
+        #print app.fontParams
         self.SetFont(wx.Font(
-            self.fontParams['size'],
-            self.fontParams['family'],
-            self.fontParams['style'],
-            self.fontParams['weight'])
+            app.fontParams['size'],
+            app.fontParams['family'],
+            app.fontParams['style'],
+            app.fontParams['weight'])
         )
 
     def __init_ctrls(self, prnt):
         if app.debug:
-            self.SetTitle(u"Métamorphose 2 v. %s -- DEBUG MODE"%self.version)
+            self.SetTitle(u"Métamorphose 2 v. %s -- DEBUG MODE"%app.version)
         else:
             self.SetTitle(u"Métamorphose 2 (beta)")
         self.SetBackgroundColour(wx.NullColour)
@@ -434,7 +433,7 @@ class MainWindow(wx.Frame):
     def usage(self):
         """Print CLI usage and options to screen."""
         print()
-        print("Metamorphose 2.%s\nRunning on Python %s, wxPython %s"%(self.version, platform.python_version(), utils.get_wxversion()))
+        print("Metamorphose 2.%s\nRunning on Python %s, wxPython %s"%(app.version, platform.python_version(), utils.get_wxversion()))
         print("Copyright (C) 2006-2010 ianare sevi")
         print("<http://file-folder-ren.sourceforge.net/>\n")
         print("Metamorphose is a graphical mass renaming program for files and folders.")
@@ -497,13 +496,13 @@ class MainWindow(wx.Frame):
         for o, a in opts:
             # show processing times
             if o in ("-t", "--timer"):
-                self.show_times = True
+                app.showTimes = True
                 print("Showing processing times")
             # show debug messages
             elif o in ("-d", "--debug"):
                 app.debug = True
                 print("Running in debug mode")
-                print("Version : " + self.version)
+                print("Version : " + app.version)
                 print("Python %s, wxPython %s"%(platform.python_version(), utils.get_wxversion()))
             # set path
             elif o in ("-p", "--path"):
@@ -526,7 +525,7 @@ class MainWindow(wx.Frame):
                     self.autoModeLevel = int(level)
            # specify the language
             elif o in ("-l", "--language"):
-                self.language = self.strip_leading(a)
+                app.language = self.strip_leading(a)
         return path, configFilePath
 
 
@@ -566,7 +565,7 @@ class MainWindow(wx.Frame):
             language = syslang
         '''
         # get language from file if not specified from command line
-        if self.language == '':
+        if app.language == '':
             try:# see if language file exist
                 langIni = codecs.open(utils.get_user_path(u'language.ini'),'r', 'utf-8')
             except IOError:# have user choose language
@@ -574,7 +573,7 @@ class MainWindow(wx.Frame):
             else:# get language from file
                 language = langIni.read().strip()
         else:
-            language = self.language
+            language = app.language
 
         try:
             locales[language]
@@ -600,7 +599,7 @@ class MainWindow(wx.Frame):
         else:
             self.langLTR = False
             self.alignment = wx.ALIGN_RIGHT
-        self.language = language
+        app.language = language
         self.encoding = unicode(locale.getlocale()[1])
 
         # to get some language settings to display properly:
@@ -613,17 +612,13 @@ class MainWindow(wx.Frame):
 
     def __init__(self, prnt):
         # Important variables needed throughout the application classes
-        self.version = utils.get_version()
+        app.version = utils.get_version()
         self.warn = [] # warnings
         self.bad = [] # errors
         self.errorLog = [] # all errors go here
         self.items = [] # items to rename
         self.spacer = u" "*6 # spacer for status messages (to clear image)
-        self.REmsg = False # regular expression error
-        self.recursiveFolderOn = False # if true, will need to sort items before renaming
-        self.language = '' # to be set later
         self.autoModeLevel = False # automatic mode level
-        self.show_times = False # show processing times
 
         path, configFilePath = self.__get_cli_options()
 
@@ -638,7 +633,7 @@ class MainWindow(wx.Frame):
         if app.debug:
             print("Operating System :", platform.system())
             print("System encoding :", self.encoding)
-            print("Interface language :", self.language)
+            print("Interface language :", app.language)
 
         # import these modules here since they need language settings activated
         global renamer
@@ -728,13 +723,13 @@ class MainWindow(wx.Frame):
             Title = u'\m/ (>_<) \m/'
         else:
             Title = _(u"Language")
-            event = self.language
+            event = app.language
         # show the language choices
         dlg = langSelect.create(self, Title, event)
         if dlg.ShowModal() == wx.ID_OK:
             language = dlg.GetLanguage()
             dlg.Destroy()
-            if self.language != language:
+            if app.language != language:
                 self.change_language(language, event)
             return language
 
@@ -795,14 +790,14 @@ class MainWindow(wx.Frame):
             sep = app.prefs.get('logSeparator')
             ext = app.prefs.get('logFextension')
 
-            if self.show_times:
+            if app.showTimes:
                 t = time.time()
 
             # create file contents
             for original, renamed in self.toRename:
                 CSVfile += unicode(q+original[0]+q+sep+q+renamed[0]+q+'\n')
 
-            if self.show_times:
+            if app.showTimes:
                 print("Export file contents for %s items : %s"%(len(self.toRename), (time.time() - t)))
 
             # trigered by menu, allow to choose output file
@@ -908,7 +903,7 @@ class MainWindow(wx.Frame):
             helpFile=u'examples.html'
             Title=_(u"Examples")
             Icon=u'examples'
-        return classes.SmallHelp(self,self,helpFile,Title,Icon).Show()
+        return classes.SmallHelp(self,helpFile,Title,Icon).Show()
 
     def show_about(self, event):
         """Opens about dialog."""

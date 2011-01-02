@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
+# Copyright (C) 2006-2011 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@ import platform
 import wx.lib.hyperlink as hl
 import wx.lib.buttons
 import utils
+import app
 import classes
 
 def create(parent):
@@ -51,13 +52,13 @@ class About(wx.Dialog):
         mainSizer.Add(buttonsRow,0,wx.ALIGN_CENTER|wx.BOTTOM,15)
         self.SetSizerAndFit(mainSizer)
 
-    def __init_ctrls(self):
-        wx.Dialog.__init__(self, id=wxID_ABOUT, name=u'About', parent=main,
+    def __init_ctrls(self, parent):
+        wx.Dialog.__init__(self, id=wxID_ABOUT, name=u'About', parent=parent,
               style=wx.DEFAULT_DIALOG_STYLE,
               title=_(u"About Metamorphose"))
         self.SetIcon(wx.Icon(utils.icon_path(u'about.ico'),wx.BITMAP_TYPE_ICO))
 
-        fontParams = main.fontParams
+        fontParams = app.fontParams
         fontSize = fontParams['size']
         fontFamily = fontParams['family']
         fontStyle = fontParams['style']
@@ -77,12 +78,12 @@ class About(wx.Dialog):
         self.CLOSE.Bind(wx.EVT_BUTTON, self.on_close_button, id=wxID_ABOUTCLOSE)
 
         self.copyright = wx.StaticText(id=wxID_ABOUTCOPYRIGHT,
-              label=u"Copyright © 2006-2010 Ianaré Sévi", name=u'copyright',
+              label=u"Copyright © 2006-2011 Ianaré Sévi", name=u'copyright',
               parent=self)
         self.copyright.SetFont(wx.Font(fontSize+2, fontFamily, fontStyle, wx.BOLD, False))
 
         self.version = wx.StaticText(id=wxID_ABOUTVERSION,
-              label=_(u"Version: %s")%main.version, name=u'version', parent=self)
+              label=_(u"Version: %s")%app.version, name=u'version', parent=self)
         self.version.SetFont(wx.Font(fontSize+2, fontFamily, fontStyle, wx.BOLD, False))
 
         self.wxVersion = wx.StaticText(id=wxID_ABOUTWXVERSION,
@@ -123,9 +124,7 @@ class About(wx.Dialog):
               id=wxID_PANELCREDITSBUTTON)
 
     def __init__(self, parent):
-        global main
-        main = parent
-        self.__init_ctrls()
+        self.__init_ctrls(parent)
         self.__init_sizer()
 
     def on_close_button(self, event):
@@ -142,7 +141,7 @@ class About(wx.Dialog):
             title=_(u"License")
             icon=u'examples'
             size=False
-        return classes.SmallHelp(self,main,helpFile,title,icon,size).ShowModal()
+        return classes.SmallHelp(self,helpFile,title,icon,size).ShowModal()
 
     def on_donate_button(self, event):
         self.donate.GotoURL("http://sourceforge.net/donate/index.php?group_id=146403")

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2006-2010 ianaré sévi <ianare@gmail.com>
+# Copyright (C) 2006-2011 ianaré sévi <ianare@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -171,7 +171,7 @@ class Core():
 
     def _set_initial(self):
         self.clear_all()
-        main.recursiveFolderOn = False
+        app.recursiveFolderOn = False
         utils.set_busy(True)
         self.enable_panel_widget('selectNone', False)
         main.menuPicker.getNoneMenu.Enable(False)
@@ -203,7 +203,7 @@ class Core():
                     filter = re.compile(filter)
             except sre_constants.error as err:
                 main.set_status_msg(_(u"Regular-Expression: %s")%err,u'warn')
-                main.REmsg = True
+                app.REmsg = True
                 filter = re.compile(r'')
                 pass
             useRE = True
@@ -237,7 +237,7 @@ class Core():
 
             main.set_status_msg(_(u"Getting directory contents please wait ..."),u'wait')
 
-            if main.show_times:
+            if app.showTimes:
                 t = time.time()
 
             filter, useRE = self._get_filter(params)
@@ -293,7 +293,7 @@ class Core():
 
                 # remove debug only when folder renaming is fixed
                 if app.debug and params.foldersOn:
-                    main.recursiveFolderOn = True
+                    app.recursiveFolderOn = True
 
                 try:
                     for dirpath, dirnames, filenames in os.walk(params.root):
@@ -370,7 +370,7 @@ class Core():
             main.Refresh()
 
             # output time taken if set
-            if main.show_times:
+            if app.showTimes:
                 print( "%s items load : %s"%(self.count_panel_items(), (time.time() - t)) )
 
             if app.prefs.get(u'autoSelectAll'):
