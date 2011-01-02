@@ -144,7 +144,6 @@ class Core():
                 else:
                     error = True
                     break
-
             # set correct path if in dupe error mode
             if warn == 'duplicate_name':
                 if not path.endswith(os.sep):
@@ -152,25 +151,23 @@ class Core():
                 renamed[0] = renamed[0].replace(path,u'')
                 renamed[0] = join(path, u't_e_m_p', renamed[0])
 
-            # write name to undo
-            self.originalFile.write(original[0] + u'\n')
-            self.renamedFile.write(renamed[0] + u'\n')
-
             # the actual renaimg op
             error = self._rename_item(i, original, renamed, count)
 
             if error:
                 break
-
             i += 1
+            app.debug_print("%s\n%s\n"%(original[0], renamed[0]))
 
-            if app.debug:
-                try:
-                    print("%s\n%s\n"%(original[0], renamed[0]) )
-                except:
-                    print("could not display name on this terminal\n")
+        main.set_status_msg(_(u"Writing undo files, please wait ..."),u'wait')
+        # write out undo files
+        backup = main.toRename[:i]
+        if app.recursiveFolderOn:
+            backup.reverse()
+        for original, renamed in backup:
+            self.originalFile.write(original[0] + u'\n')
+            self.renamedFile.write(renamed[0] + u'\n')
         return error, i
-
 
     def _print_list(self, list):
         """Print out a list (for testing/debug)."""
@@ -189,8 +186,6 @@ class Core():
         utils.set_busy(True)
         main.picker.view.path.SetEditable(False)
 
-        ##### BEGIN HEAVY TESTING ##############################################
-
         # adjust and sort items when recursively renaming folders
         if app.recursiveFolderOn and event != u'undo':
             main.set_status_msg(_(u"Adjusting %s recursive paths, please wait ...")%len(main.toRename),u'wait')
@@ -201,74 +196,15 @@ class Core():
             if app.showTimes:
                 t = time.time()
 
-            # define these here for faster processing
-            def os_split(item):
-                return os.path.split(item)
-            def add_sep(path):
-                return os.sep + path + os.sep
-            # order by path depth
-            def recursive_folder_sort(x, y):
-                x = x[1][0].count(os.sep)
-                y = y[1][0].count(os.sep)
-                return cmp(x, y)
+            def sort_test(n):
+                return -n[1][0].count(os.sep)
 
-            main.toRename.sort(recursive_folder_sort)
-            sortedRename = main.toRename
-
-            # make a list of all folders that will be processed
-            foldersToAdjust = []
-            for item in sortedRename:
-                # only grab folders
-                if not item[0][1]:
-                    #oF = os_split(item[0][0])[0] # original folder name
-                    #nF = os_split(item[1][0])[0] # new folder name
-                    oF = item[0][0]
-                    nF = item[1][0]
-                    if oF is not nF:
-                        print(oF, nF)
-                        #print item[1][0].count(os.sep)
-                        foldersToAdjust.append((oF, nF))
-
-            # replace all occurences of folders in path
-            for i in range(len(main.toRename)):
-
-                print(foldersToAdjust)
-                for f in foldersToAdjust:
-                    oF = add_sep(f[0]) # original folder name
-
-                    # continue from this point for faster processing
-                    if oF not in main.toRename[i][0][0]:
-                        continue
-
-                    nF = add_sep(f[1]) # new folder name
-
-                    print(oF, nF)
-                    #print testing(i,oF,nF)
-
-                    print(main.toRename[i][0][0])
-                    print(main.toRename[i][0][0].replace(oF,nF,1))
-                    print()
-
-                    main.toRename[i][0][0] = main.toRename[i][0][0].replace(oF,nF,1)
-                    main.toRename[i][1][0] = main.toRename[i][1][0].replace(oF,nF,1)
-
-                #if not progressDialog.update(i):
-                #    error = 'cancelled'
-                #    break
-
-            # make sure renaming will be in correct order !
-            main.toRename.sort(recursive_folder_sort)
+            main.toRename.sort(key=sort_test)
 
             progressDialog.destroy()
 
             if app.showTimes:
                 print("%s items recursive adjust : %s"%(len(main.toRename), (time.time() - t)))
-
-            #self._print_list(foldersToAdjust)
-            self._print_list(main.toRename)
-            sys.exit()
-            
-        ##### END HEAVY TESTING ################################################
 
         if not error:
             main.set_status_msg(_(u"Renaming in progress, please wait ..."),u'wait')

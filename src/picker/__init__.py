@@ -297,7 +297,6 @@ class Core():
 
                 try:
                     for dirpath, dirnames, filenames in os.walk(params.root):
-                        #main.Update()
                         base = dirpath.replace(params.root,'')
                         if maxDepth != 0 and len(base.split(os.path.sep)) > maxDepth:
                             continue
@@ -307,12 +306,11 @@ class Core():
                                 _filter_files(entry)
 
                         # enable this when folder renaming is fixed
-                        '''
                         if app.debug and params.foldersOn:
-                            for entry in dirs:
+                            for entry in dirnames:
                                 entry = os.path.join(base,entry)
                                 _filter_folders(entry)
-                        '''
+
                         main.set_status_msg(_(u"Retrieved %s items from directory")%len(files),u'wait')
 
                 except UnicodeDecodeError as err:

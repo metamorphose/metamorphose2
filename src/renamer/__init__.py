@@ -76,9 +76,7 @@ class Core():
         self.__preview.error_check_items()
 
     def rename(self, event):
-        self.__engine.setup()
         self.__engine.rename(event)
 
     def undo(self, event):
-        self.__engine.setup()
         self.__engine.undo_last_rename(event)

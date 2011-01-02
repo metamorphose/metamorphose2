@@ -101,32 +101,19 @@ class Panel(wx.Panel):
               label=_(u"Number of items:"), name='staticText3', parent=self)
 
         self.itemCountForProgDialog = wx.SpinCtrl(id=wxID_PANELITEMCOUNTFORPROGDIALOG,
-              initial=3000, max=1000000, min=0, name=u'itemCountForProgDialog',
-              parent=self, pos=wx.Point(117, 161), size=wx.Size(75, -1),
+              initial=2000, max=100000, min=5, name=u'itemCountForProgDialog',
+              parent=self, size=wx.Size(75, -1),
               style=wx.SP_ARROW_KEYS)
-        self.itemCountForProgDialog.SetValue(3000)
+        self.itemCountForProgDialog.SetValue(2000)
         self.__init_sizers()
 
     def __init__(self, parent):
         self.__init_ctrls(parent)
         self.SetSizerAndFit(self.mainSizer)
 
-
     def init_enabled(self):
         self.show_progress_dialog_checkbox(False)
         self.show_changed_items_checkbox(False)
-
-    '''
-    def on_browse_button(self, event):
-        dlg = wx.DirDialog(self,_(u"Choose a directory:"),
-            style=wx.DD_DEFAULT_STYLE)
-        dlg.SetPath(self.logLocation.GetValue())
-        try:
-            if dlg.ShowModal() == wx.ID_OK:
-                dir = dlg.GetPath()
-                self.logLocation.SetValue(dir)
-        finally: dlg.Destroy()
-    '''
 
     def show_changed_items_checkbox(self, event):
         if self.onlyShowChangedItems.GetValue():

@@ -99,7 +99,7 @@ class ItemList(wx.ListCtrl):
 
         wx.ListCtrl.__init__(self, parent, id=id, name=name, style=style)
         self.thumbnails = {}
-        self._create_image_list(main.bottomWindow.imgPreview.GetValue())
+        self.__create_image_list(main.bottomWindow.imgPreview.GetValue())
 
         """
         self.SetItemCount(100000)
@@ -112,18 +112,17 @@ class ItemList(wx.ListCtrl):
         self.attr2 = wx.ListItemAttr()
         self.attr2.SetBackgroundColour("light blue")
 
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected)
         """
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_item_selected)
-        self.Bind(wx.EVT_KEY_DOWN, self._on_key_down)
-        self.Bind(wx.EVT_KEY_UP, self._on_key_up)
+        self.Bind(wx.EVT_KEY_DOWN, self.__on_key_down)
+        self.Bind(wx.EVT_KEY_UP, self.__on_key_up)
 
         # keep shift key value
         self.shiftDown = False
         self.totalSelected = 0
 
-    def _create_image_list(self, imgPreview):
+    def __create_image_list(self, imgPreview):
         # get thumbnail size
         if imgPreview:
             xy = int(main.bottomWindow.thumbSize.GetStringSelection())
@@ -139,7 +138,7 @@ class ItemList(wx.ListCtrl):
         self.SetImageList(self.imgs, wx.IMAGE_LIST_SMALL)
         return thumbSize
 
-    def _get_item_info(self, item):
+    def get_item_info(self, item):
         """Get item info and parse it for inclusion in renaming list."""
         item_txt = self.GetItemText(item)
         item_txt = item_txt.lstrip(os.sep)
@@ -148,21 +147,21 @@ class ItemList(wx.ListCtrl):
         fullItem = [fullItem,IsFile]
         return fullItem
 
-    def _on_key_down(self, event):
+    def __on_key_down(self, event):
         """Need to know if shift is pressed to adjust selection."""
         if event.m_keyCode == wx.WXK_SHIFT:
             self.shiftDown = True
         else:
             self.shiftDown = False
 
-    def _on_key_up(self, event):
+    def __on_key_up(self, event):
         self.shiftDown = False
         if event.m_keyCode == wx.WXK_SHIFT:
             self.totalSelected = 0
             self.pickerPanel.enable_buttons()
             main.show_preview(True)
     
-    def _image_to_pil(self, source, thumbSize):
+    def __image_to_pil(self, source, thumbSize):
         """Create a thumbnail from an image file."""
         source = Image.open(source, 'r')
         source.thumbnail(thumbSize, Image.ANTIALIAS)
@@ -175,7 +174,7 @@ class ItemList(wx.ListCtrl):
         currentItem = event.m_itemIndex
         item = wx.ListItem()
         item.SetId(currentItem)
-        fullItem = self._get_item_info(currentItem)
+        fullItem = self.get_item_info(currentItem)
 
         # avoid selecting same item twice when using shift key
         if self.shiftDown:
@@ -214,7 +213,7 @@ class ItemList(wx.ListCtrl):
         supported = ('.png','.jpg','.bmp','.tif','.jpeg',
                      '.tiff','.gif','.ico','.thm')
         imgPreview = main.bottomWindow.imgPreview.GetValue()
-        thumbSize = self.thumbSize = self._create_image_list(imgPreview)
+        thumbSize = self.thumbSize = self.__create_image_list(imgPreview)
 
         if imgPreview and utils.is_pil_loaded():
             imgPreview = True
@@ -238,7 +237,7 @@ class ItemList(wx.ListCtrl):
             if imgPreview is True and _get_ext(item) in supported:
                 fullitem = os.path.join(root,item.lstrip('/'))
                 try:
-                    thumb = self._image_to_pil(fullitem,thumbSize)
+                    thumb = self.__image_to_pil(fullitem,thumbSize)
 
                 except IOError:
                     img = 1
@@ -288,19 +287,18 @@ class ItemList(wx.ListCtrl):
 class Panel(wx.Panel):
     def __init_sizer(self):
         # adjust button sizes
-        #utils.adjust_exact_buttons(self,ignore=('OK'))
         utils.adjust_exact_buttons(self)
 
         PathSizer = self.PathSizer = wx.BoxSizer(orient=wx.HORIZONTAL)
         SelectSizer = self.SelectSizer = wx.BoxSizer(orient=wx.HORIZONTAL)
         mainSizer = self.mainSizer = wx.BoxSizer(orient=wx.VERTICAL)
 
-        PathSizer.AddWindow(self.BROWSE,0,wx.ALL, 5, wx.ALIGN_CENTER)
+        PathSizer.AddWindow(self.browse,0,wx.ALL, 5, wx.ALIGN_CENTER)
         PathSizer.AddWindow(self.path,1,wx.ALIGN_CENTER|wx.RIGHT, 5)
         PathSizer.AddWindow(self.walkIt,0,wx.ALIGN_CENTER|wx.RIGHT, 5)
         PathSizer.AddWindow(self.staticText2,0,wx.ALIGN_CENTER|wx.RIGHT, 3)
         PathSizer.AddWindow(self.walkDepth,0,wx.ALIGN_CENTER|wx.RIGHT, 15)
-        PathSizer.AddWindow(self.OK,0,wx.RIGHT|wx.ALIGN_CENTER,8)
+        PathSizer.AddWindow(self.ok,0,wx.RIGHT|wx.ALIGN_CENTER,8)
 
         SelectSizer.AddWindow(self.notType,0,wx.ALIGN_CENTER)
         SelectSizer.AddWindow(self.staticText1,0,wx.ALIGN_CENTER|wx.LEFT,3)
@@ -335,27 +333,27 @@ class Panel(wx.Panel):
         self.path.Bind(wx.EVT_TEXT_ENTER, self.Core.set_path,
               id=wxID_PICKERPANELPATH)
 
-        self.OK = wx.Button(id=wxID_PICKERPANELOK, label=_(u"Refresh"), name=u'OK',
+        self.ok = wx.Button(id=wxID_PICKERPANELOK, label=_(u"Refresh"), name=u'OK',
               parent=self, style=wx.BU_EXACTFIT)
         #reloadImg = wx.Bitmap(utils.icon_path(u'reload.png'), wx.BITMAP_TYPE_PNG)
-        #self.OK = wx.BitmapButton(bitmap=reloadImg, id=wxID_PICKERPANELOK, name=u'OK',
+        #self.ok = wx.BitmapButton(bitmap=reloadImg, id=wxID_PICKERPANELOK, name=u'OK',
         #      parent=self, style=wx.BU_AUTODRAW)
-        self.OK.Enable(True)
-        self.OK.SetToolTipString(_(u"Load or reload current path"))
-        self.OK.Bind(wx.EVT_BUTTON, self.Core.set_path, id=wxID_PICKERPANELOK)
+        self.ok.Enable(True)
+        self.ok.SetToolTipString(_(u"Load or reload current path"))
+        self.ok.Bind(wx.EVT_BUTTON, self.Core.set_path, id=wxID_PICKERPANELOK)
 
-        self.BROWSE = wx.Button(id=wxID_PICKERPANELBROWSE, label=_(u"Browse"),
+        self.browse = wx.Button(id=wxID_PICKERPANELBROWSE, label=_(u"Browse"),
           name=u'BROWSE', parent=self, style=wx.BU_EXACTFIT)
-        self.BROWSE.SetToolTipString(_(u"Browse for path"))
-        self.BROWSE.Bind(wx.EVT_BUTTON, self.browse_for_path,
+        self.browse.SetToolTipString(_(u"Browse for path"))
+        self.browse.Bind(wx.EVT_BUTTON, self.browse_for_path,
           id=wxID_PICKERPANELBROWSE)
 
         self.pathHelp = wx.StaticText(id=wxID_PICKERPANELPATH_HELP,
               label=_(u"Input/Paste path and press OK, or BROWSE for path:"),
-              name=u'pathHelp', parent=self, style=0)
+              name=u'pathHelp', parent=self)
 
         self.select = wx.StaticText(id=wxID_PICKERPANELSELECT, label=_(u"Select:"),
-              name=u'select', parent=self, style=0)
+              name=u'select', parent=self)
 
         self.selectAll = wx.Button(id=wxID_PICKERPANELSELECT_ALL, label=_(u"all"),
               name=u'selectAll', parent=self, style=wx.BU_EXACTFIT)
@@ -370,13 +368,13 @@ class Panel(wx.Panel):
               id=wxID_PICKERPANELSELECT_NONE)
 
         self.foldersOn = wx.CheckBox(id=wxID_PICKERPANELFOLDERSON, label=_(u"Folders"),
-              name=u'foldersOn', parent=self, style=0,)
+              name=u'foldersOn', parent=self,)
         self.foldersOn.SetValue(True)
         self.foldersOn.Bind(wx.EVT_CHECKBOX, self._refresh_items,
               id=wxID_PICKERPANELFOLDERSON)
 
         self.filesOn = wx.CheckBox(id=wxID_PICKERPANELFILESON, label=_(u"Files"),
-              name=u'filesOn', parent=self, style=0)
+              name=u'filesOn', parent=self)
         self.filesOn.SetValue(True)
         self.filesOn.Bind(wx.EVT_CHECKBOX, self._refresh_items,
               id=wxID_PICKERPANELFILESON)
@@ -392,17 +390,17 @@ class Panel(wx.Panel):
               id=wxID_PICKERPANELFILTERSEL)
 
         self.staticText1 = wx.StaticText(id=wxID_PICKERPANELSTATICTEXT1,
-              label=_(u"Contaning:"), name=u'staticText1', parent=self, style=0)
+              label=_(u"Contaning:"), name=u'staticText1', parent=self)
 
         self.filterByRE = wx.CheckBox(id=wxID_PICKERPANELFILTERBYRE, label=_(u"Reg-Expr"),
-              name=u'filterByRE', parent=self, style=0)
+              name=u'filterByRE', parent=self)
         self.filterByRE.SetValue(False)
         self.filterByRE.SetToolTipString(_(u"Evaluate filter as a regular expression"))
         self.filterByRE.Bind(wx.EVT_CHECKBOX, self.__regex_options,
               id=wxID_PICKERPANELFILTERBYRE)
 
         self.ignoreCase = wx.CheckBox(id=wxID_PICKERPANELIGNORECASE, label=_(u"I"),
-              name=u'ignoreCase', parent=self, style=0)
+              name=u'ignoreCase', parent=self)
         self.ignoreCase.SetValue(True)
         self.ignoreCase.Enable(False)
         self.ignoreCase.SetToolTipString(_(u"case-Insensitive match"))
@@ -410,7 +408,7 @@ class Panel(wx.Panel):
               id=wxID_PICKERPANELIGNORECASE)
 
         self.useLocale = wx.CheckBox(id=wxID_PICKERPANELUSELOCALE, label=_(u"U"),
-              name=u'useLocale', parent=self, style=0)
+              name=u'useLocale', parent=self)
         self.useLocale.SetValue(True)
         self.useLocale.Enable(False)
         self.useLocale.SetToolTipString(_(u"Unicode match (\w matches 'a','b','c', etc)"))
@@ -418,14 +416,14 @@ class Panel(wx.Panel):
               id=wxID_PICKERPANELUSELOCALE)
 
         self.walkIt = wx.CheckBox(id=wxID_PICKERPANELWALKIT, label=_(u"Recursive"),
-              name=u'walkIt', parent=self, style=0)
+              name=u'walkIt', parent=self)
         self.walkIt.SetValue(False)
         self.walkIt.SetToolTipString(_(u"Get all files in directory and sub-directories, but no folders"))
         self.walkIt.Bind(wx.EVT_CHECKBOX, self.__on_recursive_checkbox,
               id=wxID_PICKERPANELWALKIT)
 
         self.staticText2 = wx.StaticText(id=wxID_PICKERPANELSTATICTEXT2,
-              label=_(u"depth:"), name=u'staticText2', parent=self, style=0)
+              label=_(u"depth:"), name=u'staticText2', parent=self)
         self.staticText2.Enable(False)
 
         self.walkDepth = wx.SpinCtrl(id=wxID_PICKERPANELWALKDEPTH, initial=0,
@@ -436,7 +434,7 @@ class Panel(wx.Panel):
         self.walkDepth.Enable(False)
 
         self.notType = wx.CheckBox(id=wxID_PICKERPANELNOT_TYPE, label=_(u"Not"),
-              name=u'notType', parent=self, style=0)
+              name=u'notType', parent=self)
         self.notType.SetValue(False)
         self.notType.SetToolTipString(_(u"NOT containing"))
         self.notType.Bind(wx.EVT_CHECKBOX, self._refresh_items,
@@ -456,7 +454,6 @@ class Panel(wx.Panel):
         # file picker:
         self.ItemList = ItemList(id=wxID_SELECTIONAREAFPICKER, name=u'picker',
                                  parent=self.selectionArea,MainWindow=main)
-
         self.__init_splitter()
 
 
@@ -466,7 +463,6 @@ class Panel(wx.Panel):
             self.selectionArea.SplitVertically(self.dirPicker, self.ItemList, 280)
         else:
             self.selectionArea.Initialize(self.ItemList)
-
 
     def __init__(self, Core, parent, MainWindow):
         global main
@@ -487,10 +483,11 @@ class Panel(wx.Panel):
 
     def __on_recursive_checkbox(self, event):
         if self.walkIt.GetValue():
-            self.foldersOn.Enable(False)
-            self.filesOn.Enable(False)
             self.walkDepth.Enable(True)
             self.staticText2.Enable(True)
+            if not app.debug:
+                self.foldersOn.Enable(False)
+                self.filesOn.Enable(False)
         else:
             self.foldersOn.Enable(True)
             self.filesOn.Enable(True)
@@ -615,7 +612,7 @@ class Panel(wx.Panel):
         self.Core.clear_joined_items()
         for i in range(self.ItemList.GetItemCount()):
             # add to list
-            self.Core.joinedItems.append(self.ItemList._get_item_info(i))
+            self.Core.joinedItems.append(self.ItemList.get_item_info(i))
             # show selected in picker
             item = wx.ListItem()
             item.SetId(i)
@@ -631,7 +628,6 @@ class Panel(wx.Panel):
         main.menuPicker.getAllMenu.Enable(False)
         main.currentItem = None
         main.show_preview(event)
-
 
     def select_none(self, event):
         """Remove all items from renaming list."""
