@@ -34,7 +34,6 @@ class Core():
     def __init__(self, MainWindow):
         global main
         main = MainWindow
-        self.setup()
 
     def _set_display(self, i):
         """Refreshes display and main window during renaming operation."""
@@ -97,7 +96,7 @@ class Core():
         return False
 
 
-    def _compare(self, renamed, original):
+    def __compare(self, renamed, original):
         """Dupe checking, windows is case insensitive."""
         renamed = renamed[0]
         original = original[0]
@@ -110,13 +109,13 @@ class Core():
             return False
 
 
-    def _rename_item_list(self, event):
+    def __rename_item_list(self, event):
         """After pre-renaming checks are completed, rename the list of items."""
         # calculate refresh settings
         count = len(main.toRename)
         count = count / 25 + 1
-        if count > int(self.prefs.get('renRefreshMin')):
-            count = int(self.prefs.get('renRefreshMin'))
+        if count > int(app.prefs.get('renRefreshMin')):
+            count = int(app.prefs.get('renRefreshMin'))
 
         # define here for faster processing
         def exists(item):
@@ -131,7 +130,7 @@ class Core():
         # renaming operation:
         i = 0
         for original, renamed in main.toRename:
-            if warn != 'duplicate_name' and self._compare(renamed, original) and\
+            if warn != 'duplicate_name' and self.__compare(renamed, original) and\
               exists(renamed[0]):
                 # set item as bad
                 main.toRename[i][1][1] = None
@@ -178,16 +177,11 @@ class Core():
         for item in list:
             print(item)
 
-    def setup(self):
-        """Should be called before running to intialise."""
-        self.prefs = app.prefs
-
     def rename(self, event):
         """
         Write undo files first (safety first !), then attemp to perform
         the renaming operation.
         """
-        
         itemsRenamed = 0
         error = False
         main.currentItem = None
@@ -201,7 +195,7 @@ class Core():
         if app.recursiveFolderOn and event != u'undo':
             main.set_status_msg(_(u"Adjusting %s recursive paths, please wait ...")%len(main.toRename),u'wait')
 
-            progressDialog = classes.ProgressDialog(main, self.prefs, main.items,
+            progressDialog = classes.ProgressDialog(main, app.prefs, main.items,
                              _(u"Adjusting %%% recursive paths, please wait ..."))
 
             if app.showTimes:
@@ -234,7 +228,6 @@ class Core():
                         print(oF, nF)
                         #print item[1][0].count(os.sep)
                         foldersToAdjust.append((oF, nF))
-            sys.exit()
 
             # replace all occurences of folders in path
             for i in range(len(main.toRename)):
@@ -272,7 +265,7 @@ class Core():
                 print("%s items recursive adjust : %s"%(len(main.toRename), (time.time() - t)))
 
             #self._print_list(foldersToAdjust)
-            #self._print_list(main.toRename)
+            self._print_list(main.toRename)
             sys.exit()
             
         ##### END HEAVY TESTING ################################################
@@ -296,17 +289,17 @@ class Core():
             if app.showTimes:
                 t = time.time()
             # rename the item list
-            error, itemsRenamed = self._rename_item_list(event)
+            error, itemsRenamed = self.__rename_item_list(event)
 
         # end of operations
         if not error:
             main.set_status_msg(_(u"Renaming for %s items completed")
                               %itemsRenamed, u"complete")
-            if self.prefs.get('reloadAfterRename') and event != u'undo':
+            if app.prefs.get('reloadAfterRename') and event != u'undo':
                 main.picker.refresh(event)
             else:
                 main.picker.clear_all()
-            if self.prefs.get(u'alwaysMakeLog'):
+            if app.prefs.get(u'alwaysMakeLog'):
                 main.save_items_as_text(False)
         elif error == 'cancelled':
             main.set_status_msg(_(u"Renaming cancelled"), u'failed')
@@ -318,7 +311,7 @@ class Core():
             print("%s items renamed : %s"%(itemsRenamed, (time.time() - t)))
 
         # auto
-        if main.autoModeLevel > 2 and not error:
+        if app.autoModeLevel > 2 and not error:
             print(_(u"Renaming for %s items completed")%itemsRenamed)
             sys.exit()
 

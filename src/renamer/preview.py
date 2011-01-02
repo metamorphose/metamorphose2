@@ -71,7 +71,7 @@ class Core():
             main.bottomWindow.go.Enable(True)
             main.menuFile.GoMenu.Enable(True)
             # auto mode rename
-            if main.autoModeLevel > 1:
+            if app.autoModeLevel > 1:
                 main.rename_items(event=True)
         else:
             main.bottomWindow.go.Enable(False)
@@ -294,9 +294,9 @@ class Core():
                 newExt = splitName[1][1:]
             else:
                 newName = renamedItem
-                newExt = u''
+                newExt = False
 
-            utils.debug_print(itemToRename)
+            app.debug_print(itemToRename)
 
             if hasNumbering: main.curDir = newPath
 
@@ -307,7 +307,7 @@ class Core():
                 newPath,newName,newExt = op.rename_item(newPath, newName,
                                                        newExt, itemToRename)
 
-                if len(newExt) > 0:
+                if newExt is not False:
                     renamedItem = newName+'.'+newExt
                 else:
                     renamedItem = newName
@@ -328,7 +328,7 @@ class Core():
               main.ec in main.warn:
                 self.items_ren.append(newItem)
 
-            utils.debug_print("%s\n"%newItem)
+            app.debug_print("%s\n"%newItem)
 
             # increment item position counters
             main.ec += 1 # for error/warn assignment

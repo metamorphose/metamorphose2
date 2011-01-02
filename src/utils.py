@@ -24,7 +24,6 @@ import sys
 import codecs
 import locale
 import time
-import app
 try:
     import Image
 except:
@@ -45,7 +44,6 @@ def get_version():
         f.close()
     return v + u' (beta)'
 
-
 def get_wxversion():
     """Get the wxPython Version."""
     wxVer = ""
@@ -62,14 +60,6 @@ def is_pil_loaded():
         return False
     else:
         return True
-
-def debug_print(msg):
-    """Print debug messages to screen, if debugging is enabled."""
-    if app.debug:
-        try:
-            print(msg)
-        except:
-            print('invalid char in msg')
 
 def set_min_size(parent, ignoreCtrls=(), ignoreClasses=()):
     """Recursively set all sizes to platform defaults
@@ -172,8 +162,8 @@ def get_user_path(file):
     base = wx.StandardPaths.Get().GetUserConfigDir()
     return os.path.join(base,homedir,file)
 
-def get_real_path(file):
-    """Return application path for file."""
+def set_real_path():
+    """Set application path."""
     if hasattr(sys, "frozen"):
         path = os.path.dirname(sys.executable)
     else:
@@ -186,7 +176,13 @@ def get_real_path(file):
             print("Could not determine application path.\nMake sure the application is correctly installed.\n")
             sys.exit();
         #print(path)
-    return os.path.join(path,file)
+    return os.path.join(path)
+
+realPath = set_real_path()
+
+def get_real_path(file):
+    """Return application path for file."""
+    return os.path.join(realPath,file)
 
 def locale_path(lang):
     """Return locale directory."""

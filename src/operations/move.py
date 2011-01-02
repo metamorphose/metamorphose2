@@ -37,15 +37,15 @@ class OpPanel(Operation):
         mainSizer.Add(self.search,0,wx.EXPAND|wx.BOTTOM|wx.TOP,10)
 
         moveSizer1 = self.moveSizer1 = wx.BoxSizer(wx.HORIZONTAL)
-        moveSizer1.Add(self.repl_move_pos,0,wx.ALIGN_CENTER|wx.LEFT,5)
-        moveSizer1.Add(self.repl_move_pos_value,0,wx.ALIGN_CENTER|wx.LEFT,5)
+        moveSizer1.Add(self.replMovePos,0,wx.ALIGN_CENTER|wx.LEFT,5)
+        moveSizer1.Add(self.replMovePosValue,0,wx.ALIGN_CENTER|wx.LEFT,5)
         moveSizer1.Add(self.staticText5,0,wx.ALIGN_CENTER|wx.LEFT,10)
 
         moveSizer2 = self.moveSizer2 = wx.BoxSizer(wx.HORIZONTAL)
-        moveSizer2.Add(self.repl_move_txt,0,wx.ALIGN_CENTER|wx.LEFT|wx.RIGHT,5)
-        moveSizer2.Add(self.repl_move_txt_mod,0,wx.ALIGN_CENTER|wx.RIGHT,5)
+        moveSizer2.Add(self.replMoveText,0,wx.ALIGN_CENTER|wx.LEFT|wx.RIGHT,5)
+        moveSizer2.Add(self.replMoveTextMod,0,wx.ALIGN_CENTER|wx.RIGHT,5)
         moveSizer2.Add(self.staticText6,0,wx.ALIGN_CENTER|wx.RIGHT,3)
-        moveSizer2.Add(self.repl_move_txt_value,1,wx.ALIGN_CENTER|wx.RIGHT,5)
+        moveSizer2.Add(self.replMoveTextValue,1,wx.ALIGN_CENTER|wx.RIGHT,5)
 
         moveSizer = self.moveSizer = wx.StaticBoxSizer(self.staticBox1, wx.VERTICAL)
         moveSizer.Add(moveSizer1,0,wx.EXPAND|wx.TOP,5)
@@ -71,21 +71,21 @@ class OpPanel(Operation):
               label=_(u"Move the match:"), name='staticBox1', parent=self,
               style=0)
 
-        self.repl_move_pos = wx.RadioButton(id=wxID_PANELREPL_MOVE_POS,
-              label=_(u"to position:"), name=u'repl_move_pos', parent=self,
+        self.replMovePos = wx.RadioButton(id=wxID_PANELREPL_MOVE_POS,
+              label=_(u"to position:"), name=u'replMovePos', parent=self,
               style=wx.RB_GROUP)
-        self.repl_move_pos.SetValue(True)
-        self.repl_move_pos.Bind(wx.EVT_RADIOBUTTON, self.activate_options,
+        self.replMovePos.SetValue(True)
+        self.replMovePos.Bind(wx.EVT_RADIOBUTTON, self.activate_options,
               id=wxID_PANELREPL_MOVE_POS)
 
-        self.repl_move_pos_value = wx.SpinCtrl(id=wxID_PANELREPL_MOVE_POS_VALUE,
-              initial=0, max=255, min=-255, name=u'repl_move_pos_value',
+        self.replMovePosValue = wx.SpinCtrl(id=wxID_PANELREPL_MOVE_POS_VALUE,
+              initial=0, max=255, min=-255, name=u'replMovePosValue',
               parent=self, size=wx.Size(60, -1), value='0',
               style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER)
-        self.repl_move_pos_value.SetValue(0)
-        self.repl_move_pos_value.Bind(wx.EVT_TEXT_ENTER, main.show_preview,
+        self.replMovePosValue.SetValue(0)
+        self.replMovePosValue.Bind(wx.EVT_TEXT_ENTER, main.show_preview,
               id=wxID_PANELREPL_MOVE_POS_VALUE)
-        self.repl_move_pos_value.Bind(wx.EVT_SPINCTRL, main.show_preview,
+        self.replMovePosValue.Bind(wx.EVT_SPINCTRL, main.show_preview,
               id=wxID_PANELREPL_MOVE_POS_VALUE)
 
         self.staticText5 = wx.StaticText(id=wxID_PANELSTATICTEXT6,
@@ -93,24 +93,24 @@ class OpPanel(Operation):
               name=u'staticText5', parent=self, style=0)
         self.staticText5.Enable(True)
 
-        self.repl_move_txt = wx.RadioButton(id=wxID_PANELREPL_MOVE_TXT,
-              label=_(u"to"), name=u'repl_move_txt', parent=self, style=0)
-        self.repl_move_txt.SetValue(False)
-        self.repl_move_txt.Bind(wx.EVT_RADIOBUTTON, self.activate_options,
+        self.replMoveText = wx.RadioButton(id=wxID_PANELREPL_MOVE_TXT,
+              label=_(u"to"), name=u'replMoveText', parent=self, style=0)
+        self.replMoveText.SetValue(False)
+        self.replMoveText.Bind(wx.EVT_RADIOBUTTON, self.activate_options,
               id=wxID_PANELREPL_MOVE_TXT)
 
-        self.repl_move_txt_value = wx.TextCtrl(id=wxID_PANELREPL_MOVE_TXT_VALUE,
-              name=u'repl_move_txt_value', parent=self, style=0, value='')
-        self.repl_move_txt_value.Enable(False)
-        self.repl_move_txt_value.Bind(wx.EVT_TEXT, main.show_preview,
+        self.replMoveTextValue = wx.TextCtrl(id=wxID_PANELREPL_MOVE_TXT_VALUE,
+              name=u'replMoveTextValue', parent=self, style=0, value='')
+        self.replMoveTextValue.Enable(False)
+        self.replMoveTextValue.Bind(wx.EVT_TEXT, main.show_preview,
               id=wxID_PANELREPL_MOVE_TXT_VALUE)
 
-        self.repl_move_txt_mod = wx.Choice(choices=[_(u"before"), _(u"after"),
+        self.replMoveTextMod = wx.Choice(choices=[_(u"before"), _(u"after"),
               _(u"replace")], id=wxID_PANELREPL_MOVE_TXT_MOD,
-              name=u'repl_move_txt_mod', parent=self)
-        self.repl_move_txt_mod.SetSelection(0)
-        self.repl_move_txt_mod.Enable(False)
-        self.repl_move_txt_mod.Bind(wx.EVT_CHOICE, main.show_preview,
+              name=u'replMoveTextMod', parent=self)
+        self.replMoveTextMod.SetSelection(0)
+        self.replMoveTextMod.Enable(False)
+        self.replMoveTextMod.Bind(wx.EVT_CHOICE, main.show_preview,
               id=wxID_PANELREPL_MOVE_TXT_MOD)
 
         self.staticText6 = wx.StaticText(id=wxID_PANELSTATICTEXT6,
@@ -134,21 +134,21 @@ class OpPanel(Operation):
         self.__init_sizer()
         self.activate_options(0)
         self.moveRE = False
-        self.regExpPanel.activatedField = self.repl_move_txt_value
+        self.regExpPanel.activatedField = self.replMoveTextValue
 
     def activate_options(self, event):
-        movetxt = (self.repl_move_txt_value,self.repl_move_txt_mod,self.staticText6,
+        movetxt = (self.replMoveTextValue,self.replMoveTextMod,self.staticText6,
           self.regExpPanel.regExpr)
         # by position
-        if self.repl_move_pos.GetValue():
-            self.repl_move_pos_value.Enable(True)
+        if self.replMovePos.GetValue():
+            self.replMovePosValue.Enable(True)
             for i in movetxt: i.Enable(False)
             self.staticText5.Enable(True)
             self.regExpPanel.set_active(False)
             self.moveRE = False
         # by text
         else:
-            self.repl_move_pos_value.Enable(False)
+            self.replMovePosValue.Enable(False)
             for i in movetxt: i.Enable(True)
             if self.regExpPanel.regExpr.GetValue():
                 self.regExpPanel.set_active(True)
@@ -157,7 +157,7 @@ class OpPanel(Operation):
         main.show_preview(event)
 
     def define_regex(self, event):
-        moveTxt = self.repl_move_txt_value.GetValue()
+        moveTxt = self.replMoveTextValue.GetValue()
         self.moveRE = self.regExpPanel.create_regex(moveTxt)
         main.show_preview(event)
 
@@ -172,15 +172,15 @@ class OpPanel(Operation):
 
         # calculate initial values
         moveTo = u':Do_Not_Move:'
-        moveMod = self.repl_move_txt_mod.GetStringSelection()
+        moveMod = self.replMoveTextMod.GetStringSelection()
         # by position:
-        if self.repl_move_pos.GetValue():
+        if self.replMovePos.GetValue():
             moveByPosition = True
-            moveTo = self.repl_move_pos_value.GetValue()
+            moveTo = self.replMovePosValue.GetValue()
         # by searching for text:
         else:
             moveByPosition = False
-            moveTxt = self.repl_move_txt_value.GetValue()
+            moveTxt = self.replMoveTextValue.GetValue()
             # regular expression:
             if self.regExpPanel.regExpr.GetValue():
                 self.moveRE = self.regExpPanel.create_regex(moveTxt)
@@ -227,7 +227,6 @@ class OpPanel(Operation):
         # remove the original, saving a backup in case no match found:
         oldName = newName
         newName = newName.replace(moveMatch,"",1)
-
 
         # now find where to move to if not by position:
         if not moveByPosition:

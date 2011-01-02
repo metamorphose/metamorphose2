@@ -193,9 +193,8 @@ class Panel(wx.Panel):
         elif self.between.GetValue():
             self.define_between(event)
 
-
-    # SET NECESSARY VARIABLES FOR BETWEEN SEARCH
     def define_between(self, event):
+        """Set variables for between search."""
         self.searchValues = (u"between",)
         if self.regExpPanel.regExpr.GetValue():
             self.mod1 = self.regExpPanel.create_regex(self.BTWtextMatch1.GetValue())

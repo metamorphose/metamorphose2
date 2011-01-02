@@ -522,7 +522,7 @@ class MainWindow(wx.Frame):
                     exit("Auto mode level must be used with configuration file ( '-c' or '--config' option )")
                 else:
                     print("Auto mode level set : %s"%level)
-                    self.autoModeLevel = int(level)
+                    app.autoModeLevel = int(level)
            # specify the language
             elif o in ("-l", "--language"):
                 app.language = self.strip_leading(a)
@@ -612,13 +612,11 @@ class MainWindow(wx.Frame):
 
     def __init__(self, prnt):
         # Important variables needed throughout the application classes
-        app.version = utils.get_version()
         self.warn = [] # warnings
         self.bad = [] # errors
         self.errorLog = [] # all errors go here
         self.items = [] # items to rename
         self.spacer = u" "*6 # spacer for status messages (to clear image)
-        self.autoModeLevel = False # automatic mode level
 
         path, configFilePath = self.__get_cli_options()
 

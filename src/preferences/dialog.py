@@ -138,14 +138,14 @@ class Dialog(wx.Dialog):
 
     def load_prefs(self, panel):
         """load preferences from file and apply them to a panel."""
-        utils.debug_print('Loading %s preferences ...' % panel.GetName())
+        app.debug_print('Loading %s preferences ...' % panel.GetName())
         for child in panel.GetChildren():
             try:
                 v = self.prefs.get(child.GetName(), False)
             except KeyError:
                 pass
             else:
-                utils.debug_print("   %s = %s" % (child.GetName(), v))
+                app.debug_print("   %s = %s" % (child.GetName(), v))
                 if isinstance(child, wx.CheckBox) or isinstance(child, wx.RadioButton)\
                     or isinstance(child, wx.SpinCtrl):
                         child.SetValue(v)

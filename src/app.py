@@ -12,28 +12,57 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-"""Application wide access and storage."""
+import utils
+
+"""
+Application wide access and storage.
+
+Some methods utility methods that make more sense
+here than in the utils module.
+"""
 
 # Variables
 
-version = False
-warn = [] # warnings
-bad = [] # errors
-errorLog = [] # all errors go here
-items = [] # items to rename
-spacer = u" " * 6 # spacer for status messages (to clear image)
-REmsg = False # regular expression error
-recursiveFolderOn = False # if true, will need to sort items before renaming
-language = '' # to be set later
-autoModeLevel = False # automatic mode level
-showTimes = False # show processing times
-debug = False # show debug info
+# Application version
+version = utils.get_version()
+# Interface language
+language = ''
+# Items with warnings
+warn = []
+# Items with errors
+bad = []
+# All errors
+errorLog = []
+# Items to rename
+items = []
+# Has regular expression error message
+REmsg = False
+# If true, will need to sort items before renaming
+recursiveFolderOn = False
+# Automatic mode level
+autoModeLevel = False
+# Show processing times
+showTimes = False
+# Show debug info
+debug = False
+# Font parameters
 fontParams = {}
 
-# objects
+# Objects
 
-# preferences object to be set later
+# preferences object to be set on load
 prefs = False
 
 
 # Links
+
+
+# Methods
+
+def debug_print(msg):
+    """Print debug messages to screen, if debugging is enabled."""
+    if debug:
+        try:
+            print(msg)
+        except:
+            print('invalid char in msg')

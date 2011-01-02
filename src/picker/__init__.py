@@ -58,7 +58,7 @@ class Parameters(classes.Parameters):
 
     def set_root_path(self, root):
         """Load all needed panel values to instance."""
-        utils.debug_print("Examining : %s"%root)
+        app.debug_print("Examining : %s"%root)
         
         self.root = False
         # don't do anything for blank path

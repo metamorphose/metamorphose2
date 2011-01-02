@@ -14,7 +14,6 @@
 
 import wx
 import utils
-import app
 
 class Panel(wx.Panel):
     """Color preferences panel."""

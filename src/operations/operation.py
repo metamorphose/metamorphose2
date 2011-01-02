@@ -23,7 +23,6 @@ class Operation(wx.Panel):
     """
     def __init__(self, params={}):
         # default parameters
-        # need to define here due to python's handling of class instances
         self.params = {
             'applyPathOnly' : False,
             'applyName' : True,
@@ -52,7 +51,7 @@ class Operation(wx.Panel):
         elif self.params['applyExtension'] and not self.params['applyName']:
             newName = ext
         elif self.params['applyName'] and self.params['applyExtension']:
-            if ext != '':
+            if ext is not False:
                 newName = name+'.'+ext
             else:
                 newName = name

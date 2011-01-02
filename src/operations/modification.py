@@ -280,7 +280,7 @@ class OpPanel(Operation):
 
 
     def rename_item(self, path, name, ext, original):
-        newName = newName = self.join_ext(name,ext)
+        newName = self.join_ext(name, ext)
         if not newName:
             return path,name,ext
 
@@ -338,4 +338,3 @@ class OpPanel(Operation):
 
         name,ext = self.split_ext(newName,name,ext)
         return path,name,ext
-
