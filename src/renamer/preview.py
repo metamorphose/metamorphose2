@@ -288,9 +288,13 @@ class Core():
             newPath = splitPath[0]
             # split name & extension
             renamedItem = splitPath[1]
-            splitName = splitext(renamedItem)
-            newName = splitName[0]
-            newExt = splitName[1][1:]
+            if isFile:
+                splitName = splitext(renamedItem)
+                newName = splitName[0]
+                newExt = splitName[1][1:]
+            else:
+                newName = renamedItem
+                newExt = u''
 
             utils.debug_print(itemToRename)
 
