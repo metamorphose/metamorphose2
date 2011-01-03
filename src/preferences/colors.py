@@ -21,29 +21,28 @@ class Panel(wx.Panel):
     def __init_renamecolor_sizer(self, parent):
         parent.AddWindow(self.willChangeColorTxt, 0,
             flag=wx.ALIGN_CENTER_VERTICAL, border=0)
-        parent.AddWindow(self.willChangeColor, 0, 0, border=0)
-        parent.AddWindow(self.willChangeColorBtn, 0, 0, border=0)
+        parent.AddWindow(self.willChangeColor, 0, flag=wx.EXPAND, border=0)
+
         parent.AddWindow(self.renamedColorTxt, 0,
             flag=wx.ALIGN_CENTER_VERTICAL, border=0)
         parent.AddWindow(self.renamedColor, 0, 0, border=0)
-        parent.AddWindow(self.renamedColorBtn, 0, 0, border=0)
+
         parent.AddWindow(self.errorColorTxt, 0,
             flag=wx.ALIGN_CENTER_VERTICAL, border=0)
         parent.AddWindow(self.errorColor, 0, 0, border=0)
-        parent.AddWindow(self.errorColorBtn, 0, 0, border=0)
+
         parent.AddWindow(self.warnColorTxt, 0,
             flag=wx.ALIGN_CENTER_VERTICAL, border=0)
         parent.AddWindow(self.warnColor, 0, 0, border=0)
-        parent.AddWindow(self.warnColorBtn, 0, 0, border=0)
 
     def __init_sizers(self):
-        self.renameColorSizer = wx.FlexGridSizer(4, 3, 6, 8)
+        self.renameColorSizer = wx.FlexGridSizer(4, 2, 6, 8)
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)
         
         self.__init_renamecolor_sizer(self.renameColorSizer)
 
         self.mainSizer.AddSpacer(wx.Size(8, 8), border=0, flag=0)
-        self.mainSizer.AddWindow(self.renameColorSizer, 0,
+        self.mainSizer.AddSizer(self.renameColorSizer, 0,
             flag=wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, border=10)
         self.mainSizer.AddWindow(self.setDefaultsBtn, 0,
             flag=wx.ALIGN_CENTER_HORIZONTAL|wx.TOP, border=5)
@@ -53,48 +52,29 @@ class Panel(wx.Panel):
         wx.Panel.__init__(self, name=u'Colors', parent=prnt, style=wx.TAB_TRAVERSAL)
 
         self.willChangeColorTxt = wx.StaticText(self, id=-1, label=_(u"Will be renamed"))
-
-        self.willChangeColor = wx.TextCtrl(self, id=-1, size=wx.Size(100, -1),
-            name=u'willChangeColor', value=u'#E5FFE5')
-        self.willChangeColor.Enable(False)
+        self.willChangeColor = wx.ColourPickerCtrl(self, id=-1, col='#E5FFE5',
+            name="willChangeColor", style=wx.CLRP_USE_TEXTCTRL|wx.CLRP_SHOW_LABEL)
+        self.willChangeColor.SetMinSize(wx.Size(250, 35))
         self.willChangeColor.SetToolTipString(_(u"Color of items to be renamed."))
 
-        self.willChangeColorBtn = wx.Button(self, -1, label=_(u"Choose ..."),
-            name=u'willChangeColorBtn')
-        self.Bind(wx.EVT_BUTTON, self.choose_color, self.willChangeColorBtn)
-
         self.renamedColorTxt = wx.StaticText(self, id=-1, label=_(u"Successfully renamed"))
-
-        self.renamedColor = wx.TextCtrl(self, id=-1, size=wx.Size(100, -1),
-            value=u'#97F27F', name=u'renamedColor')
-        self.renamedColor.Enable(False)
+        self.renamedColor = wx.ColourPickerCtrl(self, id=-1, col='#97F27F',
+            name="renamedColor", style=wx.CLRP_USE_TEXTCTRL|wx.CLRP_SHOW_LABEL)
+        self.renamedColor.SetMinSize(wx.Size(250, 35))
         self.renamedColor.SetToolTipString(_(u"Color of successfully renamed items."))
-
-        self.renamedColorBtn = wx.Button(self, -1, label=_(u"Choose ..."),
-            name=u'renamedColorBtn')
-        self.Bind(wx.EVT_BUTTON, self.choose_color, self.renamedColorBtn)
         
         self.errorColorTxt = wx.StaticText(self, -1, label=_(u"Error"))
-
-        self.errorColor = wx.TextCtrl(self, -1, size=wx.Size(100, -1),
-            name=u'errorColor', value=u'#FF1616')
-        self.errorColor.Enable(False)
+        self.errorColor = wx.ColourPickerCtrl(self, id=-1, col='#FF1616',
+            name="errorColor", style=wx.CLRP_USE_TEXTCTRL|wx.CLRP_SHOW_LABEL)
+        self.errorColor.SetMinSize(wx.Size(250, 35))
         self.errorColor.SetToolTipString(_(u"Color of items with errors."))
-
-        self.errorColorBtn = wx.Button(self, -1, label=_(u"Choose ..."),
-            name=u'errorColorBtn')
-        self.Bind(wx.EVT_BUTTON, self.choose_color, self.errorColorBtn)
         
         self.warnColorTxt = wx.StaticText(self, -1, label=_(u"Warning"))
-
-        self.warnColor = wx.TextCtrl(self, -1, size=wx.Size(100, -1),
-            name=u'warnColor', value=u'#FDEB22')
-        self.warnColor.Enable(False)
+        self.warnColor = wx.ColourPickerCtrl(self, id=-1, col='#FDEB22',
+            name="warnColor", style=wx.CLRP_USE_TEXTCTRL|wx.CLRP_SHOW_LABEL)
+        self.warnColor.SetMinSize(wx.Size(250, 35))
         self.warnColor.SetToolTipString(_(u"Color of items with warnings."))
-
-        self.warnColorBtn = wx.Button(self, -1, label=_(u"Choose ..."),
-            name=u'warnColorBtn')
-        self.Bind(wx.EVT_BUTTON, self.choose_color, self.warnColorBtn)
+        self.Bind(wx.EVT_COLOURPICKER_CHANGED, self.choose_color, self.warnColor)
 
         self.setDefaultsBtn = wx.Button(self, -1, label=_(u"Set colors to defaults"),
             name=u'setDefaultsBtn')
@@ -107,15 +87,18 @@ class Panel(wx.Panel):
         self.SetSizerAndFit(self.mainSizer)
 
     def init_enabled(self):
-        textCtrls = (
+        ctrls = (
             'renamedColor', 'willChangeColor',
             'errorColor', 'warnColor'
         )
-        for name in textCtrls:
-            textCtrl = getattr(self, name)
-            value = textCtrl.GetValue()
-            textCtrl.SetBackgroundColour(value)
+        for name in ctrls:
+            clrCtrl = getattr(self, name)
+            value = clrCtrl.GetColour()
+            value = value.GetAsString(wx.C2S_HTML_SYNTAX)
+            txtCtrl = clrCtrl.GetTextCtrl()
+            txtCtrl.SetValue(value)
 
+            
     def hex_to_rgb(self, value):
         value = value.lstrip('#')
         lv = len(value)
@@ -137,27 +120,15 @@ class Panel(wx.Panel):
             'warnColor' : '#FDEB22',
         }
         for name, value in defaults.items():
-            textCtrl = getattr(self, name)
-            textCtrl.SetValue(value)
-            textCtrl.SetBackgroundColour(value)
+            clrCtrl = getattr(self, name)
+            clrCtrl.SetColour(value)
+            #textCtrl.SetBackgroundColour(value)
 
     def choose_color(self, event):
-        name = event.GetEventObject().GetName()[:-3]
-        textCtrl = getattr(self, name)
-        value = textCtrl.GetValue()
-        value = self.hex_to_rgb(value)
-        
-        colorData = wx.ColourData()
-        colorData.SetChooseFull(False)
-        colorData.SetColour(value)
-        colorDialog = wx.ColourDialog(self, colorData)
-        colorDialog.ShowModal()
-        colorData = colorDialog.GetColourData()
-        color = colorData.GetColour()
-        #if color[0] != -1:
-        color = color.GetAsString(wx.C2S_HTML_SYNTAX)
-        #else:
-        #    color = app.prefs[name]
-        textCtrl.SetValue(color)
-        textCtrl.SetBackgroundColour(color)
+        name = event.GetEventObject().GetName()
+        clrCtrl = getattr(self, name)
+        value = clrCtrl.GetColour()
+        value = value.GetAsString(wx.C2S_HTML_SYNTAX)
+        txtCtrl = clrCtrl.GetTextCtrl()
+        txtCtrl.SetValue(value)
         

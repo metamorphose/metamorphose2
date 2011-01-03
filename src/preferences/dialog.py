@@ -80,10 +80,9 @@ class Dialog(wx.Dialog):
         self.__init_mainsizer_items(self.mainSizer)
         self.__init_buttons_items(self.buttons)
         
-        
         utils.set_min_size(self, ignoreClasses=(
                            wx.TextCtrl, wx.Button, wx.Choice, wx.SpinCtrl,
-                           wx.FilePickerCtrl, wx.DirPickerCtrl))
+                           wx.FilePickerCtrl, wx.DirPickerCtrl, wx.ColourPickerCtrl))
         self.SetSizerAndFit(self.mainSizer)
         
 
