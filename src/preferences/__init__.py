@@ -28,15 +28,13 @@ from dialog import Dialog
 
 def create_dialog(parent, initial=False):
     """Create and return the preferences dialog."""
-    return Dialog(parent, Methods(parent), initial)
+    return Dialog(parent, Methods(), initial)
 
 class Methods:
     """
     Preference methods.
     """
-    def __init__(self, MainWindow=False):
-        global main
-        main = MainWindow
+    def __init__(self):
         self.header = u'Version=%s\n'%app.version
         self.prefs = False
 
@@ -50,16 +48,13 @@ class Methods:
         prefFile = codecs.open(prefFile, type, 'utf-8')
         return prefFile
 
-    def __upgrade_file(self):
-        pass
-
     def __create_new(self):
         """Create default preferences file."""
         msg = _(u"Please take a moment to set your preferences.\n\n")
         title = _(u"Preferences")
         utils.make_warn_msg(msg, title)
         # show preferences
-        prefDiag = Dialog(main, self, initial=True)
+        prefDiag = Dialog(None, self, initial=True)
         prefDiag.ShowModal()
         prefDiag.Destroy()
 
