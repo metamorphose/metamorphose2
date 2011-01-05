@@ -77,7 +77,7 @@ class Dialog(wx.Dialog):
         self.Center(wx.HORIZONTAL|wx.VERTICAL)
 
         # the base path
-        docspath = utils.get_real_path(u'help')
+        docspath = app.get_real_path(u'help')
 
         # the notebook tabs
         notebookTabs = (self.htmlWindow1, self.htmlWindow2, self.htmlWindow3,

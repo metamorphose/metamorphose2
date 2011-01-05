@@ -12,7 +12,9 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-import utils
+from __future__ import print_function
+import sys
+import os
 
 """
 Application wide access and storage.
@@ -21,10 +23,53 @@ Some methods utility methods that make more sense
 here than in the utils module.
 """
 
+# Methods
+
+def debug_print(msg):
+    """Print debug messages to screen, if debugging is enabled."""
+    if debug:
+        try:
+            print(msg)
+        except:
+            print('invalid char in msg')
+
+def __set_real_path():
+    """Set application path."""
+    if hasattr(sys, "frozen"):
+        path = os.path.dirname(sys.executable)
+    else:
+        path = False
+        for path in sys.path:
+            if 'metamorphose' in path:
+                path = path.decode(sys.getfilesystemencoding())
+                break
+        if not path:
+            print("Could not determine application path.\nMake sure the application is correctly installed.\n")
+            sys.exit();
+        #print(path)
+    return os.path.join(path)
+
+realPath = __set_real_path()
+
+def get_real_path(file):
+    """Return application path for file."""
+    return os.path.join(realPath,file)
+
+def __get_version():
+    """Get current version from file."""
+    try:
+        f = open(get_real_path("version"))
+    except:
+        v = 'unknown'
+    else:
+        v = f.readline().strip()
+        f.close()
+    return v + u' (beta)'
+
 # Variables
 
 # Application version
-version = utils.get_version()
+version = __get_version()
 # Interface language
 language = ''
 # Items with warnings
@@ -55,14 +100,3 @@ prefs = False
 
 
 # Links
-
-
-# Methods
-
-def debug_print(msg):
-    """Print debug messages to screen, if debugging is enabled."""
-    if debug:
-        try:
-            print(msg)
-        except:
-            print('invalid char in msg')

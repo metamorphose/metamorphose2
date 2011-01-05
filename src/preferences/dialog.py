@@ -93,8 +93,6 @@ class Dialog(wx.Dialog):
                      wx.BITMAP_TYPE_ICO))
 
         self.notebook = Notebook(id=-1, name=u'notebook', parent=self)
-        # make XP theme look better
-        self.notebook.SetBackgroundColour(main.notebook.GetThemeBackgroundColour())
 
         self.apply = wx.Button(id=wx.ID_APPLY, name=u'apply', parent=self, style=0)
         self.apply.Bind(wx.EVT_BUTTON, self.__on_apply_button)

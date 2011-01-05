@@ -339,9 +339,6 @@ class MainWindow(wx.Frame):
         parent.AddPage(self.sorting.view, _(u"Sorting"), False, img2)
         parent.AddPage(self.errors.view, _(u"Errors/Warnings: %s")%0, False, img3)
 
-        # required to make XP theme colours ok
-        self.notebook.SetBackgroundColour(self.notebook.GetThemeBackgroundColour())
-
     def __init_sizer(self):
         mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(self.splitter,1,wx.EXPAND|wx.ALL, 5)
@@ -388,6 +385,7 @@ class MainWindow(wx.Frame):
         )
 
     def __init_ctrls(self, prnt):
+        wx.SystemOptions.SetOption('msw.notebook.themed-background', '0')
         if app.debug:
             self.SetTitle(u"Métamorphose 2 v. %s -- DEBUG MODE"%app.version)
         else:
@@ -644,7 +642,7 @@ class MainWindow(wx.Frame):
         import bottomWindow
 
         # initialise preferences
-        app.prefs = preferences.Methods(self)
+        app.prefs = preferences.Methods()
 
         # icons used for status bar messages
         self.statusImages = {
@@ -749,7 +747,7 @@ class MainWindow(wx.Frame):
             # Restart app automatically if not in windows
             if utils.make_yesno_dlg(msg, title):
                 if platform.system() != 'Windows':
-                    if wx.Process.Open(utils.get_real_path(sys.argv[0])):
+                    if wx.Process.Open(app.get_real_path(sys.argv[0])):
                         self.Close()
                 else:
                     self.Close()
@@ -770,7 +768,7 @@ class MainWindow(wx.Frame):
     def on_menu_reset(self, event):
         yes = utils.make_yesno_dlg(_(u'Are you sure you want to reset?'), _(u'Are you sure?'))
         if yes:
-            configs.load(self, utils.get_real_path('default.cfg'))
+            configs.load(self, app.get_real_path('default.cfg'))
             self.picker.view.path.SetValue(u'')
             self.picker.clear_all()
 

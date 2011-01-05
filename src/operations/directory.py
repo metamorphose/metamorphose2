@@ -36,8 +36,8 @@ class OpPanel(Operation):
         wx.Panel.__init__(self, id=-1, name=u'Panel', parent=prnt,
               style=wx.TAB_TRAVERSAL)
         self.notebook = Notebook(self, main)
-        self.dirTools = directoryTools.Panel(self.notebook, main)
-        self.notebook.init_pages(self.dirTools,
+        self.directoryToolsPanel = directoryTools.Panel(self.notebook, main)
+        self.notebook.init_pages(self.directoryToolsPanel,
                           _(u"Directory settings"), u'directory.ico')
         self.numberingPanel = self.notebook.numbering
         self.dateTimePanel = self.notebook.dateTime
@@ -50,7 +50,7 @@ class OpPanel(Operation):
         self.set_as_path_only()
         self.__init_ctrls(parent)
         self.__init_sizer(parent)
-        self.update_parameters(self.dirTools.params)
+        self.update_parameters(self.directoryToolsPanel.params)
 
     def on_config_load(self):
         """Update GUI elements, settings after config load."""
@@ -60,14 +60,14 @@ class OpPanel(Operation):
     def __add_path(self, newPath, path):
         """Extra operation for absolute paths."""
         recurPath = ''
-        recur = self.dirTools.pathRecur.GetValue()
+        recur = self.directoryToolsPanel.pathRecur.GetValue()
         path = path.split(os.sep)
         # remove drive letter
         if wx.Platform == '__WXMSW__':
             path = path[1:]
 
         # inverse the selection or not
-        if not self.dirTools.inverse.GetValue():
+        if not self.directoryToolsPanel.inverse.GetValue():
             if recur <= 0:
                 recur -= 1
             path = path[-recur:]
@@ -81,13 +81,13 @@ class OpPanel(Operation):
         return newPath
 
     def __add_file_name(self, newPath, name, ext):
-        if self.dirTools.useFileExt.GetValue() and self.dirTools.useFileName.GetValue():
+        if self.directoryToolsPanel.useFileExt.GetValue() and self.directoryToolsPanel.useFileName.GetValue():
             if ext:
                 ext = '.' + ext
             parsedName = name + ext
-        elif self.dirTools.useFileName.GetValue():
+        elif self.directoryToolsPanel.useFileName.GetValue():
             parsedName = name
-        elif self.dirTools.useFileExt.GetValue():
+        elif self.directoryToolsPanel.useFileExt.GetValue():
             parsedName = ext
         else:
             parsedName = ''
@@ -97,13 +97,13 @@ class OpPanel(Operation):
 
     def reset_counter(self, c):
         """Reset the numbering counter for the operation."""
-        utils.reset_counter(self, self.dirTools, c)
+        utils.reset_counter(self, self.directoryToolsPanel, c)
 
     def rename_item(self, path, name, ext, original):
         """Create the new path."""
         rejoin = False
-        operations = self.dirTools.opButtonsPanel
-        newPath = self.dirTools.directoryText.GetValue()
+        operations = self.directoryToolsPanel.opButtonsPanel
+        newPath = self.directoryToolsPanel.directoryText.GetValue()
         params = self.params
 
         # absolute path

@@ -56,7 +56,7 @@ class SmallHelp(wx.Dialog):
         wx.Dialog.__init__(self, id=-1, name='smallHelpDialog', parent=prnt,
               size=size,
               style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX, title=title)
-        self.SetIcon(wx.Icon(utils.get_real_path(u'icons/%s.ico')%icon,wx.BITMAP_TYPE_ICO))
+        self.SetIcon(wx.Icon(utils.get_icon_path(u'%s.ico')%icon,wx.BITMAP_TYPE_ICO))
 
         self.display = wx.html.HtmlWindow(id=-1,
               name=u'display', parent=self, style=wx.html.HW_SCROLLBAR_AUTO)
@@ -66,7 +66,7 @@ class SmallHelp(wx.Dialog):
         if u'gtk2' in wx.PlatformInfo:
             self.display.SetStandardFonts()
 
-        docspath = utils.get_real_path(u'help')
+        docspath = app.get_real_path(u'help')
 
         if os.path.isfile(os.path.join(docspath,app.language,helpFile)):
             helpFile = os.path.join(docspath,app.language,helpFile)

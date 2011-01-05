@@ -43,9 +43,6 @@ class Notebook(wx.Notebook):
         img2 = il.Add(wx.Bitmap(utils.icon_path(u'date_time.ico'), wx.BITMAP_TYPE_ICO))
         self.AssignImageList(il)
 
-        # required to make XP theme better:
-        self.SetBackgroundColour(main.notebook.GetThemeBackgroundColour())
-
         self.AddPage(page=varPanel, text=varText, select=True,
               imageId=img0)
         self.AddPage(imageId=img1, page=self.numbering, select=False,

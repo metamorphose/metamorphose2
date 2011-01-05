@@ -251,7 +251,7 @@ class Panel(wx.Panel):
             txt = _(u"Enable")
             ico = 'enable'
         parent.disable = wx.MenuItem(parent, wxID_MENUDISABLE, txt)
-        parent.disable.SetBitmap(wx.Bitmap(utils.get_real_path(u"icons/%s.png"%ico),
+        parent.disable.SetBitmap(wx.Bitmap(utils.get_icon_path(u"%s.png"%ico),
             wx.BITMAP_TYPE_PNG))
 
         parent.reset = wx.MenuItem(parent, wxID_MENURESET, _(u"Reset"))
