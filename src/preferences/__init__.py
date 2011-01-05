@@ -149,6 +149,9 @@ class Methods:
                 elif isinstance(child, wx.FilePickerCtrl):
                     value = child.GetPath()
                     type = 'FilePickerCtrl'
+                elif isinstance(child, wx.ColourPickerCtrl):
+                    value = child.GetColour().GetAsString(wx.C2S_HTML_SYNTAX)
+                    type = 'ColourPickerCtrl'
 
                 if value is not None:
                     name = child.GetName()
