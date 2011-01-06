@@ -56,7 +56,7 @@ class SmallHelp(wx.Dialog):
         wx.Dialog.__init__(self, id=-1, name='smallHelpDialog', parent=prnt,
               size=size,
               style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX, title=title)
-        self.SetIcon(wx.Icon(utils.get_icon_path(u'%s.ico')%icon,wx.BITMAP_TYPE_ICO))
+        self.SetIcon(wx.Icon(utils.icon_path(u'%s.ico')%icon,wx.BITMAP_TYPE_ICO))
 
         self.display = wx.html.HtmlWindow(id=-1,
               name=u'display', parent=self, style=wx.html.HW_SCROLLBAR_AUTO)

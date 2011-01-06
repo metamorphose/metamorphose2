@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: metamorphose\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-12-30 13:16+0100\n"
+"PO-Revision-Date: 2011-01-06 10:23+0100\n"
 "Last-Translator: ianaré sévi <ianare.sevi@c4mprod.com>\n"
 "Language-Team: ianaré sévi\n"
 "Language: \n"
@@ -19,226 +19,226 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../src\n"
 
-#: MainWindow/__init__.py:90
+#: MainWindow/__init__.py:89
 #: errors/wxErrorsView.py:34
 msgid "File"
 msgstr "Archivo"
 
-#: MainWindow/__init__.py:91
-#: MainWindow/__init__.py:338
-#: helpDiag.py:36
+#: MainWindow/__init__.py:90
+#: MainWindow/__init__.py:337
+#: helpDiag.py:37
 msgid "Picker"
 msgstr "Seleccionador"
 
-#: MainWindow/__init__.py:92
+#: MainWindow/__init__.py:91
 msgid "Renamer"
 msgstr "Renombrador"
 
-#: MainWindow/__init__.py:93
+#: MainWindow/__init__.py:92
 msgid "Settings"
 msgstr "Preferencias"
 
-#: MainWindow/__init__.py:94
-#: helpDiag.py:48
+#: MainWindow/__init__.py:93
+#: helpDiag.py:49
 msgid "Help"
 msgstr "Ayuda"
 
-#: MainWindow/__init__.py:102
+#: MainWindow/__init__.py:101
 msgid "&Load Config\tctrl+L"
 msgstr "&Cargar Configuración\tctrl+L"
 
-#: MainWindow/__init__.py:103
+#: MainWindow/__init__.py:102
 msgid "Load configuration from file"
 msgstr "Cargar configuración desde un archivo"
 
-#: MainWindow/__init__.py:107
+#: MainWindow/__init__.py:106
 msgid "&Save Config\tctrl+S"
 msgstr "&Guardar configuración\tctrl+S"
 
-#: MainWindow/__init__.py:108
+#: MainWindow/__init__.py:107
 msgid "Save configuration to file"
 msgstr "Guardar la configuración en un archivo"
 
-#: MainWindow/__init__.py:113
+#: MainWindow/__init__.py:112
 msgid "&Export to log file"
 msgstr "&Exportar al fichero log"
 
-#: MainWindow/__init__.py:114
+#: MainWindow/__init__.py:113
 msgid "Save current snapshot to a log file"
 msgstr "Guardar la captura actual a un fichero log"
 
-#: MainWindow/__init__.py:119
+#: MainWindow/__init__.py:118
 msgid "&Import from log file"
 msgstr "&Importar un fichero log"
 
-#: MainWindow/__init__.py:120
+#: MainWindow/__init__.py:119
 msgid "Load a snapshot"
 msgstr "Cargar una captura"
 
-#: MainWindow/__init__.py:125
+#: MainWindow/__init__.py:124
 msgid "&Reset"
 msgstr "&Reiniciar"
 
-#: MainWindow/__init__.py:125
+#: MainWindow/__init__.py:124
 msgid "Reset all settings"
 msgstr "Reiniciar todos los parámetros"
 
-#: MainWindow/__init__.py:130
+#: MainWindow/__init__.py:129
 msgid "&Preview\tF7"
 msgstr "Vista &Previa\tF7"
 
-#: MainWindow/__init__.py:130
+#: MainWindow/__init__.py:129
 msgid "Preview selection"
 msgstr "Previsualizar la selección"
 
-#: MainWindow/__init__.py:135
+#: MainWindow/__init__.py:134
 msgid "&Go !\tF8"
 msgstr "I&r\tF8"
 
-#: MainWindow/__init__.py:135
+#: MainWindow/__init__.py:134
 msgid "Rename selection"
 msgstr "Renombrar la selección"
 
-#: MainWindow/__init__.py:140
+#: MainWindow/__init__.py:139
 msgid "&Quit\tctrl+Q"
 msgstr "Salir\tctrl+Q"
 
-#: MainWindow/__init__.py:140
+#: MainWindow/__init__.py:139
 msgid "Quit Metamorphose"
 msgstr "Salir de Métamorphose"
 
-#: MainWindow/__init__.py:177
+#: MainWindow/__init__.py:176
 msgid "Destroy operation"
 msgstr "Destruir la operación"
 
-#: MainWindow/__init__.py:178
+#: MainWindow/__init__.py:177
 msgid "Destroy visible operation"
 msgstr "Destruir la operación visible"
 
-#: MainWindow/__init__.py:183
+#: MainWindow/__init__.py:182
 msgid "Destroy all operations\tctrl+D"
 msgstr "Destruir todas las operaciones\tctrl+D"
 
-#: MainWindow/__init__.py:184
+#: MainWindow/__init__.py:183
 msgid "Destroy all operations"
 msgstr "Destruir todas las operaciones"
 
-#: MainWindow/__init__.py:199
+#: MainWindow/__init__.py:198
 msgid "&Browse...\tF4"
 msgstr "Buscar...\tF4"
 
-#: MainWindow/__init__.py:200
+#: MainWindow/__init__.py:199
 #: operations/directoryTools.py:71
-#: picker/wxPickerView.py:349
+#: picker/wxPickerView.py:347
 msgid "Browse for path"
 msgstr "Buscar la ruta"
 
-#: MainWindow/__init__.py:204
+#: MainWindow/__init__.py:203
 msgid "&Refresh\tF5"
 msgstr "&Refrescar\tF5"
 
-#: MainWindow/__init__.py:205
-#: picker/wxPickerView.py:344
+#: MainWindow/__init__.py:204
+#: picker/wxPickerView.py:342
 msgid "Load or reload current path"
 msgstr "Cargar o recargar la ruta actual"
 
-#: MainWindow/__init__.py:210
+#: MainWindow/__init__.py:209
 msgid "Select &All\tctrl+A"
 msgstr "Seleccionar &todos\tctrl+A"
 
-#: MainWindow/__init__.py:211
+#: MainWindow/__init__.py:210
 msgid "Select all items in picker"
 msgstr "Seleccionar todos los objetos del selector"
 
-#: MainWindow/__init__.py:215
+#: MainWindow/__init__.py:214
 msgid "Select &None\tctrl+N"
 msgstr "NO seleccionar ninguno\tctrl+N"
 
-#: MainWindow/__init__.py:216
+#: MainWindow/__init__.py:215
 msgid "Deselect all items in picker"
 msgstr "Deseleccionar todos los objetos del selector"
 
-#: MainWindow/__init__.py:220
+#: MainWindow/__init__.py:219
 msgid "Recursive &selection\tctrl+R"
 msgstr "&Selección recursiva\tctrl+R"
 
-#: MainWindow/__init__.py:221
-#: picker/wxPickerView.py:423
+#: MainWindow/__init__.py:220
+#: picker/wxPickerView.py:421
 msgid "Get all files in directory and sub-directories, but no folders"
 msgstr "Obtener todos los archivos de carpeta y subcarpetas, pero no las carpetas"
 
-#: MainWindow/__init__.py:246
-#: preferences/__init__.py:56
+#: MainWindow/__init__.py:245
+#: preferences/__init__.py:54
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: MainWindow/__init__.py:247
+#: MainWindow/__init__.py:246
 msgid "Change your preferences"
 msgstr "Cambiar sus preferencias"
 
-#: MainWindow/__init__.py:250
-#: MainWindow/__init__.py:730
+#: MainWindow/__init__.py:249
+#: MainWindow/__init__.py:721
 msgid "Language"
 msgstr "Idioma"
 
-#: MainWindow/__init__.py:251
+#: MainWindow/__init__.py:250
 msgid "Change the language"
 msgstr "Cambiar el idioma"
 
-#: MainWindow/__init__.py:269
+#: MainWindow/__init__.py:268
 msgid "About"
 msgstr "Acerca de"
 
-#: MainWindow/__init__.py:270
+#: MainWindow/__init__.py:269
 msgid "Display general information about Metamorphose"
 msgstr "Mostrar información general acerca de Métamorphose"
 
-#: MainWindow/__init__.py:275
+#: MainWindow/__init__.py:274
 msgid "&Help\tF1"
 msgstr "&Ayuda\tF1"
 
-#: MainWindow/__init__.py:276
+#: MainWindow/__init__.py:275
 msgid "How to use Metamorphose"
 msgstr "Como usar Métamorphose"
 
-#: MainWindow/__init__.py:281
+#: MainWindow/__init__.py:280
 msgid "&Examples\tF2"
 msgstr "&Ejemplos\tF2"
 
-#: MainWindow/__init__.py:282
+#: MainWindow/__init__.py:281
 msgid "Some useful examples"
 msgstr "Algunos ejemplos útiles"
 
-#: MainWindow/__init__.py:287
+#: MainWindow/__init__.py:286
 msgid "&Date && Time Formats"
 msgstr "&Formato Fecha y Hora"
 
-#: MainWindow/__init__.py:288
+#: MainWindow/__init__.py:287
 msgid "Display a reference for Date & Time formats"
 msgstr "Mostrar referencia para el formato de fecha y hora"
 
-#: MainWindow/__init__.py:293
+#: MainWindow/__init__.py:292
 msgid "&Regular Expressions"
 msgstr "&Expresiones regulares"
 
-#: MainWindow/__init__.py:294
+#: MainWindow/__init__.py:293
 msgid "Display a regular expression reference"
 msgstr "Mostrar referencia para expresiones regulares"
 
-#: MainWindow/__init__.py:339
-#: helpDiag.py:38
+#: MainWindow/__init__.py:338
+#: helpDiag.py:39
 msgid "- Renamer -"
 msgstr "- Renombrador -"
 
-#: MainWindow/__init__.py:340
+#: MainWindow/__init__.py:339
 msgid "Sorting"
 msgstr "Orden"
 
-#: MainWindow/__init__.py:341
+#: MainWindow/__init__.py:340
 msgid "Errors/Warnings: %s"
 msgstr "Errores/Advertencias: %s"
 
-#: MainWindow/__init__.py:682
+#: MainWindow/__init__.py:673
 msgid ""
 "%s\n"
 "\n"
@@ -248,17 +248,16 @@ msgstr ""
 "\n"
 "Imposible deshacer la última operación"
 
-#: MainWindow/__init__.py:683
+#: MainWindow/__init__.py:674
 #: errors/wxErrorsView.py:32
-#: preferences/colors.py:78
-#: preferences/colors.py:127
-#: renamer/engine.py:355
-#: utils.py:149
-#: utils.py:236
+#: preferences/colors.py:67
+#: renamer/engine.py:284
+#: utils.py:130
+#: utils.py:201
 msgid "Error"
 msgstr "Error"
 
-#: MainWindow/__init__.py:752
+#: MainWindow/__init__.py:743
 msgid ""
 "\n"
 "\n"
@@ -268,7 +267,7 @@ msgstr ""
 "\n"
 "Debes reiniciar Métamorphose para cambiar el Idioma"
 
-#: MainWindow/__init__.py:753
+#: MainWindow/__init__.py:744
 msgid ""
 "\n"
 "\n"
@@ -278,39 +277,39 @@ msgstr ""
 "\n"
 "¿Salir de Metamorfosis ahora ?"
 
-#: MainWindow/__init__.py:755
+#: MainWindow/__init__.py:746
 msgid "Change the Language"
 msgstr "Cambiar el Idioma"
 
-#: MainWindow/__init__.py:778
+#: MainWindow/__init__.py:769
 msgid "Are you sure you want to reset?"
 msgstr "¿Estáis seguros que queréis reiniciar ?"
 
-#: MainWindow/__init__.py:778
+#: MainWindow/__init__.py:769
 msgid "Are you sure?"
 msgstr "¿Estáis seguros ?"
 
-#: MainWindow/__init__.py:810
+#: MainWindow/__init__.py:801
 msgid "Save current items as ..."
 msgstr "Guardar los objetos actuales como ..."
 
-#: MainWindow/__init__.py:812
+#: MainWindow/__init__.py:803
 msgid "CSV file (*.%s)"
 msgstr "Fichero CSV (*.%s)"
 
-#: MainWindow/__init__.py:839
+#: MainWindow/__init__.py:830
 msgid "Log file"
 msgstr "Fichero log"
 
-#: MainWindow/__init__.py:840
+#: MainWindow/__init__.py:831
 msgid "All files"
 msgstr "Todos los ficheros"
 
-#: MainWindow/__init__.py:844
+#: MainWindow/__init__.py:835
 msgid "Import selection from ..."
 msgstr "Importar una selección de ..."
 
-#: MainWindow/__init__.py:880
+#: MainWindow/__init__.py:871
 msgid ""
 "These items could not be loaded, it doesn't look like they exist :\n"
 "\n"
@@ -318,21 +317,21 @@ msgstr ""
 "Imposible cargar estos objetos; parece que no existen:\n"
 "\n"
 
-#: MainWindow/__init__.py:901
+#: MainWindow/__init__.py:892
 msgid "Regular Expression Help"
 msgstr "Ayuda para expresiones regulares"
 
-#: MainWindow/__init__.py:905
+#: MainWindow/__init__.py:896
 msgid "Date and Time Formatting Help"
 msgstr "Ayuda para formato de fecha y hora"
 
-#: MainWindow/__init__.py:909
+#: MainWindow/__init__.py:900
 msgid "Examples"
 msgstr "Ejemplos"
 
-#: MainWindow/__init__.py:945
+#: MainWindow/__init__.py:936
 #: operations/__init__.py:27
-#: renamer/wxRenamerView.py:274
+#: renamer/wxRenamerView.py:275
 msgid "directory"
 msgstr "directorio"
 
@@ -417,50 +416,50 @@ msgstr ""
 msgid "Previewing will destroy any changes!"
 msgstr "¡La previsualización destruirá cualquier cambio!"
 
-#: about.py:57
+#: about.py:58
 msgid "About Metamorphose"
 msgstr "Sobre Métamorphose"
 
-#: about.py:76
+#: about.py:77
 msgid "Click here to exit"
 msgstr "Clic aquí para salir"
 
-#: about.py:85
+#: about.py:86
 msgid "Version: %s"
 msgstr "Versión: %s"
 
-#: about.py:89
+#: about.py:90
 msgid "Using Python %s, wxPython %s"
 msgstr "Usando: Python %s, wxPython %s"
 
-#: about.py:93
+#: about.py:94
 msgid "Metamorphose Home Page"
 msgstr "Página web de Métamorphose"
 
-#: about.py:96
+#: about.py:97
 msgid "Bug Report"
 msgstr "Reporte de errores"
 
-#: about.py:100
+#: about.py:101
 msgid "Feature Request"
 msgstr "Solicitar una nueva característica"
 
-#: about.py:105
-#: about.py:111
+#: about.py:106
+#: about.py:112
 msgid "Donate"
 msgstr "Donar"
 
-#: about.py:116
-#: about.py:142
+#: about.py:117
+#: about.py:141
 msgid "License"
 msgstr "Licencia"
 
-#: about.py:121
-#: about.py:137
+#: about.py:122
+#: about.py:136
 msgid "Credits"
 msgstr "Créditos"
 
-#: classes.py:89
+#: classes.py:90
 msgid "Progress"
 msgstr "Progreso"
 
@@ -477,15 +476,15 @@ msgstr "Archivo de configuración (*.cfg)"
 msgid "Load a configuration file"
 msgstr "Cargar un archivo de configuración"
 
-#: configs.py:338
+#: configs.py:337
 msgid "Invalid XML in config file : %s"
 msgstr "XML inválido en este fichero de configuración: %s"
 
-#: configs.py:339
+#: configs.py:338
 msgid "Invalid Configuration"
 msgstr "Configuración no válida"
 
-#: configs.py:355
+#: configs.py:354
 msgid "Not all settings could be loaded."
 msgstr ""
 
@@ -527,7 +526,7 @@ msgstr "todos los elementos con errores"
 
 #: errors/wxErrorsView.py:117
 msgid "from above items."
-msgstr "Los elementos de arriba."
+msgstr "de los elementos de arriba."
 
 #: errors/wxErrorsView.py:152
 msgid "Errors: %s - Warnings: %s"
@@ -553,16 +552,16 @@ msgstr "Guardar los errores como ..."
 msgid "Log file (*.csv)"
 msgstr "Fichero log (*.csv)"
 
-#: helpDiag.py:34
+#: helpDiag.py:35
 #: preferences/dialog.py:42
 msgid "General"
 msgstr "General"
 
-#: helpDiag.py:40
+#: helpDiag.py:41
 msgid "Numbering"
 msgstr "Numeración"
 
-#: helpDiag.py:42
+#: helpDiag.py:43
 msgid "Date and Time"
 msgstr "Fecha y Hora"
 
@@ -576,7 +575,7 @@ msgstr "Buscar un texto y reemplazarlo con un texto o una suboperación"
 
 #: operations/__init__.py:28
 #: operations/move.py:109
-#: operations/move.py:269
+#: operations/move.py:268
 msgid "replace"
 msgstr "reemplazar"
 
@@ -672,155 +671,155 @@ msgstr "Rellenar en la posición:"
 msgid "(0 = first character)"
 msgstr "(0 = primer carácter)"
 
-#: operations/dateTime.py:96
+#: operations/dateTime.py:97
 msgid "Date Settings:"
 msgstr "Ajustes de Fecha:"
 
-#: operations/dateTime.py:100
+#: operations/dateTime.py:101
 msgid "Time Settings:"
 msgstr "Ajustes de Hora:"
 
-#: operations/dateTime.py:109
-#: operations/dateTime.py:257
+#: operations/dateTime.py:110
+#: operations/dateTime.py:258
 msgid "MM-DD-YYYY"
 msgstr "MM-DD-AAAA"
 
-#: operations/dateTime.py:110
-#: operations/dateTime.py:258
+#: operations/dateTime.py:111
+#: operations/dateTime.py:259
 msgid "MM-DD-YY"
 msgstr "MM-DD-AA"
 
-#: operations/dateTime.py:110
-#: operations/dateTime.py:259
+#: operations/dateTime.py:111
+#: operations/dateTime.py:260
 msgid "DD-MM-YYYY"
 msgstr "DD-MM-AAAA"
 
-#: operations/dateTime.py:110
-#: operations/dateTime.py:260
+#: operations/dateTime.py:111
+#: operations/dateTime.py:261
 msgid "DD-MM-YY"
 msgstr "DD-MM-AA"
 
-#: operations/dateTime.py:111
-#: operations/dateTime.py:261
+#: operations/dateTime.py:112
+#: operations/dateTime.py:262
 msgid "YYYY-MM-DD"
 msgstr "AAAA-MM-DD"
 
-#: operations/dateTime.py:111
-#: operations/dateTime.py:262
+#: operations/dateTime.py:112
+#: operations/dateTime.py:263
 msgid "Month DD, YYYY"
 msgstr "Mes DD, AAAA"
 
-#: operations/dateTime.py:111
-#: operations/dateTime.py:263
+#: operations/dateTime.py:112
+#: operations/dateTime.py:264
 msgid "Day, Month DD, YYYY"
 msgstr "Día, Mes DD, AAAA"
 
-#: operations/dateTime.py:112
-#: operations/dateTime.py:264
+#: operations/dateTime.py:113
+#: operations/dateTime.py:265
 msgid "YY"
 msgstr "AA"
 
-#: operations/dateTime.py:112
-#: operations/dateTime.py:265
+#: operations/dateTime.py:113
+#: operations/dateTime.py:266
 msgid "YYYY"
 msgstr "AAAA"
 
-#: operations/dateTime.py:115
-#: operations/dateTime.py:124
+#: operations/dateTime.py:116
+#: operations/dateTime.py:125
 msgid "Use menu or enter text"
 msgstr "Usar este menú o teclee texto"
 
-#: operations/dateTime.py:119
-#: operations/dateTime.py:290
+#: operations/dateTime.py:120
+#: operations/dateTime.py:291
 msgid "HH'MM"
 msgstr "HH'MM"
 
-#: operations/dateTime.py:119
-#: operations/dateTime.py:291
+#: operations/dateTime.py:120
+#: operations/dateTime.py:292
 msgid "24HH'MM"
 msgstr "24HH'MM"
 
-#: operations/dateTime.py:120
-#: operations/dateTime.py:292
+#: operations/dateTime.py:121
+#: operations/dateTime.py:293
 msgid "HH'MM'SS"
 msgstr "HH'MM'SS"
 
-#: operations/dateTime.py:120
-#: operations/dateTime.py:293
+#: operations/dateTime.py:121
+#: operations/dateTime.py:294
 msgid "24HH'MM'SS"
 msgstr "24HH'MM'SS"
 
-#: operations/dateTime.py:120
-#: operations/dateTime.py:294
+#: operations/dateTime.py:121
+#: operations/dateTime.py:295
 msgid "HHhMMm"
 msgstr "HHhMMm"
 
-#: operations/dateTime.py:120
-#: operations/dateTime.py:295
+#: operations/dateTime.py:121
+#: operations/dateTime.py:296
 msgid "24HHhMMm"
 msgstr "24HHhMMm"
 
-#: operations/dateTime.py:121
-#: operations/dateTime.py:296
+#: operations/dateTime.py:122
+#: operations/dateTime.py:297
 msgid "HHhMMmSSs"
 msgstr "HHhMMmSSs"
 
-#: operations/dateTime.py:121
-#: operations/dateTime.py:297
+#: operations/dateTime.py:122
+#: operations/dateTime.py:298
 msgid "24HHhMMmSSs"
 msgstr "24HHhMMmSSs"
 
-#: operations/dateTime.py:132
-#: operations/dateTime.py:136
+#: operations/dateTime.py:133
+#: operations/dateTime.py:137
 msgid "Formatting:"
 msgstr "Formato:"
 
-#: operations/dateTime.py:143
-#: operations/dateTime.py:154
+#: operations/dateTime.py:144
+#: operations/dateTime.py:155
 msgid "Separator:"
 msgstr "Separador:"
 
-#: operations/dateTime.py:166
+#: operations/dateTime.py:167
 msgid "Adjust Time"
 msgstr "Ajustar la Hora"
 
-#: operations/dateTime.py:176
+#: operations/dateTime.py:177
 msgid "Set to now"
 msgstr "Ajustar a ahora"
 
-#: operations/dateTime.py:182
+#: operations/dateTime.py:183
 msgid "Date Preview:"
 msgstr "Previsualización de Fecha:"
 
-#: operations/dateTime.py:187
+#: operations/dateTime.py:188
 msgid "Time Preview:"
 msgstr "Previsualización de Hora:"
 
-#: operations/dateTime.py:192
+#: operations/dateTime.py:193
 msgid "Get date && time from item, using:"
 msgstr "Obtener la fecha y hora del elemento, usando:"
 
-#: operations/dateTime.py:199
+#: operations/dateTime.py:200
 msgid "last access"
 msgstr "último acceso"
 
-#: operations/dateTime.py:199
+#: operations/dateTime.py:200
 msgid "last modification"
 msgstr "última modificación"
 
-#: operations/dateTime.py:200
+#: operations/dateTime.py:201
 msgid "Exif tag - picture taken"
 msgstr "etiqueta Exif - foto tomada"
 
-#: operations/dateTime.py:201
+#: operations/dateTime.py:202
 msgid "Exif tag - image modified"
 msgstr "etiqueta Exif - imagen modificada"
 
-#: operations/dateTime.py:214
+#: operations/dateTime.py:215
 msgid "creation"
 msgstr "creación"
 
-#: operations/dateTime.py:216
+#: operations/dateTime.py:217
 msgid "metadata change"
 msgstr "cambio de metadatos"
 
@@ -833,7 +832,7 @@ msgid "Name (absolute paths allowed):"
 msgstr "Nombre (Ruta completa permitida):"
 
 #: operations/directoryTools.py:69
-#: picker/wxPickerView.py:347
+#: picker/wxPickerView.py:345
 msgid "Browse"
 msgstr "Explorar"
 
@@ -850,9 +849,8 @@ msgid "Path depth to copy:"
 msgstr "Profundidad de la ruta a copiar:"
 
 #: operations/directoryTools.py:100
-#, fuzzy
 msgid "Negative values allowed"
-msgstr "valores negativos permitidos"
+msgstr "Valores negativos permitidos"
 
 #: operations/directoryTools.py:106
 msgid "inverse"
@@ -871,22 +869,20 @@ msgid "Add a directory with the same name as the file."
 msgstr ""
 
 #: operations/directoryTools.py:119
-#: renamer/wxRenamerView.py:218
+#: renamer/wxRenamerView.py:219
 msgid "Name"
 msgstr "al Nombre"
 
 #: operations/directoryTools.py:121
-#, fuzzy
 msgid "Add the file name"
 msgstr "Añadir el nombre del fichero."
 
 #: operations/directoryTools.py:125
-#: renamer/wxRenamerView.py:220
+#: renamer/wxRenamerView.py:221
 msgid "Extension"
 msgstr "a la extensión"
 
 #: operations/directoryTools.py:127
-#, fuzzy
 msgid "Add the file extension"
 msgstr "Añadir la extensión del fichero."
 
@@ -899,7 +895,7 @@ msgid "File-Name"
 msgstr "Nombre-Archivo"
 
 #: operations/directoryTools.py:160
-#: picker/wxPickerView.py:583
+#: picker/wxPickerView.py:580
 msgid "Choose a directory:"
 msgstr "Seleccionar una carpeta:"
 
@@ -1009,121 +1005,121 @@ msgstr "Conversión del Códec:"
 
 #: operations/modification.py:95
 #: preferences/general.py:85
-#: utils.py:278
+#: utils.py:243
 msgid "All Languages / Unicode"
 msgstr "Todas las lenguas / Unicode"
 
 #: operations/modification.py:96
 #: preferences/general.py:85
-#: utils.py:279
+#: utils.py:244
 msgid "Western Europe"
 msgstr "Europa del Oeste"
 
 #: operations/modification.py:97
 #: preferences/general.py:86
-#: utils.py:281
+#: utils.py:246
 msgid "Central & Eastern Europe"
 msgstr "Europe del Este y Central"
 
 #: operations/modification.py:97
 #: preferences/general.py:86
-#: utils.py:283
+#: utils.py:248
 msgid "Esperanto, Maltese"
 msgstr "Esperanto, Maltés"
 
 #: operations/modification.py:98
 #: preferences/general.py:87
-#: utils.py:284
+#: utils.py:249
 msgid "Nordic Languages"
 msgstr "Lenguas Nórdicas"
 
 #: operations/modification.py:98
 #: preferences/general.py:87
-#: utils.py:286
+#: utils.py:251
 msgid "Celtic Languages"
 msgstr "Lenguas Celtas"
 
 #: operations/modification.py:99
 #: preferences/general.py:88
-#: utils.py:287
+#: utils.py:252
 msgid "Baltic Languages"
 msgstr "Lenguas Bálticas"
 
 #: operations/modification.py:99
 #: preferences/general.py:88
-#: utils.py:288
+#: utils.py:253
 msgid "Cyrillic Languages"
 msgstr "Lenguas Cirílcas"
 
 #: operations/modification.py:99
 #: preferences/general.py:88
-#: utils.py:290
+#: utils.py:255
 msgid "Greek"
 msgstr "Griego"
 
 #: operations/modification.py:100
 #: preferences/general.py:89
-#: utils.py:292
+#: utils.py:257
 msgid "Turkish"
 msgstr "Turco"
 
 #: operations/modification.py:100
 #: preferences/general.py:89
-#: utils.py:294
+#: utils.py:259
 msgid "Hebrew"
 msgstr "Hebreo"
 
 #: operations/modification.py:100
 #: preferences/general.py:89
-#: utils.py:296
+#: utils.py:261
 msgid "Arabic"
 msgstr "Árabe"
 
 #: operations/modification.py:100
 #: preferences/general.py:89
-#: utils.py:297
+#: utils.py:262
 msgid "Urdu"
 msgstr "Urdu"
 
 #: operations/modification.py:100
 #: preferences/general.py:89
-#: utils.py:298
+#: utils.py:263
 msgid "Thai"
 msgstr "Thaï"
 
 #: operations/modification.py:101
 #: preferences/general.py:90
-#: utils.py:299
+#: utils.py:264
 msgid "Vietnamese"
 msgstr "Vietnamita"
 
 #: operations/modification.py:101
 #: preferences/general.py:90
-#: utils.py:300
+#: utils.py:265
 msgid "Traditional Chinese"
 msgstr "Chino tradicional"
 
 #: operations/modification.py:102
 #: preferences/general.py:91
-#: utils.py:301
+#: utils.py:266
 msgid "Simplified Chinese"
 msgstr "Chino Simplicado"
 
 #: operations/modification.py:102
 #: preferences/general.py:91
-#: utils.py:302
+#: utils.py:267
 msgid "Unified Chinese"
 msgstr "Chino Unificado"
 
 #: operations/modification.py:102
 #: preferences/general.py:91
-#: utils.py:303
+#: utils.py:268
 msgid "Korean"
 msgstr "Coreano"
 
 #: operations/modification.py:103
 #: preferences/general.py:92
-#: utils.py:304
+#: utils.py:269
 msgid "Japanese"
 msgstr "Japonés"
 
@@ -1160,12 +1156,12 @@ msgid "to"
 msgstr "a"
 
 #: operations/move.py:108
-#: operations/move.py:250
+#: operations/move.py:249
 msgid "after"
 msgstr "después"
 
 #: operations/move.py:108
-#: operations/move.py:252
+#: operations/move.py:251
 msgid "before"
 msgstr "antes"
 
@@ -1173,11 +1169,11 @@ msgstr "antes"
 msgid "text:"
 msgstr "texto:"
 
-#: operations/notebook.py:52
+#: operations/notebook.py:49
 msgid "Numbering settings"
 msgstr "Configuración de la numeración"
 
-#: operations/notebook.py:54
+#: operations/notebook.py:51
 msgid "Date && Time settings"
 msgstr "Ajustes de Fecha y Hora"
 
@@ -1623,7 +1619,7 @@ msgid "Unicode"
 msgstr "Unicode"
 
 #: operations/regExpr.py:62
-#: picker/wxPickerView.py:416
+#: picker/wxPickerView.py:414
 msgid "Unicode match (\\w matches 'a','b','c', etc)"
 msgstr "comparación Unicode  (\\w hallar é, ó, á, etc)"
 
@@ -1702,8 +1698,8 @@ msgid "This is a translated string"
 msgstr "Esta es una cadena traducida"
 
 #: picker/__init__.py:69
-#: picker/__init__.py:326
-#: picker/__init__.py:337
+#: picker/__init__.py:324
+#: picker/__init__.py:335
 msgid "Cannot read path!"
 msgstr "¡Imposible de leer la ruta!"
 
@@ -1747,13 +1743,13 @@ msgstr "- sólo una extensión"
 msgid "Getting directory contents please wait ..."
 msgstr "Obteniendo el contenido de la carpeta, espere por favor ..."
 
-#: picker/__init__.py:316
-#: picker/__init__.py:330
-#: picker/__init__.py:361
+#: picker/__init__.py:314
+#: picker/__init__.py:328
+#: picker/__init__.py:359
 msgid "Retrieved %s items from directory"
 msgstr "%s elementos recuperados de la carpeta"
 
-#: picker/__init__.py:320
+#: picker/__init__.py:318
 msgid ""
 "The item '%s' has an encoding error.\n"
 "Unable to process this path in recursive mode, please correct the name and try again."
@@ -1761,15 +1757,15 @@ msgstr ""
 "El elemento '%s' tiene un error de codificación.\n"
 "No se pudo procesar la ruta en modo recursivo, por favor corrija el nombre e intente de nuevo."
 
-#: picker/__init__.py:322
+#: picker/__init__.py:320
 msgid "Unable to load item"
 msgstr "Imposible cargar este elemento"
 
-#: picker/__init__.py:356
+#: picker/__init__.py:354
 msgid "At least one item has an encoding error in its name. You will not be able to modify these."
 msgstr "Al menos un elemento tiene un error de codificación en su nombre. No le sera posible modificar esto."
 
-#: picker/__init__.py:357
+#: picker/__init__.py:355
 msgid "Encoding Error"
 msgstr "Error de Codificación"
 
@@ -1789,91 +1785,91 @@ msgstr ""
 msgid "PIL needed"
 msgstr "Se necesita PIL"
 
-#: picker/wxPickerView.py:199
+#: picker/wxPickerView.py:198
 msgid "%s items were (de)selected"
 msgstr "%s elementos han sido (de)seleccionados"
 
-#: picker/wxPickerView.py:338
+#: picker/wxPickerView.py:336
 msgid "Refresh"
 msgstr "Refrescar"
 
-#: picker/wxPickerView.py:354
+#: picker/wxPickerView.py:352
 msgid "Input/Paste path and press OK, or BROWSE for path:"
 msgstr "Escribir/Pegar una ruta y tocar OK, o EXPLORAR para la ruta:"
 
-#: picker/wxPickerView.py:357
+#: picker/wxPickerView.py:355
 msgid "Select:"
 msgstr "Seleccionar:"
 
-#: picker/wxPickerView.py:360
+#: picker/wxPickerView.py:358
 msgid "all"
 msgstr "todos"
 
-#: picker/wxPickerView.py:367
+#: picker/wxPickerView.py:365
 msgid "none"
 msgstr "ninguno"
 
-#: picker/wxPickerView.py:372
+#: picker/wxPickerView.py:370
 msgid "Folders"
 msgstr "Carpetas"
 
-#: picker/wxPickerView.py:378
+#: picker/wxPickerView.py:376
 msgid "Files"
 msgstr "Archivos"
 
-#: picker/wxPickerView.py:388
+#: picker/wxPickerView.py:386
 msgid "Names containing (Use menu or enter text)"
 msgstr "Nombres conteniendo (use el menú o introduzca texto)"
 
-#: picker/wxPickerView.py:395
+#: picker/wxPickerView.py:393
 msgid "Contaning:"
 msgstr "Conteniendo:"
 
-#: picker/wxPickerView.py:397
+#: picker/wxPickerView.py:395
 msgid "Reg-Expr"
 msgstr "Expr-Reg"
 
-#: picker/wxPickerView.py:400
+#: picker/wxPickerView.py:398
 msgid "Evaluate filter as a regular expression"
 msgstr "Evaluar el filtro como una expresión regular"
 
-#: picker/wxPickerView.py:404
+#: picker/wxPickerView.py:402
 msgid "I"
 msgstr "I"
 
-#: picker/wxPickerView.py:408
+#: picker/wxPickerView.py:406
 msgid "case-Insensitive match"
 msgstr "comparación (no tener en cuenta May/Minúsc)"
 
-#: picker/wxPickerView.py:412
+#: picker/wxPickerView.py:410
 msgid "U"
 msgstr "U"
 
-#: picker/wxPickerView.py:420
+#: picker/wxPickerView.py:418
 msgid "Recursive"
 msgstr "Recursivo"
 
-#: picker/wxPickerView.py:428
+#: picker/wxPickerView.py:426
 msgid "depth:"
 msgstr "nivel:"
 
-#: picker/wxPickerView.py:435
+#: picker/wxPickerView.py:433
 msgid "Number of levels to descend, 0 = unlimited"
 msgstr "Número de niveles a descender, 0 = ilimitado"
 
-#: picker/wxPickerView.py:438
+#: picker/wxPickerView.py:436
 msgid "Not"
 msgstr "No"
 
-#: picker/wxPickerView.py:441
+#: picker/wxPickerView.py:439
 msgid "NOT containing"
 msgstr "NO conteniendo"
 
-#: picker/wxPickerView.py:655
+#: picker/wxPickerView.py:651
 msgid "All items were deselected"
 msgstr "Todos los elementos han sido deseleccionados"
 
-#: preferences/__init__.py:55
+#: preferences/__init__.py:53
 msgid ""
 "Please take a moment to set your preferences.\n"
 "\n"
@@ -1881,7 +1877,7 @@ msgstr ""
 "Por favor tome un momento para ajustar las preferencias.\n"
 "\n"
 
-#: preferences/__init__.py:171
+#: preferences/__init__.py:172
 msgid ""
 "\n"
 "The preferences file is outdated or corrupt."
@@ -1889,7 +1885,7 @@ msgstr ""
 "\n"
 "El archivo de configuración esta desactualizado o corrupto"
 
-#: preferences/__init__.py:172
+#: preferences/__init__.py:173
 msgid ""
 "\n"
 "Will now recreate the preferences file."
@@ -1897,7 +1893,7 @@ msgstr ""
 "\n"
 "Ahora se recreara el archivo de Preferencias"
 
-#: preferences/__init__.py:173
+#: preferences/__init__.py:174
 msgid "Problem with preferences"
 msgstr "Problema con las preferencias"
 
@@ -1921,49 +1917,38 @@ msgstr "Previsualizar cuando se cargue una configuración"
 msgid "Automatically show errors after preview"
 msgstr "Mostrar los errores automáticamente tras la previsualización"
 
-#: preferences/colors.py:56
+#: preferences/colors.py:53
 msgid "Will be renamed"
 msgstr ""
 
-#: preferences/colors.py:61
+#: preferences/colors.py:57
 msgid "Color of items to be renamed."
 msgstr ""
 
-#: preferences/colors.py:63
-#: preferences/colors.py:74
-#: preferences/colors.py:85
-#: preferences/colors.py:96
-msgid "Choose ..."
-msgstr ""
-
-#: preferences/colors.py:67
+#: preferences/colors.py:60
 msgid "Successfully renamed"
 msgstr ""
 
-#: preferences/colors.py:72
+#: preferences/colors.py:64
 msgid "Color of successfully renamed items."
 msgstr ""
 
-#: preferences/colors.py:83
+#: preferences/colors.py:71
 msgid "Color of items with errors."
 msgstr "Colores de los elementos con errores."
 
-#: preferences/colors.py:89
-#: utils.py:157
+#: preferences/colors.py:74
+#: utils.py:138
 msgid "Warning"
 msgstr "Advertencia"
 
-#: preferences/colors.py:94
+#: preferences/colors.py:78
 msgid "Color of items with warnings."
 msgstr "Colores de los elementos con advertencias."
 
-#: preferences/colors.py:100
+#: preferences/colors.py:81
 msgid "Set colors to defaults"
 msgstr ""
-
-#: preferences/colors.py:126
-msgid "Invalid color specified."
-msgstr "Color especificado no válido."
 
 #: preferences/dialog.py:43
 msgid "Display"
@@ -2061,7 +2046,7 @@ msgstr "Elegid un grupo de lenguas:"
 
 #: preferences/general.py:84
 #: preferences/general.py:131
-#: utils.py:277
+#: utils.py:242
 msgid "Use System Default"
 msgstr "Usar la del Sistema"
 
@@ -2089,11 +2074,11 @@ msgstr "Extensión del fichero:"
 msgid "These settings apply to loading and saving of log files."
 msgstr "Opciones para cargar y guardar ficheros de registro."
 
-#: renamer/engine.py:52
+#: renamer/engine.py:51
 msgid "Renaming Failed : %s"
 msgstr "La operación fracasó: %s"
 
-#: renamer/engine.py:53
+#: renamer/engine.py:52
 msgid ""
 "Error renaming:\n"
 "%s \n"
@@ -2112,17 +2097,17 @@ msgstr ""
 "\n"
 "Razón : %s"
 
-#: renamer/engine.py:55
+#: renamer/engine.py:54
 msgid "Renaming Failed !!"
 msgstr "¡Fallo al renombrar !"
 
-#: renamer/engine.py:139
-#: renamer/engine.py:142
+#: renamer/engine.py:138
+#: renamer/engine.py:141
 #: renamer/preview.py:180
 msgid "Duplicate name"
 msgstr "Nombre duplicado"
 
-#: renamer/engine.py:140
+#: renamer/engine.py:139
 msgid ""
 "This name already exists:\n"
 "%s"
@@ -2130,7 +2115,7 @@ msgstr ""
 "Este nombra ya existe:\n"
 "%s"
 
-#: renamer/engine.py:141
+#: renamer/engine.py:140
 msgid ""
 "\n"
 "\n"
@@ -2146,19 +2131,23 @@ msgstr ""
 "\n"
 "¿¿ Hacemos esto ??"
 
-#: renamer/engine.py:202
+#: renamer/engine.py:162
+msgid "Writing undo files, please wait ..."
+msgstr ""
+
+#: renamer/engine.py:191
 msgid "Adjusting %s recursive paths, please wait ..."
 msgstr "Ajustando %%% rutas recursivas, tened paciencia ..."
 
-#: renamer/engine.py:205
+#: renamer/engine.py:194
 msgid "Adjusting %%% recursive paths, please wait ..."
 msgstr "Ajustando %%% rutas recursivas, tened paciencia ..."
 
-#: renamer/engine.py:281
+#: renamer/engine.py:210
 msgid "Renaming in progress, please wait ..."
 msgstr "Renombramiento en curso, tened paciencia ..."
 
-#: renamer/engine.py:288
+#: renamer/engine.py:217
 msgid ""
 "\n"
 "Make sure 'undo' directory exists and is read/write\n"
@@ -2172,20 +2161,20 @@ msgstr ""
 "¡¡Será imposible deshacer esta operación!!\n"
 "¿¿ Continuar de todas maneras ??"
 
-#: renamer/engine.py:289
+#: renamer/engine.py:218
 msgid "Problem with undo!"
 msgstr "¡ Problema al deshacer la operación !"
 
-#: renamer/engine.py:303
-#: renamer/engine.py:322
+#: renamer/engine.py:232
+#: renamer/engine.py:251
 msgid "Renaming for %s items completed"
 msgstr "Renombramiento de %s elementos terminado"
 
-#: renamer/engine.py:312
+#: renamer/engine.py:241
 msgid "Renaming cancelled"
 msgstr "Renombramiento cancelado"
 
-#: renamer/engine.py:355
+#: renamer/engine.py:284
 msgid ""
 "%s\n"
 "\n"
@@ -2195,7 +2184,7 @@ msgstr ""
 "\n"
 "¡¡ Fallo al deshacer !!"
 
-#: renamer/engine.py:371
+#: renamer/engine.py:300
 msgid "Nothing to undo"
 msgstr "Nada que deshacer"
 
@@ -2236,123 +2225,123 @@ msgstr "Creando %s nuevos nombres, tened paciencia ..."
 msgid "Generating %%% new names, please wait ..."
 msgstr "Creando %%% nuevos nombres, tened paciencia ..."
 
-#: renamer/wxRenamerView.py:151
+#: renamer/wxRenamerView.py:152
 msgid "You don't have any operations defined."
 msgstr "No hay ninguna operación definida."
 
-#: renamer/wxRenamerView.py:156
+#: renamer/wxRenamerView.py:157
 msgid "Double-click or drag && drop an operation in the 'Available' box to add one."
 msgstr "Doble clic o arrastrar y soltar una operación de la caja 'Disponibles' para añadirla."
 
-#: renamer/wxRenamerView.py:157
+#: renamer/wxRenamerView.py:158
 msgid ""
 "\n"
 "You may then drag && drop used operations to reorder them."
 msgstr ""
 
-#: renamer/wxRenamerView.py:238
+#: renamer/wxRenamerView.py:239
 msgid "Move up"
 msgstr "Desplazar hacia arriba"
 
-#: renamer/wxRenamerView.py:242
+#: renamer/wxRenamerView.py:243
 msgid "Move down"
 msgstr "Desplazar hacia abajo"
 
-#: renamer/wxRenamerView.py:247
-#: renamer/wxRenamerView.py:361
-#: renamer/wxRenamerView.py:553
-#: renamer/wxRenamerView.py:577
+#: renamer/wxRenamerView.py:248
+#: renamer/wxRenamerView.py:362
+#: renamer/wxRenamerView.py:554
+#: renamer/wxRenamerView.py:578
 msgid "Disable"
 msgstr "Desactivar"
 
-#: renamer/wxRenamerView.py:250
-#: renamer/wxRenamerView.py:556
-#: renamer/wxRenamerView.py:574
+#: renamer/wxRenamerView.py:251
+#: renamer/wxRenamerView.py:557
+#: renamer/wxRenamerView.py:575
 msgid "Enable"
 msgstr "Activar"
 
-#: renamer/wxRenamerView.py:256
-#: renamer/wxRenamerView.py:375
+#: renamer/wxRenamerView.py:257
+#: renamer/wxRenamerView.py:376
 msgid "Reset"
 msgstr "Reiniciar"
 
-#: renamer/wxRenamerView.py:260
-#: renamer/wxRenamerView.py:368
+#: renamer/wxRenamerView.py:261
+#: renamer/wxRenamerView.py:369
 msgid "Destroy"
 msgstr "Borrar"
 
-#: renamer/wxRenamerView.py:264
-#: renamer/wxRenamerView.py:368
+#: renamer/wxRenamerView.py:265
+#: renamer/wxRenamerView.py:369
 msgid "Destroy All"
 msgstr "Borrar Todos"
 
-#: renamer/wxRenamerView.py:268
+#: renamer/wxRenamerView.py:269
 msgid "Enable/Disable"
 msgstr "Activar/Desactivar"
 
-#: renamer/wxRenamerView.py:275
+#: renamer/wxRenamerView.py:276
 msgid "Apply to"
 msgstr "Aplicar a"
 
-#: renamer/wxRenamerView.py:302
+#: renamer/wxRenamerView.py:303
 msgid "Available:"
 msgstr "Disponibles:"
 
-#: renamer/wxRenamerView.py:343
+#: renamer/wxRenamerView.py:344
 msgid "Used:"
 msgstr "Utilizados:"
 
-#: renamer/wxRenamerView.py:349
+#: renamer/wxRenamerView.py:350
 msgid "Move current operation down by 1"
 msgstr "Descender la operación actual 1 lugar"
 
-#: renamer/wxRenamerView.py:356
+#: renamer/wxRenamerView.py:357
 msgid "Move current operation up by 1"
 msgstr "Subir la operación actual 1 lugar"
 
-#: renamer/wxRenamerView.py:363
+#: renamer/wxRenamerView.py:364
 msgid "Enable or Disable current operation"
 msgstr "Activar o Desactivar la operación actual"
 
-#: renamer/wxRenamerView.py:371
+#: renamer/wxRenamerView.py:372
 msgid "Do Stuff"
 msgstr "Hacer algo"
 
-#: renamer/wxRenamerView.py:377
+#: renamer/wxRenamerView.py:378
 msgid "Reset the current operation"
 msgstr "Reiniciar la operación actual"
 
-#: renamer/wxRenamerView.py:382
+#: renamer/wxRenamerView.py:383
 msgid "Order:"
 msgstr "Orden:"
 
-#: renamer/wxRenamerView.py:386
+#: renamer/wxRenamerView.py:387
 msgid "extension"
 msgstr "a la extensión"
 
-#: renamer/wxRenamerView.py:393
+#: renamer/wxRenamerView.py:394
 msgid "name"
 msgstr "al nombre"
 
-#: renamer/wxRenamerView.py:399
+#: renamer/wxRenamerView.py:400
 msgid "Apply to:"
 msgstr "Aplicar:"
 
-#: renamer/wxRenamerView.py:588
+#: renamer/wxRenamerView.py:589
 msgid "Really reset this '%s' operation?"
 msgstr "¿De verdad queréis reiniciar esta  '%s' operación ?"
 
-#: renamer/wxRenamerView.py:589
-#: renamer/wxRenamerView.py:611
-#: renamer/wxRenamerView.py:693
+#: renamer/wxRenamerView.py:590
+#: renamer/wxRenamerView.py:612
+#: renamer/wxRenamerView.py:694
 msgid "Are You Sure?"
 msgstr "¿Estáis seguros ?"
 
-#: renamer/wxRenamerView.py:610
+#: renamer/wxRenamerView.py:611
 msgid "Really destroy all operations?"
 msgstr "¿ De verdad queréis borrar todas las operaciones ?"
 
-#: renamer/wxRenamerView.py:692
+#: renamer/wxRenamerView.py:693
 msgid "Really destroy this '%s' operation?"
 msgstr "¿De verdad quiere borrar esta operación '%s' ?"
 
@@ -2469,10 +2458,12 @@ msgstr "Exif: imagen modificada"
 msgid "Sort by item attributes, using:"
 msgstr "Ordenación por atributos del elemento, usando :"
 
-#: utils.py:165
+#: utils.py:146
 msgid "Information"
 msgstr "Información"
 
+#~ msgid "Invalid color specified."
+#~ msgstr "Color especificado no válido."
 #~ msgid "change length"
 #~ msgstr "cambiar el tamaño"
 #~ msgid ""
@@ -2509,8 +2500,6 @@ msgstr "Información"
 #~ msgstr "Erreur de renommage"
 #~ msgid "&OK (load/reload)\tF5"
 #~ msgstr "&OK (charger/recharger)\tF5"
-#~ msgid "Re-building names, please wait ..."
-#~ msgstr "Reconstruction des noms, veuillez patienter ..."
 #~ msgid "OK"
 #~ msgstr "OK"
 #~ msgid "Save selection as ..."

@@ -85,7 +85,7 @@ class Core():
                  ( _(u"- programming") , u"\.(py|pyc|php|pl|h|c|cpp|cxx|jar|java|js|tcl)$" ),
                  ( _(u"- compressed") , u"\.(zip|tar|7z|ace|gz|tgz|rar|r\d{1,3}|cab|bz2)$" ),
                  ( _(u"- an extension") , u"^.+\..+$" ),
-                 ( _(u"- only an extension") , u"^\." ),
+                 ( _(u"- only an extension") , u"(^|\\\|/)\." ),
             )
         self.CustomSearches = {}
 
@@ -373,3 +373,4 @@ class Core():
 
             if app.prefs.get(u'autoSelectAll'):
                 self.select_all()
+
