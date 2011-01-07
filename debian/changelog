@@ -1,4 +1,15 @@
-metamorphose2 (0.8.1-1) unstable; urgency=low
+metamorphose2 (0.8.2-1) unstable; urgency=low
+
+  * Fix bug folder periods (ticket 3148632).
+  * Continue better centralized variable storage.
+  * Change color picker buttons.
+  * Minor bugfixes.
+  * Translation updates.
+  * Allow recursive folder renaming in debug mode (!)
+
+ -- ianaré sévi <ianare@gmail.com>  Fri, 07 Jan 2011 01:21:56 +0100 
+ 
+ metamorphose2 (0.8.1-1) unstable; urgency=low
 
   * Fix bug with duplicate rename (ticket 3095633).
   * Fix bug with config file load/save (ticket 3148071).
