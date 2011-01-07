@@ -187,7 +187,10 @@ class LoadConfig():
         global main
         main = mainWindow
         self.loadError = False
+        utils.set_busy(True)
+        main.set_status_msg(_(u"Loading configuration ..."), u'wait')
         self.__load_file(configFilePath)
+        utils.set_busy(False)
 
     def __set_widget_value(self, id, type, value):
         """Set widget's value correctly depending on type."""

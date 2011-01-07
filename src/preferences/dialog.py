@@ -152,6 +152,8 @@ class Dialog(wx.Dialog):
                     child.SetSelection(v)
                 elif isinstance(child, wx.DirPickerCtrl) or isinstance(child, wx.FilePickerCtrl):
                     child.SetPath(unicode(v))
+                elif isinstance(child, wx.ColourPickerCtrl):
+                    child.SetColour(v)
 
     def __close_diag(self, event):
         self.Close()

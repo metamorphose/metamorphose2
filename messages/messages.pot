@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-01-06 10:10+CET\n"
+"POT-Creation-Date: 2011-01-07 01:03+CET\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -437,15 +437,19 @@ msgstr ""
 msgid "Load a configuration file"
 msgstr ""
 
-#: configs.py:337
+#: configs.py:191
+msgid "Loading configuration ..."
+msgstr ""
+
+#: configs.py:340
 msgid "Invalid XML in config file : %s"
 msgstr ""
 
-#: configs.py:338
+#: configs.py:341
 msgid "Invalid Configuration"
 msgstr ""
 
-#: configs.py:354
+#: configs.py:357
 msgid "Not all settings could be loaded."
 msgstr ""
 

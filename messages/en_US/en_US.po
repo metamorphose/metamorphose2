@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: metamorphose\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2011-01-06 10:21+0100\n"
-"Last-Translator: ianaré sévi <ianare.sevi@c4mprod.com>\n"
+"PO-Revision-Date: 2011-01-07 01:05+0100\n"
+"Last-Translator: ianaré sévi <ianare.gmail.com>\n"
 "Language-Team: ianaré sévi\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -468,15 +468,19 @@ msgstr ""
 msgid "Load a configuration file"
 msgstr ""
 
-#: configs.py:337
+#: configs.py:191
+msgid "Loading configuration ..."
+msgstr ""
+
+#: configs.py:340
 msgid "Invalid XML in config file : %s"
 msgstr ""
 
-#: configs.py:338
+#: configs.py:341
 msgid "Invalid Configuration"
 msgstr ""
 
-#: configs.py:354
+#: configs.py:357
 msgid "Not all settings could be loaded."
 msgstr ""
 
