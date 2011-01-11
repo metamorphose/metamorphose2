@@ -54,12 +54,13 @@ class SmallHelp(wx.Dialog):
         if size == False:
             size = wx.Size(610, 531)
         wx.Dialog.__init__(self, id=-1, name='smallHelpDialog', parent=prnt,
-              size=size,
-              style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX, title=title)
+              style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX,
+              title=title)
         self.SetIcon(wx.Icon(utils.icon_path(u'%s.ico')%icon,wx.BITMAP_TYPE_ICO))
 
         self.display = wx.html.HtmlWindow(id=-1,
               name=u'display', parent=self, style=wx.html.HW_SCROLLBAR_AUTO)
+        #self.display.SetMinSize(wx.Size(1010, 531))
 
         self.Center(wx.HORIZONTAL|wx.VERTICAL)
 
@@ -74,6 +75,8 @@ class SmallHelp(wx.Dialog):
             helpFile = os.path.join(docspath,u'en_US',helpFile)
 
         self.display.LoadPage(helpFile)
+        self.SetSize(size)
+        self.CentreOnParent()
 
 
 # progress dialog handling

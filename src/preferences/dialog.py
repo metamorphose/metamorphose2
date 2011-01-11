@@ -131,7 +131,8 @@ class Dialog(wx.Dialog):
                 main.picker.dirPicker.ShowHidden(prefs.get(u'showHiddenDirs'))
             self.oldDirTree = prefs.get(u'useDirTree')
             self.oldSHowHiddenDirs = prefs.get(u'showHiddenDirs')
-            main.show_preview(event)
+            main.bottomWindow.display.set_preferences()
+            main.show_preview(True)
 
     def load_prefs(self, panel):
         """load preferences from file and apply them to a panel."""
