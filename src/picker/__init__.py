@@ -226,7 +226,6 @@ class Core():
         files = [] #files will go here
         folders = [] #folders will go here
         error = False
-        
         params = self.params.load()
 
         if params.root is False:
@@ -373,4 +372,3 @@ class Core():
 
             if app.prefs.get(u'autoSelectAll'):
                 self.select_all()
-

@@ -20,7 +20,6 @@ from __future__ import print_function
 import wx
 import wx.html
 import os
-import sys
 import codecs
 import locale
 import time
@@ -30,10 +29,6 @@ try:
     import Image
 except:
     pass
-
-homedir = 'metamorphose2'
-if os.sep == '/':
-    homedir = '.' + homedir
 
 def get_wxversion():
     """Get the wxPython Version."""
@@ -151,37 +146,11 @@ def make_info_msg(msg, title=None):
 def get_user_path(file):
     """Return user's default config path."""
     base = wx.StandardPaths.Get().GetUserConfigDir()
-    return os.path.join(base,homedir,file)
-
-def locale_path(lang):
-    """Return locale directory."""
-    # windows py2exe
-    if hasattr(sys, "frozen"):
-        return app.get_real_path(u'messages')
-    # Linux, freeBSD when installed
-    elif os.path.exists(u'/usr/share/locale/%s/LC_MESSAGES/metamorphose2.mo'%lang):
-        return u'/usr/share/locale'
-    # run from source
-    else:
-        return app.get_real_path(u'../messages')
+    return os.path.join(base,app.homedir,file)
 
 def icon_path(icon):
     """Get the full icon path."""
     return app.get_real_path(u'icons/%s'%icon)
-
-def add_to_warnings(main,path,msg):
-    """Add an item to warnings."""
-    ec = main.ec
-    if main.warn.count(ec) < 1:
-        main.warn.append(ec)
-        main.errorLog.insert(0, (ec, path, msg, u'warn'))
-
-def add_to_errors(main, path, msg):
-    """Add an item to errors."""
-    ec = main.ec
-    if main.bad.count(ec) < 1:
-        main.bad.append(ec)
-        main.errorLog.insert(0, (ec, path, msg, u'bad'))
 
 def reset_counter(parent, tools, c):
     """Reset a numbering counter."""
@@ -219,7 +188,7 @@ def dev_null(event):
     """
     Do nothing.
     
-    Sometimes need to bind to this when programmatically doing things.
+    Sometimes need to bind this to wx.Event.
     """
     pass
 

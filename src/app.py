@@ -23,6 +23,10 @@ Some methods utility methods that make more sense
 here than in the utils module.
 """
 
+homedir = 'metamorphose2'
+if os.sep == '/':
+    homedir = '.' + homedir
+
 # Methods
 
 def debug_print(msg):
@@ -66,6 +70,18 @@ def __get_version():
         f.close()
     return v + u' (beta)'
 
+def locale_path(lang):
+    """Return locale directory."""
+    # windows py2exe
+    if hasattr(sys, "frozen"):
+        return get_real_path(u'messages')
+    # Linux, freeBSD when installed
+    elif os.path.exists(u'/usr/share/locale/%s/LC_MESSAGES/metamorphose2.mo'%lang):
+        return u'/usr/share/locale'
+    # run from source
+    else:
+        return get_real_path(u'../messages')
+
 # Variables
 
 # Application version
@@ -92,6 +108,8 @@ showTimes = False
 debug = False
 # Font parameters
 fontParams = {}
+# Runnin in GUI or CLI mode (future)
+cliMode = False
 
 # Objects
 

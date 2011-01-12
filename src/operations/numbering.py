@@ -339,7 +339,7 @@ class Panel(wx.Panel):
 
         # alpha auto pad start value correction
         elif self.alpha.GetValue() and self.alphaPad.GetValue():
-            def _to_alpha(i):
+            def __to_alpha(i):
                 s = ""
                 while i:
                     i -= 1
@@ -347,7 +347,7 @@ class Panel(wx.Panel):
                     s = chr(97+m)+s
                     i = q
                 return s
-            width = len(_to_alpha(abs(maxNumb)))
+            width = len(__to_alpha(abs(maxNumb)))
 
             if width == 1:
                 start = start

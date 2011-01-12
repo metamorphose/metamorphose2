@@ -63,8 +63,7 @@ class Core():
         try:
             shutil1.move(original[0], renamed[0], True)
         except IOError as (errNumb, err):
-            if app.debug:
-                print("IOError : %s, %s"%(errNumb, err))
+            app.debug_print("IOError : %s, %s"%(errNumb, err))
             # may need to create dirs first
             if errNumb == 2 and not os.path.exists(os.path.dirname(renamed[0])):
                 try:
@@ -78,8 +77,7 @@ class Core():
                 self._show_rename_error(i, err, original, renamed)
                 return True
         except OSError as (errNumb, err):
-            if app.debug:
-                print("OSError : %s, %s"%(errNumb, err))
+            app.debug_print("OSError : %s, %s"%(errNumb, err))
             # don't stop for a read-only error if the renamed item exists
             if not (errNumb == 30 and os.path.exists(renamed[0])):
                 self._show_rename_error(i, err, original, renamed)

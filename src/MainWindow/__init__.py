@@ -586,7 +586,7 @@ class MainWindow(wx.Frame):
 
         # set locale and language
         wx.Locale(locales[language][0], wx.LOCALE_LOAD_DEFAULT)
-        Lang = gettext.translation(u'metamorphose2', utils.locale_path(language),
+        Lang = gettext.translation(u'metamorphose2', app.locale_path(language),
                                    languages=[locales[language][1]])
         Lang.install(unicode=True)
 
@@ -756,8 +756,7 @@ class MainWindow(wx.Frame):
         """Set status bar text and image."""
         self.statusImage.SetBitmap(self.statusImages[img])
         self.SetStatusText(self.make_space(msg))
-        if app.debug:
-            print(u"status message : '%s'" %msg)
+        app.debug_print(u"status message : '%s'" %msg)
 
 
 
