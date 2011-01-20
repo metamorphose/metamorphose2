@@ -7,14 +7,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: metamorphose\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2011-01-07 01:05+0100\n"
-"Last-Translator: ianaré sévi <ianare.gmail.com>\n"
+"PO-Revision-Date: 2011-01-10 12:31-0800\n"
+"Last-Translator: Gabriel Espinoza <virtuosonic@users.sourceforge.net>\n"
 "Language-Team: ianaré sévi\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: pygettext.py 1.5\n"
+"Language: \n"
 "X-Poedit-Language: Spanish\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ../src\n"
@@ -265,7 +264,7 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Debes reiniciar Métamorphose para cambiar el Idioma"
+"Debes reiniciar Métamorphose para cambiar el Idioma."
 
 #: MainWindow/__init__.py:744
 msgid ""
@@ -275,7 +274,7 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"¿Salir de Metamorfosis ahora ?"
+"¿Salir de Métamorphose ahora?"
 
 #: MainWindow/__init__.py:746
 msgid "Change the Language"
@@ -374,11 +373,11 @@ msgstr "Mostrar miniaturas"
 
 #: MainWindow/bottomWindow.py:260
 msgid "Can slow preview considerably"
-msgstr "Puede alentar la vista previa"
+msgstr "Puede alentar la vista previa considerablemente"
 
 #: MainWindow/bottomWindow.py:269
 msgid "Thumbnail Size"
-msgstr "Tamaño de Miniaturas"
+msgstr "Tamaño de Miniatura"
 
 #: MainWindow/bottomWindow.py:278
 msgid "Automatic Preview"
@@ -402,7 +401,7 @@ msgstr "Rehacer"
 
 #: MainWindow/editDialog.py:55
 msgid "Manually edit name, use with care."
-msgstr "Editar un nombre manualmente, usar cuidadosamente."
+msgstr "Editar un nombre manualmente, uselo cuidadosamente."
 
 #: MainWindow/editDialog.py:59
 msgid ""
@@ -490,7 +489,7 @@ msgstr "Configuración no válida"
 
 #: configs.py:357
 msgid "Not all settings could be loaded."
-msgstr ""
+msgstr "No fue posible cargar todas las opciones de la configuración."
 
 #: errors/wxErrorsView.py:93
 msgid "items with:"
@@ -870,7 +869,7 @@ msgstr "Copiar Nombre de Archivo"
 
 #: operations/directoryTools.py:115
 msgid "Add a directory with the same name as the file."
-msgstr ""
+msgstr "Agregar un directorio con el mismo nombre que el archivo."
 
 #: operations/directoryTools.py:119
 #: renamer/wxRenamerView.py:219
@@ -1923,23 +1922,23 @@ msgstr "Mostrar los errores automáticamente tras la previsualización"
 
 #: preferences/colors.py:53
 msgid "Will be renamed"
-msgstr ""
+msgstr "Sera renombrado"
 
 #: preferences/colors.py:57
 msgid "Color of items to be renamed."
-msgstr ""
+msgstr "Color de los elementos que seran renombrados."
 
 #: preferences/colors.py:60
 msgid "Successfully renamed"
-msgstr ""
+msgstr "Renombrado existosamente"
 
 #: preferences/colors.py:64
 msgid "Color of successfully renamed items."
-msgstr ""
+msgstr "Color de los elementos renombrados satisfactoriamente."
 
 #: preferences/colors.py:71
 msgid "Color of items with errors."
-msgstr "Colores de los elementos con errores."
+msgstr "Color de los elementos con errores"
 
 #: preferences/colors.py:74
 #: utils.py:138
@@ -1948,11 +1947,11 @@ msgstr "Advertencia"
 
 #: preferences/colors.py:78
 msgid "Color of items with warnings."
-msgstr "Colores de los elementos con advertencias."
+msgstr "Color de los elementos con advertencias"
 
 #: preferences/colors.py:81
 msgid "Set colors to defaults"
-msgstr ""
+msgstr "Ajustar colores a valores predeterminados"
 
 #: preferences/dialog.py:43
 msgid "Display"
@@ -2468,8 +2467,10 @@ msgstr "Información"
 
 #~ msgid "Invalid color specified."
 #~ msgstr "Color especificado no válido."
+
 #~ msgid "change length"
 #~ msgstr "cambiar el tamaño"
+
 #~ msgid ""
 #~ "%s\n"
 #~ "%s\n"
@@ -2480,42 +2481,63 @@ msgstr "Información"
 #~ "%s\n"
 #~ "\n"
 #~ "¿ Continuar la carga de los elementos de esta carpeta ?"
+
 #~ msgid "Edit"
 #~ msgstr "Éditer"
+
 #~ msgid "track"
 #~ msgstr "№piste"
+
 #~ msgid "year"
 #~ msgstr "année"
+
 #~ msgid "Unknown CDM compression: %02x"
 #~ msgstr "Compression CDM inconnue : %02x"
+
 #~ msgid "Long read (%s): (%d > %d)"
 #~ msgstr "Lecture longue (%s) : (%d > %d)"
+
 #~ msgid "Short read (%s): (%d < %d)"
 #~ msgstr "Lecture courte (%s) : (%d < %d)"
+
 #~ msgid "Unsupported major version: %d"
 #~ msgstr "Version majeure non supportée : %d"
+
 #~ msgid "MP3 info"
 #~ msgstr "infos MP3"
+
 #~ msgid "Could not read id3 tag: %s"
 #~ msgstr "Impossible de lire l'étiquette id3 : %s"
+
 #~ msgid "id3 error: %s"
 #~ msgstr "Erreur id3 : %s"
+
 #~ msgid "Error Renaming"
 #~ msgstr "Erreur de renommage"
+
 #~ msgid "&OK (load/reload)\tF5"
 #~ msgstr "&OK (charger/recharger)\tF5"
+
 #~ msgid "OK"
 #~ msgstr "OK"
+
 #~ msgid "Save selection as ..."
 #~ msgstr "Sauvegarder la sélection comme ..."
+
 #~ msgid "number of hard links"
 #~ msgstr "nombre de liens matériels"
+
 #~ msgid "device"
 #~ msgstr "appareil"
+
 #~ msgid "EXIF error: %s"
 #~ msgstr "Erreur d'EXIF : %s"
+
 #~ msgid "Could not read EXIF tag"
 #~ msgstr "Impossible de lire l'étiquette Exif"
+
 #~ msgid "replace/remove"
 #~ msgstr "remplacer/supprimer"
 
+#~ msgid "Choose ..."
+#~ msgstr "Elegir ..."
