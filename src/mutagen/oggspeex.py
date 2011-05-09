@@ -1,6 +1,6 @@
 # Ogg Speex support.
 #
-# Copyright 2006 Joe Wreschnig <piman@sacredchao.net>
+# Copyright 2006 Joe Wreschnig
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as
@@ -51,9 +51,7 @@ class OggSpeexInfo(object):
                 "page has ID header, but doesn't start a stream")
         self.sample_rate = cdata.uint_le(page.packets[0][36:40])
         self.channels = cdata.uint_le(page.packets[0][48:52])
-        self.bitrate = cdata.int_le(page.packets[0][52:56])
-        if self.bitrate == -1:
-            self.bitrate = 0
+        self.bitrate = max(0, cdata.int_le(page.packets[0][52:56]))
         self.serial = page.serial
 
     def pprint(self):

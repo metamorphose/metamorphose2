@@ -1,6 +1,6 @@
 # Ogg FLAC support.
 #
-# Copyright 2006 Joe Wreschnig <piman@sacredchao.net>
+# Copyright 2006 Joe Wreschnig
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as
@@ -13,7 +13,7 @@
 This module handles FLAC files wrapped in an Ogg bitstream. The first
 FLAC stream found is used. For 'naked' FLACs, see mutagen.flac.
 
-This module is bsaed off the specification at
+This module is based off the specification at
 http://flac.sourceforge.net/ogg_mapping.html.
 """
 

@@ -216,43 +216,73 @@ class ID3(DictProxy, mutagen.Metadata):
         if self.PEDANTIC:
             if (2,4,0) <= self.version and (flags & 0x0f):
                 raise ValueError("'%s' has invalid flags %#02x" % (fn, flags))
-            elif (2,3,0) <= self.version and (flags & 0x1f):
+            elif (2,3,0) <= self.version < (2,4,0) and (flags & 0x1f):
                 raise ValueError("'%s' has invalid flags %#02x" % (fn, flags))
 
         if self.f_extended:
-            if self.version >= (2,4,0):
+            extsize = self.__fullread(4)
+            if extsize in Frames:
+                # Some tagger sets the extended header flag but
+                # doesn't write an extended header; in this case, the
+                # ID3 data follows immediately. Since no extended
+                # header is going to be long enough to actually match
+                # a frame, and if it's *not* a frame we're going to be
+                # completely lost anyway, this seems to be the most
+                # correct check.
+                # http://code.google.com/p/quodlibet/issues/detail?id=126
+                self.__flags ^= 0x40
+                self.__extsize = 0
+                self.__fileobj.seek(-4, 1)
+                self.__readbytes -= 4
+            elif self.version >= (2,4,0):
                 # "Where the 'Extended header size' is the size of the whole
                 # extended header, stored as a 32 bit synchsafe integer."
-                self.__extsize = BitPaddedInt(self.__fullread(4)) - 4
+                self.__extsize = BitPaddedInt(extsize) - 4
             else:
                 # "Where the 'Extended header size', currently 6 or 10 bytes,
                 # excludes itself."
-                self.__extsize = unpack('>L', self.__fullread(4))[0]
-            self.__extdata = self.__fullread(self.__extsize)
+                self.__extsize = unpack('>L', extsize)[0]
+            if self.__extsize:
+                self.__extdata = self.__fullread(self.__extsize)
+            else:
+                self.__extdata = ""
 
-    def __determine_bpi(self, data, frames):
-        if self.version < (2,4,0): return int
+    def __determine_bpi(self, data, frames, EMPTY="\x00" * 10):
+        if self.version < (2, 4, 0):
+            return int
         # have to special case whether to use bitpaddedints here
         # spec says to use them, but iTunes has it wrong
 
         # count number of tags found as BitPaddedInt and how far past
         o = 0
         asbpi = 0
-        while o < len(data)-10:
-            name, size, flags = unpack('>4sLH', data[o:o+10])
+        while o < len(data) - 10:
+            part = data[o:o + 10]
+            if part == EMPTY:
+                bpioff = -((len(data) - o) % 10)
+                break
+            name, size, flags = unpack('>4sLH', part)
             size = BitPaddedInt(size)
-            o += 10+size
-            if name in frames: asbpi += 1
-        bpioff = o - len(data)
+            o += 10 + size
+            if name in frames:
+                asbpi += 1
+        else:
+            bpioff = o - len(data)
 
         # count number of tags found as int and how far past
         o = 0
         asint = 0
-        while o < len(data)-10:
-            name, size, flags = unpack('>4sLH', data[o:o+10])
-            o += 10+size
-            if name in frames: asint += 1
-        intoff = o - len(data)
+        while o < len(data) - 10:
+            part = data[o:o + 10]
+            if part == EMPTY:
+                intoff = -((len(data) - o) % 10)
+                break
+            name, size, flags = unpack('>4sLH', part)
+            o += 10 + size
+            if name in frames:
+                asint += 1
+        else:
+            intoff = o - len(data)
 
         # if more tags as int, or equal and bpi is past and int is not
         if asint > asbpi or (asint == asbpi and (bpioff >= 1 and intoff <= 1)):
@@ -838,7 +868,10 @@ class SynchronizedTextSpec(EncodedTextSpec):
         encoding, term = self._encodings[frame.encoding]
         while data:
             l = len(term)
-            value_idx = data.index(term)
+            try:
+                value_idx = data.index(term)
+            except ValueError:
+                raise ID3JunkFrameError
             value = data[:value_idx].decode(encoding)
             time, = struct.unpack(">I", data[value_idx+l:value_idx+l+4])
             texts.append((value, time))
@@ -1123,8 +1156,7 @@ class TextFrame(Frame):
     def __unicode__(self): return u'\u0000'.join(self.text)
     def __eq__(self, other):
         if isinstance(other, str): return str(self) == other
-        elif isinstance(other, unicode):
-            return u'\u0000'.join(self.text) == other
+        elif isinstance(other, unicode): return unicode(self) == other
         return self.text == other
     def __getitem__(self, item): return self.text[item]
     def __iter__(self): return iter(self.text)
@@ -1296,7 +1328,9 @@ class TRDA(TextFrame): "Recording Dates"
 class TRSN(TextFrame): "Internet Radio Station Name"
 class TRSO(TextFrame): "Internet Radio Station Owner"
 class TSIZ(NumericTextFrame): "Size of audio data (bytes)"
+class TSO2(TextFrame): "iTunes Album Artist Sort"
 class TSOA(TextFrame): "Album Sort Order key"
+class TSOC(TextFrame): "iTunes Composer Sort"
 class TSOP(TextFrame): "Perfomer Sort Order key"
 class TSOT(TextFrame): "Title Sort Order key"
 class TSRC(TextFrame): "International Standard Recording Code (ISRC)"
@@ -1526,7 +1560,7 @@ class PCNT(Frame):
     def __pos__(self): return self.count
     def _pprint(self): return unicode(self.count)
 
-class POPM(Frame):
+class POPM(FrameOpt):
     """Popularimeter.
 
     This frame keys a rating (out of 255) and a play count to an email
@@ -1535,16 +1569,17 @@ class POPM(Frame):
     Attributes:
     email -- email this POPM frame is for
     rating -- rating from 0 to 255
-    count -- number of times the files has been played
+    count -- number of times the files has been played (optional)
     """
-    _framespec = [ Latin1TextSpec('email'), ByteSpec('rating'),
-        IntegerSpec('count') ]
+    _framespec = [ Latin1TextSpec('email'), ByteSpec('rating') ]
+    _optionalspec = [ IntegerSpec('count') ]
+                   
     HashKey = property(lambda s: '%s:%s' % (s.FrameID, s.email))
 
     def __eq__(self, other): return self.rating == other
     def __pos__(self): return self.rating
-    def _pprint(self): return "%s=%s %s/255" % (
-        self.email, self.count, self.rating)
+    def _pprint(self): return "%s=%r %r/255" % (
+        self.email, getattr(self, 'count', None), self.rating)
 
 class GEOB(Frame):
     """General Encapsulated Object.
@@ -1889,7 +1924,8 @@ def MakeID3v1(id3):
                        "TALB": "album"}.items():
         if v2id in id3:
             text = id3[v2id].text[0].encode('latin1', 'replace')[:30]
-        else: text = ""
+        else:
+            text = ""
         v1[name] = text + ("\x00" * (30 - len(text)))
 
     if "COMM" in id3:
@@ -1910,8 +1946,12 @@ def MakeID3v1(id3):
                 v1["genre"] = chr(TCON.GENRES.index(genre))
     if "genre" not in v1: v1["genre"] = "\xff"
 
-    if "TDRC" in id3: v1["year"] = str(id3["TDRC"])[:4]
-    else: v1["year"] = "\x00\x00\x00\x00"
+    if "TDRC" in id3:
+        v1["year"] = str(id3["TDRC"])[:4]
+    elif "TYER" in id3:
+        v1["year"] = str(id3["TYER"])[:4]
+    else:
+        v1["year"] = "\x00\x00\x00\x00"
 
     return ("TAG%(title)s%(artist)s%(album)s%(year)s%(comment)s"
             "%(track)s%(genre)s") % v1 
@@ -1919,6 +1959,8 @@ def MakeID3v1(id3):
 class ID3FileType(mutagen.FileType):
     """An unknown type of file with ID3 tags."""
 
+    ID3 = ID3
+    
     class _Info(object):
         length = 0
         def __init__(self, fileobj, offset): pass
@@ -1928,23 +1970,27 @@ class ID3FileType(mutagen.FileType):
         return header.startswith("ID3")
     score = staticmethod(score)
 
-    def add_tags(self, ID3=ID3):
+    def add_tags(self, ID3=None):
         """Add an empty ID3 tag to the file.
 
         A custom tag reader may be used in instead of the default
         mutagen.id3.ID3 object, e.g. an EasyID3 reader.
         """
+        if ID3 is None:
+            ID3 = self.ID3
         if self.tags is None:
             self.tags = ID3()
         else:
             raise error("an ID3 tag already exists")
 
-    def load(self, filename, ID3=ID3, **kwargs):
+    def load(self, filename, ID3=None, **kwargs):
         """Load stream and tag information from a file.
 
         A custom tag reader may be used in instead of the default
         mutagen.id3.ID3 object, e.g. an EasyID3 reader.
         """
+        if ID3 is None:
+            ID3 = self.ID3
         self.filename = filename
         try: self.tags = ID3(filename, **kwargs)
         except error: self.tags = None
@@ -1957,4 +2003,3 @@ class ID3FileType(mutagen.FileType):
             self.info = self._Info(fileobj, offset)
         finally:
             fileobj.close()
-

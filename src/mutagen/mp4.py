@@ -1,4 +1,4 @@
-# Copyright 2006 Joe Wreschnig <piman@sacredchao.net>
+# Copyright 2006 Joe Wreschnig
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as
@@ -25,7 +25,7 @@ import sys
 
 from mutagen import FileType, Metadata
 from mutagen._constants import GENRES
-from mutagen._util import cdata, insert_bytes, delete_bytes, DictProxy
+from mutagen._util import cdata, insert_bytes, delete_bytes, DictProxy, utf8
 
 class error(IOError): pass
 class MP4MetadataError(error): pass
@@ -247,7 +247,7 @@ class MP4Tags(DictProxy, Metadata):
         for atom in ilst.children:
             fileobj.seek(atom.offset + 8)
             data = fileobj.read(atom.length - 8)
-            info = self.__atoms.get(atom.name, (MP4Tags.__parse_text, None))
+            info = self.__atoms.get(atom.name, (type(self).__parse_text, None))
             info[0](self, atom, data, *info[2:])
 
     def __key_sort((key1, v1), (key2, v2)):
@@ -272,7 +272,7 @@ class MP4Tags(DictProxy, Metadata):
         items = self.items()
         items.sort(self.__key_sort)
         for key, value in items:
-            info = self.__atoms.get(key[:4], (None, MP4Tags.__render_text))
+            info = self.__atoms.get(key[:4], (None, type(self).__render_text))
             try:
                 values.append(info[1](self, key, value, *info[2:]))
             except (TypeError, ValueError), s:
@@ -355,9 +355,15 @@ class MP4Tags(DictProxy, Metadata):
         """Update all parent atoms with the new size."""
         for atom in path:
             fileobj.seek(atom.offset)
-            size = cdata.uint_be(fileobj.read(4)) + delta
-            fileobj.seek(atom.offset)
-            fileobj.write(cdata.to_uint_be(size))
+            size = cdata.uint_be(fileobj.read(4))
+            if size == 1: # 64bit
+                # skip name (4B) and read size (8B)
+                size = cdata.ulonglong_be(fileobj.read(12)[4:])
+                fileobj.seek(atom.offset + 8)
+                fileobj.write(cdata.to_ulonglong_be(size + delta))
+            else: # 32bit
+                fileobj.seek(atom.offset)
+                fileobj.write(cdata.to_uint_be(size + delta))
 
     def __update_offset_table(self, fileobj, fmt, atom, delta, offset):
         """Update offset table in the specified atom."""
@@ -528,7 +534,7 @@ class MP4Tags(DictProxy, Metadata):
         if isinstance(value, basestring):
             value = [value]
         return self.__render_data(
-            key, flags, [text.encode('utf-8') for text in value])
+            key, flags, map(utf8, value))
 
     def delete(self, filename):
         self.clear()
@@ -642,6 +648,8 @@ class MP4(FileType):
     Only audio ('soun') tracks will be read.
     """
 
+    MP4Tags = MP4Tags
+    
     _mimes = ["audio/mp4", "audio/x-m4a", "audio/mpeg4", "audio/aac"]
 
     def load(self, filename):
@@ -652,7 +660,7 @@ class MP4(FileType):
             try: self.info = MP4Info(atoms, fileobj)
             except StandardError, err:
                 raise MP4StreamInfoError, err, sys.exc_info()[2]
-            try: self.tags = MP4Tags(atoms, fileobj)
+            try: self.tags = self.MP4Tags(atoms, fileobj)
             except MP4MetadataError:
                 self.tags = None
             except StandardError, err:
@@ -661,7 +669,7 @@ class MP4(FileType):
             fileobj.close()
 
     def add_tags(self):
-        self.tags = MP4Tags()
+        self.tags = self.MP4Tags()
 
     def score(filename, fileobj, header):
         return ("ftyp" in header) + ("mp4" in header)

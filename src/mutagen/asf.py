@@ -115,6 +115,9 @@ class ASFBaseAttribute(object):
         else:
             self.value = value
 
+    def data_size(self):
+        raise NotImplementedError
+
     def __repr__(self):
         name = "%s(%r" % (type(self).__name__, self.value)
         if self.language:
@@ -158,6 +161,9 @@ class ASFUnicodeAttribute(ASFBaseAttribute):
     def _render(self):
         return self.value.encode("utf-16-le") + "\x00\x00"
 
+    def data_size(self):
+        return len(self.value) * 2 + 2
+
     def __str__(self):
         return self.value
 
@@ -174,6 +180,9 @@ class ASFByteArrayAttribute(ASFBaseAttribute):
 
     def _render(self):
         return self.value
+
+    def data_size(self):
+        return len(self.value)
 
     def __str__(self):
         return "[binary data (%s bytes)]" % len(self.value)
@@ -198,6 +207,9 @@ class ASFBoolAttribute(ASFBaseAttribute):
         else:
             return struct.pack("<H", int(self.value))
 
+    def data_size(self):
+        return 4
+
     def __bool__(self):
         return self.value
 
@@ -217,6 +229,9 @@ class ASFDWordAttribute(ASFBaseAttribute):
 
     def _render(self):
         return struct.pack("<L", self.value)
+
+    def data_size(self):
+        return 4
 
     def __int__(self):
         return self.value
@@ -238,6 +253,9 @@ class ASFQWordAttribute(ASFBaseAttribute):
     def _render(self):
         return struct.pack("<Q", self.value)
 
+    def data_size(self):
+        return 8
+
     def __int__(self):
         return self.value
 
@@ -258,6 +276,9 @@ class ASFWordAttribute(ASFBaseAttribute):
     def _render(self):
         return struct.pack("<H", self.value)
 
+    def data_size(self):
+        return 2
+
     def __int__(self):
         return self.value
 
@@ -277,6 +298,9 @@ class ASFGUIDAttribute(ASFBaseAttribute):
 
     def _render(self):
         return self.value
+
+    def data_size(self):
+        return len(self.value)
 
     def __str__(self):
         return self.value
@@ -356,20 +380,30 @@ class ContentDescriptionObject(BaseObject):
         pos = 10
         for length in lengths:
             end = pos + length
-            texts.append(data[pos:end].decode("utf-16-le").strip("\x00"))
+            if length > 0:
+                texts.append(data[pos:end].decode("utf-16-le").strip("\x00"))
+            else:
+                texts.append(None)
             pos = end
-        (asf.tags["Title"], asf.tags["Author"], asf.tags["Copyright"],
-         asf.tags["Description"], asf.tags["Rating"]) = texts
+        title, author, copyright, desc, rating = texts
+        for key, value in dict(
+            Title=title,
+            Author=author,
+            Copyright=copyright,
+            Description=desc,
+            Rating=rating).items():
+            if value is not None:
+                asf.tags[key] = value
 
     def render(self, asf):
         def render_text(name):
             value = asf.tags.get(name, [])
-            if value and value[0]:
+            if value:
                 return value[0].encode("utf-16-le") + "\x00\x00"
             else:
                 return ""
         texts = map(render_text, _standard_attribute_names)
-        data = struct.pack("<HHHHH", *map(str.__len__, texts)) + "".join(texts)
+        data = struct.pack("<HHHHH", *map(len, texts)) + "".join(texts)
         return self.GUID + struct.pack("<Q", 24 + len(data)) + data
 
 
@@ -552,11 +586,13 @@ class ASF(FileType):
         for name, value in self.tags:
             if name in _standard_attribute_names:
                 continue
+            large_value = value.data_size() > 0xFFFF
             if (value.language is None and value.stream is None and
-                name not in self.to_extended_content_description):
+                name not in self.to_extended_content_description and
+                not large_value):
                 self.to_extended_content_description[name] = value
             elif (value.language is None and value.stream is not None and
-                  name not in self.to_metadata):
+                  name not in self.to_metadata and not large_value):
                 self.to_metadata[name] = value
             else:
                 self.to_metadata_library.append((name, value))

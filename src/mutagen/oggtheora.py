@@ -1,6 +1,6 @@
 # Ogg Theora support.
 #
-# Copyright 2006 Joe Wreschnig <piman@sacredchao.net>
+# Copyright 2006 Joe Wreschnig
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as
@@ -50,7 +50,7 @@ class OggTheoraInfo(object):
                 "found Theora version %d.%d != 3.2" % (vmaj, vmin))
         fps_num, fps_den = struct.unpack(">2I", data[22:30])
         self.fps = fps_num / float(fps_den)
-        self.bitrate, = struct.unpack(">I", data[37:40] + "\x00")
+        self.bitrate = struct.unpack(">I", data[37:40] + "\x00")[0]
         self.serial = page.serial
 
     def pprint(self):
