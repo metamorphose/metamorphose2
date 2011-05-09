@@ -12,12 +12,13 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-import wx
-from operation import Operation
+import sre_constants
+
 from notebook import Notebook
+from operation import Operation
 import replaceTools
 import utils
-import sre_constants
+import wx
 
 class OpPanel(Operation):
     """Panel in charge of replacing matches with text or operations."""
@@ -26,16 +27,16 @@ class OpPanel(Operation):
         #smallestSize = parent.rightSizer.GetSize() - parent.rightTopSizer.GetSize() - (10,10)
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         #mainSizer.SetMinSize(smallestSize)
-        mainSizer.Add(self.notebook,0,wx.EXPAND)
+        mainSizer.Add(self.notebook, 0, wx.EXPAND)
         self.SetSizerAndFit(mainSizer)
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=-1, name=u'Panel', parent=prnt,
-              style=wx.TAB_TRAVERSAL)
+						  style=wx.TAB_TRAVERSAL)
         self.notebook = Notebook(self, main)
         self.replaceToolsPanel = replaceTools.Panel(self.notebook, main)
         self.notebook.init_pages(self.replaceToolsPanel,
-                          _(u"Replace settings"), u'replace.ico')
+								 _(u"Replace settings"), u'replace.ico')
         self.numberingPanel = self.notebook.numbering
         self.dateTimePanel = self.notebook.dateTime
 
@@ -59,9 +60,9 @@ class OpPanel(Operation):
 
     def rename_item(self, path, name, ext, original):
         operations = self.replaceToolsPanel.opButtonsPanel
-        newName = self.join_ext(name,ext)
+        newName = self.join_ext(name, ext)
         if not newName:
-            return path,name,ext
+            return path, name, ext
 
         # basic settings
         search = self.replaceToolsPanel.search
@@ -70,7 +71,7 @@ class OpPanel(Operation):
 
         #- do nothing
         if searchValues[0] == u"text" and not searchValues[2] and not text:
-            return path,name,ext
+            return path, name, ext
 
         #- search and replace when field not blank:
         elif searchValues[0] == u"text" and searchValues[2]:
@@ -94,8 +95,8 @@ class OpPanel(Operation):
             # need to first substiute, then parse for backreference support
             try:
                 replaced = searchValues[2].sub(text, newName)
-            except (sre_constants.error,AttributeError) as err:
-                main.set_status_msg(_(u"Regular-Expression: %s")%err,u'warn')
+            except (sre_constants.error, AttributeError) as err:
+                main.set_status_msg(_(u"Regular-Expression: %s") % err, u'warn')
                 # so we know not to change status text after RE error msg:
                 app.REmsg = True
                 pass
@@ -104,7 +105,7 @@ class OpPanel(Operation):
 
             # show RE error message from search, if any
             if search.REmsg:
-                main.set_status_msg(search.REmsg,u'warn')
+                main.set_status_msg(search.REmsg, u'warn')
                 app.REmsg = True
 
         #- replace in between
@@ -113,16 +114,16 @@ class OpPanel(Operation):
             if positions:
                 frm = positions[0]
                 to = positions[1]
-                parsedText = operations.parse_input(text,original,self)
+                parsedText = operations.parse_input(text, original, self)
                 newName = newName[:frm] + parsedText + newName[to:]
 
         #- replace by position:
         elif searchValues[0] == u"position":
             ss = search.repl_from.GetValue()
             sl = search.repl_len.GetValue()
-            frm,to,tail = search.get_start_end_pos(ss,sl,newName)
-            parsedText = operations.parse_input(text,original,self)
+            frm, to, tail = search.get_start_end_pos(ss, sl, newName)
+            parsedText = operations.parse_input(text, original, self)
             newName = newName[:frm] + parsedText + tail
 
-        name,ext = self.split_ext(newName,name,ext)
-        return path,name,ext
+        name, ext = self.split_ext(newName, name, ext)
+        return path, name, ext

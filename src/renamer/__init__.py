@@ -13,8 +13,8 @@
 # GNU General Public License for more details.
 
 import engine
-import preview
 import operations
+import preview
 import wxRenamerView
 
 

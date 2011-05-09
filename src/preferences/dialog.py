@@ -15,12 +15,12 @@
 from __future__ import print_function
 import logging
 
+import app
 import automation
 import colors
 import display
 import errorCheck
 import general
-import app
 import utils
 import wx
 
@@ -39,13 +39,13 @@ class Notebook(wx.Toolbook):
         self.AssignImageList(il)
 
         panels = (
-              (general, _(u'General'), imgGeneral),
-              (display, _(u'Display'), imgDisplay),
-              (colors, _(u'Colors'), imgColors),
-              (automation, _(u'Automate'), imgAuto),
-              (logging, _(u'Logging'), imgLog),
-              (errorCheck, _(u'Error Checks'), imgError)
-            )
+				  (general, _(u'General'), imgGeneral),
+				  (display, _(u'Display'), imgDisplay),
+				  (colors, _(u'Colors'), imgColors),
+				  (automation, _(u'Automate'), imgAuto),
+				  (logging, _(u'Logging'), imgLog),
+				  (errorCheck, _(u'Error Checks'), imgError)
+				  )
         i = 0
         for pane in panels:
             page = getattr(pane[0], 'Panel')
@@ -64,8 +64,8 @@ class Dialog(wx.Dialog):
     """
     def __init_mainsizer_items(self, parent):
         parent.AddWindow(self.notebook, 1, border=5,
-                         flag=wx.ALL | wx.EXPAND)
-        parent.AddSizer(self.buttons, 0, border=5, flag=wx.ALL|wx.EXPAND)
+						 flag=wx.ALL | wx.EXPAND)
+        parent.AddSizer(self.buttons, 0, border=5, flag=wx.ALL | wx.EXPAND)
 
     def __init_buttons_items(self, parent):
         parent.AddSpacer((110, -1), 0, border=0, flag=0)
@@ -81,16 +81,16 @@ class Dialog(wx.Dialog):
         self.__init_buttons_items(self.buttons)
         
         utils.set_min_size(self, ignoreClasses=(
-                           wx.TextCtrl, wx.Button, wx.Choice, wx.SpinCtrl,
-                           wx.FilePickerCtrl, wx.DirPickerCtrl, wx.ColourPickerCtrl))
+						   wx.TextCtrl, wx.Button, wx.Choice, wx.SpinCtrl,
+						   wx.FilePickerCtrl, wx.DirPickerCtrl, wx.ColourPickerCtrl))
         self.SetSizerAndFit(self.mainSizer)
         
 
     def __init_ctrls(self, parent):
         wx.Dialog.__init__(self, name=u'dialog', parent=parent,
-                           style=wx.CAPTION, title=u'Preferences')
+						   style=wx.CAPTION, title=u'Preferences')
         self.SetIcon(wx.Icon(utils.icon_path(u'preferences.ico'),
-                     wx.BITMAP_TYPE_ICO))
+					 wx.BITMAP_TYPE_ICO))
 
         self.notebook = Notebook(id=-1, name=u'notebook', parent=self)
 

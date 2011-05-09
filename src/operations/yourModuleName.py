@@ -16,19 +16,19 @@
 Example Module.
 """
 
-import wx
 from operation import Operation
+import wx
 
 [wxID_PANEL, wxID_PANELSTATICTEXT1] = [wx.NewId() for __init_ctrls in range(2)]
 
 class OpPanel(Operation):
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'Panel', parent=prnt,
-              style=wx.TAB_TRAVERSAL)
+						  style=wx.TAB_TRAVERSAL)
 
         self.staticText1 = wx.StaticText(id=wxID_PANELSTATICTEXT1,
-              label=_(u"This is a translated string"), name=u'staticText1', parent=self,
-              pos=wx.Point(192, 72), size=wx.Size(-1, -1), style=0)
+										 label=_(u"This is a translated string"), name=u'staticText1', parent=self,
+										 pos=wx.Point(192, 72), size=wx.Size(-1, -1), style=0)
 
 
     def __init__(self, parent, main_window, params={}):
@@ -39,9 +39,9 @@ class OpPanel(Operation):
 
     # the renaming function
     def rename_item(self, path, name, ext, original):
-        newName = self.join_ext(name,ext)
+        newName = self.join_ext(name, ext)
         if not newName:
-            return path,name,ext
+            return path, name, ext
 
         #== your code START ====================#
 
@@ -50,6 +50,6 @@ class OpPanel(Operation):
         #== your code END ======================#
 
         # apply to name and/or ext
-        name,ext = self.split_ext(newName,name,ext)
+        name, ext = self.split_ext(newName, name, ext)
 
         return path, name, ext

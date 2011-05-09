@@ -18,28 +18,28 @@
 Handle loading and saving configuration XML files.
 """
 
-import wx
 import codecs
-import time
-import re
 from os import path
+import re
+import time
 from xml.dom import minidom
 from xml.sax.saxutils import escape
 from xml.sax.saxutils import unescape
 
 import app
-import utils
 import operations
+import utils
+import wx
 
 
 def save(main):
     """Get values, write configuration file."""
     # save dialog
     dlg = wx.FileDialog(None, message=_(u"Save configuration as ..."),
-          defaultDir=utils.get_user_path(u'configs'), defaultFile=u'.cfg',
-          wildcard=_(u"Configuration file (*.cfg)")+u'|*.cfg',
-          style=wx.SAVE|wx.OVERWRITE_PROMPT
-          )
+						defaultDir=utils.get_user_path(u'configs'), defaultFile=u'.cfg',
+						wildcard=_(u"Configuration file (*.cfg)") + u'|*.cfg',
+						style=wx.SAVE | wx.OVERWRITE_PROMPT
+						)
     # write file
     if dlg.ShowModal() == wx.ID_OK:
         cfgFilePath = dlg.GetPath()
@@ -57,11 +57,11 @@ def load(main, configFilePath=False):
         LoadConfig(main, configFilePath)
     else:
         dlg = wx.FileDialog(None,
-          message=_(u"Load a configuration file"),
-          defaultDir=utils.get_user_path('configs'), defaultFile=u'',
-          wildcard=_(u"Configuration file (*.cfg)")+u'|*.cfg',
-          style=wx.OPEN
-          )
+							message=_(u"Load a configuration file"),
+							defaultDir=utils.get_user_path('configs'), defaultFile=u'',
+							wildcard=_(u"Configuration file (*.cfg)") + u'|*.cfg',
+							style=wx.OPEN
+							)
         if dlg.ShowModal() == wx.ID_OK:
             LoadConfig(main, dlg.GetPath())
         dlg.Destroy()
@@ -104,13 +104,13 @@ class SaveConfig():
         if isinstance(child, wx.Notebook) or isinstance(child, wx.Panel):
             type = child.GetClassName()
             id = child.GetName()
-            cfg += '\t\t\t'+r*'\t'+u'<%s id="%s">\n'%(type,id)
+            cfg += '\t\t\t' + r * '\t' + u'<%s id="%s">\n' % (type, id)
             for child in child.GetChildren():
                 try:
-                    cfg = self._all_child_params_to_xml(cfg, child, r+1)
+                    cfg = self._all_child_params_to_xml(cfg, child, r + 1)
                 except TypeError:
                     pass
-            cfg += '\t\t\t'+r*'\t'+u"</%s>\n"%type
+            cfg += '\t\t\t' + r * '\t' + u"</%s>\n" % type
             return cfg
         # others get values
         else:
@@ -119,8 +119,8 @@ class SaveConfig():
             except TypeError:
                 pass
             else:
-                cfg += '\t\t\t'+r*'\t'+u'<value id="%s" type="%s">%s</value>\n'\
-                      %(id, widgetType, value)
+                cfg += '\t\t\t' + r * '\t' + u'<value id="%s" type="%s">%s</value>\n'\
+					% (id, widgetType, value)
             return cfg
 
     def _renaming_ops_to_xml(self):
@@ -137,7 +137,7 @@ class SaveConfig():
             type = re.sub("\d{1,}: ", '', type)
             type = operations.defs[type][0]
             operation = operationStack[i]
-            cfg += u'\t\t<operation id="%s" type="%s">\n'%(i, type)
+            cfg += u'\t\t<operation id="%s" type="%s">\n' % (i, type)
             cfg += u'\t\t\t<parameters>\n'
             for k in operation.params.keys():
                 v = operation.params[k]
@@ -152,26 +152,26 @@ class SaveConfig():
         """Create an XML configuration file."""
         datetime = utils.udate(main, '%Y-%m-%d %H:%M:%S', time.localtime())
         cfgFile = u'<?xml version="1.0" encoding="UTF-8"?>\n'
-        cfgFile += u'<configuration application="Métamorphose-2" '+\
-                   'version="%s" datetime="%s">\n'\
-                   %(app.version, datetime)
+        cfgFile += u'<configuration application="Métamorphose-2" ' + \
+			'version="%s" datetime="%s">\n'\
+			% (app.version, datetime)
         # get info for 'normal' notebook tabs
         pages = utils.get_notebook_page_names(main)
-        for i in (0,2,3):
+        for i in (0, 2, 3):
             # section header is page name
-            cfgFile += u'\t<page id="%s" name="%s">\n'%(i,pages[i].GetName())
+            cfgFile += u'\t<page id="%s" name="%s">\n' % (i, pages[i].GetName())
             for child in pages[i].GetChildren():
                 try:
-                    id,type,value = self.__get_child_values(child)
+                    id, type, value = self.__get_child_values(child)
                 except TypeError:
                     pass
                 else:
                     cfgFile += u'\t\t<value id="%s" type="%s">%s</value>\n'\
-                               %(id,type,value)
+						% (id, type, value)
             cfgFile += u'\t</page>\n'
 
         # get renaming operations
-        cfgFile += u'\t<page id="1" name="%s">\n'%pages[1].GetName()
+        cfgFile += u'\t<page id="1" name="%s">\n' % pages[1].GetName()
         cfgFile += self._renaming_ops_to_xml()
         cfgFile += "\t</page>\n</configuration>\n"
         
@@ -259,10 +259,10 @@ class LoadConfig():
         else:
             for node in paramNode.childNodes:
                 if node.nodeType == 1:
-                     value = node.childNodes[0].nodeValue
-                     if value == 'True': value = True
-                     if value == 'False': value = False
-                     params[node.nodeName] = value
+					value = node.childNodes[0].nodeValue
+					if value == 'True': value = True
+					if value == 'False': value = False
+					params[node.nodeName] = value
         return params
 
 
@@ -270,7 +270,7 @@ class LoadConfig():
         pages = utils.get_notebook_page_names(main)
         configVersion = config.attributes['version'].value
 
-        app.debug_print("config version : %s"%configVersion)
+        app.debug_print("config version : %s" % configVersion)
 
         for page in config.getElementsByTagName('page'):
             page_name = page.attributes['name'].value
@@ -278,7 +278,7 @@ class LoadConfig():
 
             # normal pages
             if page_name != 'mainPanel':
-                app.debug_print("loading config page : %s"%page_name)
+                app.debug_print("loading config page : %s" % page_name)
 
                 for node in page.getElementsByTagName('value'):
                     id = node.attributes['id'].value
@@ -306,7 +306,7 @@ class LoadConfig():
                 for op in page.getElementsByTagName('operation'):
                     type = op.attributes['type'].value
                     type = operations.get_translated_name(type)
-                    app.debug_print("loading operation type : %s"%type)
+                    app.debug_print("loading operation type : %s" % type)
 
                     # make sure it's a valid type
                     if type == False:
@@ -330,16 +330,16 @@ class LoadConfig():
 
     def __load_file(self, configFilePath):
         """Read file and apply settings."""
-        app.debug_print("loading config file : %s"%configFilePath)
+        app.debug_print("loading config file : %s" % configFilePath)
         # attempt to open config file
         try:
-            xmldoc = codecs.open(configFilePath,'r', 'utf-8')
+            xmldoc = codecs.open(configFilePath, 'r', 'utf-8')
             xmldoc = minidom.parseString(xmldoc.read().encode("utf-8"))
         except:
             utils.make_err_msg(
-                _(u"Invalid XML in config file : %s") % configFilePath,
-                _(u"Invalid Configuration")
-            )
+							   _(u"Invalid XML in config file : %s") % configFilePath,
+							   _(u"Invalid Configuration")
+							   )
         else:
             config = xmldoc.firstChild
 
@@ -364,6 +364,6 @@ class LoadConfig():
             # preview
             main.bottomWindow.autoPreview.SetValue(v)
             if app.autoModeLevel != 0 or\
-             (app.prefs.get('previewOnConfig') and app.autoModeLevel is False):
-                main.picker.view.reset_dirpicker_on_config_load()
+				(app.prefs.get('previewOnConfig') and app.autoModeLevel is False):
+					main.picker.view.reset_dirpicker_on_config_load()
 

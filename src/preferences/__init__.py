@@ -13,18 +13,19 @@
 # GNU General Public License for more details.
 
 from __future__ import print_function
-import wx
-import os
 import codecs
-import app
-import utils
-import general
-import automation
-import display
-import colors
-import errorCheck
 import logging
+import os
+
+import app
+import automation
+import colors
 from dialog import Dialog
+import display
+import errorCheck
+import general
+import utils
+import wx
 
 def create_dialog(parent, initial=False):
     """Create and return the preferences dialog."""
@@ -35,16 +36,16 @@ class Methods:
     Preference methods.
     """
     def __init__(self):
-        self.header = u'Version=%s\n'%app.version
+        self.header = u'Version=%s\n' % app.version
         self.prefs = False
 
     def __find_pref_file(self):
         prefFile = utils.get_user_path(u'preferences.ini')
         return prefFile
 
-    def __open_pref_file(self,type):
+    def __open_pref_file(self, type):
         prefFile = self.__find_pref_file()
-        app.debug_print("Opening as '%s' : %s"%(type,prefFile))
+        app.debug_print("Opening as '%s' : %s" % (type, prefFile))
         prefFile = codecs.open(prefFile, type, 'utf-8')
         return prefFile
 
@@ -71,7 +72,7 @@ class Methods:
         prefs = {}
         for line in prefFile:
             if line.find('=') > 0:
-                line = line.replace(u'\n','')
+                line = line.replace(u'\n', '')
                 split = line.split('=')
                 try:
                     prefs[split[0]] = int(split[1])
@@ -93,12 +94,12 @@ class Methods:
 
         # windows-compatible ?
         if prefs[u'useWinChars']:
-            prefs[u'bad_chars'] = (u'\\',u'/',u':',u'*',u'?',u'"',u'>',u'<',u'|')
+            prefs[u'bad_chars'] = (u'\\', u'/', u':', u'*', u'?', u'"', u'>', u'<', u'|')
         if prefs[u'useWinNames']:
             prefs[u'bad_win_words'] = (u'con', u'prn', u'aux', u'clock$',
-              u'nul', u'com1', u'com2', u'com3', u'com4', u'com5', u'com6', u'com7',
-              u'com8', u'com9', u'lpt1', u'lpt2', u'lpt3', u'lpt4', u'lpt5',u'lpt6',
-              u'lpt7', u'lpt8', u'lpt9')
+									   u'nul', u'com1', u'com2', u'com3', u'com4', u'com5', u'com6', u'com7',
+									   u'com8', u'com9', u'lpt1', u'lpt2', u'lpt3', u'lpt4', u'lpt5', u'lpt6',
+									   u'lpt7', u'lpt8', u'lpt9')
 
         prefs[u'backgroundColor'] = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)
         prefs[u'highlightColor'] = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT)
@@ -114,7 +115,7 @@ class Methods:
         # get all pages in notebook
         for i in range(prefDialog.notebook.GetPageCount()):
             # section header is page name
-            options += u'\n[%s]\n'%prefDialog.notebook.GetPageText(i)
+            options += u'\n[%s]\n' % prefDialog.notebook.GetPageText(i)
 
             # get all controls in page
             for child in prefDialog.notebook.GetPage(i).GetChildren():
@@ -150,8 +151,8 @@ class Methods:
 
                 if value is not None:
                     name = child.GetName()
-                    options += u'%s=%s\n'%(name,value)
-                    app.debug_print("%s (%s) = %s"%(name,type,value))
+                    options += u'%s=%s\n' % (name, value)
+                    app.debug_print("%s (%s) = %s" % (name, type, value))
         prefFile.write(options)
         prefFile.close()
         self.__load_preferences()

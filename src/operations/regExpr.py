@@ -12,13 +12,14 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-import wx
 import re
 import sre_constants
 
+import wx
+
 [wxID_PANEL, wxID_PANELA_Z, wxID_PANELDIGIT,
- wxID_PANELREG_EXPR, wxID_PANELREG_EXP_DIV,
- wxID_PANELREG_EXP_I, wxID_PANELREG_EXP_U,
+	wxID_PANELREG_EXPR, wxID_PANELREG_EXP_DIV,
+	wxID_PANELREG_EXP_I, wxID_PANELREG_EXP_U,
 ] = [wx.NewId() for __init_ctrls in range(7)]
 
 class Panel(wx.Panel):
@@ -26,55 +27,55 @@ class Panel(wx.Panel):
     
     def __init_sizer(self):
         regExprSizer = wx.BoxSizer(wx.HORIZONTAL)
-        regExprSizer.Add(self.regExpr,0,wx.ALIGN_CENTER|wx.RIGHT,3)
-        regExprSizer.Add(self.iRegExpr,0,wx.ALIGN_CENTER|wx.LEFT|wx.RIGHT,3)
-        regExprSizer.Add(self.uRegExpr,0,wx.ALIGN_CENTER)
-        regExprSizer.Add((0,0),1)
-        regExprSizer.Add(self.regExpDiv,0,wx.ALIGN_CENTER|wx.LEFT|wx.RIGHT,3)
-        regExprSizer.Add((0,0),1)
-        regExprSizer.Add(self.aToZ,0,wx.ALIGN_CENTER|wx.RIGHT,5)
-        regExprSizer.Add(self.digit,0,wx.ALIGN_CENTER)
-        regExprSizer.Add((0,0),60)
+        regExprSizer.Add(self.regExpr, 0, wx.ALIGN_CENTER | wx.RIGHT, 3)
+        regExprSizer.Add(self.iRegExpr, 0, wx.ALIGN_CENTER | wx.LEFT | wx.RIGHT, 3)
+        regExprSizer.Add(self.uRegExpr, 0, wx.ALIGN_CENTER)
+        regExprSizer.Add((0, 0), 1)
+        regExprSizer.Add(self.regExpDiv, 0, wx.ALIGN_CENTER | wx.LEFT | wx.RIGHT, 3)
+        regExprSizer.Add((0, 0), 1)
+        regExprSizer.Add(self.aToZ, 0, wx.ALIGN_CENTER | wx.RIGHT, 5)
+        regExprSizer.Add(self.digit, 0, wx.ALIGN_CENTER)
+        regExprSizer.Add((0, 0), 60)
         self.SetSizerAndFit(regExprSizer)
         #mainSizer.Add(regExprSizer,0,wx.EXPAND|wx.TOP,5)
 
     def __init_ctrls(self, prnt, name):
         wx.Panel.__init__(self, id=wxID_PANEL, name=name, parent=prnt,
-              style=wx.TAB_TRAVERSAL)
+						  style=wx.TAB_TRAVERSAL)
 
         self.regExpr = wx.CheckBox(id=wxID_PANELREG_EXPR,
-              label=_(u"Evaluate as regular expression"), name=u'regExpr', parent=self,
-              style=0)
+								   label=_(u"Evaluate as regular expression"), name=u'regExpr', parent=self,
+								   style=0)
         self.regExpr.SetValue(False)
         self.regExpr.Bind(wx.EVT_CHECKBOX, prnt.activate_options,
-              id=wxID_PANELREG_EXPR)
+						  id=wxID_PANELREG_EXPR)
 
         self.iRegExpr = wx.CheckBox(id=wxID_PANELREG_EXP_I, label=_(u"case sensitive"),
-              name=u'iRegExpr', parent=self)
+									name=u'iRegExpr', parent=self)
         self.iRegExpr.SetValue(False)
         self.iRegExpr.SetToolTipString(_(u"Differentiate between upper and lower case"))
         self.iRegExpr.Enable(False)
         self.iRegExpr.Bind(wx.EVT_CHECKBOX, prnt.define_regex)
 
         self.uRegExpr = wx.CheckBox(id=wxID_PANELREG_EXP_U, label=_(u"Unicode"),
-              name=u'uRegExpr', parent=self)
+									name=u'uRegExpr', parent=self)
         self.uRegExpr.SetValue(True)
         self.uRegExpr.SetToolTipString(_(u"Unicode match (\w matches 'a','b','c', etc)"))
         self.uRegExpr.Enable(False)
         self.uRegExpr.Bind(wx.EVT_CHECKBOX, prnt.define_regex)
 
         self.regExpDiv = wx.StaticLine(id=wxID_PANELREG_EXP_DIV,
-              name=u'regExpDiv', parent=self, size=wx.Size(2, 21),
-              style=wx.LI_VERTICAL)
+									   name=u'regExpDiv', parent=self, size=wx.Size(2, 21),
+									   style=wx.LI_VERTICAL)
 
         self.aToZ = wx.Button(id=wxID_PANELA_Z, label=_(u"[a-z]"), name=u'aToZ',
-              parent=self, style=wx.BU_EXACTFIT)
+							  parent=self, style=wx.BU_EXACTFIT)
         self.aToZ.SetToolTipString(_(u"All alphabetical characters"))
         self.aToZ.Enable(False)
         self.aToZ.Bind(wx.EVT_BUTTON, self._add_regex_buttons)
 
         self.digit = wx.Button(id=wxID_PANELDIGIT, label=_(u"[0-9]"),
-              name=u'digit', parent=self, style=wx.BU_EXACTFIT)
+							   name=u'digit', parent=self, style=wx.BU_EXACTFIT)
         self.digit.SetToolTipString(_(u"All number characters"))
         self.digit.Enable(False)
         self.digit.Bind(wx.EVT_BUTTON, self._add_regex_buttons)
@@ -102,7 +103,7 @@ class Panel(wx.Panel):
     def set_active(self, activate):
         """Set active widgets."""
         reg_exp_tup = (self.iRegExpr, self.uRegExpr,
-          self.aToZ,self.digit)
+					   self.aToZ, self.digit)
         for option in reg_exp_tup:
             option.Enable(activate)
 
@@ -130,15 +131,15 @@ class Panel(wx.Panel):
 
             # give user a descriptive error message
             # set message directly for when items are NOT loaded
-            main.set_status_msg(_(u"Regular-Expression: %s")%err,u'warn')
+            main.set_status_msg(_(u"Regular-Expression: %s") % err, u'warn')
 
             # set message in variable for when items ARE loaded
-            self.parent.REmsg = _(u"Regular-Expression: %s")%err
+            self.parent.REmsg = _(u"Regular-Expression: %s") % err
 
             # so we know not to change status text after re error msg
             app.REmsg = True
             pass
         else:
             # reset status message for when items are not loaded
-            main.set_status_msg("",u'eyes')
+            main.set_status_msg("", u'eyes')
             return mod

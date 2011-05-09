@@ -12,8 +12,9 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-import wx
 import os
+
+import wx
 
 class Operation(wx.Panel):
     """"
@@ -24,9 +25,9 @@ class Operation(wx.Panel):
     def __init__(self, params={}):
         # default parameters
         self.params = {
-            'applyPathOnly' : False,
-            'applyName' : True,
-            'applyExtension' : False,
+            'applyPathOnly': False,
+            'applyName': True,
+            'applyExtension': False,
         }
         self.update_parameters(params)
 
@@ -52,7 +53,7 @@ class Operation(wx.Panel):
             newName = ext
         elif self.params['applyName'] and self.params['applyExtension']:
             if ext is not False:
-                newName = name+'.'+ext
+                newName = name + '.' + ext
             else:
                 newName = name
         else:
@@ -68,4 +69,4 @@ class Operation(wx.Panel):
         elif self.params['applyName'] and self.params['applyExtension']:
             name = os.path.splitext(newName)[0]
             ext = os.path.splitext(newName)[1][1:]
-        return name,ext
+        return name, ext

@@ -12,30 +12,30 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-import wx
 import utils
+import wx
 from wx.lib.mixins.listctrl import ListCtrlAutoWidthMixin
 
 [wxID_ERRORPANEL, wxID_ERRORPANELERRORSLIST, wxID_ERRORPANELERRORSSTATICTEXT1,
- wxID_ERRORPANELERRORSREMOVEERRORS, wxID_ERRORPANELERRORSREMOVEWARNINGS,
- wxID_ERRORPANELERRORSSTATICTEXT2, wxID_ERRORPANELERRORSREMOVE, wxID_ERRORPANELERRORSSAVE
+	wxID_ERRORPANELERRORSREMOVEERRORS, wxID_ERRORPANELERRORSREMOVEWARNINGS,
+	wxID_ERRORPANELERRORSSTATICTEXT2, wxID_ERRORPANELERRORSREMOVE, wxID_ERRORPANELERRORSSAVE
 ] = [wx.NewId() for __init_ctrls in range(8)]
 
 class ErrorList(wx.ListCtrl, ListCtrlAutoWidthMixin):
     """List control for errors."""
     
     def __init__(self, parent, ID, pos=wx.DefaultPosition):
-        style = wx.LC_REPORT|wx.LC_VIRTUAL
+        style = wx.LC_REPORT | wx.LC_VIRTUAL
         wx.ListCtrl.__init__(self, parent, ID, pos, wx.DefaultSize, style)
         # causes freeze under winXP
         #ListCtrlAutoWidthMixin.__init__(self)
         self.InsertColumn(col=0, format=wx.LIST_FORMAT_LEFT, heading=_(u"Error"),
-              width=260)
+						  width=260)
         self.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT, heading=_(u"File"),
-              width=639)
+						  width=639)
         imgs = wx.ImageList(16, 16)
-        imgs.Add(wx.Bitmap(utils.icon_path(u'warn.ico'),wx.BITMAP_TYPE_ICO))
-        imgs.Add(wx.Bitmap(utils.icon_path(u'failed.ico'),wx.BITMAP_TYPE_ICO))
+        imgs.Add(wx.Bitmap(utils.icon_path(u'warn.ico'), wx.BITMAP_TYPE_ICO))
+        imgs.Add(wx.Bitmap(utils.icon_path(u'failed.ico'), wx.BITMAP_TYPE_ICO))
         self.AssignImageList(imgs, wx.IMAGE_LIST_SMALL)
         self.SetItemCount(0)
         self.parent = parent
@@ -66,55 +66,55 @@ class Panel(wx.Panel):
     def __init_sizer(self):
     	mainSizer = wx.BoxSizer(wx.VERTICAL)
     	options = wx.BoxSizer(wx.HORIZONTAL)
-        options.Add(self.saveToLog,0,wx.LEFT,10)
-    	options.Add(self.remove,0,wx.LEFT,215)
-    	options.Add(self.staticText1,0,wx.ALIGN_CENTER|wx.LEFT,5)
-    	options.Add(self.removeWarnings,0,wx.ALIGN_CENTER|wx.LEFT,5)
-    	options.Add(self.removeErrors,0,wx.ALIGN_CENTER|wx.LEFT,5)
-    	options.Add(self.staticText2,0,wx.ALIGN_CENTER|wx.LEFT,10)
+        options.Add(self.saveToLog, 0, wx.LEFT, 10)
+    	options.Add(self.remove, 0, wx.LEFT, 215)
+    	options.Add(self.staticText1, 0, wx.ALIGN_CENTER | wx.LEFT, 5)
+    	options.Add(self.removeWarnings, 0, wx.ALIGN_CENTER | wx.LEFT, 5)
+    	options.Add(self.removeErrors, 0, wx.ALIGN_CENTER | wx.LEFT, 5)
+    	options.Add(self.staticText2, 0, wx.ALIGN_CENTER | wx.LEFT, 10)
 
-        mainSizer.Add(self.errorsList,1,wx.EXPAND|wx.TOP|wx.BOTTOM,3)
-        mainSizer.Add(options,0,wx.BOTTOM,3)
+        mainSizer.Add(self.errorsList, 1, wx.EXPAND | wx.TOP | wx.BOTTOM, 3)
+        mainSizer.Add(options, 0, wx.BOTTOM, 3)
 
         self.SetSizerAndFit(mainSizer)
 
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_ERRORPANEL, name=u'errorPanel',
-              parent=prnt, pos=wx.Point(295, 251), size=wx.Size(650, 302),
-              style=wx.TAB_TRAVERSAL)
+						  parent=prnt, pos=wx.Point(295, 251), size=wx.Size(650, 302),
+						  style=wx.TAB_TRAVERSAL)
         self.SetClientSize(wx.Size(642, 273))
 
         self.errorsList = ErrorList(self, wxID_ERRORPANELERRORSLIST)
         self.errorsList.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_activate_error,
-              id=wxID_ERRORPANELERRORSLIST)
+							 id=wxID_ERRORPANELERRORSLIST)
 
         self.staticText1 = wx.StaticText(id=wxID_ERRORPANELERRORSSTATICTEXT1,
-              label=_(u"items with:"), name=u'staticText1', parent=self, style=0)
+										 label=_(u"items with:"), name=u'staticText1', parent=self, style=0)
 
         self.saveToLog = wx.Button(id=wxID_ERRORPANELERRORSSAVE, name=u'remove',
-              parent=self, label=_(u"Save errors to log"), style=wx.BU_EXACTFIT)
+								   parent=self, label=_(u"Save errors to log"), style=wx.BU_EXACTFIT)
         self.saveToLog.SetToolTipString(_(u"Save errors to a log file."))
         self.saveToLog.Bind(wx.EVT_BUTTON, self.save_errors_to_log)
         self.saveToLog.Enable(False)
 
         self.remove = wx.Button(id=wxID_ERRORPANELERRORSREMOVE, name=u'remove',
-              parent=self, label=_(u"Remove"), style=wx.BU_EXACTFIT)
+								parent=self, label=_(u"Remove"), style=wx.BU_EXACTFIT)
         self.remove.SetToolTipString(_(u"Remove items from renaming selection"))
         self.remove.Bind(wx.EVT_BUTTON, self.remove_names_by_type)
 
         self.removeWarnings = wx.CheckBox(id=wxID_ERRORPANELERRORSREMOVEWARNINGS, label=_(u"warnings"),
-              name=u'removeWarnings', parent=self, style=0)
+										  name=u'removeWarnings', parent=self, style=0)
         self.removeWarnings.SetValue(False)
         self.removeWarnings.SetToolTipString(_(u"all items with warnings"))
 
         self.removeErrors = wx.CheckBox(id=wxID_ERRORPANELERRORSREMOVEERRORS, label=_(u"errors"),
-              name=u'removeErrors', parent=self, style=0)
+										name=u'removeErrors', parent=self, style=0)
         self.removeErrors.SetValue(True)
         self.removeErrors.SetToolTipString(_(u"all items with errors"))
 
         self.staticText2 = wx.StaticText(id=wxID_ERRORPANELERRORSSTATICTEXT2,
-              label=_("from above items."), name=u'staticText1', parent=self, style=0)
+										 label=_("from above items."), name=u'staticText1', parent=self, style=0)
 
 
     def __init__(self, Core, parent, main_window):
@@ -149,13 +149,13 @@ class Panel(wx.Panel):
         badCount = len(self.errors)
         warnCount = len(self.warnings)
 
-        main.notebook.SetPageText(3,_(u"Errors: %s - Warnings: %s")%(badCount, warnCount))
+        main.notebook.SetPageText(3, _(u"Errors: %s - Warnings: %s") % (badCount, warnCount))
 
         if len(warn) != 0 and len(bad) == 0:
-            main.set_status_msg(_(u"Ready to rename %s items, but with %s warnings")%(len(main.toRename),warnCount),u'warn')
+            main.set_status_msg(_(u"Ready to rename %s items, but with %s warnings") % (len(main.toRename), warnCount), u'warn')
             self.saveToLog.Enable(False)
         else:
-            main.set_status_msg(_(u"%s total items, %s have problems") %(len(main.toRename), badCount+warnCount),u'failed')
+            main.set_status_msg(_(u"%s total items, %s have problems") % (len(main.toRename), badCount + warnCount), u'failed')
             self.saveToLog.Enable(True)
 
     def clear_errors(self):
@@ -163,7 +163,7 @@ class Panel(wx.Panel):
         self.warnings = []
         self.errorsList.DeleteAllItems()
         self.saveToLog.Enable(False)
-        main.notebook.SetPageText(3,_(u"Errors/Warnings: 0"))
+        main.notebook.SetPageText(3, _(u"Errors/Warnings: 0"))
 
     def on_activate_error(self, event):
         currentItem = event.m_itemIndex
@@ -190,10 +190,10 @@ class Panel(wx.Panel):
         for item in self.errors:
             CSVfile += u'"%s"\n' % item
         dlg = wx.FileDialog(self, message=_(u"Save error list as ..."),
-              defaultDir='', defaultFile=u'.csv',
-              wildcard=_(u"Log file (*.csv)") + u'|*.csv',
-              style=wx.SAVE|wx.OVERWRITE_PROMPT
-              )
+							defaultDir='', defaultFile=u'.csv',
+							wildcard=_(u"Log file (*.csv)") + u'|*.csv',
+							style=wx.SAVE | wx.OVERWRITE_PROMPT
+							)
         if dlg.ShowModal() == wx.ID_OK:
             # attempt to write file
             utils.write_file(dlg.GetPath(), CSVfile)

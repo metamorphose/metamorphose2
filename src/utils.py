@@ -17,13 +17,14 @@ Helper functions available throughout Metamorphose.
 """
 
 from __future__ import print_function
-import wx
-import wx.html
-import os
 import codecs
 import locale
+import os
 import time
+
 import app
+import wx
+import wx.html
 
 try:
     import Image
@@ -53,7 +54,7 @@ def set_min_size(parent, ignoreCtrls=(), ignoreClasses=()):
     # need this for some cases in linux, otherwise cuts off text
     if wx.Platform == '__WXGTK__' and isinstance(parent, wx.StaticText):
         textSize = parent.GetTextExtent(parent.GetLabel())
-        size = wx.Size(textSize[0]+2,-1)
+        size = wx.Size(textSize[0] + 2, -1)
     else:
         size = wx.DefaultSize
 
@@ -73,7 +74,7 @@ def adjust_exact_buttons(parent, ignore=()):
     for child in parent.GetChildren():
         if isinstance(child, wx.Button) and child.GetName() not in ignore:
             txt = child.GetLabel()
-            size = wx.Size(child.GetTextExtent(txt)[0] + 18,-1)
+            size = wx.Size(child.GetTextExtent(txt)[0] + 18, -1)
             child.SetMinSize(size)
 
 def safe_makedir(dir):
@@ -94,20 +95,20 @@ def init_environment():
     for d in dirs:
         safe_makedir(get_user_path(d))
 
-def calc_slice_pos(s,l):
+def calc_slice_pos(s, l):
     """Calculate the correct start and end positions for slices."""
     if s == -1 and l == 1:
         frm = -1
         to = None
     elif s < 0 and l > 1:
         frm = s#-l+1
-        to = s+l
+        to = s + l
         if to >= 0:
             to = None
     else:
         frm = s
-        to = s+l
-    return frm,to
+        to = s + l
+    return frm, to
 
 def make_yesno_dlg(msg, title):
     """Show a generic yes / no choice message dialog."""
@@ -146,11 +147,11 @@ def make_info_msg(msg, title=None):
 def get_user_path(file):
     """Return user's default config path."""
     base = wx.StandardPaths.Get().GetUserConfigDir()
-    return os.path.join(base,app.homedir,file)
+    return os.path.join(base, app.homedir, file)
 
 def icon_path(icon):
     """Get the full icon path."""
-    return app.get_real_path(u'icons/%s'%icon)
+    return app.get_real_path(u'icons/%s' % icon)
 
 def reset_counter(parent, tools, c):
     """Reset a numbering counter."""
@@ -208,36 +209,36 @@ def set_busy(busy):
 def get_encoding_choices(key):
     """Return valid encodings tuple for a given language type."""
     encodingLookup = {
-        _(u"Use System Default") : (u"%s"%locale.getlocale()[1],),
-        _(u'All Languages / Unicode') : (u'utf_8', u'utf_16'),
-        _(u'Western Europe') : (u'windows-1252', u'iso-8859-1', u'iso-8859-15',
-            u'mac_roman', u'cp500', u'cp850', u'cp1140'),
-        _(u'Central & Eastern Europe') : (u'windows-1250', u'iso-8859-2',
-            u'mac_latin2', u'cp852'),
-        _(u'Esperanto, Maltese') : (u'iso-8859-3',),
-        _(u'Nordic Languages') : (u'iso-8859-10', u'mac_iceland', u'cp861',
-            u'cp865'),
-        _(u'Celtic Languages') : (u'iso8859_14', ),
-        _(u'Baltic Languages') : (u'windows-1257',u'iso-8859-13',u'cp775'),
-        _(u'Cyrillic Languages') : (u'windows-1251',u'iso-8859-5',u'koi8_r',
-            'koi8_u',u'mac_cyrillic',u'cp154',u'cp866',u'cp855'),
-        _(u'Greek') : (u'windows-1253',u'iso-8859-7',u'mac_greek',u'cp737',
-            u'cp869',u'cp875'),
-        _(u'Turkish') : (u'windows-1254', u'iso-8859-9', u'mac_turkish',
-            u'cp857', u'cp1026'),
-        _(u'Hebrew') : (u'windows-1255', u'iso-8859-8', u'cp424', u'cp856',
-            u'cp862'),
-        _(u'Arabic') : (u'windows-1256', u'iso-8859-6', u'cp864'),
-        _(u'Urdu') : (u'cp1006', ),
-        _(u'Thai') : (u'cp874', ),
-        _(u'Vietnamese') : (u'windows-1258', ),
-        _(u'Traditional Chinese') : (u'ms950', u'big5hkscs', u'big5'),
-        _(u'Simplified Chinese') : (u'gb2312', u'hz'),
-        _(u'Unified Chinese') : (u'ms936', u'gb18030'),
-        _(u'Korean') : (u'ms949', u'iso-2022-kr', u'ms1361', u'euc_kr'),
-        _(u'Japanese') : (u'ms-kanji', u'iso-2022-jp', u'shift_jis', u'euc_jp',
-            u'iso-2022-jp-1', u'iso-2022-jp-2004', u'iso-2022-jp-3',
-            u'iso-2022-jp-ext', u'shift_jis_2004', u'shift_jisx0213',
-            u'euc_jis_2004', u'euc_jisx0213'),
+        _(u"Use System Default"): (u"%s" % locale.getlocale()[1], ),
+        _(u'All Languages / Unicode'): (u'utf_8', u'utf_16'),
+        _(u'Western Europe'): (u'windows-1252', u'iso-8859-1', u'iso-8859-15',
+							   u'mac_roman', u'cp500', u'cp850', u'cp1140'),
+        _(u'Central & Eastern Europe'): (u'windows-1250', u'iso-8859-2',
+										 u'mac_latin2', u'cp852'),
+        _(u'Esperanto, Maltese'): (u'iso-8859-3', ),
+        _(u'Nordic Languages'): (u'iso-8859-10', u'mac_iceland', u'cp861',
+								 u'cp865'),
+        _(u'Celtic Languages'): (u'iso8859_14',),
+        _(u'Baltic Languages'): (u'windows-1257', u'iso-8859-13', u'cp775'),
+        _(u'Cyrillic Languages'): (u'windows-1251', u'iso-8859-5', u'koi8_r',
+								   'koi8_u', u'mac_cyrillic', u'cp154', u'cp866', u'cp855'),
+        _(u'Greek'): (u'windows-1253', u'iso-8859-7', u'mac_greek', u'cp737',
+					  u'cp869', u'cp875'),
+        _(u'Turkish'): (u'windows-1254', u'iso-8859-9', u'mac_turkish',
+						u'cp857', u'cp1026'),
+        _(u'Hebrew'): (u'windows-1255', u'iso-8859-8', u'cp424', u'cp856',
+					   u'cp862'),
+        _(u'Arabic'): (u'windows-1256', u'iso-8859-6', u'cp864'),
+        _(u'Urdu'): (u'cp1006',),
+        _(u'Thai'): (u'cp874',),
+        _(u'Vietnamese'): (u'windows-1258',),
+        _(u'Traditional Chinese'): (u'ms950', u'big5hkscs', u'big5'),
+        _(u'Simplified Chinese'): (u'gb2312', u'hz'),
+        _(u'Unified Chinese'): (u'ms936', u'gb18030'),
+        _(u'Korean'): (u'ms949', u'iso-2022-kr', u'ms1361', u'euc_kr'),
+        _(u'Japanese'): (u'ms-kanji', u'iso-2022-jp', u'shift_jis', u'euc_jp',
+						 u'iso-2022-jp-1', u'iso-2022-jp-2004', u'iso-2022-jp-3',
+						 u'iso-2022-jp-ext', u'shift_jis_2004', u'shift_jisx0213',
+						 u'euc_jis_2004', u'euc_jisx0213'),
         }
     return encodingLookup[key]

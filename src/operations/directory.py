@@ -12,12 +12,13 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-import wx
-from operation import Operation
-from notebook import Notebook
-import directoryTools
-import utils
 import os.path
+
+import directoryTools
+from notebook import Notebook
+from operation import Operation
+import utils
+import wx
 
 class OpPanel(Operation):
     """This is the main panel for directory manipulations.
@@ -29,16 +30,16 @@ class OpPanel(Operation):
         #smallestSize = parent.rightSizer.GetSize() - parent.rightTopSizer.GetSize() - (10,10)
         superSizer = wx.BoxSizer(wx.VERTICAL)
         #superSizer.SetMinSize(smallestSize)
-        superSizer.Add(self.notebook,0,wx.EXPAND)
+        superSizer.Add(self.notebook, 0, wx.EXPAND)
         self.SetSizerAndFit(superSizer)
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=-1, name=u'Panel', parent=prnt,
-              style=wx.TAB_TRAVERSAL)
+						  style=wx.TAB_TRAVERSAL)
         self.notebook = Notebook(self, main)
         self.directoryToolsPanel = directoryTools.Panel(self.notebook, main)
         self.notebook.init_pages(self.directoryToolsPanel,
-                          _(u"Directory settings"), u'directory.ico')
+								 _(u"Directory settings"), u'directory.ico')
         self.numberingPanel = self.notebook.numbering
         self.dateTimePanel = self.notebook.dateTime
 
@@ -76,7 +77,7 @@ class OpPanel(Operation):
 
         # reassemble path
         for segment in path:
-            recurPath = os.path.join(recurPath,segment)
+            recurPath = os.path.join(recurPath, segment)
         newPath = newPath.replace(self.params['pathStructTxt'], recurPath)
         return newPath
 
@@ -120,11 +121,11 @@ class OpPanel(Operation):
         if params['nameTxt'] in newPath:
             newPath = self.__add_file_name(newPath, name, ext)
 
-        newPath = operations.parse_input(newPath,original,self)
+        newPath = operations.parse_input(newPath, original, self)
 
         if rejoin:
-            newPath = os.path.join(split[0],newPath)
+            newPath = os.path.join(split[0], newPath)
         else:
-            newPath = os.path.join(path,newPath)
+            newPath = os.path.join(path, newPath)
 
-        return (newPath,name,ext)
+        return (newPath, name, ext)

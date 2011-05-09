@@ -13,16 +13,16 @@
 # GNU General Public License for more details.
 
 from __future__ import print_function
-import app
-import utils
-import os
-import time
 import codecs
+import os
 import platform
 import sys
+import time
 
-import shutil1 # some earlier python versions have a bug in shutil
+import app
 import classes
+import shutil1
+import utils
 
 class Core():
     """
@@ -48,10 +48,10 @@ class Core():
         main.toRename[i][1][1] = None
         self._set_display(i)
         # show error message
-        main.set_status_msg(_("Renaming Failed : %s")%err, u'failed')
+        main.set_status_msg(_("Renaming Failed : %s") % err, u'failed')
         utils.make_err_msg(_(u"Error renaming:\n%s \n\nto:\n%s \n\nReason: %s")\
-                         %(original[0],renamed[0],err),
-                         _(u"Renaming Failed !!"))
+						   % (original[0], renamed[0], err),
+						   _(u"Renaming Failed !!"))
 
 
     def _rename_item(self, i, original, renamed, refresh_int):
@@ -63,7 +63,7 @@ class Core():
         try:
             shutil1.move(original[0], renamed[0], True)
         except IOError as (errNumb, err):
-            app.debug_print("IOError : %s, %s"%(errNumb, err))
+            app.debug_print("IOError : %s, %s" % (errNumb, err))
             # may need to create dirs first
             if errNumb == 2 and not os.path.exists(os.path.dirname(renamed[0])):
                 try:
@@ -77,7 +77,7 @@ class Core():
                 self._show_rename_error(i, err, original, renamed)
                 return True
         except OSError as (errNumb, err):
-            app.debug_print("OSError : %s, %s"%(errNumb, err))
+            app.debug_print("OSError : %s, %s" % (errNumb, err))
             # don't stop for a read-only error if the renamed item exists
             if not (errNumb == 30 and os.path.exists(renamed[0])):
                 self._show_rename_error(i, err, original, renamed)
@@ -118,8 +118,8 @@ class Core():
         # define here for faster processing
         def exists(item):
             return os.path.exists(item)
-        def join(a,b,c):
-            return unicode(os.path.join(a,b,c))
+        def join(a, b, c):
+            return unicode(os.path.join(a, b, c))
 
         warn = False
         if event != u'undo':
@@ -129,24 +129,24 @@ class Core():
         i = 0
         for original, renamed in main.toRename:
             if warn != 'duplicate_name' and self.__compare(renamed, original) and\
-              exists(renamed[0]):
-                # set item as bad
-                main.toRename[i][1][1] = None
-                self._set_display(i)
-                main.set_status_msg(_(u"Duplicate name"), u'warn')
-                msg = _(u"This name already exists:\n%s")%renamed[0]\
-                    +_(u"\n\nI can make a sub-folder called 't_e_m_p' and do the renaming operation there.\nYou can then move everything back.\n\nGo ahead and do this?")
-                title = _(u"Duplicate name")
-                if utils.make_yesno_dlg(msg, title):
-                    warn = 'duplicate_name'
-                else:
-                    error = True
-                    break
+				exists(renamed[0]):
+					# set item as bad
+					main.toRename[i][1][1] = None
+					self._set_display(i)
+					main.set_status_msg(_(u"Duplicate name"), u'warn')
+					msg = _(u"This name already exists:\n%s") % renamed[0]\
+						+ _(u"\n\nI can make a sub-folder called 't_e_m_p' and do the renaming operation there.\nYou can then move everything back.\n\nGo ahead and do this?")
+					title = _(u"Duplicate name")
+					if utils.make_yesno_dlg(msg, title):
+						warn = 'duplicate_name'
+					else:
+						error = True
+						break
             # set correct path if in dupe error mode
             if warn == 'duplicate_name':
                 if not path.endswith(os.sep):
-                    path = path+os.sep
-                renamed[0] = renamed[0].replace(path,u'')
+                    path = path + os.sep
+                renamed[0] = renamed[0].replace(path, u'')
                 renamed[0] = join(path, u't_e_m_p', renamed[0])
 
             # the actual renaimg op
@@ -155,9 +155,9 @@ class Core():
             if error:
                 break
             i += 1
-            app.debug_print("%s\n%s\n"%(original[0], renamed[0]))
+            app.debug_print("%s\n%s\n" % (original[0], renamed[0]))
 
-        main.set_status_msg(_(u"Writing undo files, please wait ..."),u'wait')
+        main.set_status_msg(_(u"Writing undo files, please wait ..."), u'wait')
         # write out undo files
         backup = main.toRename[:i]
         if app.recursiveFolderOn:
@@ -186,10 +186,10 @@ class Core():
 
         # adjust and sort items when recursively renaming folders
         if app.recursiveFolderOn and event != u'undo':
-            main.set_status_msg(_(u"Adjusting %s recursive paths, please wait ...")%len(main.toRename),u'wait')
+            main.set_status_msg(_(u"Adjusting %s recursive paths, please wait ...") % len(main.toRename), u'wait')
 
             progressDialog = classes.ProgressDialog(main, app.prefs, main.items,
-                             _(u"Adjusting %%% recursive paths, please wait ..."))
+													_(u"Adjusting %%% recursive paths, please wait ..."))
 
             if app.showTimes:
                 t = time.time()
@@ -202,15 +202,15 @@ class Core():
             progressDialog.destroy()
 
             if app.showTimes:
-                print("%s items recursive adjust : %s"%(len(main.toRename), (time.time() - t)))
+                print("%s items recursive adjust : %s" % (len(main.toRename), (time.time() - t)))
 
         if not error:
-            main.set_status_msg(_(u"Renaming in progress, please wait ..."),u'wait')
+            main.set_status_msg(_(u"Renaming in progress, please wait ..."), u'wait')
 
             # open undo files for writing
             try:
-                self.originalFile = codecs.open(utils.get_user_path(u'undo/original.bak'),'w',"utf-8")
-                self.renamedFile = codecs.open(utils.get_user_path(u'undo/renamed.bak'),'w',"utf-8")
+                self.originalFile = codecs.open(utils.get_user_path(u'undo/original.bak'), 'w', "utf-8")
+                self.renamedFile = codecs.open(utils.get_user_path(u'undo/renamed.bak'), 'w', "utf-8")
             except IOError as (n, strerror):
                 msg = strerror + _(u"\nMake sure 'undo' directory exists and is read/write\n\nYou will not be able to undo!!\nDo you want to continue??")
                 title = _(u"Problem with undo!")
@@ -228,7 +228,7 @@ class Core():
         # end of operations
         if not error:
             main.set_status_msg(_(u"Renaming for %s items completed")
-                              %itemsRenamed, u"complete")
+								% itemsRenamed, u"complete")
             if app.prefs.get('reloadAfterRename') and event != u'undo':
                 main.picker.refresh(event)
             else:
@@ -242,11 +242,11 @@ class Core():
         self._set_display(len(main.toRename)-1)
 
         if app.showTimes:
-            print("%s items renamed : %s"%(itemsRenamed, (time.time() - t)))
+            print("%s items renamed : %s" % (itemsRenamed, (time.time() - t)))
 
         # auto
         if app.autoModeLevel > 2 and not error:
-            print(_(u"Renaming for %s items completed")%itemsRenamed)
+            print(_(u"Renaming for %s items completed") % itemsRenamed)
             sys.exit()
 
         main.picker.refresh_dir_tree()
@@ -269,27 +269,27 @@ class Core():
         renamed = []
         utils.set_busy(True)
         try:
-            originalFile = codecs.open(utils.get_user_path(u'undo/original.bak'),'r',
-                           'utf-8')
-            renamedFile = codecs.open(utils.get_user_path(u'undo/renamed.bak'),'r',
-                          'utf-8')
+            originalFile = codecs.open(utils.get_user_path(u'undo/original.bak'), 'r',
+									   'utf-8')
+            renamedFile = codecs.open(utils.get_user_path(u'undo/renamed.bak'), 'r',
+									  'utf-8')
             for line in originalFile:
-                original.append([line.strip(),False])
+                original.append([line.strip(), False])
             for line in renamedFile:
-                renamed.append([line.strip(),1])
+                renamed.append([line.strip(), 1])
 
         except IOError as error:
-            utils.make_err_msg(_(u"%s\n\nUndo Failed !!")%error, _(u"Error"))
+            utils.make_err_msg(_(u"%s\n\nUndo Failed !!") % error, _(u"Error"))
             pass
         else:
             def get_name(x): return x[0]
-            commonPrefix = os.path.commonprefix(map(get_name,original)).rstrip(os.sep)
+            commonPrefix = os.path.commonprefix(map(get_name, original)).rstrip(os.sep)
             if os.path.exists(commonPrefix):
                 main.picker.view.path.SetValue(commonPrefix)
                 main.picker.view.dirPicker.SetPath(commonPrefix)
 
             if not len(original) == 0:
-                main.toRename = zip(renamed,original)#reverse order from original rename!
+                main.toRename = zip(renamed, original)#reverse order from original rename!
                 main.currentItem = None
                 main.display_results()
                 main.rename_items(u'undo')

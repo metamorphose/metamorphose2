@@ -15,9 +15,10 @@
 """Base classes used throughout the application."""
 
 import os
-import wx
+
 import app
 import utils
+import wx
 
 class Parameters:
     """Load parameters from GUI to core."""
@@ -54,25 +55,25 @@ class SmallHelp(wx.Dialog):
         if size == False:
             size = wx.Size(610, 531)
         wx.Dialog.__init__(self, id=-1, name='smallHelpDialog', parent=prnt,
-              style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX,
-              title=title)
-        self.SetIcon(wx.Icon(utils.icon_path(u'%s.ico')%icon,wx.BITMAP_TYPE_ICO))
+						   style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX,
+						   title=title)
+        self.SetIcon(wx.Icon(utils.icon_path(u'%s.ico') % icon, wx.BITMAP_TYPE_ICO))
 
         self.display = wx.html.HtmlWindow(id=-1,
-              name=u'display', parent=self, style=wx.html.HW_SCROLLBAR_AUTO)
+										  name=u'display', parent=self, style=wx.html.HW_SCROLLBAR_AUTO)
         #self.display.SetMinSize(wx.Size(1010, 531))
 
-        self.Center(wx.HORIZONTAL|wx.VERTICAL)
+        self.Center(wx.HORIZONTAL | wx.VERTICAL)
 
         if u'gtk2' in wx.PlatformInfo:
             self.display.SetStandardFonts()
 
         docspath = app.get_real_path(u'help')
 
-        if os.path.isfile(os.path.join(docspath,app.language,helpFile)):
-            helpFile = os.path.join(docspath,app.language,helpFile)
+        if os.path.isfile(os.path.join(docspath, app.language, helpFile)):
+            helpFile = os.path.join(docspath, app.language, helpFile)
         else:
-            helpFile = os.path.join(docspath,u'en_US',helpFile)
+            helpFile = os.path.join(docspath, u'en_US', helpFile)
 
         self.display.LoadPage(helpFile)
         self.SetSize(size)
@@ -90,15 +91,15 @@ class ProgressDialog(wx.ProgressDialog):
         if prefs.get('showProgressDialog') and items > int(prefs.get(u'itemCountForProgDialog')):
             self.active = True
             wx.ProgressDialog.__init__(self,
-                                       _(u"Progress"),
-                                       message,
-                                       maximum = items,
-                                       parent=parent,
-                                       style =  wx.PD_APP_MODAL
-                                        | wx.PD_ELAPSED_TIME
-                                        | wx.PD_AUTO_HIDE
-                                        | wx.PD_CAN_ABORT
-                                       )
+									   _(u"Progress"),
+									   message,
+									   maximum=items,
+									   parent=parent,
+									   style=wx.PD_APP_MODAL
+									   | wx.PD_ELAPSED_TIME
+									   | wx.PD_AUTO_HIDE
+									   | wx.PD_CAN_ABORT
+									   )
         else:
             self.active = False
 

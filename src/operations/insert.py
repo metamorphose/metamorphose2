@@ -12,11 +12,11 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-import wx
-from operation import Operation
-from notebook import Notebook
 import insertTools
+from notebook import Notebook
+from operation import Operation
 import utils
+import wx
 
 class OpPanel(Operation):
     """This panel controls inserts."""
@@ -25,16 +25,16 @@ class OpPanel(Operation):
         #smallestSize = parent.rightSizer.GetSize() - parent.rightTopSizer.GetSize() - (10,10)
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         #mainSizer.SetMinSize(smallestSize)
-        mainSizer.Add(self.notebook,0,wx.EXPAND)
+        mainSizer.Add(self.notebook, 0, wx.EXPAND)
         self.SetSizerAndFit(mainSizer)
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=-1, name=u'Panel', parent=prnt,
-              style=wx.TAB_TRAVERSAL)
+						  style=wx.TAB_TRAVERSAL)
         self.notebook = Notebook(self, main)
         self.insertToolsPanel = insertTools.Panel(self.notebook, main)
         self.notebook.init_pages(self.insertToolsPanel,
-                          _(u"Insert settings"), u'insert.ico')
+								 _(u"Insert settings"), u'insert.ico')
         self.numberingPanel = self.notebook.numbering
         self.dateTimePanel = self.notebook.dateTime
 
@@ -58,13 +58,13 @@ class OpPanel(Operation):
 
     def rename_item(self, path, name, ext, original):
         """Insert into name."""
-        newName = self.join_ext(name,ext)
+        newName = self.join_ext(name, ext)
         if not newName:
-            return path,name,ext
+            return path, name, ext
 
         insert = self.insertToolsPanel
         operations = insert.opButtonsPanel
-        parsedText = operations.parse_input(insert.Text.GetValue(),original,self)
+        parsedText = operations.parse_input(insert.Text.GetValue(), original, self)
         # prefix
         if insert.prefix.GetValue():
             newName = parsedText + name
@@ -73,13 +73,13 @@ class OpPanel(Operation):
             newName = name + parsedText
         # exact position
         elif insert.position.GetValue():
-                pos = insert.positionPos.GetValue()
-                if pos == -1:
-                    newName += parsedText
-                elif pos < -1:
-                    newName = newName[:pos+1] + parsedText + newName[pos+1:]
-                else:
-                    newName = newName[:pos] + parsedText + newName[pos:]
+			pos = insert.positionPos.GetValue()
+			if pos == -1:
+				newName += parsedText
+			elif pos < -1:
+				newName = newName[:pos + 1] + parsedText + newName[pos + 1:]
+			else:
+				newName = newName[:pos] + parsedText + newName[pos:]
 
         # insert before/after a character:
         elif insert.after.GetValue() or insert.before.GetValue():
@@ -128,8 +128,8 @@ class OpPanel(Operation):
                 match1 = insert.BTWtextMatch1.GetValue()
                 match2 = insert.BTWtextMatch2.GetValue()
                 try:
-                    frm = newName.index(match1)+len(match1)
-                    to = newName.index(match2,frm)
+                    frm = newName.index(match1) + len(match1)
+                    to = newName.index(match2, frm)
                 except ValueError:
                     pass
                 else:
@@ -137,6 +137,6 @@ class OpPanel(Operation):
             if good2go:
                 newName = newName[:frm] + parsedText + newName[to:]
 
-        name,ext = self.split_ext(newName,name,ext)
+        name, ext = self.split_ext(newName, name, ext)
 
-        return path,name,ext
+        return path, name, ext

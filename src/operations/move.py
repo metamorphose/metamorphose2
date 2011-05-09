@@ -12,18 +12,19 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-import wx
-from operation import Operation
-import search
-import utils
 import platform
 import sys
+
+from operation import Operation
 import regExpr
+import search
+import utils
+import wx
 
 [wxID_PANEL, wxID_PANELREPL_MOVE_POS, wxID_PANELREPL_MOVE_POS_VALUE,
- wxID_PANELREPL_MOVE_TXT, wxID_PANELREPL_MOVE_TXT_MOD,
- wxID_PANELREPL_MOVE_TXT_VALUE, wxID_PANELSTATICTEXT6, wxID_PANELSTATICBOX1,
- wxID_PANELSTATICTEXT5
+	wxID_PANELREPL_MOVE_TXT, wxID_PANELREPL_MOVE_TXT_MOD,
+	wxID_PANELREPL_MOVE_TXT_VALUE, wxID_PANELSTATICTEXT6, wxID_PANELSTATICBOX1,
+	wxID_PANELSTATICTEXT5
 ] = [wx.NewId() for __init_ctrls in range(9)]
 
 class OpPanel(Operation):
@@ -34,33 +35,33 @@ class OpPanel(Operation):
     """
     def __init_sizer(self):
         mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
-        mainSizer.Add(self.search,0,wx.EXPAND|wx.BOTTOM|wx.TOP,10)
+        mainSizer.Add(self.search, 0, wx.EXPAND | wx.BOTTOM | wx.TOP, 10)
 
         moveSizer1 = self.moveSizer1 = wx.BoxSizer(wx.HORIZONTAL)
-        moveSizer1.Add(self.replMovePos,0,wx.ALIGN_CENTER|wx.LEFT,5)
-        moveSizer1.Add(self.replMovePosValue,0,wx.ALIGN_CENTER|wx.LEFT,5)
-        moveSizer1.Add(self.staticText5,0,wx.ALIGN_CENTER|wx.LEFT,10)
+        moveSizer1.Add(self.replMovePos, 0, wx.ALIGN_CENTER | wx.LEFT, 5)
+        moveSizer1.Add(self.replMovePosValue, 0, wx.ALIGN_CENTER | wx.LEFT, 5)
+        moveSizer1.Add(self.staticText5, 0, wx.ALIGN_CENTER | wx.LEFT, 10)
 
         moveSizer2 = self.moveSizer2 = wx.BoxSizer(wx.HORIZONTAL)
-        moveSizer2.Add(self.replMoveText,0,wx.ALIGN_CENTER|wx.LEFT|wx.RIGHT,5)
-        moveSizer2.Add(self.replMoveTextMod,0,wx.ALIGN_CENTER|wx.RIGHT,5)
-        moveSizer2.Add(self.staticText6,0,wx.ALIGN_CENTER|wx.RIGHT,3)
-        moveSizer2.Add(self.replMoveTextValue,1,wx.ALIGN_CENTER|wx.RIGHT,5)
+        moveSizer2.Add(self.replMoveText, 0, wx.ALIGN_CENTER | wx.LEFT | wx.RIGHT, 5)
+        moveSizer2.Add(self.replMoveTextMod, 0, wx.ALIGN_CENTER | wx.RIGHT, 5)
+        moveSizer2.Add(self.staticText6, 0, wx.ALIGN_CENTER | wx.RIGHT, 3)
+        moveSizer2.Add(self.replMoveTextValue, 1, wx.ALIGN_CENTER | wx.RIGHT, 5)
 
         moveSizer = self.moveSizer = wx.StaticBoxSizer(self.staticBox1, wx.VERTICAL)
-        moveSizer.Add(moveSizer1,0,wx.EXPAND|wx.TOP,5)
-        moveSizer.Add(moveSizer2,0,wx.EXPAND|wx.TOP,15)
-        moveSizer.Add((-1,5),0)
-        moveSizer.Add(self.regExpPanel,0,wx.LEFT|wx.EXPAND,15)
-        moveSizer.Add((-1,5),0)
+        moveSizer.Add(moveSizer1, 0, wx.EXPAND | wx.TOP, 5)
+        moveSizer.Add(moveSizer2, 0, wx.EXPAND | wx.TOP, 15)
+        moveSizer.Add((-1, 5), 0)
+        moveSizer.Add(self.regExpPanel, 0, wx.LEFT | wx.EXPAND, 15)
+        moveSizer.Add((-1, 5), 0)
 
-        mainSizer.Add(self.moveSizer,0,wx.EXPAND)
+        mainSizer.Add(self.moveSizer, 0, wx.EXPAND)
         self.SetSizerAndFit(mainSizer)
 
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'Panel', parent=prnt,
-              style=0)
+						  style=0)
 
         # regular expressions --------------------------------------------- #
         self.regExpPanel = regExpr.Panel(self, main)
@@ -68,54 +69,54 @@ class OpPanel(Operation):
         self.search = search.Panel(self, main, _(u"Search for what to move, by:"))
 
         self.staticBox1 = wx.StaticBox(id=wxID_PANELSTATICBOX1,
-              label=_(u"Move the match:"), name='staticBox1', parent=self,
-              style=0)
+									   label=_(u"Move the match:"), name='staticBox1', parent=self,
+									   style=0)
 
         self.replMovePos = wx.RadioButton(id=wxID_PANELREPL_MOVE_POS,
-              label=_(u"to position:"), name=u'replMovePos', parent=self,
-              style=wx.RB_GROUP)
+										  label=_(u"to position:"), name=u'replMovePos', parent=self,
+										  style=wx.RB_GROUP)
         self.replMovePos.SetValue(True)
         self.replMovePos.Bind(wx.EVT_RADIOBUTTON, self.activate_options,
-              id=wxID_PANELREPL_MOVE_POS)
+							  id=wxID_PANELREPL_MOVE_POS)
 
         self.replMovePosValue = wx.SpinCtrl(id=wxID_PANELREPL_MOVE_POS_VALUE,
-              initial=0, max=255, min=-255, name=u'replMovePosValue',
-              parent=self, size=wx.Size(60, -1), value='0',
-              style=wx.SP_ARROW_KEYS|wx.TE_PROCESS_ENTER)
+											initial=0, max=255, min=-255, name=u'replMovePosValue',
+											parent=self, size=wx.Size(60, -1), value='0',
+											style=wx.SP_ARROW_KEYS | wx.TE_PROCESS_ENTER)
         self.replMovePosValue.SetValue(0)
         self.replMovePosValue.Bind(wx.EVT_TEXT_ENTER, main.show_preview,
-              id=wxID_PANELREPL_MOVE_POS_VALUE)
+								   id=wxID_PANELREPL_MOVE_POS_VALUE)
         self.replMovePosValue.Bind(wx.EVT_SPINCTRL, main.show_preview,
-              id=wxID_PANELREPL_MOVE_POS_VALUE)
+								   id=wxID_PANELREPL_MOVE_POS_VALUE)
 
         self.staticText5 = wx.StaticText(id=wxID_PANELSTATICTEXT6,
-              label=_(u"Use negative values to start from end of name."),
-              name=u'staticText5', parent=self, style=0)
+										 label=_(u"Use negative values to start from end of name."),
+										 name=u'staticText5', parent=self, style=0)
         self.staticText5.Enable(True)
 
         self.replMoveText = wx.RadioButton(id=wxID_PANELREPL_MOVE_TXT,
-              label=_(u"to"), name=u'replMoveText', parent=self, style=0)
+										   label=_(u"to"), name=u'replMoveText', parent=self, style=0)
         self.replMoveText.SetValue(False)
         self.replMoveText.Bind(wx.EVT_RADIOBUTTON, self.activate_options,
-              id=wxID_PANELREPL_MOVE_TXT)
+							   id=wxID_PANELREPL_MOVE_TXT)
 
         self.replMoveTextValue = wx.TextCtrl(id=wxID_PANELREPL_MOVE_TXT_VALUE,
-              name=u'replMoveTextValue', parent=self, style=0, value='')
+											 name=u'replMoveTextValue', parent=self, style=0, value='')
         self.replMoveTextValue.Enable(False)
         self.replMoveTextValue.Bind(wx.EVT_TEXT, main.show_preview,
-              id=wxID_PANELREPL_MOVE_TXT_VALUE)
+									id=wxID_PANELREPL_MOVE_TXT_VALUE)
 
         self.replMoveTextMod = wx.Choice(choices=[_(u"before"), _(u"after"),
-              _(u"replace")], id=wxID_PANELREPL_MOVE_TXT_MOD,
-              name=u'replMoveTextMod', parent=self)
+										 _(u"replace")], id=wxID_PANELREPL_MOVE_TXT_MOD,
+										 name=u'replMoveTextMod', parent=self)
         self.replMoveTextMod.SetSelection(0)
         self.replMoveTextMod.Enable(False)
         self.replMoveTextMod.Bind(wx.EVT_CHOICE, main.show_preview,
-              id=wxID_PANELREPL_MOVE_TXT_MOD)
+								  id=wxID_PANELREPL_MOVE_TXT_MOD)
 
         self.staticText6 = wx.StaticText(id=wxID_PANELSTATICTEXT6,
-            label=_(u"text:"), name=u'staticText6', parent=self,
-            style=0)
+										 label=_(u"text:"), name=u'staticText6', parent=self,
+										 style=0)
         self.staticText6.Enable(False)
 
         # grotesque hack for win2000
@@ -123,7 +124,7 @@ class OpPanel(Operation):
             winver = sys.getwindowsversion()
             if winver[0] <= 5 and winver[1] < 1:
                 self.hack = wx.RadioButton(id=-1, label='',
-                      name=u'hack', parent=self, style=wx.RB_GROUP)
+										   name=u'hack', parent=self, style=wx.RB_GROUP)
                 self.hack.Show(False)
 
     def __init__(self, parent, main_window, params={}):
@@ -137,8 +138,8 @@ class OpPanel(Operation):
         self.regExpPanel.activatedField = self.replMoveTextValue
 
     def activate_options(self, event):
-        movetxt = (self.replMoveTextValue,self.replMoveTextMod,self.staticText6,
-          self.regExpPanel.regExpr)
+        movetxt = (self.replMoveTextValue, self.replMoveTextMod, self.staticText6,
+				   self.regExpPanel.regExpr)
         # by position
         if self.replMovePos.GetValue():
             self.replMovePosValue.Enable(True)
@@ -162,9 +163,9 @@ class OpPanel(Operation):
         main.show_preview(event)
 
     def rename_item(self, path, name, ext, original):
-        newName = self.join_ext(name,ext)
+        newName = self.join_ext(name, ext)
         if not newName:
-            return path,name,ext
+            return path, name, ext
 
         # basic settings
         search = self.search
@@ -197,7 +198,7 @@ class OpPanel(Operation):
                 pass
             # show RE error message from search, if any
             if search.REmsg:
-                main.set_status_msg(search.REmsg,u'warn')
+                main.set_status_msg(search.REmsg, u'warn')
                 app.REmsg = True
         # text:
         elif searchValues[0] == u"text" and searchValues[2]:
@@ -214,7 +215,7 @@ class OpPanel(Operation):
         elif searchValues[0] == u"position":
             ss = search.repl_from.GetValue()
             sl = search.repl_len.GetValue()
-            frm,to = utils.calc_slice_pos(ss,sl)
+            frm, to = utils.calc_slice_pos(ss, sl)
             moveMatch = newName[frm:to]
         # between
         elif searchValues[0] == u"between":
@@ -226,7 +227,7 @@ class OpPanel(Operation):
 
         # remove the original, saving a backup in case no match found:
         oldName = newName
-        newName = newName.replace(moveMatch,"",1)
+        newName = newName.replace(moveMatch, "", 1)
 
         # now find where to move to if not by position:
         if not moveByPosition:
@@ -260,13 +261,13 @@ class OpPanel(Operation):
                 if moveTo == -1:
                     newName = newName + moveMatch
                 elif moveTo < -1:
-                    newName = newName[:moveTo+1] + moveMatch + newName[moveTo+1:]
+                    newName = newName[:moveTo + 1] + moveMatch + newName[moveTo + 1:]
                 else:
                     newName = newName[:moveTo] + moveMatch + newName[moveTo:]
             # text specified
             else:
                 if moveTo == _(u"replace") and moveMatch:
-                    newName = newName.replace(moveTxt,moveMatch,1)
+                    newName = newName.replace(moveTxt, moveMatch, 1)
                 elif moveMatch:
                     newName = newName[:moveTo] + moveMatch + newName[moveTo:]
             del oldName
@@ -274,5 +275,5 @@ class OpPanel(Operation):
         else:
             newName = oldName
 
-        name,ext = self.split_ext(newName,name,ext)
-        return path,name,ext
+        name, ext = self.split_ext(newName, name, ext)
+        return path, name, ext

@@ -27,8 +27,8 @@ class Parameters(classes.Parameters):
     def load(self):
         """Load all needed panel values to instance."""
         widgets = (
-            '',
-        )
+				   '',
+				   )
         return self.set_parameters(widgets)
 
 

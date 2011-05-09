@@ -34,8 +34,8 @@ path = sys.path[0]
 
 # Prefer wxpython 2.8
 if not hasattr(sys, "frozen"):
-    msg = "\nwxPython 2.8 is required!\nRefer to 'readme_xx.html'",\
-              " for installation instructions.\n"
+    msg = "\nwxPython 2.8 is required!\nRefer to 'readme_xx.html'", \
+		" for installation instructions.\n"
     try:
         import wxversion
     except:
@@ -80,6 +80,6 @@ def main():
 if __name__ == '__main__':
     if 'unicode' not in wx.PlatformInfo:
         print("\nInstalled version: %s\nYou need a unicode build of wxPython to run Metamorphose 2.\n"
-              % wxversion.getInstalled())
+			  % wxversion.getInstalled())
     else:
         main()

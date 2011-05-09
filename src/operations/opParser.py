@@ -26,7 +26,6 @@ import time
 
 import EXIF
 import app
-import utils
 from mutagen.apev2 import APEv2File
 from mutagen.asf import ASF
 from mutagen.easyid3 import EasyID3
@@ -45,6 +44,7 @@ from mutagen.optimfrog import OptimFROG
 from mutagen.trueaudio import TrueAudio
 from mutagen.wavpack import WavPack
 import roman
+import utils
 
 # Metadata tag translations
 

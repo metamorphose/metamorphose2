@@ -4,11 +4,11 @@ XXX The functions here don't copy the resource fork or other metadata on Mac.
 
 """
 
-import os
-import sys
-import stat
 import errno
+import os
 from os.path import abspath
+import stat
+import sys
 
 # To ignore on non-Windows systems
 try:
@@ -17,13 +17,13 @@ except NameError:
     WindowsError = None
 
 
-__all__ = ["copyfileobj","copyfile","copymode","copystat","copy","copy2",
-           "copytree","move","rmtree","Error"]
+__all__ = ["copyfileobj", "copyfile", "copymode", "copystat", "copy", "copy2",
+	"copytree", "move", "rmtree", "Error"]
 
 class Error(EnvironmentError):
     pass
 
-def copyfileobj(fsrc, fdst, length=16*1024):
+def copyfileobj(fsrc, fdst, length=16 * 1024):
     """copy data from file-like object fsrc to file-like object fdst"""
     while 1:
         buf = fsrc.read(length)
@@ -33,7 +33,7 @@ def copyfileobj(fsrc, fdst, length=16*1024):
 
 def _samefile(src, dst):
     # Macintosh, Unix.
-    if hasattr(os.path,'samefile'):
+    if hasattr(os.path, 'samefile'):
         try:
             return os.path.samefile(src, dst)
         except OSError:
@@ -41,7 +41,7 @@ def _samefile(src, dst):
 
     # All other platforms: check for same pathname.
     return (os.path.normcase(os.path.abspath(src)) ==
-            os.path.normcase(os.path.abspath(dst)))
+			os.path.normcase(os.path.abspath(dst)))
 
 def copyfile(src, dst):
     """Copy data from src to dst"""
@@ -215,7 +215,7 @@ def move(src, dst, ignore_permission_err=False):
             copytree(src, dst, symlinks, ignore_permission_err)
             rmtree(src)
         else:
-            copy2(src,dst,ignore_permission_err)
+            copy2(src, dst, ignore_permission_err)
             os.unlink(src)
 
 def destinsrc(src, dst):

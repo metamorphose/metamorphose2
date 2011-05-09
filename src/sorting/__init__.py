@@ -17,13 +17,13 @@ Sort items based on name, attribute and some support for sorting based
 on file content (images, music).
 """
 
-import utils
-import classes
-import sys
 import os
 import re
-import EXIF
+import sys
 
+import EXIF
+import classes
+import utils
 import wxSortingView
 
 
@@ -38,16 +38,16 @@ class Parameters(classes.Parameters):
     def load(self):
         """Load all needed panel values to instance."""
         widgets = (
-            'byPosition',
-            'PosStart',
-            'PosLength',
-            'intelySort',
-            'statSort',
-            'manually',
-            'dirsPlace',
-            'statSortChoice',
-            'descending',
-        )
+				   'byPosition',
+				   'PosStart',
+				   'PosLength',
+				   'intelySort',
+				   'statSort',
+				   'manually',
+				   'dirsPlace',
+				   'statSortChoice',
+				   'descending',
+				   )
         return self.set_parameters(widgets)
 
 
@@ -67,9 +67,9 @@ class Core():
 
     def _get_from_exif(self, path, selection):
         """Get wanted Exif info from image for sorting."""
-        ref = {7 : 'EXIF DateTimeOriginal', 8 : 'Image DateTime'}
+        ref = {7: 'EXIF DateTimeOriginal', 8: 'Image DateTime'}
         try:
-            file=open(path, 'rb')
+            file = open(path, 'rb')
         except:
             return False
         else:
@@ -97,7 +97,7 @@ class Core():
         if params.byPosition:
             s = params.PosStart
             l = params.PosLength
-            frm,to = utils.calc_slice_pos(s,l)
+            frm, to = utils.calc_slice_pos(s, l)
             def _folder_key(x):
                 return os.path.basename(x[0])[frm:to].lower()
             def _files_key(x):
@@ -109,7 +109,7 @@ class Core():
             # return the number in the name
             def _get_numb(x):
                 try:
-                    compare = float(re.sub('\D','',x[0]))
+                    compare = float(re.sub('\D', '', x[0]))
                 except ValueError:
                     compare = x[0]
                 return compare
@@ -135,7 +135,7 @@ class Core():
             else:
                 # choices are in different order than os.stat
                 ref = ('st_ctime', 'st_mtime', 'st_atime', 'st_size', 'st_mode',
-                       'st_uid', 'st_gid')
+					   'st_uid', 'st_gid')
                 s = ref[selection]
                 def _folder_key(x):
                     stat = os.stat(x[0])

@@ -12,9 +12,9 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
+import opParser
 import utils
 import wx
-import opParser
 
 [wxID_PANEL, wxID_PANELID3, wxID_PANELID3SELECT, wxID_PANELINSDATE,
     wxID_PANELINS_NUM, wxID_PANELINSTIME, wxID_PANELSTATICTEXT1,
@@ -48,91 +48,91 @@ class Panel(wx.Panel):
 
     def __init_ctrls(self, prnt, Name):
         wx.Panel.__init__(self, id=wxID_PANEL, name=Name, parent=prnt,
-                          style=wx.TAB_TRAVERSAL, )
+						  style=wx.TAB_TRAVERSAL,)
 
         self.staticText1 = wx.StaticText(id=wxID_PANELSTATICTEXT1,
-                                         label=_(u"Insert a special operation:"), name='staticText1',
-                                         parent=self, style=0)
+										 label=_(u"Insert a special operation:"), name='staticText1',
+										 parent=self, style=0)
 
         self.ins_num = wx.Button(id=wxID_PANELINS_NUM,
-                                 label=_(u"numbering"), name=u'ins_num', parent=self, style=wx.BU_EXACTFIT)
+								 label=_(u"numbering"), name=u'ins_num', parent=self, style=wx.BU_EXACTFIT)
         self.ins_num.SetToolTipString(_(u"Insert enumerating sequence. Use the 'Numbering settings'\npanel to change settings"))
         self.ins_num.Bind(wx.EVT_BUTTON, self._on_number_button,
-                          id=wxID_PANELINS_NUM)
+						  id=wxID_PANELINS_NUM)
 
         self.insDate = wx.Button(id=wxID_PANELINSDATE, label=_(u"date"),
-                                 name=u'insDate', parent=self, style=wx.BU_EXACTFIT)
+								 name=u'insDate', parent=self, style=wx.BU_EXACTFIT)
         self.insDate.SetToolTipString(_(u"Insert date. Use the 'Date / Time settings' panel to\nchange settings"))
         self.insDate.Bind(wx.EVT_BUTTON, self._on_date_button,
-                          id=wxID_PANELINSDATE)
+						  id=wxID_PANELINSDATE)
 
         self.insTime = wx.Button(id=wxID_PANELINSTIME, label=_(u"time"),
-                                 name=u'insTime', parent=self, style=wx.BU_EXACTFIT)
+								 name=u'insTime', parent=self, style=wx.BU_EXACTFIT)
         self.insTime.SetToolTipString(_(u"Insert time. Use the 'Date / Time settings' panel to\nchange settings"))
         self.insTime.Bind(wx.EVT_BUTTON, self._on_time_button,
-                          id=wxID_PANELINSTIME)
+						  id=wxID_PANELINSTIME)
 
         self.id3select = wx.Choice(choices=[
-                                   _(u"audio info"),
-                                   _('artist'),
-                                   _('album'),
-                                   _('disc number'),
-                                   _('track number'),
-                                   _('title'),
-                                   _('genre'),
-                                   _('performer'),
-                                   _('date'),
-                                   _('author'),
-                                   _('composer'),
-                                   _('conductor'),
-                                   _('lyricist'),
-                                   _('comment'),
-                                   #_('version'),
-                                   #_('language'),
-                                   #_('encoded by'),
-                                   ],
-                                   id=wxID_PANELID3SELECT, name=u'id3select', parent=self)
+								   _(u"audio info"),
+								   _('artist'),
+								   _('album'),
+								   _('disc number'),
+								   _('track number'),
+								   _('title'),
+								   _('genre'),
+								   _('performer'),
+								   _('date'),
+								   _('author'),
+								   _('composer'),
+								   _('conductor'),
+								   _('lyricist'),
+								   _('comment'),
+								   #_('version'),
+								   #_('language'),
+								   #_('encoded by'),
+								   ],
+								   id=wxID_PANELID3SELECT, name=u'id3select', parent=self)
         self.id3select.SetSelection(0)
         self.id3select.SetToolTipString(_(u"Insert id3 tag information from mp3 file"))
         self.id3select.Bind(wx.EVT_CHOICE, self._on_id3, id=wxID_PANELID3SELECT)
 
         self.EXIFselect = wx.Choice(choices=[
-                                    _(u"image info"),
-                                    #_(u"date taken"),
-                                    #_(u"date modified"),
-                                    _(u"width"),
-                                    _(u"height"),
-                                    _(u"width") + u":x:" + _(u"height"),
-                                    _(u"X-resolution"),
-                                    _(u"Y-resolution"),
-                                    _(u"X-res") + u":x:" + _(u"Y-res"),
-                                    _(u"orientation"),
-                                    _(u"exposure"),
-                                    _(u"F-stop"),
-                                    _(u"flash"),
-                                    _(u"focal-length"),
-                                    _(u"ISO"),
-                                    _(u"shutter-speed"),
-                                    _(u"copyright"),
-                                    _(u"make"),
-                                    _(u"model"),
-                                    _(u"unit"),
-                                    _(u"software")],
-                                    id=wxID_PANELEXIFSELECT, name=u'EXIFselect', parent=self,
-                                    size=wx.Size(128, -1))
+									_(u"image info"),
+									#_(u"date taken"),
+									#_(u"date modified"),
+									_(u"width"),
+									_(u"height"),
+									_(u"width") + u":x:" + _(u"height"),
+									_(u"X-resolution"),
+									_(u"Y-resolution"),
+									_(u"X-res") + u":x:" + _(u"Y-res"),
+									_(u"orientation"),
+									_(u"exposure"),
+									_(u"F-stop"),
+									_(u"flash"),
+									_(u"focal-length"),
+									_(u"ISO"),
+									_(u"shutter-speed"),
+									_(u"copyright"),
+									_(u"make"),
+									_(u"model"),
+									_(u"unit"),
+									_(u"software")],
+									id=wxID_PANELEXIFSELECT, name=u'EXIFselect', parent=self,
+									size=wx.Size(128, -1))
         self.EXIFselect.SetSelection(0)
         self.EXIFselect.SetToolTipString(_(u"Insert Exif tag information from tiff or jpeg file.\nUse the date button to insert Exif date"))
         self.EXIFselect.Bind(wx.EVT_CHOICE, self._on_exif, id=wxID_PANELEXIFSELECT)
 
         self.folder = wx.Button(id=wxID_PANELFOLDER, label=_(u"folder:"),
-                                name=u'folder', parent=self, style=wx.BU_EXACTFIT)
+								name=u'folder', parent=self, style=wx.BU_EXACTFIT)
         self.folder.SetToolTipString(_(u"Insert parent folder name"))
         self.folder.Bind(wx.EVT_BUTTON, self._on_folder_button, id=wxID_PANELFOLDER)
 
         self.folderDepth = wx.SpinCtrl(id=wxID_PANELFOLDERDEPTH,
-                                       initial=1, max=999, min=1, name=u'folderDepth',
-                                       parent=self, pos=wx.Point(200, 104), size=wx.Size(50, -1),
-                                       value='1', style=wx.SP_ARROW_KEYS)
+									   initial=1, max=999, min=1, name=u'folderDepth',
+									   parent=self, pos=wx.Point(200, 104), size=wx.Size(50, -1),
+									   value='1', style=wx.SP_ARROW_KEYS)
         self.folderDepth.SetValue(1)
         self.folderDepth.SetToolTipString(_(u"How far back to get folder"))
 

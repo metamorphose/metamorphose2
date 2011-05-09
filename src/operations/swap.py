@@ -12,16 +12,16 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-import wx
 from operation import Operation
 import search
 import utils
+import wx
 
 [wxID_PANEL, wxID_PANELREPL_MOVE_POS, wxID_PANELREPL_MOVE_POS_VALUE,
- wxID_PANELREPL_MOVE_TXT, wxID_PANELREPL_MOVE_TXT_MOD,
- wxID_PANELREPL_MOVE_TXT_RE, wxID_PANELREPL_MOVE_TXT_VALUE,
- wxID_PANELSTATICTEXT6, wxID_PANELSTATICBOX1, wxID_PANELREPL_MOVE_TXT_REU,
- wxID_PANELREPL_MOVE_TXT_REI, wxID_PANELSTATICTEXT5
+	wxID_PANELREPL_MOVE_TXT, wxID_PANELREPL_MOVE_TXT_MOD,
+	wxID_PANELREPL_MOVE_TXT_RE, wxID_PANELREPL_MOVE_TXT_VALUE,
+	wxID_PANELSTATICTEXT6, wxID_PANELSTATICBOX1, wxID_PANELREPL_MOVE_TXT_REU,
+	wxID_PANELREPL_MOVE_TXT_REI, wxID_PANELSTATICTEXT5
 ] = [wx.NewId() for __init_ctrls in range(12)]
 
 class OpPanel(Operation):
@@ -31,15 +31,15 @@ class OpPanel(Operation):
     """
     def __init_sizer(self):
         mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
-        mainSizer.Add(self.searchFrom,0,wx.EXPAND|wx.BOTTOM,3)
-        mainSizer.Add(self.searchTo,0,wx.EXPAND)
+        mainSizer.Add(self.searchFrom, 0, wx.EXPAND | wx.BOTTOM, 3)
+        mainSizer.Add(self.searchTo, 0, wx.EXPAND)
         self.SetSizerAndFit(mainSizer)
 
 
     def __init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'Panel', parent=prnt,
-              style=wx.TAB_TRAVERSAL)
+						  style=wx.TAB_TRAVERSAL)
 
         self.searchFrom = search.Panel(self, main, _(u"Swap this:"), 'searchFrom')
         self.searchTo = search.Panel(self, main, _(u"With this:"), 'searchTo')
@@ -68,7 +68,7 @@ class OpPanel(Operation):
                 pass
             # show RE error message from search, if any
             if search.REmsg:
-                main.set_status_msg(search.REmsg,u'warn')
+                main.set_status_msg(search.REmsg, u'warn')
                 app.REmsg = True
 
         # text:
@@ -90,7 +90,7 @@ class OpPanel(Operation):
         elif searchValues[0] == u"position":
             ss = search.repl_from.GetValue()
             sl = search.repl_len.GetValue()
-            frm,to = utils.calc_slice_pos(ss,sl)
+            frm, to = utils.calc_slice_pos(ss, sl)
 
         # between
         elif searchValues[0] == u"between":
@@ -99,12 +99,12 @@ class OpPanel(Operation):
                 frm = positions[0]
                 to = positions[1]
 
-        return (frm,to)
+        return (frm, to)
 
     def rename_item(self, path, name, ext, original):
-        newName = self.join_ext(name,ext)
+        newName = self.join_ext(name, ext)
         if not newName:
-            return path,name,ext
+            return path, name, ext
 
         # basic settings
         searchFrom = self.searchFrom
@@ -118,7 +118,7 @@ class OpPanel(Operation):
         swapMatchTo = self.find_in_name(newName, searchTo, searchToValues)
 
         # only works for one character for now
-        if swapMatchFrom != (0,0) and swapMatchTo != (0,0) and swapMatchTo != swapMatchFrom:
+        if swapMatchFrom != (0, 0) and swapMatchTo != (0, 0) and swapMatchTo != swapMatchFrom:
             swapMatchTo1 = newName[swapMatchTo[0]:swapMatchTo[1]]
             swapMatchFrom1 = newName[swapMatchFrom[0]:swapMatchFrom[1]]
             newNameList = []
@@ -133,7 +133,7 @@ class OpPanel(Operation):
 
         #---- code goes here ----
 
-        name,ext = self.split_ext(newName,name,ext)
-        return path,name,ext
+        name, ext = self.split_ext(newName, name, ext)
+        return path, name, ext
 
 

@@ -78,15 +78,15 @@ class Core():
     def __init__(self, parent, MainWindow):
         self.CommonSearches = (
 			 ("" , ""),
-			 ( _(u"- audio") , u"\.(mp3|wav|ogg|flac|wma|aiff|aac|m3u|mid|ra|ram)$" ),
-			 ( _(u"- image") , u"\.(bmp|jpg|jpeg|png|svg|ico|tif|tiff|gif|psd|ai|thm|nef)$" ),
-			 ( _(u"- video") , u"\.(avi|mpg|mpeg|mpe|mp4|m4e|wmv|divx|flc|mov|ogm)$" ),
-			 ( _(u"- office related") , u"\.(txt|csv|rtf|doc|otf|xls|pps|ppt)$" ),
-			 ( _(u"- web related") , u"\.(htm|html|php|css|js|asp|cgi|swf)$" ),
-			 ( _(u"- programming") , u"\.(py|pyc|php|pl|h|c|cpp|cxx|jar|java|js|tcl)$" ),
-			 ( _(u"- compressed") , u"\.(zip|tar|7z|ace|gz|tgz|rar|r\d{1,3}|cab|bz2)$" ),
-			 ( _(u"- an extension") , u"^.+\..+$" ),
-			 ( _(u"- only an extension") , u"(^|\\\|/)\." ),
+			 ( _(u"- audio") , u"\.(mp3|wav|ogg|flac|wma|aiff|aac|m3u|mid|ra|ram|m4a)$"),
+			 ( _(u"- image") , u"\.(bmp|jpg|jpeg|png|svg|ico|tif|tiff|gif|psd|ai|thm|nef)$"),
+			 ( _(u"- video") , u"\.(avi|mpg|mpeg|mpe|mp4|m4e|wmv|divx|flc|mov|ogm)$"),
+			 ( _(u"- office related") , u"\.(txt|csv|rtf|doc|otf|xls|pps|ppt)$"),
+			 ( _(u"- web related") , u"\.(htm|html|php|css|js|asp|cgi|swf)$"),
+			 ( _(u"- programming") , u"\.(py|pyc|php|pl|h|c|cpp|cxx|jar|java|js|tcl)$"),
+			 ( _(u"- compressed") , u"\.(zip|tar|7z|ace|gz|tgz|rar|r\d{1,3}|cab|bz2)$"),
+			 ( _(u"- an extension") , u"^.+\..+$"),
+			 ( _(u"- only an extension") , u"(^|\\\|/)\."),
 	   )
         self.CustomSearches = {}
 

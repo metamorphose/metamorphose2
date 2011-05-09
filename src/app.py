@@ -13,8 +13,8 @@
 # GNU General Public License for more details.
 
 from __future__ import print_function
-import sys
 import os
+import sys
 
 """
 Application wide access and storage.
@@ -57,7 +57,7 @@ realPath = __set_real_path()
 
 def get_real_path(file):
     """Return application path for file."""
-    return os.path.join(realPath,file)
+    return os.path.join(realPath, file)
 
 def __get_version():
     """Get current version from file."""
@@ -76,7 +76,7 @@ def locale_path(lang):
     if hasattr(sys, "frozen"):
         return get_real_path(u'messages')
     # Linux, freeBSD when installed
-    elif os.path.exists(u'/usr/share/locale/%s/LC_MESSAGES/metamorphose2.mo'%lang):
+    elif os.path.exists(u'/usr/share/locale/%s/LC_MESSAGES/metamorphose2.mo' % lang):
         return u'/usr/share/locale'
     # run from source
     else:

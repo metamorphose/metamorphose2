@@ -13,10 +13,10 @@
 # GNU General Public License for more details.
 
 
-import wx
-import numbering
 import dateTime
+import numbering
 import utils
+import wx
 
 class Notebook(wx.Notebook):
     """Base class for all notebooks used to display operation tabs."""
@@ -28,7 +28,7 @@ class Notebook(wx.Notebook):
         global main
         main = main_window
         wx.Notebook.__init__(self, id=-1, name=u'notebook', parent=parent,
-            style=wx.NB_BOTTOM|wx.BORDER_NONE)
+							 style=wx.NB_BOTTOM | wx.BORDER_NONE)
         self.SetThemeEnabled(True)
         self.numbering = numbering.Panel(self, main)
         self.dateTime = dateTime.Panel(self, main)
@@ -44,9 +44,9 @@ class Notebook(wx.Notebook):
         self.AssignImageList(il)
 
         self.AddPage(page=varPanel, text=varText, select=True,
-              imageId=img0)
+					 imageId=img0)
         self.AddPage(imageId=img1, page=self.numbering, select=False,
-              text=_(u"Numbering settings"))
+					 text=_(u"Numbering settings"))
         self.AddPage(imageId=img2, page=self.dateTime, select=False,
-                  text=_(u"Date && Time settings"))
+					 text=_(u"Date && Time settings"))
 
