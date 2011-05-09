@@ -30,6 +30,7 @@ import utils
 from mutagen.apev2 import APEv2File
 from mutagen.asf import ASF
 from mutagen.easyid3 import EasyID3
+from mutagen.easymp4 import EasyMP4
 from mutagen.flac import FLAC
 from mutagen.id3 import ID3FileType
 from mutagen.monkeysaudio import MonkeysAudio
@@ -205,8 +206,8 @@ class Parser():
                 if main.bad.count(main.ec) < 1:
                     main.bad.append(main.ec)
                     main.errorLog.insert(0, (main.ec, file,
-                                         _(u"Roman numeral error: %s") % sys.exc_info()[1],
-                                         u'bad'))
+										 _(u"Roman numeral error: %s") % sys.exc_info()[1],
+										 u'bad'))
                 y = ""
 
         def increment_reset_count():
@@ -252,8 +253,8 @@ class Parser():
                     # attempt to convert tag's text to a date
                     try:
                         dayWeek = calendar.weekday(itemDateTime[0],
-                                                   itemDateTime[1],
-                                                   itemDateTime[2])
+												   itemDateTime[1],
+												   itemDateTime[2])
                     # invalid date
                     except ValueError, err:
                         self.__add_to_warnings(path, _(u"Exif error: %s") % err)
@@ -329,7 +330,7 @@ class Parser():
 
         if options is None:
             options = [MP3, TrueAudio, OggTheora, OggSpeex, OggVorbis, OggFLAC,
-                FLAC, APEv2File, MP4, ID3FileType, WavPack, Musepack,
+                FLAC, APEv2File, EasyMP4, ID3FileType, WavPack, Musepack,
                 MonkeysAudio, OptimFROG, ASF]
 
         if not options:
