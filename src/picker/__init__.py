@@ -18,14 +18,15 @@ Supports direct selection, regular expression filters, and attribute filters.
 """
 
 from __future__ import print_function
-import app
-import utils
-import classes
-import sys
 import os
 import re
 import sre_constants
+import sys
 import time
+
+import app
+import classes
+import utils
 import wxPickerView
 
 
@@ -44,29 +45,29 @@ class Parameters(classes.Parameters):
         root = self.get_value(self.view.path)
         self.set_root_path(root)
         widgets = (
-            'foldersOn', # grab folders
-            'filesOn', # grab files
-            'notType', # invert filter
-            'FilterSel',
-            'filterByRE',
-            'ignoreCase',
-            'useLocale',
-            'walkIt', # recursive
-            'walkDepth',
-        )
+				   'foldersOn', # grab folders
+				   'filesOn', # grab files
+				   'notType', # invert filter
+				   'FilterSel',
+				   'filterByRE',
+				   'ignoreCase',
+				   'useLocale',
+				   'walkIt', # recursive
+				   'walkDepth',
+				   )
         return self.set_parameters(widgets)
 
     def set_root_path(self, root):
         """Load all needed panel values to instance."""
-        app.debug_print("Examining : %s"%root)
+        app.debug_print("Examining : %s" % root)
         
         self.root = False
         # don't do anything for blank path
         if not root:
-            main.set_status_msg('',u'eyes')
+            main.set_status_msg('', u'eyes')
         # don't do anything unless path is readable
         elif not os.access(root, os.R_OK):
-            main.set_status_msg(_(u"Cannot read path!"),u'warn')
+            main.set_status_msg(_(u"Cannot read path!"), u'warn')
             #main.bottomWindow.display.DeleteAllItems()
         # all good
         else:
@@ -76,17 +77,17 @@ class Parameters(classes.Parameters):
 class Core():
     def __init__(self, parent, MainWindow):
         self.CommonSearches = (
-                 ("" , ""),
-                 ( _(u"- audio") , u"\.(mp3|wav|ogg|flac|wma|aiff|aac|m3u|mid|ra|ram)$" ),
-                 ( _(u"- image") , u"\.(bmp|jpg|jpeg|png|svg|ico|tif|tiff|gif|psd|ai|thm|nef)$" ),
-                 ( _(u"- video") , u"\.(avi|mpg|mpeg|mpe|mp4|m4e|wmv|divx|flc|mov|ogm)$" ),
-                 ( _(u"- office related") , u"\.(txt|csv|rtf|doc|otf|xls|pps|ppt)$" ),
-                 ( _(u"- web related") , u"\.(htm|html|php|css|js|asp|cgi|swf)$" ),
-                 ( _(u"- programming") , u"\.(py|pyc|php|pl|h|c|cpp|cxx|jar|java|js|tcl)$" ),
-                 ( _(u"- compressed") , u"\.(zip|tar|7z|ace|gz|tgz|rar|r\d{1,3}|cab|bz2)$" ),
-                 ( _(u"- an extension") , u"^.+\..+$" ),
-                 ( _(u"- only an extension") , u"(^|\\\|/)\." ),
-            )
+			 ("" , ""),
+			 ( _(u"- audio") , u"\.(mp3|wav|ogg|flac|wma|aiff|aac|m3u|mid|ra|ram)$" ),
+			 ( _(u"- image") , u"\.(bmp|jpg|jpeg|png|svg|ico|tif|tiff|gif|psd|ai|thm|nef)$" ),
+			 ( _(u"- video") , u"\.(avi|mpg|mpeg|mpe|mp4|m4e|wmv|divx|flc|mov|ogm)$" ),
+			 ( _(u"- office related") , u"\.(txt|csv|rtf|doc|otf|xls|pps|ppt)$" ),
+			 ( _(u"- web related") , u"\.(htm|html|php|css|js|asp|cgi|swf)$" ),
+			 ( _(u"- programming") , u"\.(py|pyc|php|pl|h|c|cpp|cxx|jar|java|js|tcl)$" ),
+			 ( _(u"- compressed") , u"\.(zip|tar|7z|ace|gz|tgz|rar|r\d{1,3}|cab|bz2)$" ),
+			 ( _(u"- an extension") , u"^.+\..+$" ),
+			 ( _(u"- only an extension") , u"(^|\\\|/)\." ),
+	   )
         self.CustomSearches = {}
 
         global main
@@ -202,7 +203,7 @@ class Core():
                 else:
                     filter = re.compile(filter)
             except sre_constants.error as err:
-                main.set_status_msg(_(u"Regular-Expression: %s")%err,u'warn')
+                main.set_status_msg(_(u"Regular-Expression: %s") % err, u'warn')
                 app.REmsg = True
                 filter = re.compile(r'')
                 pass
@@ -214,15 +215,15 @@ class Core():
 
     # core logic
 
-    """
-    Grab items from a specified directory, either as a listing or as a
-    walk, and filter out entries based on user settings.
-    Files and folders are seperated for proper sorting.
-    Called, depending on user preferences,
-    from almost every widget in the picker panel, and from
-    the main application class.
-    """
     def refresh(self, event):
+        """
+		Grab items from a specified directory, either as a listing or as a
+		walk, and filter out entries based on user settings.
+		Files and folders are seperated for proper sorting.
+		Called, depending on user preferences,
+		from almost every widget in the picker panel, and from
+		the main application class.
+		"""
         files = [] #files will go here
         folders = [] #folders will go here
         error = False
@@ -233,8 +234,7 @@ class Core():
         # OK, load items up:
         else:
             self._set_initial()
-
-            main.set_status_msg(_(u"Getting directory contents please wait ..."),u'wait')
+            main.set_status_msg(_(u"Getting directory contents please wait ..."), u'wait')
 
             if app.showTimes:
                 t = time.time()
@@ -277,8 +277,8 @@ class Core():
 
             # define here for speed boost
             def isdir(entry):
-                    join = os.path.join(params.root, entry)
-                    return os.path.isdir(join)
+				join = os.path.join(params.root, entry)
+				return os.path.isdir(join)
 
             def get_encoded_name(filename):
                 filename = filename.decode(sys.getfilesystemencoding(), 'replace')
@@ -290,48 +290,47 @@ class Core():
             if params.walkIt:
                 maxDepth = params.walkDepth
 
-                # remove debug only when folder renaming is fixed
-                if app.debug and params.foldersOn:
+                if params.foldersOn:
                     app.recursiveFolderOn = True
 
                 try:
                     for dirpath, dirnames, filenames in os.walk(params.root):
-                        base = dirpath.replace(params.root,'')
+                        base = dirpath.replace(params.root, '')
                         if maxDepth != 0 and len(base.split(os.path.sep)) > maxDepth:
                             continue
+						# grab files
                         if params.filesOn:
                             for entry in filenames:
                                 entry = os.path.join(base, entry)
                                 _filter_files(entry)
-
-                        # enable this when folder renaming is fixed
-                        if app.debug and params.foldersOn:
+						# grab folders
+                        if params.foldersOn:
                             for entry in dirnames:
-                                entry = os.path.join(base,entry)
+                                entry = os.path.join(base, entry)
                                 _filter_folders(entry)
 
-                        main.set_status_msg(_(u"Retrieved %s items from directory")%len(files),u'wait')
+                        main.set_status_msg(_(u"Retrieved %s items from directory") % len(files), u'wait')
 
                 except UnicodeDecodeError as err:
                     entry = err[1].decode(sys.getfilesystemencoding(), 'replace')
                     msg = _("The item '%s' has an encoding error.\nUnable to process this path in recursive mode, please correct the name and try again.")\
-                            % entry
+						% entry
                     utils.make_err_msg(msg, _("Unable to load item"))
                     error = True
                     pass
                 except:
-                    main.set_status_msg(_(u"Cannot read path!"),u'warn')
+                    main.set_status_msg(_(u"Cannot read path!"), u'warn')
                     error = True
                     pass
                 else:
-                    main.set_status_msg(_(u"Retrieved %s items from directory")%len(files),u'wait')
+                    main.set_status_msg(_(u"Retrieved %s items from directory") % len(files), u'wait')
             # normal retrieval
             else:
                 encodingError = False
                 try:
                     listedDir = os.listdir(params.root)
                 except:
-                    main.set_status_msg(_(u"Cannot read path!"),u'warn')
+                    main.set_status_msg(_(u"Cannot read path!"), u'warn')
                     error = True
                     pass
                 else:
@@ -351,12 +350,12 @@ class Core():
                             _filter_files(entry)
                     if encodingError:
                         utils.make_err_msg(_("At least one item has an encoding error in its name. You will not be able to modify these."),
-                        _("Encoding Error"))
+										   _("Encoding Error"))
 
             if error is not True:
                 self.add_items_to_panel(folders, files)
-                main.set_status_msg(_(u"Retrieved %s items from directory")%self.count_panel_items(),
-                   u'complete')
+                main.set_status_msg(_(u"Retrieved %s items from directory") % self.count_panel_items(),
+									u'complete')
 
                 # after retrieval:
                 self.enable_panel_widget('selectAll', True)
@@ -368,7 +367,7 @@ class Core():
 
             # output time taken if set
             if app.showTimes:
-                print( "%s items load : %s"%(self.count_panel_items(), (time.time() - t)) )
+                print("%s items load : %s" % (self.count_panel_items(), (time.time() - t)))
 
             if app.prefs.get(u'autoSelectAll'):
                 self.select_all()
