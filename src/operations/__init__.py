@@ -26,7 +26,7 @@ import swap
 
 defs = {_(u"directory"): (u"directory", _(u"Modify the directory structure (move items)")),
 	_(u"replace"): (u"replace", _(u"Find text and replace it with text or sub-operation")),
-	_(u"modifications"): (u"modification", _(u"Case changes, character conversions, etc...")),
+	_(u"modify"): (u"modification", _(u"Case changes, character conversions, etc...")),
 	_(u"move text"): (u"move", _(u"Find text and move it")),
 	_(u"swap"): (u"swap", _(u"Find two portions of text and swap them")),
 	_(u"insert"): (u"insert", _(u"Insert text or sub-operation")),

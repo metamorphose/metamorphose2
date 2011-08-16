@@ -259,11 +259,11 @@ class Panel(wx.Panel):
         parent.reset.SetBitmap(wx.Bitmap(utils.icon_path(u'reset_op.png'),
 							   wx.BITMAP_TYPE_PNG))
 
-        parent.destroy = wx.MenuItem(parent, wxID_MENUDESTROY, _(u"Destroy"))
+        parent.destroy = wx.MenuItem(parent, wxID_MENUDESTROY, _(u"Delete"))
         parent.destroy.SetBitmap(wx.Bitmap(utils.icon_path(u'errors.ico'),
 								 wx.BITMAP_TYPE_ICO))
 
-        parent.destroyAll = wx.MenuItem(parent, wxID_MENUDESTROYALL, _(u"Destroy All"))
+        parent.destroyAll = wx.MenuItem(parent, wxID_MENUDESTROYALL, _(u"Delete All"))
         parent.destroyAll.SetBitmap(wx.Bitmap(utils.icon_path(u'nuke.png'),
 									wx.BITMAP_TYPE_PNG))
 
@@ -367,10 +367,10 @@ class Panel(wx.Panel):
         self.enableOperation.Bind(wx.EVT_TOGGLEBUTTON,
 								  self.__operation_toggle_btn, id=wxID_ENABLEOPERATION)
 
-        self.deleteOperations = wx.Choice(choices=[_(u"Destroy"), _(u"Destroy All")],
+        self.deleteOperations = wx.Choice(choices=[_(u"Delete"), _(u"Delete All")],
 										  id=wxID_DELETEOPERATIONS, name=u'actions', parent=self)
         self.deleteOperations.SetSelection(0)
-        self.deleteOperations.SetToolTipString(_(u"Do Stuff"))
+        self.deleteOperations.SetToolTipString(_(u"Delete operations"))
         self.deleteOperations.Bind(wx.EVT_CHOICE, self.__actions_choice, id=wxID_DELETEOPERATIONS)
 
         self.resetOperationButton = wx.Button(id=wxID_RESETOPERATIONBUTTON,
@@ -609,7 +609,7 @@ class Panel(wx.Panel):
     def __destroy_all_gui_operations(self, event):
         """Destroy all operations from GUI."""
         if self.Core.operations:
-            msg = _("Really destroy all operations?")
+            msg = _("Really delete all operations?\nThis cannot be undone.")
             title = _("Are You Sure?")
             if utils.make_yesno_dlg(msg, title):
                 self.destroy_all_operations()

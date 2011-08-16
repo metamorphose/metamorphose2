@@ -168,14 +168,14 @@ class MainWindow(wx.Frame):
 
     def __init_menu_renamer(self, parent):
         parent.destroyMenu = wx.MenuItem(parent, wxID_MENURENAMER_DESTROY,
-										 _(u"Destroy operation"),
-										 self.make_space(_(u"Destroy visible operation")))
+										 _(u"Delete operation"),
+										 self.make_space(_(u"Delete current operation")))
         parent.destroyMenu.SetBitmap(wx.Bitmap(utils.icon_path(u'errors.ico'),
 									 wx.BITMAP_TYPE_ICO))
 
         parent.destroyAllMenu = wx.MenuItem(parent, wxID_MENURENAMER_DESTROYALL,
-											_(u"Destroy all operations\tctrl+D"),
-											self.make_space(_(u"Destroy all operations")))
+											_(u"Delete all operations\tctrl+D"),
+											self.make_space(_(u"Delete all operations")))
         parent.destroyAllMenu.SetBitmap(wx.Bitmap(utils.icon_path(u'nuke.png'),
 										wx.BITMAP_TYPE_PNG))
 
