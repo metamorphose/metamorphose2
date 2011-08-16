@@ -28,6 +28,7 @@ class Operation(wx.Panel):
             'applyPathOnly': False,
             'applyName': True,
             'applyExtension': False,
+            'displayName' : None,
         }
         self.update_parameters(params)
 

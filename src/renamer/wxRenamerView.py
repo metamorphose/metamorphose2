@@ -34,7 +34,8 @@ import wx
 	wxID_MENUDISABLE, wxID_MENUAPPLYNAME,
 	wxID_MENUAPPLYEXTENSION, wxID_MENUDESTROY,
 	wxID_MENUDESTROYALL, wxID_RESETOPERATIONBUTTON,
-] = [wx.NewId() for __init_ctrls in range(25)]
+	wxID_MENUCHANGENAME,
+] = [wx.NewId() for __init_ctrls in range(26)]
 
 
 BackgroundClr = wx.SystemSettings_GetColour(wx.SYS_COLOUR_WINDOW)
@@ -270,6 +271,8 @@ class Panel(wx.Panel):
         parent.setStatus = wx.MenuItem(parent, wxID_MENUSETSTATUS, _(u"Enable/Disable"))
         parent.setStatus.SetBitmap(wx.Bitmap(utils.icon_path(u're.ico'),
 								   wx.BITMAP_TYPE_ICO))
+        
+        parent.changeName = wx.MenuItem(parent, wxID_MENUCHANGENAME, _(u"Change Name"))
 
         parent.AppendItem(parent.up)
         parent.AppendItem(parent.down)
