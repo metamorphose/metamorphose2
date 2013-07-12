@@ -160,17 +160,23 @@ class EasyID3(DictMixin, Metadata):
 
     def __init__(self, filename=None):
         self.__id3 = ID3()
-        self.load = self.__id3.load
-        self.save = self.__id3.save
-        self.delete = self.__id3.delete
         if filename is not None:
             self.load(filename)
+
+    load = property(lambda s: s.__id3.load,
+                    lambda s, v: setattr(s.__id3, 'load', v))
+
+    save = property(lambda s: s.__id3.save,
+                    lambda s, v: setattr(s.__id3, 'save', v))
+
+    delete = property(lambda s: s.__id3.delete,
+                      lambda s, v: setattr(s.__id3, 'delete', v))
 
     filename = property(lambda s: s.__id3.filename,
                         lambda s, fn: setattr(s.__id3, 'filename', fn))
 
-    _size = property(lambda s: s._id3.size,
-                     lambda s, fn: setattr(s.__id3, '_size', fn))
+    size = property(lambda s: s.__id3.size,
+                    lambda s, fn: setattr(s.__id3, 'size', v))
 
     def __getitem__(self, key):
         key = key.lower()

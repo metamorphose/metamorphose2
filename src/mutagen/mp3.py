@@ -87,7 +87,7 @@ class MPEGInfo(object):
             except struct.error: id3, insize = '', 0
             insize = BitPaddedInt(insize)
             if id3 == 'ID3' and insize > 0:
-                offset = insize
+                offset = insize + 10
             else: offset = 0
 
         # Try to find two valid headers (meaning, very likely MPEG data)
@@ -164,13 +164,15 @@ class MPEGInfo(object):
             possible = frame_1 + frame_length
             if possible > len(data) + 4:
                 raise HeaderNotFoundError("can't sync to second MPEG frame")
-            frame_data = struct.unpack(">H", data[possible:possible + 2])[0]
+            try:
+                frame_data = struct.unpack(
+                    ">H", data[possible:possible + 2])[0]
+            except struct.error:
+                raise HeaderNotFoundError("can't sync to second MPEG frame")
             if frame_data & 0xFFE0 != 0xFFE0:
                 raise HeaderNotFoundError("can't sync to second MPEG frame")
 
-        frame_count = real_size / float(frame_length)
-        samples = frame_size * frame_count
-        self.length = samples / self.sample_rate
+        self.length = 8 * real_size / float(self.bitrate)
 
         # Try to find/parse the Xing header, which trumps the above length
         # and bitrate calculation.
@@ -204,15 +206,6 @@ class MPEGInfo(object):
             if flags & 0x2:
                 bytes = struct.unpack('>I', data[xing + 12:xing + 16])[0]
                 self.bitrate = int((bytes * 8) // self.length)
-
-        # If the bitrate * the length is nowhere near the file
-        # length, recalculate using the bitrate and file length.
-        # Don't do this for very small files.
-        fileobj.seek(2, 0)
-        size = fileobj.tell()
-        expected = (self.bitrate / 8) * self.length
-        if not (size / 2 < expected < size * 2) and size > 2**16:
-            self.length = size / float(self.bitrate * 8)
 
     def pprint(self):
         s = "MPEG %s layer %d, %d bps, %s Hz, %.2f seconds" % (

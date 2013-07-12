@@ -30,7 +30,9 @@ interested in the 'ID3' class to start with.
 
 __all__ = ['ID3', 'ID3FileType', 'Frames', 'Open', 'delete']
 
-import struct; from struct import unpack, pack
+import struct
+
+from struct import unpack, pack, error as StructError
 from zlib import error as zlibError
 from warnings import warn
 
@@ -68,6 +70,7 @@ class ID3(DictProxy, mutagen.Metadata):
     __flags = 0
     __readbytes = 0
     __crc = None
+    __unknown_updated = False
 
     def __init__(self, *args, **kwargs):
         self.unknown_frames = []
@@ -106,7 +109,7 @@ class ID3(DictProxy, mutagen.Metadata):
         from os.path import getsize
         self.filename = filename
         self.__known_frames = known_frames
-        self.__fileobj = file(filename, 'rb')
+        self.__fileobj = open(filename, 'rb')
         self.__filesize = getsize(filename)
         try:
             try:
@@ -184,7 +187,9 @@ class ID3(DictProxy, mutagen.Metadata):
         However, ID3 frames can have multiple keys:
             POPM=user@example.org=3 128/255
         """
-        return "\n".join(map(Frame.pprint, self.values()))
+        frames = list(map(Frame.pprint, self.values()))
+        frames.sort()
+        return "\n".join(frames)
 
     def loaded_frame(self, tag):
         """Deprecated; use the add method."""
@@ -407,17 +412,30 @@ class ID3(DictProxy, mutagen.Metadata):
             try:
                 f.seek(-128, 2)
             except IOError, err:
+                # If the file is too small, that's OK - it just means
+                # we're certain it doesn't have a v1 tag.
                 from errno import EINVAL
-                if err.errno != EINVAL: raise
-                f.seek(0, 2) # ensure read won't get "TAG"
-
-            if f.read(3) == "TAG":
-                f.seek(-128, 2)
-                if v1 > 0: f.write(MakeID3v1(self))
-                else: f.truncate()
-            elif v1 == 2:
+                if err.errno != EINVAL:
+                    # If we failed to see for some other reason, bail out.
+                    raise
+                # Since we're sure this isn't a v1 tag, don't read it.
                 f.seek(0, 2)
+
+            data = f.read(128)
+            try:
+                idx = data.index("TAG")
+            except ValueError:
+                offset = 0
+                has_v1 = False
+            else:
+                offset = idx - len(data)
+                has_v1 = True
+                
+            f.seek(offset, 2)
+            if v1 == 1 and has_v1 or v1 == 2:
                 f.write(MakeID3v1(self))
+            else:
+                f.truncate()
 
         finally:
             f.close()
@@ -436,7 +454,7 @@ class ID3(DictProxy, mutagen.Metadata):
         delete(filename, delete_v1, delete_v2)
         self.clear()
 
-    def __save_frame(self, frame):
+    def __save_frame(self, frame, name=None):
         flags = 0
         if self.PEDANTIC and isinstance(frame, TextFrame):
             if len(str(frame)) == 0: return ''
@@ -450,7 +468,7 @@ class ID3(DictProxy, mutagen.Metadata):
             #flags |= Frame.FLAG24_COMPRESS | Frame.FLAG24_DATALEN
             pass
         datasize = BitPaddedInt.to_str(len(framedata), width=4)
-        header = pack('>4s4sH', type(frame).__name__, datasize, flags)
+        header = pack('>4s4sH', name or type(frame).__name__, datasize, flags)
         return header + framedata
 
     def update_to_v24(self):
@@ -461,8 +479,21 @@ class ID3(DictProxy, mutagen.Metadata):
         at some point; it is called by default when loading the tag.
         """
 
-        if self.version < (2,3,0): del self.unknown_frames[:]
-        # unsafe to write
+        if self.version < (2,3,0):
+            # unsafe to write
+            del self.unknown_frames[:]
+        elif self.version == (2,3,0) and not self.__unknown_updated:
+            # convert unknown 2.3 frames (flags/size) to 2.4
+            converted = []
+            for frame in self.unknown_frames:
+                try:
+                    name, size, flags = unpack('>4sLH', frame[:10])
+                    frame = BinaryFrame.fromData(self, flags, frame[10:])
+                except (struct.error, error):
+                    continue
+                converted.append(self.__save_frame(frame, name=name))
+            self.unknown_frames[:] = converted
+            self.__unknown_updated = True
 
         # TDAT, TYER, and TIME have been turned into TDRC.
         try:
@@ -812,6 +843,7 @@ class ID3TimeStamp(object):
     def __str__(self): return self.text
     def __repr__(self): return repr(self.text)
     def __cmp__(self, other): return cmp(self.text, other.text)
+    __hash__ = object.__hash__
     def encode(self, *args): return self.text.encode(*args)
 
 class TimeStampSpec(EncodedTextSpec):
@@ -873,6 +905,8 @@ class SynchronizedTextSpec(EncodedTextSpec):
             except ValueError:
                 raise ID3JunkFrameError
             value = data[:value_idx].decode(encoding)
+            if len(data) < value_idx + l + 4:
+                raise ID3JunkFrameError
             time, = struct.unpack(">I", data[value_idx+l:value_idx+l+4])
             texts.append((value, time))
             data = data[value_idx+l+4:]
@@ -1158,6 +1192,7 @@ class TextFrame(Frame):
         if isinstance(other, str): return str(self) == other
         elif isinstance(other, unicode): return unicode(self) == other
         return self.text == other
+    __hash__ = Frame.__hash__
     def __getitem__(self, item): return self.text[item]
     def __iter__(self): return iter(self.text)
     def append(self, value): return self.text.append(value)
@@ -1223,6 +1258,7 @@ class UrlFrame(Frame):
     def __str__(self): return self.url.encode('utf-8')
     def __unicode__(self): return self.url
     def __eq__(self, other): return self.url == other
+    __hash__ = Frame.__hash__
     def _pprint(self): return self.url
 
 class UrlFrameU(UrlFrame):
@@ -1383,23 +1419,28 @@ class PairedTextFrame(Frame):
         EncodedTextSpec('involvement'), EncodedTextSpec('person')) ]
     def __eq__(self, other):
         return self.people == other
+    __hash__ = Frame.__hash__
 
 class TIPL(PairedTextFrame): "Involved People List"
 class TMCL(PairedTextFrame): "Musicians Credits List"
 class IPLS(TIPL): "Involved People List"
 
-class MCDI(Frame):
-    """Binary dump of CD's TOC.
+class BinaryFrame(Frame):
+    """Binary data
 
     The 'data' attribute contains the raw byte string.
     """
     _framespec = [ BinaryDataSpec('data') ]
     def __eq__(self, other): return self.data == other
+    __hash__ = Frame.__hash__
+
+class MCDI(BinaryFrame): "Binary dump of CD's TOC"
 
 class ETCO(Frame):
     """Event timing codes."""
     _framespec = [ ByteSpec("format"), KeyEventSpec("events") ]
     def __eq__(self, other): return self.events == other
+    __hash__ = Frame.__hash__
 
 class MLLT(Frame):
     """MPEG location lookup table.
@@ -1414,6 +1455,7 @@ class MLLT(Frame):
                    ByteSpec('bits_for_milliseconds'),
                    BinaryDataSpec('data') ]
     def __eq__(self, other): return self.data == other
+    __hash__ = Frame.__hash__
 
 class SYTC(Frame):
     """Synchronised tempo codes.
@@ -1423,6 +1465,7 @@ class SYTC(Frame):
     """
     _framespec = [ ByteSpec("format"), BinaryDataSpec("data") ]
     def __eq__(self, other): return self.data == other
+    __hash__ = Frame.__hash__
 
 class USLT(Frame):
     """Unsynchronised lyrics/text transcription.
@@ -1438,6 +1481,7 @@ class USLT(Frame):
     def __str__(self): return self.text.encode('utf-8')
     def __unicode__(self): return self.text
     def __eq__(self, other): return self.text == other
+    __hash__ = Frame.__hash__
     
 class SYLT(Frame):
     """Synchronised lyrics/text."""
@@ -1449,6 +1493,7 @@ class SYLT(Frame):
 
     def __eq__(self, other):
         return str(self) == other
+    __hash__ = Frame.__hash__
 
     def __str__(self):
         return "".join([text for (text, time) in self.text]).encode('utf-8')
@@ -1495,6 +1540,7 @@ class RVA2(Frame):
                  self.channel == other.channel and
                  self.gain == other.gain and
                  self.peak == other.peak))
+    __hash__ = Frame.__hash__
 
     def __str__(self):
         return "%s: %+0.4f dB/%0.4f" % (
@@ -1511,6 +1557,7 @@ class EQU2(Frame):
     _framespec = [ ByteSpec("method"), Latin1TextSpec("desc"),
                    VolumeAdjustmentsSpec("adjustments") ]
     def __eq__(self, other): return self.adjustments == other
+    __hash__ = Frame.__hash__
     HashKey = property(lambda s: '%s:%s' % (s.FrameID, s.desc))
 
 # class RVAD: unsupported
@@ -1525,6 +1572,7 @@ class RVRB(Frame):
                    ByteSpec('premix_ltr'), ByteSpec('premix_rtl') ]
 
     def __eq__(self, other): return (self.left, self.right) == other
+    __hash__ = Frame.__hash__
 
 class APIC(Frame):
     """Attached (or linked) Picture.
@@ -1541,6 +1589,7 @@ class APIC(Frame):
     _framespec = [ EncodingSpec('encoding'), Latin1TextSpec('mime'),
         ByteSpec('type'), EncodedTextSpec('desc'), BinaryDataSpec('data') ]
     def __eq__(self, other): return self.data == other
+    __hash__ = Frame.__hash__
     HashKey = property(lambda s: '%s:%s' % (s.FrameID, s.desc))
     def _pprint(self):
         return "%s (%s, %d bytes)" % (
@@ -1557,6 +1606,7 @@ class PCNT(Frame):
     _framespec = [ IntegerSpec('count') ]
 
     def __eq__(self, other): return self.count == other
+    __hash__ = Frame.__hash__
     def __pos__(self): return self.count
     def _pprint(self): return unicode(self.count)
 
@@ -1577,6 +1627,7 @@ class POPM(FrameOpt):
     HashKey = property(lambda s: '%s:%s' % (s.FrameID, s.email))
 
     def __eq__(self, other): return self.rating == other
+    __hash__ = FrameOpt.__hash__
     def __pos__(self): return self.rating
     def _pprint(self): return "%s=%r %r/255" % (
         self.email, getattr(self, 'count', None), self.rating)
@@ -1599,6 +1650,7 @@ class GEOB(Frame):
     HashKey = property(lambda s: '%s:%s' % (s.FrameID, s.desc))
 
     def __eq__(self, other): return self.data == other
+    __hash__ = Frame.__hash__
 
 class RBUF(FrameOpt):
     """Recommended buffer size.
@@ -1614,6 +1666,7 @@ class RBUF(FrameOpt):
     _optionalspec = [ ByteSpec('info'), SizedIntegerSpec('offset', 4) ]
 
     def __eq__(self, other): return self.size == other
+    __hash__ = FrameOpt.__hash__
     def __pos__(self): return self.size
 
 class AENC(FrameOpt):
@@ -1636,6 +1689,7 @@ class AENC(FrameOpt):
     def __str__(self): return self.owner.encode('utf-8')
     def __unicode__(self): return self.owner
     def __eq__(self, other): return self.owner == other
+    __hash__ = FrameOpt.__hash__
 
 class LINK(FrameOpt):
     """Linked information.
@@ -1658,6 +1712,7 @@ class LINK(FrameOpt):
     def __eq__(self, other):
         try: return (self.frameid, self.url, self.data) == other
         except AttributeError: return (self.frameid, self.url) == other
+    __hash__ = FrameOpt.__hash__
 
 class POSS(Frame):
     """Position synchronisation frame
@@ -1670,6 +1725,7 @@ class POSS(Frame):
 
     def __pos__(self): return self.position
     def __eq__(self, other): return self.position == other
+    __hash__ = Frame.__hash__
 
 class UFID(Frame):
     """Unique file identifier.
@@ -1684,6 +1740,7 @@ class UFID(Frame):
     def __eq__(s, o):
         if isinstance(o, UFI): return s.owner == o.owner and s.data == o.data
         else: return s.data == o
+    __hash__ = Frame.__hash__
     def _pprint(self):
         isascii = ord(max(self.data)) < 128
         if isascii: return "%s=%s" % (self.owner, self.data)
@@ -1704,6 +1761,7 @@ class USER(Frame):
     def __str__(self): return self.text.encode('utf-8')
     def __unicode__(self): return self.text
     def __eq__(self, other): return self.text == other
+    __hash__ = Frame.__hash__
     def _pprint(self): return "%r=%s" % (self.lang, self.text)
 
 class OWNE(Frame):
@@ -1714,6 +1772,7 @@ class OWNE(Frame):
     def __str__(self): return self.seller.encode('utf-8')
     def __unicode__(self): return self.seller
     def __eq__(self, other): return self.seller == other
+    __hash__ = Frame.__hash__
 
 class COMR(FrameOpt):
     """Commercial frame."""
@@ -1724,6 +1783,7 @@ class COMR(FrameOpt):
     _optionalspec = [ Latin1TextSpec('mime'), BinaryDataSpec('logo') ]
     HashKey = property(lambda s: '%s:%s' % (s.FrameID, s._writeData()))
     def __eq__(self, other): return self._writeData() == other._writeData()
+    __hash__ = FrameOpt.__hash__
 
 class ENCR(Frame):
     """Encryption method registration.
@@ -1736,6 +1796,7 @@ class ENCR(Frame):
     HashKey = property(lambda s: "%s:%s" % (s.FrameID, s.owner))
     def __str__(self): return self.data
     def __eq__(self, other): return self.data == other
+    __hash__ = Frame.__hash__
 
 class GRID(FrameOpt):
     """Group identification registration."""
@@ -1746,6 +1807,7 @@ class GRID(FrameOpt):
     def __str__(self): return self.owner.encode('utf-8')
     def __unicode__(self): return self.owner
     def __eq__(self, other): return self.owner == other or self.group == other
+    __hash__ = FrameOpt.__hash__
     
 
 class PRIV(Frame):
@@ -1759,6 +1821,7 @@ class PRIV(Frame):
         isascii = ord(max(self.data)) < 128
         if isascii: return "%s=%s" % (self.owner, self.data)
         else: return "%s (%d bytes)" % (self.owner, len(self.data))
+    __hash__ = Frame.__hash__
 
 class SIGN(Frame):
     """Signature frame."""
@@ -1766,6 +1829,7 @@ class SIGN(Frame):
     HashKey = property(lambda s: '%s:%c:%s' % (s.FrameID, s.group, s.sig))
     def __str__(self): return self.sig
     def __eq__(self, other): return self.sig == other
+    __hash__ = Frame.__hash__
 
 class SEEK(Frame):
     """Seek frame.
@@ -1775,6 +1839,7 @@ class SEEK(Frame):
     _framespec = [ IntegerSpec('offset') ]
     def __pos__(self): return self.offset
     def __eq__(self, other): return self.offset == other
+    __hash__ = Frame.__hash__
 
 class ASPI(Frame):
     """Audio seek point index.
@@ -1786,6 +1851,7 @@ class ASPI(Frame):
                    SizedIntegerSpec("N", 2), ByteSpec("b"),
                    ASPIIndexSpec("Fi") ]
     def __eq__(self, other): return self.Fi == other
+    __hash__ = Frame.__hash__
 
 Frames = dict([(k,v) for (k,v) in globals().items()
         if len(k)==4 and isinstance(v, type) and issubclass(v, Frame)])
@@ -1872,6 +1938,7 @@ class CRM(Frame):
     _framespec = [ Latin1TextSpec('owner'), Latin1TextSpec('desc'),
                    BinaryDataSpec('data') ]
     def __eq__(self, other): return self.data == other
+    __hash__ = Frame.__hash__
 
 class CRA(AENC): "Audio encryption"
 
@@ -1889,19 +1956,37 @@ Open = ID3
 # ID3v1.1 support.
 def ParseID3v1(string):
     """Parse an ID3v1 tag, returning a list of ID3v2.4 frames."""
-    from struct import error as StructError
-    frames = {}
+
+    try:
+        string = string[string.index("TAG"):]
+    except ValueError:
+        return None
+    if 128 < len(string) or len(string) < 124:
+        return None
+
+    # Issue #69 - Previous versions of Mutagen, when encountering
+    # out-of-spec TDRC and TYER frames of less than four characters,
+    # wrote only the characters available - e.g. "1" or "" - into the
+    # year field. To parse those, reduce the size of the year field.
+    # Amazingly, "0s" works as a struct format string.
+    unpack_fmt = "3s30s30s30s%ds29sBB" % (len(string) - 124)
+
     try:
         tag, title, artist, album, year, comment, track, genre = unpack(
-            "3s30s30s30s4s29sBB", string)
-    except StructError: return None
+            unpack_fmt, string)
+    except StructError:
+        return None
 
-    if tag != "TAG": return None
+    if tag != "TAG":
+        return None
+
     def fix(string):
         return string.split("\x00")[0].strip().decode('latin1')
+
     title, artist, album, year, comment = map(
         fix, [title, artist, album, year, comment])
 
+    frames = {}
     if title: frames["TIT2"] = TIT2(encoding=0, text=title)
     if artist: frames["TPE1"] = TPE1(encoding=0, text=[artist])
     if album: frames["TALB"] = TALB(encoding=0, text=album)
@@ -1930,7 +2015,8 @@ def MakeID3v1(id3):
 
     if "COMM" in id3:
         cmnt = id3["COMM"].text[0].encode('latin1', 'replace')[:28]
-    else: cmnt = ""
+    else:
+        cmnt = ""
     v1["comment"] = cmnt + ("\x00" * (29 - len(cmnt)))
 
     if "TRCK" in id3:
@@ -1944,14 +2030,16 @@ def MakeID3v1(id3):
         else:
             if genre in TCON.GENRES:
                 v1["genre"] = chr(TCON.GENRES.index(genre))
-    if "genre" not in v1: v1["genre"] = "\xff"
+    if "genre" not in v1:
+        v1["genre"] = "\xff"
 
     if "TDRC" in id3:
-        v1["year"] = str(id3["TDRC"])[:4]
+        year = str(id3["TDRC"])
     elif "TYER" in id3:
-        v1["year"] = str(id3["TYER"])[:4]
+        year = str(id3["TYER"])
     else:
-        v1["year"] = "\x00\x00\x00\x00"
+        year = ""
+    v1["year"] = (year + "\x00\x00\x00\x00")[:4]
 
     return ("TAG%(title)s%(artist)s%(album)s%(year)s%(comment)s"
             "%(track)s%(genre)s") % v1 
@@ -1979,6 +2067,7 @@ class ID3FileType(mutagen.FileType):
         if ID3 is None:
             ID3 = self.ID3
         if self.tags is None:
+            self.ID3 = ID3
             self.tags = ID3()
         else:
             raise error("an ID3 tag already exists")
@@ -1991,6 +2080,10 @@ class ID3FileType(mutagen.FileType):
         """
         if ID3 is None:
             ID3 = self.ID3
+        else:
+            # If this was initialized with EasyID3, remember that for
+            # when tags are auto-instantiated in add_tags.
+            self.ID3 = ID3
         self.filename = filename
         try: self.tags = ID3(filename, **kwargs)
         except error: self.tags = None
@@ -1999,7 +2092,7 @@ class ID3FileType(mutagen.FileType):
             except AttributeError: offset = None
         else: offset = None
         try:
-            fileobj = file(filename, "rb")
+            fileobj = open(filename, "rb")
             self.info = self._Info(fileobj, offset)
         finally:
             fileobj.close()

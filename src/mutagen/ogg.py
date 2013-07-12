@@ -114,6 +114,8 @@ class OggPage(object):
         except AttributeError:
             return False
 
+    __hash__ = object.__hash__
+
     def __repr__(self):
         attrs = ['version', 'position', 'serial', 'sequence', 'offset',
                  'complete', 'continued', 'first', 'last']
@@ -147,10 +149,11 @@ class OggPage(object):
         data = "".join(data)
 
         # Python's CRC is swapped relative to Ogg's needs.
-        crc = ~zlib.crc32(data.translate(cdata.bitswap), -1)
-        # Although we're using to_int_be, this actually makes the CRC
+        # crc32 returns uint prior to py2.6 on some platforms, so force uint
+        crc = (~zlib.crc32(data.translate(cdata.bitswap), -1)) & 0xffffffff
+        # Although we're using to_uint_be, this actually makes the CRC
         # a proper le integer, since Python's CRC is byteswapped.
-        crc = cdata.to_int_be(crc).translate(cdata.bitswap)
+        crc = cdata.to_uint_be(crc).translate(cdata.bitswap)
         data = data[:22] + crc + data[26:]
         return data
 
@@ -435,25 +438,12 @@ class OggFileType(FileType):
         """Load file information from a filename."""
 
         self.filename = filename
-        fileobj = file(filename, "rb")
+        fileobj = open(filename, "rb")
         try:
             try:
                 self.info = self._Info(fileobj)
                 self.tags = self._Tags(fileobj, self.info)
-
-                if self.info.length:
-                    # The streaminfo gave us real length information,
-                    # don't waste time scanning the Ogg.
-                    return
-
-                last_page = OggPage.find_last(fileobj, self.info.serial)
-                samples = last_page.position
-                try:
-                    denom = self.info.sample_rate
-                except AttributeError:
-                    denom = self.info.fps
-                self.info.length = samples / float(denom)
-
+                self.info._post_tags(fileobj)
             except error, e:
                 raise self._Error, e, sys.exc_info()[2]
             except EOFError:
@@ -470,7 +460,7 @@ class OggFileType(FileType):
             filename = self.filename
 
         self.tags.clear()
-        fileobj = file(filename, "rb+")
+        fileobj = open(filename, "rb+")
         try:
             try: self.tags._inject(fileobj)
             except error, e:
@@ -487,7 +477,7 @@ class OggFileType(FileType):
         """
         if filename is None:
             filename = self.filename
-        fileobj = file(filename, "rb+")
+        fileobj = open(filename, "rb+")
         try:
             try: self.tags._inject(fileobj)
             except error, e:

@@ -38,7 +38,7 @@ _CONTAINERS = ["moov", "udta", "trak", "mdia", "meta", "ilst",
                "stbl", "minf", "moof", "traf"]
 _SKIP_SIZE = { "meta": 4 }
 
-__all__ = ['MP4', 'Open', 'delete', 'MP4Cover']
+__all__ = ['MP4', 'Open', 'delete', 'MP4Cover', 'MP4FreeForm']
 
 class MP4Cover(str):
     """A cover artwork.
@@ -58,6 +58,24 @@ class MP4Cover(str):
             self.format = imageformat
         return self
 
+
+class MP4FreeForm(str):
+    """A freeform value.
+    
+    Attributes:
+    dataformat -- format of the data (either FORMAT_TEXT or FORMAT_DATA)
+    """
+    FORMAT_DATA = 0x0
+    FORMAT_TEXT = 0x1
+
+    def __new__(cls, data, dataformat=None):
+        self = str.__new__(cls, data)
+        if dataformat is None:
+            dataformat = MP4FreeForm.FORMAT_TEXT
+        self.dataformat = dataformat
+        return self
+
+
 class Atom(object):
     """An individual atom.
 
@@ -72,19 +90,29 @@ class Atom(object):
 
     children = None
 
-    def __init__(self, fileobj):
+    def __init__(self, fileobj, level=0):
         self.offset = fileobj.tell()
         self.length, self.name = struct.unpack(">I4s", fileobj.read(8))
         if self.length == 1:
             self.length, = struct.unpack(">Q", fileobj.read(8))
+        elif self.length == 0:
+            if level != 0:
+                raise MP4MetadataError(
+                    "only a top-level atom can have zero length")
+            # Only the last atom is supposed to have a zero-length, meaning it
+            # extends to the end of file.
+            fileobj.seek(0, 2)
+            self.length = fileobj.tell() - self.offset
+            fileobj.seek(self.offset + 8, 0)
         elif self.length < 8:
-            return
+            raise MP4MetadataError(
+                "atom length can only be 0, 1 or 8 and higher")
 
         if self.name in _CONTAINERS:
             self.children = []
             fileobj.seek(_SKIP_SIZE.get(self.name, 0), 1)
             while fileobj.tell() < self.offset + self.length:
-                self.children.append(Atom(fileobj))
+                self.children.append(Atom(fileobj, level + 1))
         else:
             fileobj.seek(self.offset + self.length, 0)
 
@@ -250,7 +278,9 @@ class MP4Tags(DictProxy, Metadata):
             info = self.__atoms.get(atom.name, (type(self).__parse_text, None))
             info[0](self, atom, data, *info[2:])
 
-    def __key_sort((key1, v1), (key2, v2)):
+    def __key_sort(item1, item2):
+        (key1, v1) = item1
+        (key2, v2) = item2
         # iTunes always writes the tags in order of "relevance", try
         # to copy it as closely as possible.
         order = ["\xa9nam", "\xa9ART", "\xa9wrt", "\xa9alb",
@@ -280,7 +310,7 @@ class MP4Tags(DictProxy, Metadata):
         data = Atom.render("ilst", "".join(values))
 
         # Find the old atoms.
-        fileobj = file(filename, "rb+")
+        fileobj = open(filename, "rb+")
         try:
             atoms = Atoms(fileobj)
             try:
@@ -432,19 +462,32 @@ class MP4Tags(DictProxy, Metadata):
             if atom_name != "data":
                 raise MP4MetadataError(
                     "unexpected atom %r inside %r" % (atom_name, atom.name))
-            value.append(data[pos+16:pos+length])
+
+            version = ord(data[pos+8])
+            if version != 0:
+                raise MP4MetadataError("Unsupported version: %r" % version)
+
+            flags = struct.unpack(">I", "\x00" + data[pos+9:pos+12])[0]
+            value.append(MP4FreeForm(data[pos+16:pos+length],
+                                     dataformat=flags))
             pos += length
         if value:
             self["%s:%s:%s" % (atom.name, mean, name)] = value
+
     def __render_freeform(self, key, value):
         dummy, mean, name = key.split(":", 2)
         mean = struct.pack(">I4sI", len(mean) + 12, "mean", 0) + mean
         name = struct.pack(">I4sI", len(name) + 12, "name", 0) + name
         if isinstance(value, basestring):
             value = [value]
-        return Atom.render("----", mean + name + "".join([
-            struct.pack(">I4s2I", len(data) + 16, "data", 1, 0) + data
-            for data in value]))
+        data = ""
+        for v in value:
+            flags = MP4FreeForm.FORMAT_TEXT
+            if isinstance(v, MP4FreeForm):
+                flags = v.dataformat
+            data += struct.pack(">I4s2I", len(v) + 16, "data", flags, 0)
+            data += v
+        return Atom.render("----", mean + name + data)
 
     def __parse_pair(self, atom, data):
         self[atom.name] = [struct.unpack(">2H", data[2:6]) for
@@ -507,6 +550,9 @@ class MP4Tags(DictProxy, Metadata):
         while pos < atom.length - 8:
             length, name, imageformat = struct.unpack(">I4sI", data[pos:pos+12])
             if name != "data":
+                if name == "name":
+                    pos += length
+                    continue
                 raise MP4MetadataError(
                     "unexpected atom %r inside 'covr'" % name)
             if imageformat not in (MP4Cover.FORMAT_JPEG, MP4Cover.FORMAT_PNG):
@@ -654,7 +700,7 @@ class MP4(FileType):
 
     def load(self, filename):
         self.filename = filename
-        fileobj = file(filename, "rb")
+        fileobj = open(filename, "rb")
         try:
             atoms = Atoms(fileobj)
             try: self.info = MP4Info(atoms, fileobj)

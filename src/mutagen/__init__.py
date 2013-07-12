@@ -1,5 +1,3 @@
-#! /usr/bin/env python
-#
 # mutagen aims to be an all purpose media tagging library
 # Copyright (C) 2005  Michael Urman
 #
@@ -21,7 +19,7 @@ depending on tag or format. They may also be entirely different objects
 for certain keys, again depending on format.
 """
 
-version = (1, 20)
+version = (1, 21)
 version_string = ".".join(map(str, version))
 
 import warnings
@@ -181,6 +179,7 @@ def File(filename, options=None, easy=False):
         from mutagen.oggspeex import OggSpeex
         from mutagen.oggtheora import OggTheora
         from mutagen.oggvorbis import OggVorbis
+        from mutagen.oggopus import OggOpus
         if easy:
             from mutagen.trueaudio import EasyTrueAudio as TrueAudio
         else:
@@ -195,12 +194,12 @@ def File(filename, options=None, easy=False):
         from mutagen.optimfrog import OptimFROG
         options = [MP3, TrueAudio, OggTheora, OggSpeex, OggVorbis, OggFLAC,
                    FLAC, APEv2File, MP4, ID3FileType, WavPack, Musepack,
-                   MonkeysAudio, OptimFROG, ASF]
+                   MonkeysAudio, OptimFROG, ASF, OggOpus]
 
     if not options:
         return None
 
-    fileobj = file(filename, "rb")
+    fileobj = open(filename, "rb")
     try:
         header = fileobj.read(128)
         # Sort by name after score. Otherwise import order affects

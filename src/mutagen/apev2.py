@@ -206,7 +206,7 @@ class APEv2(DictMixin, Metadata):
     def load(self, filename):
         """Load tags from a filename."""
         self.filename = filename
-        fileobj = file(filename, "rb")
+        fileobj = open(filename, "rb")
         try:
             data = _APEv2Data(fileobj)
         finally:
@@ -242,11 +242,13 @@ class APEv2(DictMixin, Metadata):
     def __getitem__(self, key):
         if not is_valid_apev2_key(key):
             raise KeyError("%r is not a valid APEv2 key" % key)
+        key = key.encode('ascii')
         return self.__dict[key.lower()]
 
     def __delitem__(self, key):
         if not is_valid_apev2_key(key):
             raise KeyError("%r is not a valid APEv2 key" % key)
+        key = key.encode('ascii')
         del(self.__dict[key.lower()])
 
     def __setitem__(self, key, value):
@@ -268,6 +270,7 @@ class APEv2(DictMixin, Metadata):
 
         if not is_valid_apev2_key(key):
             raise KeyError("%r is not a valid APEv2 key" % key)
+        key = key.encode('ascii')
 
         if not isinstance(value, _APEValue):
             # let's guess at the content if we're not already a value...
@@ -302,9 +305,9 @@ class APEv2(DictMixin, Metadata):
 
         filename = filename or self.filename
         try:
-            fileobj = file(filename, "r+b")
+            fileobj = open(filename, "r+b")
         except IOError:
-            fileobj = file(filename, "w+b")
+            fileobj = open(filename, "w+b")
         data = _APEv2Data(fileobj)
 
         if data.is_at_start:
@@ -343,7 +346,7 @@ class APEv2(DictMixin, Metadata):
     def delete(self, filename=None):
         """Remove tags from a file."""
         filename = filename or self.filename
-        fileobj = file(filename, "r+b")
+        fileobj = open(filename, "r+b")
         try:
             data = _APEv2Data(fileobj)
             if data.start is not None and data.size is not None:
@@ -416,6 +419,8 @@ class APETextValue(_APEValue):
     def __cmp__(self, other):
         return cmp(unicode(self), other)
 
+    __hash__ = _APEValue.__hash__
+
     def __setitem__(self, index, value):
         values = list(self)
         values[index] = value.encode("utf-8")
@@ -445,7 +450,7 @@ class APEv2File(FileType):
 
     def load(self, filename):
         self.filename = filename
-        self.info = self._Info(file(filename, "rb"))
+        self.info = self._Info(open(filename, "rb"))
         try: self.tags = APEv2(filename)
         except error: self.tags = None
 
