@@ -21,7 +21,7 @@ import os
 import re
 import sys
 
-import EXIF
+from exif import EXIF
 import classes
 import utils
 import wxSortingView
@@ -38,16 +38,16 @@ class Parameters(classes.Parameters):
     def load(self):
         """Load all needed panel values to instance."""
         widgets = (
-				   'byPosition',
-				   'PosStart',
-				   'PosLength',
-				   'intelySort',
-				   'statSort',
-				   'manually',
-				   'dirsPlace',
-				   'statSortChoice',
-				   'descending',
-				   )
+            'byPosition',
+            'PosStart',
+            'PosLength',
+            'intelySort',
+            'statSort',
+            'manually',
+            'dirsPlace',
+            'statSortChoice',
+            'descending',
+        )
         return self.set_parameters(widgets)
 
 
@@ -135,7 +135,7 @@ class Core():
             else:
                 # choices are in different order than os.stat
                 ref = ('st_ctime', 'st_mtime', 'st_atime', 'st_size', 'st_mode',
-					   'st_uid', 'st_gid')
+                       'st_uid', 'st_gid')
                 s = ref[selection]
                 def _folder_key(x):
                     stat = os.stat(x[0])

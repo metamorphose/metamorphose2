@@ -24,7 +24,7 @@ import re
 import sys
 import time
 
-import EXIF
+from exif import EXIF
 import app
 from mutagen.apev2 import APEv2File
 from mutagen.asf import ASF
@@ -111,7 +111,7 @@ class Parser():
             main.bad.append(ec)
             main.errorLog.insert(0, (ec, path, msg, u'bad'))
 
-#### FOLDER ###################################################################
+#--- FOLDER ------------------------------------------------------------------#
     def __add_folder(self, file, depth):
         splitPath = file.split(os.sep)
         try:
@@ -121,7 +121,7 @@ class Parser():
         else:
             return folder
 
-#### NUMBERING ################################################################
+#--- NUMBERING ---------------------------------------------------------------#
     def __to_alpha(self, i):
         s = ''
         while i:
@@ -206,8 +206,8 @@ class Parser():
                 if main.bad.count(main.ec) < 1:
                     main.bad.append(main.ec)
                     main.errorLog.insert(0, (main.ec, file,
-										 _(u"Roman numeral error: %s") % sys.exc_info()[1],
-										 u'bad'))
+                        _(u"Roman numeral error: %s") % sys.exc_info()[1],
+                        u'bad'))
                 y = ""
 
         def increment_reset_count():
@@ -230,7 +230,7 @@ class Parser():
             increment_reset_count()
         return unicode(y)
 
-#### DATE AND TIME ############################################################
+#--- DATE AND TIME -----------------------------------------------------------#
     def __get_exif_date(self, path, tag):
         ext = os.path.splitext(path)[1][1:].lower()
         if re.match('tif|tiff|jpg|jpeg|jtif|thm', ext, re.IGNORECASE):
@@ -299,7 +299,7 @@ class Parser():
             else:
                 return ''
 
-#### IMAGE METADATA ############################################################
+#--- IMAGE METADATA ----------------------------------------------------------#
     def __get_image_tag(self, path, EXIFtags, command):
         tag = IMAGE_INFO[command]
 
@@ -316,7 +316,7 @@ class Parser():
         else:
             self.__add_to_warnings(path, _(u"Could not read Exif tag"))
 
-#### AUDIO METADATA ############################################################
+#--- AUDIO METADATA ----------------------------------------------------------#
     # (based on 'File' function from mutagen/__init__.py)
     def __get_audio_metadata(self, filename, options=None):
         """Guess the type of the file and try to open it.
@@ -388,7 +388,7 @@ class Parser():
             self.__add_to_warnings(path, _(u"Could not read tag: %s") % command)
             return False
 
-#### PARSE INPUT AND FORMAT ###################################################
+#--- PARSE INPUT AND FORMAT --------------------------------------------------#
     def parse_input(self, text, file, operation):
         """
         Parse the active fields for sub operations and return
