@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: metamorphose\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2011-08-16 13:54+0100\n"
-"Last-Translator: ianaré sévi <ianare.sevi@c4mprod.com>\n"
+"PO-Revision-Date: 2013-07-12 02:11+0100\n"
+"Last-Translator: Ianaré Sévi <ianare@gmail.com>\n"
 "Language-Team: ianaré sévi\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -332,7 +332,7 @@ msgstr "Exemples"
 
 #: MainWindow/__init__.py:930
 #: operations/__init__.py:27
-#: renamer/wxRenamerView.py:276
+#: renamer/wxRenamerView.py:279
 msgid "directory"
 msgstr "répertoire"
 
@@ -417,46 +417,42 @@ msgstr ""
 msgid "Previewing will destroy any changes!"
 msgstr "Prévisualiser supprimera toute modification !"
 
-#: about.py:58
+#: about.py:57
 msgid "About Metamorphose"
 msgstr "À propos de Métamorphose"
 
-#: about.py:77
+#: about.py:76
 msgid "Click here to exit"
 msgstr "Cliquer ici pour fermer"
 
-#: about.py:86
+#: about.py:85
 msgid "Version: %s"
 msgstr "Version : %s"
 
-#: about.py:90
+#: about.py:89
 msgid "Using Python %s, wxPython %s"
 msgstr "Utilisant : Python %s, wxPython %s"
 
-#: about.py:94
+#: about.py:93
 msgid "Metamorphose Home Page"
 msgstr "Site web de Métamorphose"
 
-#: about.py:97
-msgid "Bug Report"
-msgstr "Rapport de bogue"
+#: about.py:96
+msgid "GitHub Project Page"
+msgstr "Page GitHub du projet"
 
 #: about.py:101
-msgid "Feature Request"
-msgstr "Demande de nouveauté"
-
-#: about.py:106
-#: about.py:112
+#: about.py:107
 msgid "Donate"
 msgstr "Faire un Don"
 
-#: about.py:117
-#: about.py:141
+#: about.py:112
+#: about.py:136
 msgid "License"
 msgstr "Licence"
 
-#: about.py:122
-#: about.py:136
+#: about.py:117
+#: about.py:131
 msgid "Credits"
 msgstr "Générique"
 
@@ -874,7 +870,7 @@ msgid "Add a directory with the same name as the file."
 msgstr "Ajouter un dossier avec le même nom que le fichier."
 
 #: operations/directoryTools.py:120
-#: renamer/wxRenamerView.py:220
+#: renamer/wxRenamerView.py:221
 msgid "Name"
 msgstr "au nom"
 
@@ -883,7 +879,7 @@ msgid "Add the file name"
 msgstr "Ajouter le nom du fichier"
 
 #: operations/directoryTools.py:126
-#: renamer/wxRenamerView.py:222
+#: renamer/wxRenamerView.py:223
 msgid "Extension"
 msgstr "à l'extension"
 
@@ -2230,15 +2226,15 @@ msgstr "Création de %s nouveaux noms, veuillez patienter ..."
 msgid "Generating %%% new names, please wait ..."
 msgstr "Création de %%% nouveaux noms, veuillez patienter ..."
 
-#: renamer/wxRenamerView.py:153
+#: renamer/wxRenamerView.py:154
 msgid "You don't have any operations defined."
 msgstr "Il n'y a aucune opération active."
 
-#: renamer/wxRenamerView.py:158
+#: renamer/wxRenamerView.py:159
 msgid "Double-click or drag && drop an operation in the 'Available' box to add one."
 msgstr "Double-cliquer ou glisser-déposer une opération depuis la boite « Applicables » pour l'ajouter."
 
-#: renamer/wxRenamerView.py:159
+#: renamer/wxRenamerView.py:160
 msgid ""
 "\n"
 "You may then drag && drop used operations to reorder them."
@@ -2246,105 +2242,109 @@ msgstr ""
 "\n"
 "Vous pourrez ensuite réordonner les opérations utilisées en les glissant-déposant."
 
-#: renamer/wxRenamerView.py:240
+#: renamer/wxRenamerView.py:241
 msgid "Move up"
 msgstr "Déplacer vers le haut"
 
-#: renamer/wxRenamerView.py:244
+#: renamer/wxRenamerView.py:245
 msgid "Move down"
 msgstr "Déplacer vers le bas"
 
-#: renamer/wxRenamerView.py:249
-#: renamer/wxRenamerView.py:363
-#: renamer/wxRenamerView.py:555
-#: renamer/wxRenamerView.py:579
+#: renamer/wxRenamerView.py:250
+#: renamer/wxRenamerView.py:366
+#: renamer/wxRenamerView.py:558
+#: renamer/wxRenamerView.py:582
 msgid "Disable"
 msgstr "Désactiver"
 
-#: renamer/wxRenamerView.py:252
-#: renamer/wxRenamerView.py:558
-#: renamer/wxRenamerView.py:576
+#: renamer/wxRenamerView.py:253
+#: renamer/wxRenamerView.py:561
+#: renamer/wxRenamerView.py:579
 msgid "Enable"
 msgstr "Activer"
 
-#: renamer/wxRenamerView.py:258
-#: renamer/wxRenamerView.py:377
+#: renamer/wxRenamerView.py:259
+#: renamer/wxRenamerView.py:380
 msgid "Reset"
 msgstr "Réinitialiser"
 
-#: renamer/wxRenamerView.py:262
-#: renamer/wxRenamerView.py:370
+#: renamer/wxRenamerView.py:263
+#: renamer/wxRenamerView.py:373
 msgid "Delete"
 msgstr "Supprimer"
 
-#: renamer/wxRenamerView.py:266
-#: renamer/wxRenamerView.py:370
+#: renamer/wxRenamerView.py:267
+#: renamer/wxRenamerView.py:373
 msgid "Delete All"
 msgstr "Tout Supprimer"
 
-#: renamer/wxRenamerView.py:270
+#: renamer/wxRenamerView.py:271
 msgid "Enable/Disable"
 msgstr "Activer/Désactiver"
 
-#: renamer/wxRenamerView.py:277
+#: renamer/wxRenamerView.py:275
+msgid "Change Name"
+msgstr "Changer le nom"
+
+#: renamer/wxRenamerView.py:280
 msgid "Apply to"
 msgstr "Appliquer"
 
-#: renamer/wxRenamerView.py:304
+#: renamer/wxRenamerView.py:307
 msgid "Available:"
 msgstr "Applicables :"
 
-#: renamer/wxRenamerView.py:345
+#: renamer/wxRenamerView.py:348
 msgid "Used:"
 msgstr "Utilisées :"
 
-#: renamer/wxRenamerView.py:351
+#: renamer/wxRenamerView.py:354
 msgid "Move current operation down by 1"
 msgstr "Descendre l'opération actuelle 1 place"
 
-#: renamer/wxRenamerView.py:358
+#: renamer/wxRenamerView.py:361
 msgid "Move current operation up by 1"
 msgstr "Monter l'opération actuelle 1 place"
 
-#: renamer/wxRenamerView.py:365
+#: renamer/wxRenamerView.py:368
 msgid "Enable or Disable current operation"
 msgstr "Activer ou Désactiver l'opération actuelle"
 
-#: renamer/wxRenamerView.py:373
+#: renamer/wxRenamerView.py:376
 msgid "Delete operations"
 msgstr "Supprimer les opérations"
 
-#: renamer/wxRenamerView.py:379
+#: renamer/wxRenamerView.py:382
 msgid "Reset the current operation"
 msgstr "Réinitialiser l'opération actuelle"
 
-#: renamer/wxRenamerView.py:384
+#: renamer/wxRenamerView.py:387
 msgid "Order:"
 msgstr "Ordre :"
 
-#: renamer/wxRenamerView.py:388
+#: renamer/wxRenamerView.py:391
 msgid "extension"
 msgstr "à l'extension"
 
-#: renamer/wxRenamerView.py:395
+#: renamer/wxRenamerView.py:398
 msgid "name"
 msgstr "au nom"
 
-#: renamer/wxRenamerView.py:401
+#: renamer/wxRenamerView.py:404
 msgid "Apply to:"
 msgstr "Appliquer :"
 
-#: renamer/wxRenamerView.py:590
+#: renamer/wxRenamerView.py:593
 msgid "Really reset this '%s' operation?"
 msgstr "Vraiment réinitialiser cette opération « %s » ?"
 
-#: renamer/wxRenamerView.py:591
-#: renamer/wxRenamerView.py:613
-#: renamer/wxRenamerView.py:695
+#: renamer/wxRenamerView.py:594
+#: renamer/wxRenamerView.py:616
+#: renamer/wxRenamerView.py:698
 msgid "Are You Sure?"
 msgstr "Êtes-vous sûr ?"
 
-#: renamer/wxRenamerView.py:612
+#: renamer/wxRenamerView.py:615
 msgid ""
 "Really delete all operations?\n"
 "This cannot be undone."
@@ -2352,7 +2352,7 @@ msgstr ""
 "Vraiment supprimer toutes les opérations ?\n"
 "Il ne sera pas possible d'annuler."
 
-#: renamer/wxRenamerView.py:694
+#: renamer/wxRenamerView.py:697
 msgid "Really destroy this '%s' operation?"
 msgstr "Vraiment détruire cette opération « %s » ?"
 
@@ -2472,6 +2472,12 @@ msgstr "Classer par attribut d'objet, utilisant :"
 #: utils.py:142
 msgid "Information"
 msgstr "Information"
+
+#~ msgid "Bug Report"
+#~ msgstr "Rapport de bogue"
+
+#~ msgid "Feature Request"
+#~ msgstr "Demande de nouveauté"
 
 #~ msgid "modifications"
 #~ msgstr "modifications"

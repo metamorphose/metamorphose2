@@ -71,7 +71,7 @@ wxID_MENUSETTINGS_PREFERENCES, wxID_MENUSETTINGS_LANG,
 
 class MySplitter(wx.SplitterWindow):
     """Main splitter"""
-    
+
     def __init__(self, parent):
         wx.SplitterWindow.__init__(self, parent,
 								   style=wx.SP_LIVE_UPDATE | wx.SP_3DSASH | wx.SP_NO_XP_THEME)
@@ -79,7 +79,7 @@ class MySplitter(wx.SplitterWindow):
 
 class MainWindow(wx.Frame):
     """Main application class"""
-    
+
     def __init_menubar(self, parent):
         parent.Append(menu=self.menuFile, title=_(u"File"))
         parent.Append(menu=self.menuPicker, title=_(u"Picker"))
@@ -124,7 +124,7 @@ class MainWindow(wx.Frame):
 										 _(u"&Preview\tF7"), self.make_space(_(u"Preview selection")))
         parent.PreviewMenu.SetBitmap(wx.Bitmap(utils.icon_path(u'preview.png'),
 									 wx.BITMAP_TYPE_PNG))
-            
+
         parent.GoMenu = wx.MenuItem(parent, wxID_MENUFILE_GO,
 									_(u"&Go !\tF8"), self.make_space(_(u"Rename selection")))
         parent.GoMenu.SetBitmap(wx.Bitmap(utils.icon_path(u'go.png'),
@@ -582,7 +582,7 @@ class MainWindow(wx.Frame):
         # set locale and language
         wx.Locale(locales[language][0], wx.LOCALE_LOAD_DEFAULT)
         Lang = gettext.translation(u'metamorphose2', app.locale_path(language),
-								   languages=[locales[language][1]])
+                                   languages=[locales[language][1]])
         Lang.install(unicode=True)
 
         # set some globals

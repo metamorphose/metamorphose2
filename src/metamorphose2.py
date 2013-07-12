@@ -23,7 +23,7 @@ A profesional renaming tool, it has many powerful functions.
 Well suited for those that need to rename many files and/or folders on a regular basis.
 
 In addition to general usage operations, it is useful for photo and music
-collections, webmasters, programmers, legal and clerical, et cetera. 
+collections, webmasters, programmers, legal and clerical, et cetera.
 
 This is what you should run to start the program.
 """
@@ -34,8 +34,8 @@ path = sys.path[0]
 
 # Prefer wxpython 2.8
 if not hasattr(sys, "frozen"):
-    msg = "\nwxPython 2.8 is required!\nRefer to 'readme_xx.html'", \
-		" for installation instructions.\n"
+    msg = "\nwxPython 2.8 is required!\nRefer to 'readme_xx.html'" +\
+          " for installation instructions.\n"
     try:
         import wxversion
     except:
