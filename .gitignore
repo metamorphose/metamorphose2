@@ -1,7 +1,14 @@
-*.py[co]
-
-# OS
+# OS generated #
+._*
+.DS_Store*
+.Trash-*
+*~
+.Trashes
+Thumbs.db
 .directory
+
+# Python
+*.py[co]
 
 # Packages
 *.egg

@@ -2,14 +2,14 @@
 # Git normalization
 #
 
-.gitattributes export-ignore
-.gitignore export-ignore
+.gitattributes  export-ignore
+.gitignore      export-ignore
 
-*.py	text eol=lf diff=python whitespace=blank-at-eol,space-before-tab,tab-in-indent,tabwidth=4
-*.txt 	text eol=lf
-*.md 	text eol=lf
-*.html 	text eol=lf
-*.cfg 	text eol=lf
-*.sh	text eol=lf
-*.pot	text eol=lf
-*.po	text
+*.py    text eol=lf diff=python whitespace=blank-at-eol,space-before-tab,tab-in-indent,tabwidth=4
+*.txt   text eol=lf
+*.md    text eol=lf
+*.html  text eol=lf
+*.cfg   text eol=lf
+*.sh    text eol=lf
+*.pot   text eol=lf
+*.po    text
