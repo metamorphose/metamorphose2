@@ -621,10 +621,9 @@ class MainWindow(wx.Frame):
 
         self.set_language()
 
-        if app.debug:
-            print("Operating System :", platform.system())
-            print("System encoding :", self.encoding)
-            print("Interface language :", app.language)
+        app.debug_print("Operating System : " + platform.system())
+        app.debug_print("System encoding : " + self.encoding)
+        app.debug_print("Interface language : " + app.language)
 
         # import these modules here since they need language settings activated
         global renamer
@@ -678,6 +677,7 @@ class MainWindow(wx.Frame):
 
         # Load config from command line
         if configFilePath:
+            app.debug_print("Load config from CLI")
             configs.LoadConfig(self, configFilePath)
 
         # Set root directory from command line arguments:
@@ -687,7 +687,7 @@ class MainWindow(wx.Frame):
             self.picker.set_path(True)
 
 
-##### MISC STUFF: ##############################################################
+#--- MISC STUFF: ------------------------------------------------------------#
     # Little functions to make repetative stuff easier to implement.
 
     def make_space(self, statusText):
@@ -755,7 +755,7 @@ class MainWindow(wx.Frame):
 
 
 
-##### MENU ACTIONS: ############################################################
+#--- MENU ACTIONS: -----------------------------------------------------------#
     def on_menu_exit(self, event):
         self.Close()
 
@@ -911,7 +911,7 @@ class MainWindow(wx.Frame):
         self.bottomWindow.set_preferences()
 
 
-#### DISPLAY RESULTS ###########################################################
+#--- DISPLAY RESULTS ---------------------------------------------------------#
     def display_results(self, showDirs=False):
         """
         Resets the bottom preview virtual list, then sets amount of items and the
@@ -969,7 +969,7 @@ class MainWindow(wx.Frame):
             display.EnsureVisible(self.currentItem)
 
 
-#### CHANGE ITEM POSITION IN LIST ##############################################
+#--- CHANGE ITEM POSITION IN LIST --------------------------------------------#
     def on_item_selected(self, event):
         """Set the selected item."""
         self.currentItem = event.m_itemIndex
@@ -998,14 +998,14 @@ class MainWindow(wx.Frame):
             self.on_preview_button(0)
 
 
-##### NAME GENERATION ##########################################################
+#--- NAME GENERATION ---------------------------------------------------------#
     def on_preview_button(self, event):
         utils.set_busy(True)
         self.renamer.preview(event)
         utils.set_busy(False)
 
 
-##### RENAMING: ################################################################
+#--- RENAMING: ---------------------------------------------------------------#
     def rename_items(self, event):
         """Rename selected items."""
         self.renamer.rename(event)

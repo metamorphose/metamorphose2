@@ -101,10 +101,10 @@ class Panel(wx.Panel):
                                          label=_(u"Number of items:"), name='staticText3', parent=self)
 
         self.itemCountForProgDialog = wx.SpinCtrl(id=wxID_PANELITEMCOUNTFORPROGDIALOG,
-                                                  initial=2000, max=100000, min=5, name=u'itemCountForProgDialog',
+                                                  initial=200, max=100000, min=5, name=u'itemCountForProgDialog',
                                                   parent=self, size=wx.Size(75, -1),
                                                   style=wx.SP_ARROW_KEYS)
-        self.itemCountForProgDialog.SetValue(2000)
+        self.itemCountForProgDialog.SetValue(200)
         self.__init_sizers()
 
     def __init__(self, parent):

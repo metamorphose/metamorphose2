@@ -92,6 +92,7 @@ IMAGE_INFO = {
 
 class Parser():
     def __init__(self, main_window):
+        app.debug_print("loading operations parser");
         global main
         main = main_window
         self.reset()
@@ -144,16 +145,12 @@ class Parser():
         countByDir = numberParams[4]
         repeat = numberParams[5]
         maxNumb = numberParams[6]
-
-        # XXX TODO incorporate into params
-        incrementOnDiff = operation.numberingPanel.incrementOnDiff.GetValue()
+        incrementOnDiff = numberParams[7]
 
         lastDir = main.lastDir
         curDir = main.curDir
         lastName = main.lastName
         curName = main.curName
-
-        #print lastName, curName
 
         maxNumb = abs((len(main.items) + (start-1)) * count)
         if repeat > 0:
@@ -164,9 +161,11 @@ class Parser():
             self.counter = 0
         if lastDir != curDir and lastDir is not False and countByDir:
             self.counter += 1
+
         # to reset by identical name
         if incrementOnDiff and curName is not False and lastName != curName:
             self.counter = 0
+
             #if True:
             #    return u''
 

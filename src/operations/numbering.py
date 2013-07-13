@@ -30,7 +30,7 @@ class Panel(wx.Panel):
     """
     The numbering panel that goes into an operation's notebook.
     """
-    
+
     def __init_num1_sizer(self, parent):
         parent.AddWindow(self.digit, 0, border=0, flag=0)
         parent.AddWindow(self.digit_pad, 0, border=0, flag=0)
@@ -360,7 +360,7 @@ class Panel(wx.Panel):
 
         self.Params = (start, stepDirection, reset,
                        self.resetDir.GetValue(), self.countByDir.GetValue(),
-                       repeat, maxNumb)
+                       repeat, maxNumb, self.incrementOnDiff.GetValue())
 
     def _check_styles(self, event):
         """Enable or disable options based on what is selected."""

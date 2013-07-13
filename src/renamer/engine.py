@@ -32,6 +32,7 @@ class Core():
     Able to undo renaming operations.
     """
     def __init__(self, MainWindow):
+        app.debug_print("loading renamer engine");
         global main
         main = MainWindow
 
@@ -261,10 +262,10 @@ class Core():
     def undo_last_rename(self, event):
         """
         Grabs names from .bak files and reverts them to their originals.
-        
+
         Keep this separate from csv file functions for safety and stability.
         """
-        
+
         original = []
         renamed = []
         utils.set_busy(True)

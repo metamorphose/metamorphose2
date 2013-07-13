@@ -21,6 +21,7 @@ import os
 import re
 import sys
 
+import app
 from exif import EXIF
 import classes
 import utils
@@ -53,14 +54,13 @@ class Parameters(classes.Parameters):
 
 class Core():
     def __init__(self, parent, main_window):
+        app.debug_print("loading sorting core");
         global main
         main = main_window
-
         if sys.platform == u'win32':
             self.ctime = _(u"creation time")
         else:
             self.ctime = _(u"metadata change time")
-
         self.view = wxSortingView.Panel(self, parent, main_window)
         self.params = Parameters(self.view)
 

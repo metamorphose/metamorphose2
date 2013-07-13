@@ -32,7 +32,7 @@ import wxPickerView
 
 class Parameters(classes.Parameters):
     """Handle loading of parameters."""
-    
+
     def __init__(self, Panel):
         # set the picker panel
         self.view = Panel
@@ -60,7 +60,7 @@ class Parameters(classes.Parameters):
     def set_root_path(self, root):
         """Load all needed panel values to instance."""
         app.debug_print("Examining : %s" % root)
-        
+
         self.root = False
         # don't do anything for blank path
         if not root:
@@ -76,6 +76,7 @@ class Parameters(classes.Parameters):
 
 class Core():
     def __init__(self, parent, MainWindow):
+        app.debug_print("loading picker core")
         self.CommonSearches = (
              ("" , ""),
              ( _(u"- audio") , u"\.(mp3|wav|ogg|flac|wma|aiff|aac|m3u|mid|ra|ram|m4a)$"),
@@ -166,7 +167,7 @@ class Core():
             IsFile = os.path.isfile(name)
             fullItem = [name, IsFile]
             self.joinedItems.remove(fullItem)
-            
+
             self.enable_buttons()
 
 

@@ -14,10 +14,11 @@
 
 import classes
 import wxErrorsView
+import app
 
 class Parameters(classes.Parameters):
     """Handle loading parameters"""
-    
+
     def __init__(self, Panel):
         # set the picker panel
         self.Panel = Panel
@@ -36,6 +37,7 @@ class Parameters(classes.Parameters):
 class Core():
     """Error core."""
     def __init__(self, parent, MainWindow):
+        app.debug_print("loading errors core");
         global main
         main = MainWindow
         self.view = wxErrorsView.Panel(self, parent, main)

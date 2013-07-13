@@ -30,6 +30,7 @@ import classes
 #
 class Core():
     def __init__(self, MainWindow):
+        app.debug_print("loading renamer preview");
         global main
         main = MainWindow
         self.setup()
