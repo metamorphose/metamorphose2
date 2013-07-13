@@ -38,6 +38,7 @@ class Core():
     def setup(self):
         self.prefs = app.prefs
 
+
     def getOperations(self):
         def getActive(x):
             if x.IsEnabled():
@@ -45,13 +46,13 @@ class Core():
         return filter(getActive, main.renamer.operations)
 
 
-    # add renamed status
     def addStatus(self, x):
+        """Add renamed status."""
         return [x, False]
 
 
-    # show some messages and display problems in error tab
     def setStatusMessage(self):
+        """Show some messages and display problems in error tab."""
         main.display_results()
 
         # good, no errors no warnings:
@@ -76,6 +77,7 @@ class Core():
         else:
             main.bottomWindow.go.Enable(False)
             main.menuFile.GoMenu.Enable(False)
+
 
     def error_check_items(self):
         """Run stand-alone error check on all items,"""
@@ -122,9 +124,10 @@ class Core():
         main.errorLog.insert(0, (ec, itemToRename, msg, log))
 
 
-    # Do final error checking and optional character stripping.
-    # Run on each item to be renamed.
     def errorCheck(self, renamedItem, itemToRename, path):
+        """Do final error checking and optional character stripping.
+        Run on each item to be renamed.
+        """
         bad = main.bad
         warn = main.warn
         ec = main.ec
