@@ -147,7 +147,7 @@ class Panel(wx.Panel):
         utils.adjust_exact_buttons(self)
         self.__init_sizer()
 
-#### BUTTONS ##################################################################
+#--- BUTTONS -----------------------------------------------------------------#
     def _insert_text(self, txt):
         if self.parent.activatedField:
             txt = u":" + txt + u":"

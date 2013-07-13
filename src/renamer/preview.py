@@ -112,7 +112,7 @@ class Core():
 
 
 
-    #### ERROR CHECKING: #######################################################
+    #--- ERROR CHECKING: -----------------------------------------------------#
     # TODO : should be separate class within this file
     def appendErrorLog(self, ec, itemToRename, msg, log):
         if log == u'warn':
@@ -233,8 +233,8 @@ class Core():
 
 
 
-    #### GENERATE NEW NAMES ####################################################
-    
+    #--- GENERATE NEW NAMES --------------------------------------------------#
+
     def run(self, operations):
         """
         Parse user settings, go through each item to be renamed and apply renaming

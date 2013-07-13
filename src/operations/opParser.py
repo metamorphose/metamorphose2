@@ -94,6 +94,9 @@ class Parser():
     def __init__(self, main_window):
         global main
         main = main_window
+        self.reset()
+
+    def reset(self):
         self.counter = 0
         self.auxCount = 0
 
