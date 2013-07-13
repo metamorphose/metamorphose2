@@ -155,8 +155,8 @@ def icon_path(icon):
 
 def reset_counter(parent, tools, c):
     """Reset a numbering counter."""
-    tools.opButtonsPanel.counter = c
-    tools.opButtonsPanel.auxCount = 0
+    tools.opButtonsPanel.parser.counter = c
+    tools.opButtonsPanel.parser.auxCount = 0
     parent.numberingPanel.set_number_params(True)
 
 def write_file(path, data):
@@ -188,7 +188,7 @@ def get_notebook_page_names(parent):
 def dev_null(event):
     """
     Do nothing.
-    
+
     Sometimes need to bind this to wx.Event.
     """
     pass
@@ -210,35 +210,71 @@ def get_encoding_choices(key):
     """Return valid encodings tuple for a given language type."""
     encodingLookup = {
         _(u"Use System Default"): (u"%s" % locale.getlocale()[1], ),
-        _(u'All Languages / Unicode'): (u'utf_8', u'utf_16'),
-        _(u'Western Europe'): (u'windows-1252', u'iso-8859-1', u'iso-8859-15',
-                               u'mac_roman', u'cp500', u'cp850', u'cp1140'),
-        _(u'Central & Eastern Europe'): (u'windows-1250', u'iso-8859-2',
-                                         u'mac_latin2', u'cp852'),
-        _(u'Esperanto, Maltese'): (u'iso-8859-3', ),
-        _(u'Nordic Languages'): (u'iso-8859-10', u'mac_iceland', u'cp861',
-                                 u'cp865'),
-        _(u'Celtic Languages'): (u'iso8859_14',),
-        _(u'Baltic Languages'): (u'windows-1257', u'iso-8859-13', u'cp775'),
-        _(u'Cyrillic Languages'): (u'windows-1251', u'iso-8859-5', u'koi8_r',
-                                   'koi8_u', u'mac_cyrillic', u'cp154', u'cp866', u'cp855'),
-        _(u'Greek'): (u'windows-1253', u'iso-8859-7', u'mac_greek', u'cp737',
-                      u'cp869', u'cp875'),
-        _(u'Turkish'): (u'windows-1254', u'iso-8859-9', u'mac_turkish',
-                        u'cp857', u'cp1026'),
-        _(u'Hebrew'): (u'windows-1255', u'iso-8859-8', u'cp424', u'cp856',
-                       u'cp862'),
-        _(u'Arabic'): (u'windows-1256', u'iso-8859-6', u'cp864'),
-        _(u'Urdu'): (u'cp1006',),
-        _(u'Thai'): (u'cp874',),
-        _(u'Vietnamese'): (u'windows-1258',),
-        _(u'Traditional Chinese'): (u'ms950', u'big5hkscs', u'big5'),
-        _(u'Simplified Chinese'): (u'gb2312', u'hz'),
-        _(u'Unified Chinese'): (u'ms936', u'gb18030'),
-        _(u'Korean'): (u'ms949', u'iso-2022-kr', u'ms1361', u'euc_kr'),
-        _(u'Japanese'): (u'ms-kanji', u'iso-2022-jp', u'shift_jis', u'euc_jp',
-                         u'iso-2022-jp-1', u'iso-2022-jp-2004', u'iso-2022-jp-3',
-                         u'iso-2022-jp-ext', u'shift_jis_2004', u'shift_jisx0213',
-                         u'euc_jis_2004', u'euc_jisx0213'),
+        _(u'All Languages / Unicode'): (
+            u'utf_8', u'utf_16'
+        ),
+        _(u'Western Europe'): (
+            u'windows-1252', u'iso-8859-1', u'iso-8859-15',
+            u'mac_roman', u'cp500', u'cp850', u'cp1140'
+        ),
+        _(u'Central & Eastern Europe'): (
+            u'windows-1250', u'iso-8859-2', u'mac_latin2', u'cp852'
+        ),
+        _(u'Esperanto, Maltese'): (
+            u'iso-8859-3'
+        ),
+        _(u'Nordic Languages'): (
+            u'iso-8859-10', u'mac_iceland', u'cp861', u'cp865'
+        ),
+        _(u'Celtic Languages'): (
+            u'iso8859_14',
+        ),
+        _(u'Baltic Languages'): (
+            u'windows-1257', u'iso-8859-13', u'cp775'
+        ),
+        _(u'Cyrillic Languages'): (
+            u'windows-1251', u'iso-8859-5', u'koi8_r', 'koi8_u',
+            u'mac_cyrillic', u'cp154', u'cp866', u'cp855'
+        ),
+        _(u'Greek'): (
+            u'windows-1253', u'iso-8859-7', u'mac_greek', u'cp737',
+            u'cp869', u'cp875'
+        ),
+        _(u'Turkish'): (
+            u'windows-1254', u'iso-8859-9', u'mac_turkish',
+            u'cp857', u'cp1026'
+        ),
+        _(u'Hebrew'): (
+            u'windows-1255', u'iso-8859-8', u'cp424', u'cp856', u'cp862'
+        ),
+        _(u'Arabic'): (
+            u'windows-1256', u'iso-8859-6', u'cp864'
+        ),
+        _(u'Urdu'): (
+            u'cp1006'
+        ),
+        _(u'Thai'): (
+            u'cp874'
+        ),
+        _(u'Vietnamese'): (
+            u'windows-1258'
+        ),
+        _(u'Traditional Chinese'): (
+            u'ms950', u'big5hkscs', u'big5'
+        ),
+        _(u'Simplified Chinese'): (
+            u'gb2312', u'hz'
+        ),
+        _(u'Unified Chinese'): (
+            u'ms936', u'gb18030'
+        ),
+        _(u'Korean'): (
+            u'ms949', u'iso-2022-kr', u'ms1361', u'euc_kr'
+        ),
+        _(u'Japanese'): (
+            u'ms-kanji', u'iso-2022-jp', u'shift_jis', u'euc_jp',
+            u'iso-2022-jp-1', u'iso-2022-jp-2004', u'iso-2022-jp-3',
+            u'iso-2022-jp-ext', u'shift_jis_2004', u'shift_jisx0213',
+            u'euc_jis_2004', u'euc_jisx0213'),
         }
     return encodingLookup[key]

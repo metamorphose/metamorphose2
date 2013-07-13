@@ -10,6 +10,9 @@ Thumbs.db
 # Python
 *.py[co]
 
+# Editors
+*swp
+
 # Packages
 *.egg
 *.egg-info
