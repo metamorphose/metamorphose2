@@ -18,7 +18,7 @@ except NameError:
 
 
 __all__ = ["copyfileobj", "copyfile", "copymode", "copystat", "copy", "copy2",
-	"copytree", "move", "rmtree", "Error"]
+    "copytree", "move", "rmtree", "Error"]
 
 class Error(EnvironmentError):
     pass
@@ -41,7 +41,7 @@ def _samefile(src, dst):
 
     # All other platforms: check for same pathname.
     return (os.path.normcase(os.path.abspath(src)) ==
-			os.path.normcase(os.path.abspath(dst)))
+            os.path.normcase(os.path.abspath(dst)))
 
 def copyfile(src, dst):
     """Copy data from src to dst"""

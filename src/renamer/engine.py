@@ -50,8 +50,8 @@ class Core():
         # show error message
         main.set_status_msg(_("Renaming Failed : %s") % err, u'failed')
         utils.make_err_msg(_(u"Error renaming:\n%s \n\nto:\n%s \n\nReason: %s")\
-						   % (original[0], renamed[0], err),
-						   _(u"Renaming Failed !!"))
+                           % (original[0], renamed[0], err),
+                           _(u"Renaming Failed !!"))
 
 
     def _rename_item(self, i, original, renamed, refresh_int):
@@ -129,19 +129,19 @@ class Core():
         i = 0
         for original, renamed in main.toRename:
             if warn != 'duplicate_name' and self.__compare(renamed, original) and\
-				exists(renamed[0]):
-					# set item as bad
-					main.toRename[i][1][1] = None
-					self._set_display(i)
-					main.set_status_msg(_(u"Duplicate name"), u'warn')
-					msg = _(u"This name already exists:\n%s") % renamed[0]\
-						+ _(u"\n\nI can make a sub-folder called 't_e_m_p' and do the renaming operation there.\nYou can then move everything back.\n\nGo ahead and do this?")
-					title = _(u"Duplicate name")
-					if utils.make_yesno_dlg(msg, title):
-						warn = 'duplicate_name'
-					else:
-						error = True
-						break
+                exists(renamed[0]):
+                    # set item as bad
+                    main.toRename[i][1][1] = None
+                    self._set_display(i)
+                    main.set_status_msg(_(u"Duplicate name"), u'warn')
+                    msg = _(u"This name already exists:\n%s") % renamed[0]\
+                        + _(u"\n\nI can make a sub-folder called 't_e_m_p' and do the renaming operation there.\nYou can then move everything back.\n\nGo ahead and do this?")
+                    title = _(u"Duplicate name")
+                    if utils.make_yesno_dlg(msg, title):
+                        warn = 'duplicate_name'
+                    else:
+                        error = True
+                        break
             # set correct path if in dupe error mode
             if warn == 'duplicate_name':
                 if not path.endswith(os.sep):
@@ -189,7 +189,7 @@ class Core():
             main.set_status_msg(_(u"Adjusting %s recursive paths, please wait ...") % len(main.toRename), u'wait')
 
             progressDialog = classes.ProgressDialog(main, app.prefs, main.items,
-													_(u"Adjusting %%% recursive paths, please wait ..."))
+                                                    _(u"Adjusting %%% recursive paths, please wait ..."))
 
             if app.showTimes:
                 t = time.time()
@@ -228,7 +228,7 @@ class Core():
         # end of operations
         if not error:
             main.set_status_msg(_(u"Renaming for %s items completed")
-								% itemsRenamed, u"complete")
+                                % itemsRenamed, u"complete")
             if app.prefs.get('reloadAfterRename') and event != u'undo':
                 main.picker.refresh(event)
             else:
@@ -270,9 +270,9 @@ class Core():
         utils.set_busy(True)
         try:
             originalFile = codecs.open(utils.get_user_path(u'undo/original.bak'), 'r',
-									   'utf-8')
+                                       'utf-8')
             renamedFile = codecs.open(utils.get_user_path(u'undo/renamed.bak'), 'r',
-									  'utf-8')
+                                      'utf-8')
             for line in originalFile:
                 original.append([line.strip(), False])
             for line in renamedFile:

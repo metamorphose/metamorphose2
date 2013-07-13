@@ -40,26 +40,26 @@ class Panel(wx.Panel):
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'replaceToolsPanel', parent=prnt,
-						  style=wx.TAB_TRAVERSAL)
+                          style=wx.TAB_TRAVERSAL)
               
         self.search = search.Panel(self, main, _(u"Search for what to replace, by:"))
 
         self.staticBox1 = wx.StaticBox(id=wxID_PANELSTATICBOX1,
-									   label=_("Replace with:"), name='staticBox1', parent=self, style=0)
+                                       label=_("Replace with:"), name='staticBox1', parent=self, style=0)
 
         # sub operation buttons ------------------------------------------- #
         self.opButtonsPanel = opButtons.Panel(self, main)
 
         txt = _(u"Text (blank to delete):")
         self.staticText1 = wx.StaticText(id=wxID_PANELSTATICTEXT1,
-										 label=txt, name='staticText1',
-										 parent=self, style=0)
+                                         label=txt, name='staticText1',
+                                         parent=self, style=0)
         Size = wx.Size(self.staticText1.GetTextExtent(txt)[0] + 3, -1)
         self.staticText1.SetMinSize(Size)
 
         self.repl_txt = wx.TextCtrl(id=wxID_PANELREPL_TXT,
-									name=u'repl_txt', parent=self,
-									style=wx.TE_PROCESS_ENTER, value=u'')
+                                    name=u'repl_txt', parent=self,
+                                    style=wx.TE_PROCESS_ENTER, value=u'')
         self.repl_txt.SetToolTipString(_(u"Keep blank to delete."))
         self.repl_txt.Bind(wx.EVT_TEXT, main.show_preview)
         self.repl_txt.Bind(wx.EVT_TEXT_ENTER, main.show_preview)

@@ -80,6 +80,6 @@ def main():
 if __name__ == '__main__':
     if 'unicode' not in wx.PlatformInfo:
         print("\nInstalled version: %s\nYou need a unicode build of wxPython to run Metamorphose 2.\n"
-			  % wxversion.getInstalled())
+              % wxversion.getInstalled())
     else:
         main()

@@ -74,7 +74,7 @@ class MySplitter(wx.SplitterWindow):
 
     def __init__(self, parent):
         wx.SplitterWindow.__init__(self, parent,
-								   style=wx.SP_LIVE_UPDATE | wx.SP_3DSASH | wx.SP_NO_XP_THEME)
+                                   style=wx.SP_LIVE_UPDATE | wx.SP_3DSASH | wx.SP_NO_XP_THEME)
 
 
 class MainWindow(wx.Frame):
@@ -93,47 +93,47 @@ class MainWindow(wx.Frame):
 
     def __init_menu_file(self, parent):
         parent.LoadIniMenu = wx.MenuItem(parent, wxID_MENUFILE_LOADINI,
-										 _(u"&Load Config\tctrl+L"),
-										 self.make_space(_(u"Load configuration from file")))
+                                         _(u"&Load Config\tctrl+L"),
+                                         self.make_space(_(u"Load configuration from file")))
         parent.LoadIniMenu.SetBitmap(wx.Bitmap(utils.icon_path(u'loadIni.png'),
-									 wx.BITMAP_TYPE_PNG))
+                                     wx.BITMAP_TYPE_PNG))
         parent.SaveIniMenu = wx.MenuItem(parent, wxID_MENUFILE_SAVEINI,
-										 _(u"&Save Config\tctrl+S"),
-										 self.make_space(_(u"Save configuration to file")))
+                                         _(u"&Save Config\tctrl+S"),
+                                         self.make_space(_(u"Save configuration to file")))
         parent.SaveIniMenu.SetBitmap(wx.Bitmap(utils.icon_path(u'saveIni.png'),
-									 wx.BITMAP_TYPE_PNG))
+                                     wx.BITMAP_TYPE_PNG))
 
         parent.SaveLog = wx.MenuItem(parent, wxID_MENUFILE_SAVELOG,
-									 _(u"&Export to log file"),
-									 self.make_space(_(u"Save current snapshot to a log file")))
+                                     _(u"&Export to log file"),
+                                     self.make_space(_(u"Save current snapshot to a log file")))
         parent.SaveLog.SetBitmap(wx.Bitmap(utils.icon_path(u'CSVto.png'),
-								 wx.BITMAP_TYPE_PNG))
+                                 wx.BITMAP_TYPE_PNG))
 
         parent.Import = wx.MenuItem(parent,
-									wxID_MENUFILE_IMPORT, _(u"&Import from log file"),
-									self.make_space(_(u"Load a snapshot")))
+                                    wxID_MENUFILE_IMPORT, _(u"&Import from log file"),
+                                    self.make_space(_(u"Load a snapshot")))
         parent.Import.SetBitmap(wx.Bitmap(utils.icon_path(u'CSVfrom.png'),
-								wx.BITMAP_TYPE_PNG))
+                                wx.BITMAP_TYPE_PNG))
 
         parent.resetApp = wx.MenuItem(parent, wxID_MENUFILE_RESET,
-									  _(u"&Reset"), self.make_space(_(u"Reset all settings")))
+                                      _(u"&Reset"), self.make_space(_(u"Reset all settings")))
         parent.resetApp.SetBitmap(wx.Bitmap(utils.icon_path(u'preview.png'),
-								  wx.BITMAP_TYPE_PNG))
+                                  wx.BITMAP_TYPE_PNG))
 
         parent.PreviewMenu = wx.MenuItem(parent, wxID_MENUFILE_PREVIEW,
-										 _(u"&Preview\tF7"), self.make_space(_(u"Preview selection")))
+                                         _(u"&Preview\tF7"), self.make_space(_(u"Preview selection")))
         parent.PreviewMenu.SetBitmap(wx.Bitmap(utils.icon_path(u'preview.png'),
-									 wx.BITMAP_TYPE_PNG))
+                                     wx.BITMAP_TYPE_PNG))
 
         parent.GoMenu = wx.MenuItem(parent, wxID_MENUFILE_GO,
-									_(u"&Go !\tF8"), self.make_space(_(u"Rename selection")))
+                                    _(u"&Go !\tF8"), self.make_space(_(u"Rename selection")))
         parent.GoMenu.SetBitmap(wx.Bitmap(utils.icon_path(u'go.png'),
-								wx.BITMAP_TYPE_PNG))
+                                wx.BITMAP_TYPE_PNG))
 
         parent.exitMenu = wx.MenuItem(parent, wxID_MENUFILE_EXIT,
-									  _(u"&Quit\tctrl+Q"), self.make_space(_(u"Quit Metamorphose")))
+                                      _(u"&Quit\tctrl+Q"), self.make_space(_(u"Quit Metamorphose")))
         parent.exitMenu.SetBitmap(wx.Bitmap(utils.icon_path(u'exit.png'),
-								  wx.BITMAP_TYPE_PNG))
+                                  wx.BITMAP_TYPE_PNG))
 
         parent.AppendItem(parent.LoadIniMenu)
         parent.AppendItem(parent.SaveIniMenu)
@@ -149,72 +149,72 @@ class MainWindow(wx.Frame):
         parent.AppendItem(parent.exitMenu)
 
         self.Bind(wx.EVT_MENU, self.save_items_as_text,
-				  id=wxID_MENUFILE_SAVELOG)
+                  id=wxID_MENUFILE_SAVELOG)
         self.Bind(wx.EVT_MENU, self.import_items_from_text,
-				  id=wxID_MENUFILE_IMPORT)
+                  id=wxID_MENUFILE_IMPORT)
         self.Bind(wx.EVT_MENU, self.save_config,
-				  id=wxID_MENUFILE_SAVEINI)
+                  id=wxID_MENUFILE_SAVEINI)
         self.Bind(wx.EVT_MENU, self.load_config,
-				  id=wxID_MENUFILE_LOADINI)
+                  id=wxID_MENUFILE_LOADINI)
         self.Bind(wx.EVT_MENU, self.on_preview_button,
-				  id=wxID_MENUFILE_PREVIEW)
+                  id=wxID_MENUFILE_PREVIEW)
         self.Bind(wx.EVT_MENU, self.rename_items,
-				  id=wxID_MENUFILE_GO)
+                  id=wxID_MENUFILE_GO)
         self.Bind(wx.EVT_MENU, self.on_menu_reset,
-				  id=wxID_MENUFILE_RESET)
+                  id=wxID_MENUFILE_RESET)
         self.Bind(wx.EVT_MENU, self.on_menu_exit,
-				  id=wxID_MENUFILE_EXIT)
+                  id=wxID_MENUFILE_EXIT)
 
 
     def __init_menu_renamer(self, parent):
         parent.destroyMenu = wx.MenuItem(parent, wxID_MENURENAMER_DESTROY,
-										 _(u"Delete operation"),
-										 self.make_space(_(u"Delete current operation")))
+                                         _(u"Delete operation"),
+                                         self.make_space(_(u"Delete current operation")))
         parent.destroyMenu.SetBitmap(wx.Bitmap(utils.icon_path(u'errors.ico'),
-									 wx.BITMAP_TYPE_ICO))
+                                     wx.BITMAP_TYPE_ICO))
 
         parent.destroyAllMenu = wx.MenuItem(parent, wxID_MENURENAMER_DESTROYALL,
-											_(u"Delete all operations\tctrl+D"),
-											self.make_space(_(u"Delete all operations")))
+                                            _(u"Delete all operations\tctrl+D"),
+                                            self.make_space(_(u"Delete all operations")))
         parent.destroyAllMenu.SetBitmap(wx.Bitmap(utils.icon_path(u'nuke.png'),
-										wx.BITMAP_TYPE_PNG))
+                                        wx.BITMAP_TYPE_PNG))
 
         parent.AppendItem(parent.destroyMenu)
         parent.AppendItem(parent.destroyAllMenu)
 
         self.Bind(wx.EVT_MENU, self.renamer.view.delete_operation,
-				  id=wxID_MENURENAMER_DESTROY)
+                  id=wxID_MENURENAMER_DESTROY)
         self.Bind(wx.EVT_MENU, self.renamer.view.destroy_all_operations,
-				  id=wxID_MENURENAMER_DESTROYALL)
+                  id=wxID_MENURENAMER_DESTROYALL)
 
 
     def __init_menu_picker(self, parent):
         parent.browseMenu = wx.MenuItem(parent, wxID_MENUPICKER_BROWSE,
-										_(u"&Browse...\tF4"),
-										self.make_space(_(u"Browse for path")))
+                                        _(u"&Browse...\tF4"),
+                                        self.make_space(_(u"Browse for path")))
         parent.browseMenu.SetBitmap(wx.Bitmap(\
-									utils.icon_path(u'browse.png'), wx.BITMAP_TYPE_PNG))
+                                    utils.icon_path(u'browse.png'), wx.BITMAP_TYPE_PNG))
         parent.okMenu = wx.MenuItem(parent, wxID_MENUPICKER_OK,
-									_(u"&Refresh\tF5"),
-									self.make_space(_(u"Load or reload current path")))
+                                    _(u"&Refresh\tF5"),
+                                    self.make_space(_(u"Load or reload current path")))
         parent.okMenu.SetBitmap(wx.Bitmap(utils.icon_path(u'reload.png'),
-								wx.BITMAP_TYPE_PNG))
+                                wx.BITMAP_TYPE_PNG))
 
         parent.getAllMenu = wx.MenuItem(parent, wxID_MENUPICKER_ALL,
-										_(u"Select &All\tctrl+A"),
-										self.make_space(_(u"Select all items in picker")))
+                                        _(u"Select &All\tctrl+A"),
+                                        self.make_space(_(u"Select all items in picker")))
         parent.getAllMenu.SetBitmap(wx.Bitmap(\
-									utils.icon_path(u'selectAll.png'), wx.BITMAP_TYPE_PNG))
+                                    utils.icon_path(u'selectAll.png'), wx.BITMAP_TYPE_PNG))
         parent.getNoneMenu = wx.MenuItem(parent, wxID_MENUPICKER_NONE,
-										 _(u"Select &None\tctrl+N"),
-										 self.make_space(_(u"Deselect all items in picker")))
+                                         _(u"Select &None\tctrl+N"),
+                                         self.make_space(_(u"Deselect all items in picker")))
         parent.getNoneMenu.SetBitmap(wx.Bitmap(\
-									 utils.icon_path(u'selectNone.png'), wx.BITMAP_TYPE_PNG))
+                                     utils.icon_path(u'selectNone.png'), wx.BITMAP_TYPE_PNG))
         parent.walkMenu = wx.MenuItem(parent, wxID_MENUPICKER_WALK,
-									  _(u"Recursive &selection\tctrl+R"),
-									  self.make_space(_(u"Get all files in directory and sub-directories, but no folders")))
+                                      _(u"Recursive &selection\tctrl+R"),
+                                      self.make_space(_(u"Get all files in directory and sub-directories, but no folders")))
         parent.walkMenu.SetBitmap(wx.Bitmap(utils.icon_path(u'walk.png'),
-								  wx.BITMAP_TYPE_PNG))
+                                  wx.BITMAP_TYPE_PNG))
 
         parent.AppendItem(parent.browseMenu)
         parent.AppendItem(parent.okMenu)
@@ -224,70 +224,70 @@ class MainWindow(wx.Frame):
         parent.AppendItem(parent.walkMenu)
 
         self.Bind(wx.EVT_MENU, self.picker.browse_for_path,
-				  id=wxID_MENUPICKER_BROWSE)
+                  id=wxID_MENUPICKER_BROWSE)
         self.Bind(wx.EVT_MENU, self.picker.set_path,
-				  id=wxID_MENUPICKER_OK)
+                  id=wxID_MENUPICKER_OK)
         self.Bind(wx.EVT_MENU, self.picker.select_none,
-				  id=wxID_MENUPICKER_NONE)
+                  id=wxID_MENUPICKER_NONE)
         self.Bind(wx.EVT_MENU, self.picker.select_all,
-				  id=wxID_MENUPICKER_ALL)
+                  id=wxID_MENUPICKER_ALL)
         self.Bind(wx.EVT_MENU, self.picker.walk_from_menu,
-				  id=wxID_MENUPICKER_WALK)
+                  id=wxID_MENUPICKER_WALK)
 
 
     def __init_menu_edit(self, parent):
         parent.PrefsMenu = wx.MenuItem(parent,
-									   wxID_MENUSETTINGS_PREFERENCES, _(u"Preferences"),
-									   self.make_space(_(u"Change your preferences")))
+                                       wxID_MENUSETTINGS_PREFERENCES, _(u"Preferences"),
+                                       self.make_space(_(u"Change your preferences")))
 
         parent.langMenu = wx.MenuItem(parent,
-									  wxID_MENUSETTINGS_LANG, _(u"Language"),
-									  self.make_space(_(u"Change the language")))
+                                      wxID_MENUSETTINGS_LANG, _(u"Language"),
+                                      self.make_space(_(u"Change the language")))
 
         parent.PrefsMenu.SetBitmap(wx.Bitmap(\
-								   utils.icon_path(u'preferences.ico'), wx.BITMAP_TYPE_ICO))
+                                   utils.icon_path(u'preferences.ico'), wx.BITMAP_TYPE_ICO))
         parent.AppendItem(parent.PrefsMenu)
 
         parent.langMenu.SetBitmap(wx.Bitmap(\
-								  utils.icon_path(u'language.png'), wx.BITMAP_TYPE_PNG))
+                                  utils.icon_path(u'language.png'), wx.BITMAP_TYPE_PNG))
         parent.AppendItem(parent.langMenu)
 
         self.Bind(wx.EVT_MENU, self.show_preferences,
-				  id=wxID_MENUSETTINGS_PREFERENCES)
+                  id=wxID_MENUSETTINGS_PREFERENCES)
         self.Bind(wx.EVT_MENU, self.language_select,
-				  id=wxID_MENUSETTINGS_LANG)
+                  id=wxID_MENUSETTINGS_LANG)
 
 
     def __init_menu_help(self, parent):
         parent.aboutMenu = wx.MenuItem(parent,
-									   wxID_MENUHELP_ABOUT, _(u"About"),
-									   self.make_space(_(u"Display general information about Metamorphose")))
+                                       wxID_MENUHELP_ABOUT, _(u"About"),
+                                       self.make_space(_(u"Display general information about Metamorphose")))
         parent.aboutMenu.SetBitmap(wx.Bitmap(utils.icon_path(u'about.ico'),
-								   wx.BITMAP_TYPE_ICO))
+                                   wx.BITMAP_TYPE_ICO))
 
         parent.helpMenu = wx.MenuItem(parent,
-									  wxID_MENUHELP_HELP, _(u"&Help\tF1"),
-									  self.make_space(_(u"How to use Metamorphose")))
+                                      wxID_MENUHELP_HELP, _(u"&Help\tF1"),
+                                      self.make_space(_(u"How to use Metamorphose")))
         parent.helpMenu.SetBitmap(wx.Bitmap(utils.icon_path(u'help.ico'),
-								  wx.BITMAP_TYPE_ICO))
+                                  wx.BITMAP_TYPE_ICO))
 
         parent.examplesMenu = wx.MenuItem(parent,
-										  wxID_MENUHELP_EXAMPLES, _(u"&Examples\tF2"),
-										  self.make_space(_(u"Some useful examples")))
+                                          wxID_MENUHELP_EXAMPLES, _(u"&Examples\tF2"),
+                                          self.make_space(_(u"Some useful examples")))
         parent.examplesMenu.SetBitmap(wx.Bitmap(\
-									  utils.icon_path(u'examples.ico'), wx.BITMAP_TYPE_ICO))
+                                      utils.icon_path(u'examples.ico'), wx.BITMAP_TYPE_ICO))
 
         parent.FormatHelpMenu = wx.MenuItem(parent,
-											wxID_MENUHELP_FORMATHELP, _(u"&Date && Time Formats"),
-											self.make_space(_(u"Display a reference for Date & Time formats")))
+                                            wxID_MENUHELP_FORMATHELP, _(u"&Date && Time Formats"),
+                                            self.make_space(_(u"Display a reference for Date & Time formats")))
         parent.FormatHelpMenu.SetBitmap(wx.Bitmap(\
-										utils.icon_path(u'date_time.ico'), wx.BITMAP_TYPE_ICO))
+                                        utils.icon_path(u'date_time.ico'), wx.BITMAP_TYPE_ICO))
 
         parent.REhelpMenu = wx.MenuItem(parent,
-										wxID_MENUHELP_REHELP, _(u"&Regular Expressions"),
-										self.make_space(_(u"Display a regular expression reference")))
+                                        wxID_MENUHELP_REHELP, _(u"&Regular Expressions"),
+                                        self.make_space(_(u"Display a regular expression reference")))
         parent.REhelpMenu.SetBitmap(wx.Bitmap(utils.icon_path(u're.ico'),
-									wx.BITMAP_TYPE_ICO))
+                                    wx.BITMAP_TYPE_ICO))
 
         parent.AppendItem(parent.aboutMenu)
         parent.AppendItem(parent.helpMenu)
@@ -296,15 +296,15 @@ class MainWindow(wx.Frame):
         parent.AppendItem(parent.REhelpMenu)
 
         self.Bind(wx.EVT_MENU, self.show_about,
-				  id=wxID_MENUHELP_ABOUT)
+                  id=wxID_MENUHELP_ABOUT)
         self.Bind(wx.EVT_MENU, self.show_help,
-				  id=wxID_MENUHELP_HELP)
+                  id=wxID_MENUHELP_HELP)
         self.Bind(wx.EVT_MENU, self.show_small_help,
-				  id=wxID_MENUHELP_EXAMPLES)
+                  id=wxID_MENUHELP_EXAMPLES)
         self.Bind(wx.EVT_MENU, self.show_small_help,
-				  id=wxID_MENUHELP_FORMATHELP)
+                  id=wxID_MENUHELP_FORMATHELP)
         self.Bind(wx.EVT_MENU, self.show_small_help,
-				  id=wxID_MENUHELP_REHELP)
+                  id=wxID_MENUHELP_REHELP)
 
 
     def __init_notebook(self):
@@ -319,13 +319,13 @@ class MainWindow(wx.Frame):
         # list containing notebook images
         il = wx.ImageList(16, 16)
         img0 = il.Add(wx.Bitmap(utils.icon_path(u'picker.ico'),
-					  wx.BITMAP_TYPE_ICO))
+                      wx.BITMAP_TYPE_ICO))
         img1 = il.Add(wx.Bitmap(utils.icon_path(u'main.ico'),
-					  wx.BITMAP_TYPE_ICO))
+                      wx.BITMAP_TYPE_ICO))
         img2 = il.Add(wx.Bitmap(utils.icon_path(u'sorting.ico'),
-					  wx.BITMAP_TYPE_ICO))
+                      wx.BITMAP_TYPE_ICO))
         img3 = il.Add(wx.Bitmap(utils.icon_path(u'errors.ico'),
-					  wx.BITMAP_TYPE_ICO))
+                      wx.BITMAP_TYPE_ICO))
         parent.AssignImageList(il)
 
         # add notebook pages to notebook
@@ -373,11 +373,11 @@ class MainWindow(wx.Frame):
             }
         #print app.fontParams
         self.SetFont(wx.Font(
-					 app.fontParams['size'],
-					 app.fontParams['family'],
-					 app.fontParams['style'],
-					 app.fontParams['weight'])
-					 )
+                     app.fontParams['size'],
+                     app.fontParams['family'],
+                     app.fontParams['style'],
+                     app.fontParams['weight'])
+                     )
 
     def __init_ctrls(self, prnt):
         wx.SystemOptions.SetOption('msw.notebook.themed-background', '0')
@@ -393,20 +393,20 @@ class MainWindow(wx.Frame):
         self.__init_fonts()
 
         self.statusBar1 = ESB.EnhancedStatusBar(id=wxID_MAIN_WINDOWSTATUSBAR1,
-												name=u'statusBar1', parent=self)
+                                                name=u'statusBar1', parent=self)
         self.SetStatusBar(self.statusBar1)
 
         self.statusImage = wx.StaticBitmap(bitmap=self.statusImages[u'eyes'],
-										   id=wxID_MAIN_WINDOWSTATUSIMAGE, name=u'statusImage',
-										   parent=self.statusBar1, size=wx.Size(-1, 16), style=0)
+                                           id=wxID_MAIN_WINDOWSTATUSIMAGE, name=u'statusImage',
+                                           parent=self.statusBar1, size=wx.Size(-1, 16), style=0)
         self.statusBar1.AddWidget(self.statusImage, ESB.ESB_ALIGN_LEFT)
 
         self.splitter = MySplitter(self)
 
         # notebook
         self.notebook = wx.Notebook(id=wxID_MAIN_WINDOWNOTEBOOK,
-									name=u'notebook', parent=self.splitter,
-									style=wx.NB_TOP | wx.NO_BORDER)
+                                    name=u'notebook', parent=self.splitter,
+                                    style=wx.NB_TOP | wx.NO_BORDER)
         self.notebook.SetThemeEnabled(True)
 
         self.bottomWindow = bottomWindow.MainPanel(self.splitter, self)
@@ -506,7 +506,7 @@ class MainWindow(wx.Frame):
             # use a config path
             elif o in ("-c", "--config"):
                 configFilePath = self.strip_leading(a)
-		# set auto level
+        # set auto level
             elif o in ("-a", "--auto"):
                 level = self.strip_leading(a)
                 if level not in ('0', '1', '2', '3'):
@@ -516,7 +516,7 @@ class MainWindow(wx.Frame):
                 else:
                     print("Auto mode level set : %s" % level)
                     app.autoModeLevel = int(level)
-		# specify the language
+        # specify the language
             elif o in ("-l", "--language"):
                 app.language = self.strip_leading(a)
         return path, configFilePath
@@ -614,7 +614,7 @@ class MainWindow(wx.Frame):
         path, configFilePath = self.__get_cli_options()
 
         wx.Frame.__init__(self, id=wxID_MAIN_WINDOW, name=u'MainWindow',
-						  parent=prnt, style=wx.DEFAULT_FRAME_STYLE)
+                          parent=prnt, style=wx.DEFAULT_FRAME_STYLE)
 
         # first run?
         utils.init_environment()
@@ -642,15 +642,15 @@ class MainWindow(wx.Frame):
         # icons used for status bar messages
         self.statusImages = {
             u'failed': wx.Bitmap(utils.icon_path(u'failed_sb.ico'),
-								 wx.BITMAP_TYPE_ICO),
+                                 wx.BITMAP_TYPE_ICO),
             u'wait': wx.Bitmap(utils.icon_path(u'wait.png'),
-							   wx.BITMAP_TYPE_PNG),
+                               wx.BITMAP_TYPE_PNG),
             u'warn': wx.Bitmap(utils.icon_path(u'warn_sb.ico'),
-							   wx.BITMAP_TYPE_ICO),
+                               wx.BITMAP_TYPE_ICO),
             u'complete': wx.Bitmap(utils.icon_path(u'complete.ico'),
-								   wx.BITMAP_TYPE_ICO),
+                                   wx.BITMAP_TYPE_ICO),
             u'eyes': wx.Bitmap(utils.icon_path(u'eyes.png'),
-							   wx.BITMAP_TYPE_PNG),
+                               wx.BITMAP_TYPE_PNG),
             }
         # build main GUI
         self.__init_ctrls(prnt)
@@ -659,14 +659,14 @@ class MainWindow(wx.Frame):
         if app.prefs.get(u'clearUndo'):
             try:
                 originalFile = codecs.open(utils.get_user_path(u'undo/original.bak'),
-										   'w', "utf-8")
+                                           'w', "utf-8")
                 originalFile.write('')
                 renamedFile = codecs.open(utils.get_user_path(u'undo/renamed.bak'),
-										  'w', "utf-8")
+                                          'w', "utf-8")
                 renamedFile.write('')
             except IOError, error:
                 utils.make_err_msg(_(u"%s\n\nCould not clear undo") % error,
-								   _(u"Error"))
+                                   _(u"Error"))
                 pass
 
         # construct rest of GUI:
@@ -793,10 +793,10 @@ class MainWindow(wx.Frame):
             # trigered by menu, allow to choose output file
             if event:
                 dlg = wx.FileDialog(self, message=_(u"Save current items as ..."),
-									defaultDir='', defaultFile=u'.%s' % ext,
-									wildcard=_(u"CSV file (*.%s)") % ext + u'|*.%s' % ext,
-									style=wx.SAVE | wx.OVERWRITE_PROMPT
-									)
+                                    defaultDir='', defaultFile=u'.%s' % ext,
+                                    wildcard=_(u"CSV file (*.%s)") % ext + u'|*.%s' % ext,
+                                    style=wx.SAVE | wx.OVERWRITE_PROMPT
+                                    )
                 if dlg.ShowModal() == wx.ID_OK:
                     # attempt to write file
                     utils.write_file(dlg.GetPath(), CSVfile)
@@ -804,7 +804,7 @@ class MainWindow(wx.Frame):
             # auto logging, generate file name
             else:
                 file = time.strftime("undo_%Y-%m-%d_%Hh%Mm%Ss",
-									 time.localtime()) + '.' + app.prefs.get('logFextension')
+                                     time.localtime()) + '.' + app.prefs.get('logFextension')
                 path = os.path.join(app.prefs.get(u'logLocation'), file)
                 utils.write_file(path, CSVfile)
 
@@ -822,13 +822,13 @@ class MainWindow(wx.Frame):
         sep = app.prefs.get('logSeparator')
 
         wildOnes = _(u"Log file") + u" (*.%s)|*.%s|" % (ext, ext) + \
-			_(u"All files") + "(*.*)|*.*"
+            _(u"All files") + "(*.*)|*.*"
 
         # file open dialog
         dlg = wx.FileDialog(
-							self, message=_(u"Import selection from ..."), defaultDir=path,
-							defaultFile=u'', wildcard=wildOnes,
-							style=wx.OPEN | wx.CHANGE_DIR)
+                            self, message=_(u"Import selection from ..."), defaultDir=path,
+                            defaultFile=u'', wildcard=wildOnes,
+                            style=wx.OPEN | wx.CHANGE_DIR)
 
         if dlg.ShowModal() == wx.ID_OK:
             original = []
@@ -865,7 +865,7 @@ class MainWindow(wx.Frame):
                 msg = _(u"These items could not be loaded, it doesn't look like they exist :\n\n")
                 msg += unloadbles
                 dlg = wx.lib.dialogs.ScrolledMessageDialog(self, msg,
-														   "Could not load all items")
+                                                           "Could not load all items")
                 dlg.ShowModal()
             if len(self.toRename) != 0:
                 self.bottomWindow.go.Enable(True)
@@ -939,9 +939,9 @@ class MainWindow(wx.Frame):
         else:
             display.imgs = wx.ImageList(16, 16)
             display.folderIco = display.imgs.Add(wx.Bitmap(\
-												 utils.icon_path(u'folder16.png'), wx.BITMAP_TYPE_PNG))
+                                                 utils.icon_path(u'folder16.png'), wx.BITMAP_TYPE_PNG))
             display.fileIco = display.imgs.Add(wx.Bitmap(\
-											   utils.icon_path(u'file16.png'), wx.BITMAP_TYPE_PNG))
+                                               utils.icon_path(u'file16.png'), wx.BITMAP_TYPE_PNG))
         display.SetImageList(display.imgs, wx.IMAGE_LIST_SMALL)
 
         display.DeleteAllItems()

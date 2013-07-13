@@ -32,11 +32,11 @@ class OpPanel(Operation):
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=-1, name=u'Panel', parent=prnt,
-						  style=wx.TAB_TRAVERSAL)
+                          style=wx.TAB_TRAVERSAL)
         self.notebook = Notebook(self, main)
         self.replaceToolsPanel = replaceTools.Panel(self.notebook, main)
         self.notebook.init_pages(self.replaceToolsPanel,
-								 _(u"Replace settings"), u'replace.ico')
+                                 _(u"Replace settings"), u'replace.ico')
         self.numberingPanel = self.notebook.numbering
         self.dateTimePanel = self.notebook.dateTime
 

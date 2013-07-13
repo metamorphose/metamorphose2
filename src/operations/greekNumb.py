@@ -72,8 +72,8 @@ class Error(EnvironmentError):
 
 # Create the numeral list
 greek_digits = [u',α,β,γ,δ,ε,ϛ,ζ,η,θ',
-	u',ι,κ,λ,μ,ν,ξ,ο,π,ϟ',
-	u',ρ,σ,τ,υ,φ,χ,ψ,ω,ϡ']
+    u',ι,κ,λ,μ,ν,ξ,ο,π,ϟ',
+    u',ρ,σ,τ,υ,φ,χ,ψ,ω,ϡ']
 
 greek_digits = map(lambda x: x.split(','), greek_digits)
 
@@ -95,7 +95,7 @@ def int2greek(number, numbersign=True, upper=False, stigma=True, arch_qoppa=Fals
     for place in reversed(range(length)):
         digit = int(number[length - place - 1])
         greek += u'ͺ' * int(math.floor(place / 3)) + \
-			greek_digits[place % 3][digit]
+            greek_digits[place % 3][digit]
 
     if upper:
         greek = greek.upper()
@@ -133,7 +133,7 @@ if __name__ == '__main__':
     # parse command line options/arguments
     try:
         opts, args = getopt.getopt(sys.argv[1:], "hnusq",
-								   ["help", "numbersign", "upper", "stigma", "arch_qoppa"])
+                                   ["help", "numbersign", "upper", "stigma", "arch_qoppa"])
     except getopt.GetoptError:
         usage(2)
     if len(args) == 0 or len(args) > 1:

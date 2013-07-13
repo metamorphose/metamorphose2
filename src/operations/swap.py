@@ -18,10 +18,10 @@ import utils
 import wx
 
 [wxID_PANEL, wxID_PANELREPL_MOVE_POS, wxID_PANELREPL_MOVE_POS_VALUE,
-	wxID_PANELREPL_MOVE_TXT, wxID_PANELREPL_MOVE_TXT_MOD,
-	wxID_PANELREPL_MOVE_TXT_RE, wxID_PANELREPL_MOVE_TXT_VALUE,
-	wxID_PANELSTATICTEXT6, wxID_PANELSTATICBOX1, wxID_PANELREPL_MOVE_TXT_REU,
-	wxID_PANELREPL_MOVE_TXT_REI, wxID_PANELSTATICTEXT5
+    wxID_PANELREPL_MOVE_TXT, wxID_PANELREPL_MOVE_TXT_MOD,
+    wxID_PANELREPL_MOVE_TXT_RE, wxID_PANELREPL_MOVE_TXT_VALUE,
+    wxID_PANELSTATICTEXT6, wxID_PANELSTATICBOX1, wxID_PANELREPL_MOVE_TXT_REU,
+    wxID_PANELREPL_MOVE_TXT_REI, wxID_PANELSTATICTEXT5
 ] = [wx.NewId() for __init_ctrls in range(12)]
 
 class OpPanel(Operation):
@@ -39,7 +39,7 @@ class OpPanel(Operation):
     def __init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'Panel', parent=prnt,
-						  style=wx.TAB_TRAVERSAL)
+                          style=wx.TAB_TRAVERSAL)
 
         self.searchFrom = search.Panel(self, main, _(u"Swap this:"), 'searchFrom')
         self.searchTo = search.Panel(self, main, _(u"With this:"), 'searchTo')

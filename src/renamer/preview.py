@@ -58,7 +58,7 @@ class Core():
         if len(main.bad) == 0 and len(main.warn) == 0:
             if not app.REmsg:
                 main.set_status_msg(_(u"Previewed %s items with no errors")\
-									% len(main.toRename), u'complete')
+                                    % len(main.toRename), u'complete')
         # problems:
         else:
             main.errors.show()
@@ -86,7 +86,7 @@ class Core():
         self.items_ren = []
 
         progressDialog = classes.ProgressDialog(main, self.prefs, main.items,
-												_(u"Error chekcing %%% names, please wait ..."))
+                                                _(u"Error chekcing %%% names, please wait ..."))
 
         for item in main.toRename:
             original = item[0][0]
@@ -143,14 +143,14 @@ class Core():
                 elif self.prefs.get(u'markWarning'):
                     if x < 1 and char in renamedItem:
                         self.appendErrorLog(ec, itemToRename,
-											_(u"Invalid Windows character: %s") % char,
-											u'warn')
+                                            _(u"Invalid Windows character: %s") % char,
+                                            u'warn')
                         x += 1
                 elif self.prefs.get(u'markBadChars'):
                     if x < 1 and char in renamedItem:
                         self.appendErrorLog(ec, itemToRename,
-											_(u"Invalid Windows character: %s") % char,
-											u'bad')
+                                            _(u"Invalid Windows character: %s") % char,
+                                            u'bad')
                         x += 1
 
         # flag bad win words:
@@ -162,7 +162,7 @@ class Core():
             for word in self.prefs.get(u'bad_win_words'):
                 if renamedItem.lower() == word:
                     self.appendErrorLog(ec, itemToRename,
-										_(u"Invalid name: %s") % word, log)
+                                        _(u"Invalid name: %s") % word, log)
 
         # completely blank
         if renamedItem == '' and bad.count(ec) < 1:
@@ -172,7 +172,7 @@ class Core():
         elif len(renamedItem) > 255:
             #if bad.count(ec) < 1:
             self.appendErrorLog(ec, itemToRename,
-								_(u"Name length over 255 characters"), u'bad')
+                                _(u"Name length over 255 characters"), u'bad')
 
         # no dupes (must be last error check)
         if os.path.join(path, renamedItem) in self.items_ren:
@@ -187,8 +187,8 @@ class Core():
         oldBlank = re.search("^\..+", leaf)
 
         if  (newBlank != None and oldBlank == None) and ec not in warn\
-			and ec not in bad and os.path.isfile(itemToRename):
-				self.appendErrorLog(ec, itemToRename, _(u"Blank file name"), u'warn')
+            and ec not in bad and os.path.isfile(itemToRename):
+                self.appendErrorLog(ec, itemToRename, _(u"Blank file name"), u'warn')
 
         return (renamedItem, path)
 
@@ -277,7 +277,7 @@ class Core():
             main.curName = False
 
         progressDialog = classes.ProgressDialog(main, self.prefs, main.items,
-												_(u"Generating %%% new names, please wait ..."))
+                                                _(u"Generating %%% new names, please wait ..."))
 
         # define here for faster access
         onlyShowChangedItems = app.prefs.get('onlyShowChangedItems')
@@ -305,7 +305,7 @@ class Core():
                 op = operations[i]
 
                 newPath, newName, newExt = op.rename_item(newPath, newName,
-														  newExt, itemToRename)
+                                                          newExt, itemToRename)
 
                 if newExt is not False:
                     renamedItem = newName + '.' + newExt
@@ -318,15 +318,15 @@ class Core():
                     main.curName = renamedItem
 
             renamedItem, newPath = self.errorCheck(renamedItem, itemToRename,
-												   newPath)
+                                                   newPath)
 
             # add to list of renamed items
             newItem = join(newPath, renamedItem)
             if not onlyShowChangedItems:
                 self.items_ren.append(newItem)
             elif newItem != itemToRename or main.ec in main.bad or\
-				main.ec in main.warn:
-					self.items_ren.append(newItem)
+                main.ec in main.warn:
+                    self.items_ren.append(newItem)
 
             app.debug_print("%s\n" % newItem)
 

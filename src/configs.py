@@ -36,10 +36,10 @@ def save(main):
     """Get values, write configuration file."""
     # save dialog
     dlg = wx.FileDialog(None, message=_(u"Save configuration as ..."),
-						defaultDir=utils.get_user_path(u'configs'), defaultFile=u'.cfg',
-						wildcard=_(u"Configuration file (*.cfg)") + u'|*.cfg',
-						style=wx.SAVE | wx.OVERWRITE_PROMPT
-						)
+                        defaultDir=utils.get_user_path(u'configs'), defaultFile=u'.cfg',
+                        wildcard=_(u"Configuration file (*.cfg)") + u'|*.cfg',
+                        style=wx.SAVE | wx.OVERWRITE_PROMPT
+                        )
     # write file
     if dlg.ShowModal() == wx.ID_OK:
         cfgFilePath = dlg.GetPath()
@@ -57,11 +57,11 @@ def load(main, configFilePath=False):
         LoadConfig(main, configFilePath)
     else:
         dlg = wx.FileDialog(None,
-							message=_(u"Load a configuration file"),
-							defaultDir=utils.get_user_path('configs'), defaultFile=u'',
-							wildcard=_(u"Configuration file (*.cfg)") + u'|*.cfg',
-							style=wx.OPEN
-							)
+                            message=_(u"Load a configuration file"),
+                            defaultDir=utils.get_user_path('configs'), defaultFile=u'',
+                            wildcard=_(u"Configuration file (*.cfg)") + u'|*.cfg',
+                            style=wx.OPEN
+                            )
         if dlg.ShowModal() == wx.ID_OK:
             LoadConfig(main, dlg.GetPath())
         dlg.Destroy()
@@ -120,7 +120,7 @@ class SaveConfig():
                 pass
             else:
                 cfg += '\t\t\t' + r * '\t' + u'<value id="%s" type="%s">%s</value>\n'\
-					% (id, widgetType, value)
+                    % (id, widgetType, value)
             return cfg
 
     def _renaming_ops_to_xml(self):
@@ -153,8 +153,8 @@ class SaveConfig():
         datetime = utils.udate(main, '%Y-%m-%d %H:%M:%S', time.localtime())
         cfgFile = u'<?xml version="1.0" encoding="UTF-8"?>\n'
         cfgFile += u'<configuration application="Métamorphose-2" ' + \
-			'version="%s" datetime="%s">\n'\
-			% (app.version, datetime)
+            'version="%s" datetime="%s">\n'\
+            % (app.version, datetime)
         # get info for 'normal' notebook tabs
         pages = utils.get_notebook_page_names(main)
         for i in (0, 2, 3):
@@ -167,7 +167,7 @@ class SaveConfig():
                     pass
                 else:
                     cfgFile += u'\t\t<value id="%s" type="%s">%s</value>\n'\
-						% (id, type, value)
+                        % (id, type, value)
             cfgFile += u'\t</page>\n'
 
         # get renaming operations
@@ -238,11 +238,11 @@ class LoadConfig():
         elif node.tagName == 'wxPanel':
             #print parent, id
             try:
-            	parent = getattr(parent, id)
+                parent = getattr(parent, id)
             except AttributeError:
-            	self.loadError = True
+                self.loadError = True
                 print id
-            	pass
+                pass
             else:
                 for child in node.childNodes:
                     if child.nodeType == 1:
@@ -259,10 +259,10 @@ class LoadConfig():
         else:
             for node in paramNode.childNodes:
                 if node.nodeType == 1:
-					value = node.childNodes[0].nodeValue
-					if value == 'True': value = True
-					if value == 'False': value = False
-					params[node.nodeName] = value
+                    value = node.childNodes[0].nodeValue
+                    if value == 'True': value = True
+                    if value == 'False': value = False
+                    params[node.nodeName] = value
         return params
 
 
@@ -337,9 +337,9 @@ class LoadConfig():
             xmldoc = minidom.parseString(xmldoc.read().encode("utf-8"))
         except:
             utils.make_err_msg(
-							   _(u"Invalid XML in config file : %s") % configFilePath,
-							   _(u"Invalid Configuration")
-							   )
+                               _(u"Invalid XML in config file : %s") % configFilePath,
+                               _(u"Invalid Configuration")
+                               )
         else:
             config = xmldoc.firstChild
 
@@ -354,7 +354,7 @@ class LoadConfig():
             self.__load_config_xml(config)
             
             if self.loadError:
-            	utils.make_warn_msg(_(u"Not all settings could be loaded."))
+                utils.make_warn_msg(_(u"Not all settings could be loaded."))
 
             # Do not replace a set path if one is not set in the config
             newPath = main.picker.view.path.GetValue()            
@@ -364,6 +364,6 @@ class LoadConfig():
             # preview
             main.bottomWindow.autoPreview.SetValue(v)
             if app.autoModeLevel != 0 or\
-				(app.prefs.get('previewOnConfig') and app.autoModeLevel is False):
-					main.picker.view.reset_dirpicker_on_config_load()
+                (app.prefs.get('previewOnConfig') and app.autoModeLevel is False):
+                    main.picker.view.reset_dirpicker_on_config_load()
 

@@ -17,8 +17,8 @@ import wx
 
 
 [wxID_EDITDIALOG, wxID_EDITDIALOGBUTTON1, wxID_EDITDIALOGBUTTON2,
-	wxID_EDITDIALOGSTATICTEXT1, wxID_EDITDIALOGSTATICTEXT2, wxID_EDITDIALOGVALUE,
-	wxID_EDITDIALOGSTATICTEXT3
+    wxID_EDITDIALOGSTATICTEXT1, wxID_EDITDIALOGSTATICTEXT2, wxID_EDITDIALOGVALUE,
+    wxID_EDITDIALOGSTATICTEXT3
 ] = [wx.NewId() for __init_ctrls in range(7)]
 
 class Dialog(wx.Dialog):
@@ -29,7 +29,7 @@ class Dialog(wx.Dialog):
         parent.AddWindow(self.staticText3, 0, border=4, flag=wx.ALL)
         parent.AddWindow(self.value, 0, border=5, flag=wx.ALL | wx.EXPAND)
         parent.AddSizer(self.boxSizer2, 0, border=10,
-						flag=wx.ALIGN_CENTER_HORIZONTAL | wx.BOTTOM | wx.TOP | wx.EXPAND)
+                        flag=wx.ALIGN_CENTER_HORIZONTAL | wx.BOTTOM | wx.TOP | wx.EXPAND)
 
     def __init_boxsizer2(self, parent):
         parent.AddWindow(self.backward, 0, border=5, flag=wx.LEFT)
@@ -47,29 +47,29 @@ class Dialog(wx.Dialog):
 
     def __init_ctrls(self, prnt):
         wx.Dialog.__init__(self, id=wxID_EDITDIALOG, name=u'editDialog',
-						   parent=prnt, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
-						   title=_(u"Manually Edit"))
+                           parent=prnt, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
+                           title=_(u"Manually Edit"))
         self.SetIcon(wx.Icon(utils.icon_path(u'edit.png'), wx.BITMAP_TYPE_PNG))
 
         self.staticText1 = wx.StaticText(id=wxID_EDITDIALOGSTATICTEXT1,
-										 label=_(u"Manually edit name, use with care."),
-										 name='staticText1', parent=self)
+                                         label=_(u"Manually edit name, use with care."),
+                                         name='staticText1', parent=self)
 
         self.staticText2 = wx.StaticText(id=wxID_EDITDIALOGSTATICTEXT2,
-										 label=_(u"Use the up and down keys to save changes to the name and \nmove to another item."),
-										 name='staticText2', parent=self)
+                                         label=_(u"Use the up and down keys to save changes to the name and \nmove to another item."),
+                                         name='staticText2', parent=self)
 
         self.staticText3 = wx.StaticText(id=wxID_EDITDIALOGSTATICTEXT3,
-										 label=_(u"Previewing will destroy any changes!"),
-										 name='staticText3', parent=self)
+                                         label=_(u"Previewing will destroy any changes!"),
+                                         name='staticText3', parent=self)
         self.staticText3.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD, False))
 
         self.value = wx.TextCtrl(id=wxID_EDITDIALOGVALUE, name=u'value',
-								 parent=self, size=wx.Size(410, -1), value=u'')
+                                 parent=self, size=wx.Size(410, -1), value=u'')
 
         self.backward = wx.Button(id=wx.ID_BACKWARD, name='backward', parent=self)
         self.backward.Bind(wx.EVT_BUTTON, self.set_next_item_from_button,
-						   id=wx.ID_BACKWARD)
+                           id=wx.ID_BACKWARD)
 
         self.button1 = wx.Button(id=wx.ID_CANCEL, name='button1', parent=self)
 
@@ -77,7 +77,7 @@ class Dialog(wx.Dialog):
 
         self.forward = wx.Button(id=wx.ID_FORWARD, name='forward', parent=self)
         self.forward.Bind(wx.EVT_BUTTON, self.set_next_item_from_button,
-						  id=wx.ID_FORWARD)
+                          id=wx.ID_FORWARD)
 
         # Windows and Linux do things differently
         # Bind both ways to be sure

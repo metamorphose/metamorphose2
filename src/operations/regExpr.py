@@ -18,8 +18,8 @@ import sre_constants
 import wx
 
 [wxID_PANEL, wxID_PANELA_Z, wxID_PANELDIGIT,
-	wxID_PANELREG_EXPR, wxID_PANELREG_EXP_DIV,
-	wxID_PANELREG_EXP_I, wxID_PANELREG_EXP_U,
+    wxID_PANELREG_EXPR, wxID_PANELREG_EXP_DIV,
+    wxID_PANELREG_EXP_I, wxID_PANELREG_EXP_U,
 ] = [wx.NewId() for __init_ctrls in range(7)]
 
 class Panel(wx.Panel):
@@ -41,41 +41,41 @@ class Panel(wx.Panel):
 
     def __init_ctrls(self, prnt, name):
         wx.Panel.__init__(self, id=wxID_PANEL, name=name, parent=prnt,
-						  style=wx.TAB_TRAVERSAL)
+                          style=wx.TAB_TRAVERSAL)
 
         self.regExpr = wx.CheckBox(id=wxID_PANELREG_EXPR,
-								   label=_(u"Evaluate as regular expression"), name=u'regExpr', parent=self,
-								   style=0)
+                                   label=_(u"Evaluate as regular expression"), name=u'regExpr', parent=self,
+                                   style=0)
         self.regExpr.SetValue(False)
         self.regExpr.Bind(wx.EVT_CHECKBOX, prnt.activate_options,
-						  id=wxID_PANELREG_EXPR)
+                          id=wxID_PANELREG_EXPR)
 
         self.iRegExpr = wx.CheckBox(id=wxID_PANELREG_EXP_I, label=_(u"case sensitive"),
-									name=u'iRegExpr', parent=self)
+                                    name=u'iRegExpr', parent=self)
         self.iRegExpr.SetValue(False)
         self.iRegExpr.SetToolTipString(_(u"Differentiate between upper and lower case"))
         self.iRegExpr.Enable(False)
         self.iRegExpr.Bind(wx.EVT_CHECKBOX, prnt.define_regex)
 
         self.uRegExpr = wx.CheckBox(id=wxID_PANELREG_EXP_U, label=_(u"Unicode"),
-									name=u'uRegExpr', parent=self)
+                                    name=u'uRegExpr', parent=self)
         self.uRegExpr.SetValue(True)
         self.uRegExpr.SetToolTipString(_(u"Unicode match (\w matches 'a','b','c', etc)"))
         self.uRegExpr.Enable(False)
         self.uRegExpr.Bind(wx.EVT_CHECKBOX, prnt.define_regex)
 
         self.regExpDiv = wx.StaticLine(id=wxID_PANELREG_EXP_DIV,
-									   name=u'regExpDiv', parent=self, size=wx.Size(2, 21),
-									   style=wx.LI_VERTICAL)
+                                       name=u'regExpDiv', parent=self, size=wx.Size(2, 21),
+                                       style=wx.LI_VERTICAL)
 
         self.aToZ = wx.Button(id=wxID_PANELA_Z, label=_(u"[a-z]"), name=u'aToZ',
-							  parent=self, style=wx.BU_EXACTFIT)
+                              parent=self, style=wx.BU_EXACTFIT)
         self.aToZ.SetToolTipString(_(u"All alphabetical characters"))
         self.aToZ.Enable(False)
         self.aToZ.Bind(wx.EVT_BUTTON, self._add_regex_buttons)
 
         self.digit = wx.Button(id=wxID_PANELDIGIT, label=_(u"[0-9]"),
-							   name=u'digit', parent=self, style=wx.BU_EXACTFIT)
+                               name=u'digit', parent=self, style=wx.BU_EXACTFIT)
         self.digit.SetToolTipString(_(u"All number characters"))
         self.digit.Enable(False)
         self.digit.Bind(wx.EVT_BUTTON, self._add_regex_buttons)
@@ -103,7 +103,7 @@ class Panel(wx.Panel):
     def set_active(self, activate):
         """Set active widgets."""
         reg_exp_tup = (self.iRegExpr, self.uRegExpr,
-					   self.aToZ, self.digit)
+                       self.aToZ, self.digit)
         for option in reg_exp_tup:
             option.Enable(activate)
 

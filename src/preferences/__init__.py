@@ -97,9 +97,9 @@ class Methods:
             prefs[u'bad_chars'] = (u'\\', u'/', u':', u'*', u'?', u'"', u'>', u'<', u'|')
         if prefs[u'useWinNames']:
             prefs[u'bad_win_words'] = (u'con', u'prn', u'aux', u'clock$',
-									   u'nul', u'com1', u'com2', u'com3', u'com4', u'com5', u'com6', u'com7',
-									   u'com8', u'com9', u'lpt1', u'lpt2', u'lpt3', u'lpt4', u'lpt5', u'lpt6',
-									   u'lpt7', u'lpt8', u'lpt9')
+                                       u'nul', u'com1', u'com2', u'com3', u'com4', u'com5', u'com6', u'com7',
+                                       u'com8', u'com9', u'lpt1', u'lpt2', u'lpt3', u'lpt4', u'lpt5', u'lpt6',
+                                       u'lpt7', u'lpt8', u'lpt9')
 
         prefs[u'backgroundColor'] = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)
         prefs[u'highlightColor'] = wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT)

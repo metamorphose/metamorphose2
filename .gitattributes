@@ -10,7 +10,7 @@ nbproject/      export-ignore
 *.txt   text eol=lf
 *.md    text eol=lf
 *.html  text eol=lf
-*.cfg   text eol=lf
+*.cfg   text eol=lf diff=xml
 *.sh    text eol=lf
 *.pot   text eol=lf
-*.po    text
+*.po    text eol=lf

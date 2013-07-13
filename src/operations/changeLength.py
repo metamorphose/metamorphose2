@@ -16,8 +16,8 @@ from operation import Operation
 import wx
 
 [wxID_PANEL, wxID_PANELMOD_LENGTH, wxID_PANELMOD_LENGTH_DIRECTION,
-	wxID_PANELMOD_LENGTH_PAD, wxID_PANELMOD_LENGTH_POSITION,
-	wxID_PANELMOD_LENGTH_TYPE, wxID_PANELSTATICBOX1, wxID_MAINPANELMOD_LENGTH
+    wxID_PANELMOD_LENGTH_PAD, wxID_PANELMOD_LENGTH_POSITION,
+    wxID_PANELMOD_LENGTH_TYPE, wxID_PANELSTATICBOX1, wxID_MAINPANELMOD_LENGTH
 ] = [wx.NewId() for __init_ctrls in range(8)]
 
 class OpPanel(Operation):
@@ -44,74 +44,74 @@ class OpPanel(Operation):
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'changeLengthPanel', parent=prnt,
-						  pos=wx.Point(369, 293), size=wx.Size(524, 304),
-						  style=wx.TAB_TRAVERSAL)
+                          pos=wx.Point(369, 293), size=wx.Size(524, 304),
+                          style=wx.TAB_TRAVERSAL)
 
         self.staticBox1 = wx.StaticBox(id=wxID_PANELSTATICBOX1,
-									   label=_(u"How to change the length:"), name='staticBox1',
-									   parent=self, pos=wx.Point(16, 16),
-									   style=0)
+                                       label=_(u"How to change the length:"), name='staticBox1',
+                                       parent=self, pos=wx.Point(16, 16),
+                                       style=0)
 
         self.modLengthType = wx.Choice(choices=[_(u"Cut"), _(u"Pad"),
-									   _(u"Both")], id=wxID_PANELMOD_LENGTH_TYPE,
-									   name=u'modLengthType', parent=self, pos=wx.Point(32, 64), )
+                                       _(u"Both")], id=wxID_PANELMOD_LENGTH_TYPE,
+                                       name=u'modLengthType', parent=self, pos=wx.Point(32, 64), )
         self.modLengthType.SetSelection(0)
         self.modLengthType.Bind(wx.EVT_CHOICE, self.__enable_options,
-								id=wxID_PANELMOD_LENGTH_TYPE)
+                                id=wxID_PANELMOD_LENGTH_TYPE)
 
         self.modLength = wx.SpinCtrl(id=wxID_MAINPANELMOD_LENGTH, initial=1,
-									 max=255, min=1, name=u'modLength', parent=self, pos=wx.Point(120,
-									 64), size=wx.Size(50, -1), value='64',
-									 style=wx.SP_ARROW_KEYS | wx.TE_PROCESS_ENTER)
+                                     max=255, min=1, name=u'modLength', parent=self, pos=wx.Point(120,
+                                     64), size=wx.Size(50, -1), value='64',
+                                     style=wx.SP_ARROW_KEYS | wx.TE_PROCESS_ENTER)
         self.modLength.SetValue(64)
         self.modLength.SetToolTipString(_(u"Length after modification"))
         self.modLength.Bind(wx.EVT_TEXT_ENTER, main.show_preview,
-							id=wxID_MAINPANELMOD_LENGTH)
+                            id=wxID_MAINPANELMOD_LENGTH)
         self.modLength.Bind(wx.EVT_SPINCTRL, main.show_preview,
-							id=wxID_MAINPANELMOD_LENGTH)
+                            id=wxID_MAINPANELMOD_LENGTH)
 
         self.staticText8 = wx.StaticText(id=-1, label=_(u"characters,"),
-										 name=u'staticText8', parent=self, style=0)
+                                         name=u'staticText8', parent=self, style=0)
 
         self.staticText2 = wx.StaticText(id=-1, label=_(u"to:"),
-										 name=u'staticText2', parent=self, style=0)
+                                         name=u'staticText2', parent=self, style=0)
 
         self.staticText4 = wx.StaticText(id=-1, label=_(u"starting from the:"),
-										 name=u'staticText4', parent=self, style=0)
+                                         name=u'staticText4', parent=self, style=0)
 
         self.modLengthDirection = wx.Choice(choices=[_(u"right"),
-											_(u"left")], id=wxID_PANELMOD_LENGTH_DIRECTION,
-											name=u'modLengthDirection', parent=self)
+                                            _(u"left")], id=wxID_PANELMOD_LENGTH_DIRECTION,
+                                            name=u'modLengthDirection', parent=self)
         self.modLengthDirection.SetSelection(0)
         self.modLengthDirection.Bind(wx.EVT_CHOICE, main.show_preview,
-									 id=wxID_PANELMOD_LENGTH_DIRECTION)
+                                     id=wxID_PANELMOD_LENGTH_DIRECTION)
 
         self.staticText3 = wx.StaticText(id=-1, label=_(u"Character for padding:"),
-										 name=u'staticText3', parent=self, style=0, )
+                                         name=u'staticText3', parent=self, style=0, )
         self.staticText3.Enable(False)
 
         self.modLengthPad = wx.TextCtrl(id=wxID_PANELMOD_LENGTH_PAD,
-										name=u'modLengthPad', parent=self,
-										size=wx.Size(24, -1), style=0, value='0')
+                                        name=u'modLengthPad', parent=self,
+                                        size=wx.Size(24, -1), style=0, value='0')
         self.modLengthPad.SetMaxLength(1)
         self.modLengthPad.Enable(False)
         self.modLengthPad.Bind(wx.EVT_TEXT, main.show_preview)
 
         self.staticText5 = wx.StaticText(id=-1, label=_(u"Position for padding:"),
-										 name=u'staticText5', parent=self, style=0)
+                                         name=u'staticText5', parent=self, style=0)
         self.staticText5.Enable(False)
 
         self.mod_length_position = wx.SpinCtrl(id=wxID_PANELMOD_LENGTH_POSITION,
-											   initial=0, max=256, min=-256, name=u'mod_length_position',
-											   parent=self, size=wx.Size(45, -1), value='0',
-											   style=wx.SP_ARROW_KEYS | wx.TE_PROCESS_ENTER)
+                                               initial=0, max=256, min=-256, name=u'mod_length_position',
+                                               parent=self, size=wx.Size(45, -1), value='0',
+                                               style=wx.SP_ARROW_KEYS | wx.TE_PROCESS_ENTER)
         self.mod_length_position.SetValue(0)
         self.mod_length_position.Enable(False)
         self.mod_length_position.SetToolTipString(_(u"(0 = first character)"))
         self.mod_length_position.Bind(wx.EVT_TEXT_ENTER, main.show_preview,
-									  id=wxID_PANELMOD_LENGTH_POSITION)
+                                      id=wxID_PANELMOD_LENGTH_POSITION)
         self.mod_length_position.Bind(wx.EVT_SPINCTRL, main.show_preview,
-									  id=wxID_PANELMOD_LENGTH_POSITION)
+                                      id=wxID_PANELMOD_LENGTH_POSITION)
 
     def __init__(self, parent, main_window, params={}):
         Operation.__init__(self, params)
@@ -124,7 +124,7 @@ class OpPanel(Operation):
         """Activate or disativate length modification options."""
         type = self.modLengthType.GetSelection()
         padding = (self.modLengthPad, self.staticText3, self.staticText5,
-				   self.mod_length_position)
+                   self.mod_length_position)
         if (type == 1 or type == 2):
             for option in padding:
                 option.Enable(True)
@@ -169,7 +169,7 @@ class OpPanel(Operation):
             else:
                 padSize = width - len(newName)
                 newName = newName[:position] + unicode(padChar * padSize) + \
-					newName[position:]
+                    newName[position:]
             return newName
 
         # perform requested operation:

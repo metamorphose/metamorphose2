@@ -26,17 +26,17 @@ try:
     import Image
 except:
     utils.make_err_msg(_("Python Imaging Library (PIL) not found.\nRefer to readme file for install instructions.\n\nYou will not be able to preview images."),
-					   _("PIL needed"))
+                       _("PIL needed"))
 
 [wxID_PICKERPANEL, wxID_PICKERPANELBROWSE, wxID_SELECTIONAREADIRPICKER,
-	wxID_PICKERPANELDIVIDER1, wxID_PICKERPANELFILESON,
-	wxID_PICKERPANELFILTERSEL, wxID_PICKERPANELFOLDERSON, wxID_PICKERPANELNOT_TYPE,
-	wxID_PICKERPANELOK, wxID_PICKERPANELPATH, wxID_PICKERPANELPATH_HELP,
-	wxID_SELECTIONAREAFPICKER, wxID_PICKERPANELSELECT, wxID_PICKERPANELSELECT_ALL,
-	wxID_PICKERPANELSELECT_NONE, wxID_PICKERPANELSTATICTEXT1,
-	wxID_PICKERPANELWALKIT, wxID_PICKERPANELFILTERBYRE, wxID_SELECTIONAREA,
-	wxID_PICKERPANELIGNORECASE, wxID_PICKERPANELUSELOCALE, wxID_PICKERPANELWALKDEPTH,
-	wxID_PICKERPANELSTATICTEXT2,
+    wxID_PICKERPANELDIVIDER1, wxID_PICKERPANELFILESON,
+    wxID_PICKERPANELFILTERSEL, wxID_PICKERPANELFOLDERSON, wxID_PICKERPANELNOT_TYPE,
+    wxID_PICKERPANELOK, wxID_PICKERPANELPATH, wxID_PICKERPANELPATH_HELP,
+    wxID_SELECTIONAREAFPICKER, wxID_PICKERPANELSELECT, wxID_PICKERPANELSELECT_ALL,
+    wxID_PICKERPANELSELECT_NONE, wxID_PICKERPANELSTATICTEXT1,
+    wxID_PICKERPANELWALKIT, wxID_PICKERPANELFILTERBYRE, wxID_SELECTIONAREA,
+    wxID_PICKERPANELIGNORECASE, wxID_PICKERPANELUSELOCALE, wxID_PICKERPANELWALKDEPTH,
+    wxID_PICKERPANELSTATICTEXT2,
 ] = [wx.NewId() for __init_ctrls in range(23)]
 
 
@@ -45,7 +45,7 @@ class DirectoryList(wx.GenericDirCtrl):
     def __init__(self, parent, ID, name, showHidden):
         self.parent = parent.GetParent()
         wx.GenericDirCtrl.__init__(self, parent, ID, name,
-								   defaultFilter=0, filter='', style=wx.DIRCTRL_DIR_ONLY)
+                                   defaultFilter=0, filter='', style=wx.DIRCTRL_DIR_ONLY)
 
         if showHidden:
             self.ShowHidden(True)
@@ -133,9 +133,9 @@ class ItemList(wx.ListCtrl):
         # apply to list
         self.imgs = wx.ImageList(thumbSize[0], thumbSize[1])
         self.folderIco = self.imgs.Add(wx.Bitmap(utils.icon_path(u'folder%s.png' % thumbSize[0]),
-									   wx.BITMAP_TYPE_PNG))
+                                       wx.BITMAP_TYPE_PNG))
         self.fileIco = self.imgs.Add(wx.Bitmap(utils.icon_path(u'file%s.png' % thumbSize[0]),
-									 wx.BITMAP_TYPE_PNG))
+                                     wx.BITMAP_TYPE_PNG))
         self.SetImageList(self.imgs, wx.IMAGE_LIST_SMALL)
         return thumbSize
 
@@ -211,7 +211,7 @@ class ItemList(wx.ListCtrl):
         """Add items found to list."""
         self.thumbnails = {}
         supported = ('.png', '.jpg', '.bmp', '.tif', '.jpeg',
-					 '.tiff', '.gif', '.ico', '.thm')
+                     '.tiff', '.gif', '.ico', '.thm')
         imgPreview = main.bottomWindow.imgPreview.GetValue()
         thumbSize = self.thumbSize = self.__create_image_list(imgPreview)
 
@@ -326,15 +326,15 @@ class Panel(wx.Panel):
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_PICKERPANEL, name=u'pickerPanel',
-						  parent=prnt, style=wx.NO_BORDER)
+                          parent=prnt, style=wx.NO_BORDER)
 
         self.path = wx.TextCtrl(id=wxID_PICKERPANELPATH, name=u'path',
-								parent=self, style=wx.TE_PROCESS_ENTER, value='')
+                                parent=self, style=wx.TE_PROCESS_ENTER, value='')
         self.path.Bind(wx.EVT_TEXT_ENTER, self.Core.set_path,
-					   id=wxID_PICKERPANELPATH)
+                       id=wxID_PICKERPANELPATH)
 
         self.ok = wx.Button(id=wxID_PICKERPANELOK, label=_(u"Refresh"), name=u'OK',
-							parent=self, style=wx.BU_EXACTFIT)
+                            parent=self, style=wx.BU_EXACTFIT)
         #reloadImg = wx.Bitmap(utils.icon_path(u'reload.png'), wx.BITMAP_TYPE_PNG)
         #self.ok = wx.BitmapButton(bitmap=reloadImg, id=wxID_PICKERPANELOK, name=u'OK',
         #      parent=self, style=wx.BU_AUTODRAW)
@@ -343,111 +343,111 @@ class Panel(wx.Panel):
         self.ok.Bind(wx.EVT_BUTTON, self.Core.set_path, id=wxID_PICKERPANELOK)
 
         self.browse = wx.Button(id=wxID_PICKERPANELBROWSE, label=_(u"Browse"),
-								name=u'BROWSE', parent=self, style=wx.BU_EXACTFIT)
+                                name=u'BROWSE', parent=self, style=wx.BU_EXACTFIT)
         self.browse.SetToolTipString(_(u"Browse for path"))
         self.browse.Bind(wx.EVT_BUTTON, self.browse_for_path,
-						 id=wxID_PICKERPANELBROWSE)
+                         id=wxID_PICKERPANELBROWSE)
 
         self.pathHelp = wx.StaticText(id=wxID_PICKERPANELPATH_HELP,
-									  label=_(u"Input/Paste path and press OK, or BROWSE for path:"),
-									  name=u'pathHelp', parent=self)
+                                      label=_(u"Input/Paste path and press OK, or BROWSE for path:"),
+                                      name=u'pathHelp', parent=self)
 
         self.select = wx.StaticText(id=wxID_PICKERPANELSELECT, label=_(u"Select:"),
-									name=u'select', parent=self)
+                                    name=u'select', parent=self)
 
         self.selectAll = wx.Button(id=wxID_PICKERPANELSELECT_ALL, label=_(u"all"),
-								   name=u'selectAll', parent=self, style=wx.BU_EXACTFIT)
+                                   name=u'selectAll', parent=self, style=wx.BU_EXACTFIT)
         self.selectAll.Enable(False)
         self.selectAll.Bind(wx.EVT_BUTTON, self.select_all,
-							id=wxID_PICKERPANELSELECT_ALL)
+                            id=wxID_PICKERPANELSELECT_ALL)
 
         self.selectNone = wx.Button(id=wxID_PICKERPANELSELECT_NONE,
-									label=_(u"none"), name=u'selectNone', parent=self, style=wx.BU_EXACTFIT)
+                                    label=_(u"none"), name=u'selectNone', parent=self, style=wx.BU_EXACTFIT)
         self.selectNone.Enable(False)
         self.selectNone.Bind(wx.EVT_BUTTON, self.select_none,
-							 id=wxID_PICKERPANELSELECT_NONE)
+                             id=wxID_PICKERPANELSELECT_NONE)
 
         self.foldersOn = wx.CheckBox(id=wxID_PICKERPANELFOLDERSON, label=_(u"Folders"),
-									 name=u'foldersOn', parent=self, )
+                                     name=u'foldersOn', parent=self, )
         self.foldersOn.SetValue(True)
         self.foldersOn.Bind(wx.EVT_CHECKBOX, self._refresh_items,
-							id=wxID_PICKERPANELFOLDERSON)
+                            id=wxID_PICKERPANELFOLDERSON)
 
         self.filesOn = wx.CheckBox(id=wxID_PICKERPANELFILESON, label=_(u"Files"),
-								   name=u'filesOn', parent=self)
+                                   name=u'filesOn', parent=self)
         self.filesOn.SetValue(True)
         self.filesOn.Bind(wx.EVT_CHECKBOX, self._refresh_items,
-						  id=wxID_PICKERPANELFILESON)
+                          id=wxID_PICKERPANELFILESON)
 
         keys = self.get_in_searches()
         self.FilterSel = wx.ComboBox(choices=keys, id=wxID_PICKERPANELFILTERSEL,
-									 name=u'FilterSel', parent=self, style=wx.TE_PROCESS_ENTER)
+                                     name=u'FilterSel', parent=self, style=wx.TE_PROCESS_ENTER)
         self.FilterSel.SetSelection(0)
         self.FilterSel.SetToolTipString(_(u"Names containing (Use menu or enter text)"))
         self.FilterSel.Bind(wx.EVT_COMBOBOX, self._on_filter_sel,
-							id=wxID_PICKERPANELFILTERSEL)
+                            id=wxID_PICKERPANELFILTERSEL)
         self.FilterSel.Bind(wx.EVT_TEXT_ENTER, self._refresh_items,
-							id=wxID_PICKERPANELFILTERSEL)
+                            id=wxID_PICKERPANELFILTERSEL)
 
         self.staticText1 = wx.StaticText(id=wxID_PICKERPANELSTATICTEXT1,
-										 label=_(u"Contaning:"), name=u'staticText1', parent=self)
+                                         label=_(u"Contaning:"), name=u'staticText1', parent=self)
 
         self.filterByRE = wx.CheckBox(id=wxID_PICKERPANELFILTERBYRE, label=_(u"Reg-Expr"),
-									  name=u'filterByRE', parent=self)
+                                      name=u'filterByRE', parent=self)
         self.filterByRE.SetValue(False)
         self.filterByRE.SetToolTipString(_(u"Evaluate filter as a regular expression"))
         self.filterByRE.Bind(wx.EVT_CHECKBOX, self.__regex_options,
-							 id=wxID_PICKERPANELFILTERBYRE)
+                             id=wxID_PICKERPANELFILTERBYRE)
 
         self.ignoreCase = wx.CheckBox(id=wxID_PICKERPANELIGNORECASE, label=_(u"I"),
-									  name=u'ignoreCase', parent=self)
+                                      name=u'ignoreCase', parent=self)
         self.ignoreCase.SetValue(True)
         self.ignoreCase.Enable(False)
         self.ignoreCase.SetToolTipString(_(u"case-Insensitive match"))
         self.ignoreCase.Bind(wx.EVT_CHECKBOX, self._refresh_items,
-							 id=wxID_PICKERPANELIGNORECASE)
+                             id=wxID_PICKERPANELIGNORECASE)
 
         self.useLocale = wx.CheckBox(id=wxID_PICKERPANELUSELOCALE, label=_(u"U"),
-									 name=u'useLocale', parent=self)
+                                     name=u'useLocale', parent=self)
         self.useLocale.SetValue(True)
         self.useLocale.Enable(False)
         self.useLocale.SetToolTipString(_(u"Unicode match (\w matches 'a','b','c', etc)"))
         self.useLocale.Bind(wx.EVT_CHECKBOX, self._refresh_items,
-							id=wxID_PICKERPANELUSELOCALE)
+                            id=wxID_PICKERPANELUSELOCALE)
 
         self.walkIt = wx.CheckBox(id=wxID_PICKERPANELWALKIT, label=_(u"Recursive"),
-								  name=u'walkIt', parent=self)
+                                  name=u'walkIt', parent=self)
         self.walkIt.SetValue(False)
         self.walkIt.SetToolTipString(_(u"Get all files in directory and sub-directories, but no folders"))
         self.walkIt.Bind(wx.EVT_CHECKBOX, self.__on_recursive_checkbox,
-						 id=wxID_PICKERPANELWALKIT)
+                         id=wxID_PICKERPANELWALKIT)
 
         self.staticText2 = wx.StaticText(id=wxID_PICKERPANELSTATICTEXT2,
-										 label=_(u"depth:"), name=u'staticText2', parent=self)
+                                         label=_(u"depth:"), name=u'staticText2', parent=self)
         self.staticText2.Enable(False)
 
         self.walkDepth = wx.SpinCtrl(id=wxID_PICKERPANELWALKDEPTH, initial=0,
-									 max=999, min=0, name=u'walkDepth', parent=self,
-									 size=wx.Size(56, -1), style=wx.SP_ARROW_KEYS, value='0')
+                                     max=999, min=0, name=u'walkDepth', parent=self,
+                                     size=wx.Size(56, -1), style=wx.SP_ARROW_KEYS, value='0')
         self.walkDepth.SetValue(0)
         self.walkDepth.SetToolTipString(_(u"Number of levels to descend, 0 = unlimited"))
         self.walkDepth.Enable(False)
         self.walkDepth.Bind(wx.EVT_SPINCTRL, self._refresh_items,
-							id=wxID_PICKERPANELWALKDEPTH)
+                            id=wxID_PICKERPANELWALKDEPTH)
 
         self.notType = wx.CheckBox(id=wxID_PICKERPANELNOT_TYPE, label=_(u"Not"),
-								   name=u'notType', parent=self)
+                                   name=u'notType', parent=self)
         self.notType.SetValue(False)
         self.notType.SetToolTipString(_(u"NOT containing"))
         self.notType.Bind(wx.EVT_CHECKBOX, self._refresh_items,
-						  id=wxID_PICKERPANELNOT_TYPE)
+                          id=wxID_PICKERPANELNOT_TYPE)
 
         self.divider1 = wx.StaticLine(id=wxID_PICKERPANELDIVIDER1,
-									  name=u'divider1', parent=self, size=wx.Size(3, 22), style=wx.LI_VERTICAL)
+                                      name=u'divider1', parent=self, size=wx.Size(3, 22), style=wx.LI_VERTICAL)
 
         # create split window:
         self.selectionArea = wx.SplitterWindow(parent=self, id=wxID_SELECTIONAREA,
-											   name=u'selectionArea', style=wx.SP_LIVE_UPDATE)
+                                               name=u'selectionArea', style=wx.SP_LIVE_UPDATE)
 
         # directory picker:
         if app.prefs.get(u'useDirTree'):
@@ -455,7 +455,7 @@ class Panel(wx.Panel):
 
         # file picker:
         self.ItemList = ItemList(id=wxID_SELECTIONAREAFPICKER, name=u'picker',
-								 parent=self.selectionArea, MainWindow=main)
+                                 parent=self.selectionArea, MainWindow=main)
         self.__init_splitter()
 
 
@@ -476,11 +476,11 @@ class Panel(wx.Panel):
     def __create_dir_tree(self):
         """Create the directory tree."""
         self.dirPicker = DirectoryList(
-			   self.selectionArea,
-			   wxID_SELECTIONAREADIRPICKER,
-			   u'dirPicker',
-			   app.prefs.get('showHiddenDirs')
-		)
+               self.selectionArea,
+               wxID_SELECTIONAREADIRPICKER,
+               u'dirPicker',
+               app.prefs.get('showHiddenDirs')
+        )
         self.dirPicker.bind()
 
     def __on_recursive_checkbox(self, event):
@@ -575,7 +575,7 @@ class Panel(wx.Panel):
     def browse_for_path(self, event):
         """Get and set path."""
         dlg = wx.DirDialog(self, _(u"Choose a directory:"),
-						   style=wx.DD_DEFAULT_STYLE)
+                           style=wx.DD_DEFAULT_STYLE)
         dlg.SetPath(self.path.GetValue())
         try:
             if dlg.ShowModal() == wx.ID_OK:

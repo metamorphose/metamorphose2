@@ -55,12 +55,12 @@ class SmallHelp(wx.Dialog):
         if size == False:
             size = wx.Size(610, 531)
         wx.Dialog.__init__(self, id=-1, name='smallHelpDialog', parent=prnt,
-						   style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX,
-						   title=title)
+                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX,
+                           title=title)
         self.SetIcon(wx.Icon(utils.icon_path(u'%s.ico') % icon, wx.BITMAP_TYPE_ICO))
 
         self.display = wx.html.HtmlWindow(id=-1,
-										  name=u'display', parent=self, style=wx.html.HW_SCROLLBAR_AUTO)
+                                          name=u'display', parent=self, style=wx.html.HW_SCROLLBAR_AUTO)
         #self.display.SetMinSize(wx.Size(1010, 531))
 
         self.Center(wx.HORIZONTAL | wx.VERTICAL)
@@ -91,15 +91,15 @@ class ProgressDialog(wx.ProgressDialog):
         if prefs.get('showProgressDialog') and items > int(prefs.get(u'itemCountForProgDialog')):
             self.active = True
             wx.ProgressDialog.__init__(self,
-									   _(u"Progress"),
-									   message,
-									   maximum=items,
-									   parent=parent,
-									   style=wx.PD_APP_MODAL
-									   | wx.PD_ELAPSED_TIME
-									   | wx.PD_AUTO_HIDE
-									   | wx.PD_CAN_ABORT
-									   )
+                                       _(u"Progress"),
+                                       message,
+                                       maximum=items,
+                                       parent=parent,
+                                       style=wx.PD_APP_MODAL
+                                       | wx.PD_ELAPSED_TIME
+                                       | wx.PD_AUTO_HIDE
+                                       | wx.PD_CAN_ABORT
+                                       )
         else:
             self.active = False
 

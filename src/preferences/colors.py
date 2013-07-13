@@ -18,7 +18,7 @@ class ColourPickerCtrl(wx.ColourPickerCtrl):
     """Custom wx.ColourPickerCtrl to make changing look easier."""
     def __init__(self, parent, col, name):
         wx.ColourPickerCtrl.__init__(self, parent=parent, id=-1, col=col,
-									 name=name, style=wx.CLRP_USE_TEXTCTRL)
+                                     name=name, style=wx.CLRP_USE_TEXTCTRL)
         self.SetMinSize(wx.Size(250, 35))
         self.SetPickerCtrlProportion(1)
         self.Bind(wx.EVT_COLOURPICKER_CHANGED, self.choose_color, self)
@@ -38,20 +38,20 @@ class Panel(wx.Panel):
     def __init_renamecolor_sizer(self, parent):
         
         parent.AddWindow(self.willChangeColorTxt, 0,
-						 flag=wx.ALIGN_CENTER_VERTICAL, border=0)
+                         flag=wx.ALIGN_CENTER_VERTICAL, border=0)
         parent.AddWindow(self.willChangeColor, 0, flag=0, border=0)
 
         parent.AddWindow(self.renamedColorTxt, 0,
-						 flag=wx.ALIGN_CENTER_VERTICAL, border=0)
+                         flag=wx.ALIGN_CENTER_VERTICAL, border=0)
         parent.AddWindow(self.renamedColor, 0, flag=0, border=0)
 
 
         parent.AddWindow(self.errorColorTxt, 0,
-						 flag=wx.ALIGN_CENTER_VERTICAL, border=0)
+                         flag=wx.ALIGN_CENTER_VERTICAL, border=0)
         parent.AddWindow(self.errorColor, 0, 0, border=0)
 
         parent.AddWindow(self.warnColorTxt, 0,
-						 flag=wx.ALIGN_CENTER_VERTICAL, border=0)
+                         flag=wx.ALIGN_CENTER_VERTICAL, border=0)
         parent.AddWindow(self.warnColor, 0, 0, border=0)
 
     def __init_sizers(self):
@@ -61,9 +61,9 @@ class Panel(wx.Panel):
 
         self.mainSizer.AddSpacer(wx.Size(8, 8), border=0, flag=0)
         self.mainSizer.AddSizer(self.renameColorSizer, 0,
-								flag=wx.ALIGN_CENTER_HORIZONTAL | wx.ALL, border=10)
+                                flag=wx.ALIGN_CENTER_HORIZONTAL | wx.ALL, border=10)
         self.mainSizer.AddWindow(self.setDefaultsBtn, 0,
-								 flag=wx.ALIGN_CENTER_HORIZONTAL | wx.TOP, border=5)
+                                 flag=wx.ALIGN_CENTER_HORIZONTAL | wx.TOP, border=5)
         self.SetSizer(self.mainSizer)
 
     def __init_ctrls(self, prnt):
@@ -86,7 +86,7 @@ class Panel(wx.Panel):
         self.warnColor.SetToolTipString(_(u"Color of items with warnings."))
 
         self.setDefaultsBtn = wx.Button(self, -1, label=_(u"Set colors to defaults"),
-										name=u'setDefaultsBtn')
+                                        name=u'setDefaultsBtn')
         self.Bind(wx.EVT_BUTTON, self.set_defaults, self.setDefaultsBtn)
 
         self.__init_sizers()

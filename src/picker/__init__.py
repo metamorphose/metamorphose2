@@ -45,16 +45,16 @@ class Parameters(classes.Parameters):
         root = self.get_value(self.view.path)
         self.set_root_path(root)
         widgets = (
-				   'foldersOn', # grab folders
-				   'filesOn', # grab files
-				   'notType', # invert filter
-				   'FilterSel',
-				   'filterByRE',
-				   'ignoreCase',
-				   'useLocale',
-				   'walkIt', # recursive
-				   'walkDepth',
-				   )
+                   'foldersOn', # grab folders
+                   'filesOn', # grab files
+                   'notType', # invert filter
+                   'FilterSel',
+                   'filterByRE',
+                   'ignoreCase',
+                   'useLocale',
+                   'walkIt', # recursive
+                   'walkDepth',
+                   )
         return self.set_parameters(widgets)
 
     def set_root_path(self, root):
@@ -77,17 +77,17 @@ class Parameters(classes.Parameters):
 class Core():
     def __init__(self, parent, MainWindow):
         self.CommonSearches = (
-			 ("" , ""),
-			 ( _(u"- audio") , u"\.(mp3|wav|ogg|flac|wma|aiff|aac|m3u|mid|ra|ram|m4a)$"),
-			 ( _(u"- image") , u"\.(bmp|jpg|jpeg|png|svg|ico|tif|tiff|gif|psd|ai|thm|nef)$"),
-			 ( _(u"- video") , u"\.(avi|mpg|mpeg|mpe|mp4|m4e|wmv|divx|flc|mov|ogm)$"),
-			 ( _(u"- office related") , u"\.(txt|csv|rtf|doc|otf|xls|pps|ppt)$"),
-			 ( _(u"- web related") , u"\.(htm|html|php|css|js|asp|cgi|swf)$"),
-			 ( _(u"- programming") , u"\.(py|pyc|php|pl|h|c|cpp|cxx|jar|java|js|tcl)$"),
-			 ( _(u"- compressed") , u"\.(zip|tar|7z|ace|gz|tgz|rar|r\d{1,3}|cab|bz2)$"),
-			 ( _(u"- an extension") , u"^.+\..+$"),
-			 ( _(u"- only an extension") , u"(^|\\\|/)\."),
-	   )
+             ("" , ""),
+             ( _(u"- audio") , u"\.(mp3|wav|ogg|flac|wma|aiff|aac|m3u|mid|ra|ram|m4a)$"),
+             ( _(u"- image") , u"\.(bmp|jpg|jpeg|png|svg|ico|tif|tiff|gif|psd|ai|thm|nef)$"),
+             ( _(u"- video") , u"\.(avi|mpg|mpeg|mpe|mp4|m4e|wmv|divx|flc|mov|ogm)$"),
+             ( _(u"- office related") , u"\.(txt|csv|rtf|doc|otf|xls|pps|ppt)$"),
+             ( _(u"- web related") , u"\.(htm|html|php|css|js|asp|cgi|swf)$"),
+             ( _(u"- programming") , u"\.(py|pyc|php|pl|h|c|cpp|cxx|jar|java|js|tcl)$"),
+             ( _(u"- compressed") , u"\.(zip|tar|7z|ace|gz|tgz|rar|r\d{1,3}|cab|bz2)$"),
+             ( _(u"- an extension") , u"^.+\..+$"),
+             ( _(u"- only an extension") , u"(^|\\\|/)\."),
+       )
         self.CustomSearches = {}
 
         global main
@@ -156,7 +156,7 @@ class Core():
             self.view.refresh_dirpicker()
 
     def remove_items_by_name(self, itemNames):
-    	for name in itemNames:
+        for name in itemNames:
             displayedName = name.replace(self.params.root, '')
             if os.path.split(displayedName)[0] == os.sep:
                 displayedName = displayedName[1:]
@@ -217,13 +217,13 @@ class Core():
 
     def refresh(self, event):
         """
-		Grab items from a specified directory, either as a listing or as a
-		walk, and filter out entries based on user settings.
-		Files and folders are seperated for proper sorting.
-		Called, depending on user preferences,
-		from almost every widget in the picker panel, and from
-		the main application class.
-		"""
+        Grab items from a specified directory, either as a listing or as a
+        walk, and filter out entries based on user settings.
+        Files and folders are seperated for proper sorting.
+        Called, depending on user preferences,
+        from almost every widget in the picker panel, and from
+        the main application class.
+        """
         files = [] #files will go here
         folders = [] #folders will go here
         error = False
@@ -277,8 +277,8 @@ class Core():
 
             # define here for speed boost
             def isdir(entry):
-				join = os.path.join(params.root, entry)
-				return os.path.isdir(join)
+                join = os.path.join(params.root, entry)
+                return os.path.isdir(join)
 
             def get_encoded_name(filename):
                 filename = filename.decode(sys.getfilesystemencoding(), 'replace')
@@ -298,12 +298,12 @@ class Core():
                         base = dirpath.replace(params.root, '')
                         if maxDepth != 0 and len(base.split(os.path.sep)) > maxDepth:
                             continue
-						# grab files
+                        # grab files
                         if params.filesOn:
                             for entry in filenames:
                                 entry = os.path.join(base, entry)
                                 _filter_files(entry)
-						# grab folders
+                        # grab folders
                         if params.foldersOn:
                             for entry in dirnames:
                                 entry = os.path.join(base, entry)
@@ -314,7 +314,7 @@ class Core():
                 except UnicodeDecodeError as err:
                     entry = err[1].decode(sys.getfilesystemencoding(), 'replace')
                     msg = _("The item '%s' has an encoding error.\nUnable to process this path in recursive mode, please correct the name and try again.")\
-						% entry
+                        % entry
                     utils.make_err_msg(msg, _("Unable to load item"))
                     error = True
                     pass
@@ -350,12 +350,12 @@ class Core():
                             _filter_files(entry)
                     if encodingError:
                         utils.make_err_msg(_("At least one item has an encoding error in its name. You will not be able to modify these."),
-										   _("Encoding Error"))
+                                           _("Encoding Error"))
 
             if error is not True:
                 self.add_items_to_panel(folders, files)
                 main.set_status_msg(_(u"Retrieved %s items from directory") % self.count_panel_items(),
-									u'complete')
+                                    u'complete')
 
                 # after retrieval:
                 self.enable_panel_widget('selectAll', True)

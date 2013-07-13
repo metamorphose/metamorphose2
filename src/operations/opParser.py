@@ -253,8 +253,8 @@ class Parser():
                     # attempt to convert tag's text to a date
                     try:
                         dayWeek = calendar.weekday(itemDateTime[0],
-												   itemDateTime[1],
-												   itemDateTime[2])
+                                                   itemDateTime[1],
+                                                   itemDateTime[2])
                     # invalid date
                     except ValueError, err:
                         self.__add_to_warnings(path, _(u"Exif error: %s") % err)

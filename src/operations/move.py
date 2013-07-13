@@ -22,9 +22,9 @@ import utils
 import wx
 
 [wxID_PANEL, wxID_PANELREPL_MOVE_POS, wxID_PANELREPL_MOVE_POS_VALUE,
-	wxID_PANELREPL_MOVE_TXT, wxID_PANELREPL_MOVE_TXT_MOD,
-	wxID_PANELREPL_MOVE_TXT_VALUE, wxID_PANELSTATICTEXT6, wxID_PANELSTATICBOX1,
-	wxID_PANELSTATICTEXT5
+    wxID_PANELREPL_MOVE_TXT, wxID_PANELREPL_MOVE_TXT_MOD,
+    wxID_PANELREPL_MOVE_TXT_VALUE, wxID_PANELSTATICTEXT6, wxID_PANELSTATICBOX1,
+    wxID_PANELSTATICTEXT5
 ] = [wx.NewId() for __init_ctrls in range(9)]
 
 class OpPanel(Operation):
@@ -61,7 +61,7 @@ class OpPanel(Operation):
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'Panel', parent=prnt,
-						  style=0)
+                          style=0)
 
         # regular expressions --------------------------------------------- #
         self.regExpPanel = regExpr.Panel(self, main)
@@ -69,54 +69,54 @@ class OpPanel(Operation):
         self.search = search.Panel(self, main, _(u"Search for what to move, by:"))
 
         self.staticBox1 = wx.StaticBox(id=wxID_PANELSTATICBOX1,
-									   label=_(u"Move the match:"), name='staticBox1', parent=self,
-									   style=0)
+                                       label=_(u"Move the match:"), name='staticBox1', parent=self,
+                                       style=0)
 
         self.replMovePos = wx.RadioButton(id=wxID_PANELREPL_MOVE_POS,
-										  label=_(u"to position:"), name=u'replMovePos', parent=self,
-										  style=wx.RB_GROUP)
+                                          label=_(u"to position:"), name=u'replMovePos', parent=self,
+                                          style=wx.RB_GROUP)
         self.replMovePos.SetValue(True)
         self.replMovePos.Bind(wx.EVT_RADIOBUTTON, self.activate_options,
-							  id=wxID_PANELREPL_MOVE_POS)
+                              id=wxID_PANELREPL_MOVE_POS)
 
         self.replMovePosValue = wx.SpinCtrl(id=wxID_PANELREPL_MOVE_POS_VALUE,
-											initial=0, max=255, min=-255, name=u'replMovePosValue',
-											parent=self, size=wx.Size(60, -1), value='0',
-											style=wx.SP_ARROW_KEYS | wx.TE_PROCESS_ENTER)
+                                            initial=0, max=255, min=-255, name=u'replMovePosValue',
+                                            parent=self, size=wx.Size(60, -1), value='0',
+                                            style=wx.SP_ARROW_KEYS | wx.TE_PROCESS_ENTER)
         self.replMovePosValue.SetValue(0)
         self.replMovePosValue.Bind(wx.EVT_TEXT_ENTER, main.show_preview,
-								   id=wxID_PANELREPL_MOVE_POS_VALUE)
+                                   id=wxID_PANELREPL_MOVE_POS_VALUE)
         self.replMovePosValue.Bind(wx.EVT_SPINCTRL, main.show_preview,
-								   id=wxID_PANELREPL_MOVE_POS_VALUE)
+                                   id=wxID_PANELREPL_MOVE_POS_VALUE)
 
         self.staticText5 = wx.StaticText(id=wxID_PANELSTATICTEXT6,
-										 label=_(u"Use negative values to start from end of name."),
-										 name=u'staticText5', parent=self, style=0)
+                                         label=_(u"Use negative values to start from end of name."),
+                                         name=u'staticText5', parent=self, style=0)
         self.staticText5.Enable(True)
 
         self.replMoveText = wx.RadioButton(id=wxID_PANELREPL_MOVE_TXT,
-										   label=_(u"to"), name=u'replMoveText', parent=self, style=0)
+                                           label=_(u"to"), name=u'replMoveText', parent=self, style=0)
         self.replMoveText.SetValue(False)
         self.replMoveText.Bind(wx.EVT_RADIOBUTTON, self.activate_options,
-							   id=wxID_PANELREPL_MOVE_TXT)
+                               id=wxID_PANELREPL_MOVE_TXT)
 
         self.replMoveTextValue = wx.TextCtrl(id=wxID_PANELREPL_MOVE_TXT_VALUE,
-											 name=u'replMoveTextValue', parent=self, style=0, value='')
+                                             name=u'replMoveTextValue', parent=self, style=0, value='')
         self.replMoveTextValue.Enable(False)
         self.replMoveTextValue.Bind(wx.EVT_TEXT, main.show_preview,
-									id=wxID_PANELREPL_MOVE_TXT_VALUE)
+                                    id=wxID_PANELREPL_MOVE_TXT_VALUE)
 
         self.replMoveTextMod = wx.Choice(choices=[_(u"before"), _(u"after"),
-										 _(u"replace")], id=wxID_PANELREPL_MOVE_TXT_MOD,
-										 name=u'replMoveTextMod', parent=self)
+                                         _(u"replace")], id=wxID_PANELREPL_MOVE_TXT_MOD,
+                                         name=u'replMoveTextMod', parent=self)
         self.replMoveTextMod.SetSelection(0)
         self.replMoveTextMod.Enable(False)
         self.replMoveTextMod.Bind(wx.EVT_CHOICE, main.show_preview,
-								  id=wxID_PANELREPL_MOVE_TXT_MOD)
+                                  id=wxID_PANELREPL_MOVE_TXT_MOD)
 
         self.staticText6 = wx.StaticText(id=wxID_PANELSTATICTEXT6,
-										 label=_(u"text:"), name=u'staticText6', parent=self,
-										 style=0)
+                                         label=_(u"text:"), name=u'staticText6', parent=self,
+                                         style=0)
         self.staticText6.Enable(False)
 
         # grotesque hack for win2000
@@ -124,7 +124,7 @@ class OpPanel(Operation):
             winver = sys.getwindowsversion()
             if winver[0] <= 5 and winver[1] < 1:
                 self.hack = wx.RadioButton(id=-1, label='',
-										   name=u'hack', parent=self, style=wx.RB_GROUP)
+                                           name=u'hack', parent=self, style=wx.RB_GROUP)
                 self.hack.Show(False)
 
     def __init__(self, parent, main_window, params={}):
@@ -139,7 +139,7 @@ class OpPanel(Operation):
 
     def activate_options(self, event):
         movetxt = (self.replMoveTextValue, self.replMoveTextMod, self.staticText6,
-				   self.regExpPanel.regExpr)
+                   self.regExpPanel.regExpr)
         # by position
         if self.replMovePos.GetValue():
             self.replMovePosValue.Enable(True)

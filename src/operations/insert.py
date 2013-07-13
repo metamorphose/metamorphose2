@@ -30,11 +30,11 @@ class OpPanel(Operation):
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=-1, name=u'Panel', parent=prnt,
-						  style=wx.TAB_TRAVERSAL)
+                          style=wx.TAB_TRAVERSAL)
         self.notebook = Notebook(self, main)
         self.insertToolsPanel = insertTools.Panel(self.notebook, main)
         self.notebook.init_pages(self.insertToolsPanel,
-								 _(u"Insert settings"), u'insert.ico')
+                                 _(u"Insert settings"), u'insert.ico')
         self.numberingPanel = self.notebook.numbering
         self.dateTimePanel = self.notebook.dateTime
 
@@ -73,13 +73,13 @@ class OpPanel(Operation):
             newName = name + parsedText
         # exact position
         elif insert.position.GetValue():
-			pos = insert.positionPos.GetValue()
-			if pos == -1:
-				newName += parsedText
-			elif pos < -1:
-				newName = newName[:pos + 1] + parsedText + newName[pos + 1:]
-			else:
-				newName = newName[:pos] + parsedText + newName[pos:]
+            pos = insert.positionPos.GetValue()
+            if pos == -1:
+                newName += parsedText
+            elif pos < -1:
+                newName = newName[:pos + 1] + parsedText + newName[pos + 1:]
+            else:
+                newName = newName[:pos] + parsedText + newName[pos:]
 
         # insert before/after a character:
         elif insert.after.GetValue() or insert.before.GetValue():

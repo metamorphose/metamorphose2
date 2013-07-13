@@ -24,11 +24,11 @@ import wx
 class OpPanel(Operation):
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'Panel', parent=prnt,
-						  style=wx.TAB_TRAVERSAL)
+                          style=wx.TAB_TRAVERSAL)
 
         self.staticText1 = wx.StaticText(id=wxID_PANELSTATICTEXT1,
-										 label=_(u"This is a translated string"), name=u'staticText1', parent=self,
-										 pos=wx.Point(192, 72), size=wx.Size(-1, -1), style=0)
+                                         label=_(u"This is a translated string"), name=u'staticText1', parent=self,
+                                         pos=wx.Point(192, 72), size=wx.Size(-1, -1), style=0)
 
 
     def __init__(self, parent, main_window, params={}):

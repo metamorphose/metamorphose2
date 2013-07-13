@@ -25,16 +25,16 @@ import swap
 
 
 defs = {_(u"directory"): (u"directory", _(u"Modify the directory structure (move items)")),
-	_(u"replace"): (u"replace", _(u"Find text and replace it with text or sub-operation")),
-	_(u"modify"): (u"modification", _(u"Case changes, character conversions, etc...")),
-	_(u"move text"): (u"move", _(u"Find text and move it")),
-	_(u"swap"): (u"swap", _(u"Find two portions of text and swap them")),
-	_(u"insert"): (u"insert", _(u"Insert text or sub-operation")),
-	_(u"length"): (u"changeLength", _(u"Change the length of the item")),
+    _(u"replace"): (u"replace", _(u"Find text and replace it with text or sub-operation")),
+    _(u"modify"): (u"modification", _(u"Case changes, character conversions, etc...")),
+    _(u"move text"): (u"move", _(u"Find text and move it")),
+    _(u"swap"): (u"swap", _(u"Find two portions of text and swap them")),
+    _(u"insert"): (u"insert", _(u"Insert text or sub-operation")),
+    _(u"length"): (u"changeLength", _(u"Change the length of the item")),
 
-	# plugins/extras
-	#_(u"your module") : (u"yourModuleName", _(u"Your module's description")),
-	}
+    # plugins/extras
+    #_(u"your module") : (u"yourModuleName", _(u"Your module's description")),
+    }
 
 
 def get_internal_name(name):

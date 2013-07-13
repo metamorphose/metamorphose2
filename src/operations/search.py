@@ -17,12 +17,12 @@ import utils
 import wx
 
 [wxID_PANEL, wxID_PANELREPL_CASE, wxID_PANELREPL_FIND,
-	wxID_PANELREPL_FROM, wxID_PANELREPL_POSBUTTON,
-	wxID_PANELREPL_TEXTBUTTON, wxID_PANELREPL_LEN,
-	wxID_PANELSTATICTEXT2, wxID_PANELSTATICBOX1,
-	wxID_PANELBETWEEN, wxID_PANELBTWTEXTMATCH1,
-	wxID_PANELBTWTEXTMATCH2, wxID_PANELSTATICTEXT6, wxID_PANELSTATICTEXT7,
-	wxID_PANELSTATICTEXT1
+    wxID_PANELREPL_FROM, wxID_PANELREPL_POSBUTTON,
+    wxID_PANELREPL_TEXTBUTTON, wxID_PANELREPL_LEN,
+    wxID_PANELSTATICTEXT2, wxID_PANELSTATICBOX1,
+    wxID_PANELBETWEEN, wxID_PANELBTWTEXTMATCH1,
+    wxID_PANELBTWTEXTMATCH2, wxID_PANELSTATICTEXT6, wxID_PANELSTATICTEXT7,
+    wxID_PANELSTATICTEXT1
 ] = [wx.NewId() for __init_ctrls in range(15)]
 
 class Panel(wx.Panel):
@@ -68,106 +68,106 @@ class Panel(wx.Panel):
         wx.Panel.__init__(self, id=wxID_PANEL, name=Name, parent=prnt, style=0)
 
         self.staticBox1 = wx.StaticBox(id=wxID_PANELSTATICBOX1,
-									   label=title, name='staticBox1', parent=self, style=0)
+                                       label=title, name='staticBox1', parent=self, style=0)
 
         # regular expressions
         self.regExpPanel = regExpr.Panel(self, main)
 
         # text
         self.repl_textButton = wx.RadioButton(id=wxID_PANELREPL_TEXTBUTTON,
-											  label=_(u"Text (Keep blank to match entire name):"), name=u'repl_textButton',
-											  parent=self, style=wx.RB_GROUP)
+                                              label=_(u"Text (Keep blank to match entire name):"), name=u'repl_textButton',
+                                              parent=self, style=wx.RB_GROUP)
         self.repl_textButton.SetValue(True)
         self.repl_textButton.Bind(wx.EVT_RADIOBUTTON,
-								  self.activate_options, id=wxID_PANELREPL_TEXTBUTTON)
+                                  self.activate_options, id=wxID_PANELREPL_TEXTBUTTON)
 
         self.repl_find = wx.TextCtrl(id=wxID_PANELREPL_FIND, name=u'repl_find',
-									 parent=self, style=wx.TE_PROCESS_ENTER, value='')
+                                     parent=self, style=wx.TE_PROCESS_ENTER, value='')
         self.repl_find.Bind(wx.EVT_SET_FOCUS, self.regExpPanel.set_activated_field,
-							id=wxID_PANELREPL_FIND)
+                            id=wxID_PANELREPL_FIND)
         self.repl_find.Bind(wx.EVT_TEXT, self.define_text)
         self.repl_find.Bind(wx.EVT_TEXT_ENTER, self.define_text)
 
         self.repl_case = wx.CheckBox(id=wxID_PANELREPL_CASE,
-									 label=_(u"case sensitive"), name=u'repl_case', parent=self,
-									 style=0)
+                                     label=_(u"case sensitive"), name=u'repl_case', parent=self,
+                                     style=0)
         self.repl_case.SetValue(False)
         self.repl_case.SetToolTipString(_(u"Differentiate between upper and lower case"))
         self.repl_case.Bind(wx.EVT_CHECKBOX, self.define_text)
 
         # in between
         self.between = wx.RadioButton(id=wxID_PANELBETWEEN, label=_(u"In between"),
-									  name=u'between', parent=self, style=0)
+                                      name=u'between', parent=self, style=0)
         self.between.SetValue(False)
         self.between.Bind(wx.EVT_RADIOBUTTON, self.activate_options,
-						  id=wxID_PANELBETWEEN)
+                          id=wxID_PANELBETWEEN)
 
         self.staticText6 = wx.StaticText(id=wxID_PANELSTATICTEXT6,
-										 label=_(u"this text:"), name='staticText6', parent=self,
-										 style=0)
+                                         label=_(u"this text:"), name='staticText6', parent=self,
+                                         style=0)
         self.staticText6.Enable(False)
 
         self.BTWtextMatch1 = wx.TextCtrl(id=wxID_PANELBTWTEXTMATCH1,
-										 name=u'BTWtextMatch1', parent=self,
-										 style=wx.TE_PROCESS_ENTER, value=u'')
+                                         name=u'BTWtextMatch1', parent=self,
+                                         style=wx.TE_PROCESS_ENTER, value=u'')
         self.BTWtextMatch1.Enable(False)
         self.BTWtextMatch1.Bind(wx.EVT_SET_FOCUS, self.regExpPanel.set_activated_field,
-								id=wxID_PANELBTWTEXTMATCH1)
+                                id=wxID_PANELBTWTEXTMATCH1)
         self.BTWtextMatch1.Bind(wx.EVT_TEXT, self.define_between,
-								id=wxID_PANELBTWTEXTMATCH1)
+                                id=wxID_PANELBTWTEXTMATCH1)
         self.BTWtextMatch1.Bind(wx.EVT_TEXT_ENTER, self.define_between,
-								id=wxID_PANELBTWTEXTMATCH1)
+                                id=wxID_PANELBTWTEXTMATCH1)
 
         self.staticText7 = wx.StaticText(id=wxID_PANELSTATICTEXT7,
-										 label=_(u"and this text:"), name='staticText7', parent=self,
-										 style=0)
+                                         label=_(u"and this text:"), name='staticText7', parent=self,
+                                         style=0)
         self.staticText7.Enable(False)
 
         self.BTWtextMatch2 = wx.TextCtrl(id=wxID_PANELBTWTEXTMATCH2,
-										 name=u'BTWtextMatch2', parent=self,
-										 style=wx.TE_PROCESS_ENTER, value=u'')
+                                         name=u'BTWtextMatch2', parent=self,
+                                         style=wx.TE_PROCESS_ENTER, value=u'')
         self.BTWtextMatch2.Enable(False)
         self.BTWtextMatch2.Bind(wx.EVT_SET_FOCUS, self.regExpPanel.set_activated_field,
-								id=wxID_PANELBTWTEXTMATCH2)
+                                id=wxID_PANELBTWTEXTMATCH2)
         self.BTWtextMatch2.Bind(wx.EVT_TEXT, self.define_between,
-								id=wxID_PANELBTWTEXTMATCH2)
+                                id=wxID_PANELBTWTEXTMATCH2)
         self.BTWtextMatch2.Bind(wx.EVT_TEXT_ENTER, self.define_between,
-								id=wxID_PANELBTWTEXTMATCH2)
+                                id=wxID_PANELBTWTEXTMATCH2)
 
         # position
         self.repl_posButton = wx.RadioButton(id=wxID_PANELREPL_POSBUTTON,
-											 label=_(u"Fixed position"), name=u'repl_posButton', parent=self,
-											 style=0)
+                                             label=_(u"Fixed position"), name=u'repl_posButton', parent=self,
+                                             style=0)
         self.repl_posButton.SetValue(False)
         self.repl_posButton.Bind(wx.EVT_RADIOBUTTON,
-								 self.activate_options, id=wxID_PANELREPL_POSBUTTON)
+                                 self.activate_options, id=wxID_PANELREPL_POSBUTTON)
 
         self.staticText1 = wx.StaticText(id=wxID_PANELSTATICTEXT6,
-										 label=_(u"Starting at:"), name='staticText6', parent=self,
-										 style=0)
+                                         label=_(u"Starting at:"), name='staticText6', parent=self,
+                                         style=0)
         self.staticText1.Enable(False)
 
         self.repl_from = wx.SpinCtrl(id=wxID_PANELREPL_FROM, initial=0, max=255,
-									 min=-255, name=u'repl_from', parent=self, size=wx.Size(65, -1),
-									 style=wx.SP_ARROW_KEYS | wx.TE_PROCESS_ENTER, value='0')
+                                     min=-255, name=u'repl_from', parent=self, size=wx.Size(65, -1),
+                                     style=wx.SP_ARROW_KEYS | wx.TE_PROCESS_ENTER, value='0')
         self.repl_from.SetValue(0)
         self.repl_from.Enable(False)
         self.repl_from.Bind(wx.EVT_TEXT_ENTER, main.show_preview)
         self.repl_from.Bind(wx.EVT_SPINCTRL, main.show_preview)
 
         self.staticText2 = wx.StaticText(id=wxID_PANELSTATICTEXT2,
-										 label=_(u"Selection length:"), name=u'repl_txt_to', parent=self,
-										 style=0)
+                                         label=_(u"Selection length:"), name=u'repl_txt_to', parent=self,
+                                         style=0)
         self.staticText2.Enable(False)
 
         self.repl_len = wx.SpinCtrl(id=wxID_PANELREPL_LEN, initial=1, max=255,
-									min=1, name=u'repl_len', parent=self, size=wx.Size(65, -1),
-									style=wx.SP_ARROW_KEYS | wx.TE_PROCESS_ENTER, value='1')
+                                    min=1, name=u'repl_len', parent=self, size=wx.Size(65, -1),
+                                    style=wx.SP_ARROW_KEYS | wx.TE_PROCESS_ENTER, value='1')
         self.repl_len.Enable(False)
         self.repl_len.Bind(wx.EVT_TEXT_ENTER, main.show_preview,
-						   id=wxID_PANELREPL_LEN)
+                           id=wxID_PANELREPL_LEN)
         self.repl_len.Bind(wx.EVT_SPINCTRL, main.show_preview,
-						   id=wxID_PANELREPL_LEN)
+                           id=wxID_PANELREPL_LEN)
 
         # fix win2000 bug
         self.filler = wx.RadioButton(id=-1, label='', name=u'filler', parent=self, style=wx.RB_GROUP)
@@ -296,7 +296,7 @@ class Panel(wx.Panel):
 
         # in between widgets
         between_tup = (self.staticText6, self.staticText7,
-					   self.BTWtextMatch1, self.BTWtextMatch2)
+                       self.BTWtextMatch1, self.BTWtextMatch2)
         if self.between.GetValue():
             for option in between_tup:
                 option.Enable(True)
@@ -310,7 +310,7 @@ class Panel(wx.Panel):
 
         # positioning widgets
         repl_pos_tup = (self.repl_from, self.staticText1, self.staticText2,
-						self.repl_len)
+                        self.repl_len)
         if self.repl_posButton.GetValue():
             for option in repl_pos_tup:
                 option.Enable(True)
