@@ -302,7 +302,8 @@ class Core():
 
             app.debug_print(itemToRename)
 
-            if hasNumbering: main.curDir = newPath
+            if hasNumbering:
+                main.curDir = newPath
 
             # go through each operation
             for i in range(len(operations)):
