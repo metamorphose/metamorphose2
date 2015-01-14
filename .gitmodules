@@ -1,3 +1,3 @@
-[submodule "src/exif"]
+[submodule "exif-py"]
 	path = src/exif
-	url = git@github.com:ianare/exif-py.git
+	url = https://github.com/ianare/exif-py.git
