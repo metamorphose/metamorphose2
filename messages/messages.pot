@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-07-12 02:06+CEST\n"
+"POT-Creation-Date: 2015-01-21 21:29+CET\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -164,7 +164,7 @@ msgstr ""
 msgid "Change your preferences"
 msgstr ""
 
-#: MainWindow/__init__.py:244 MainWindow/__init__.py:716
+#: MainWindow/__init__.py:244 MainWindow/__init__.py:723
 msgid "Language"
 msgstr ""
 
@@ -224,83 +224,83 @@ msgstr ""
 msgid "Errors/Warnings: %s"
 msgstr ""
 
-#: MainWindow/__init__.py:668
+#: MainWindow/__init__.py:674
 msgid ""
 "%s\n"
 "\n"
 "Could not clear undo"
 msgstr ""
 
-#: MainWindow/__init__.py:669 errors/wxErrorsView.py:32
-#: preferences/colors.py:80 renamer/engine.py:282 utils.py:126 utils.py:171
+#: MainWindow/__init__.py:675 errors/wxErrorsView.py:32
+#: preferences/colors.py:80 renamer/engine.py:283 utils.py:126 utils.py:171
 msgid "Error"
 msgstr ""
 
-#: MainWindow/__init__.py:738
+#: MainWindow/__init__.py:745
 msgid ""
 "\n"
 "\n"
 "You will need to restart Metamorphose to change the language."
 msgstr ""
 
-#: MainWindow/__init__.py:739
+#: MainWindow/__init__.py:746
 msgid ""
 "\n"
 "\n"
 "Close out of Metamorphose now?"
 msgstr ""
 
-#: MainWindow/__init__.py:741
+#: MainWindow/__init__.py:748
 msgid "Change the Language"
 msgstr ""
 
-#: MainWindow/__init__.py:763
+#: MainWindow/__init__.py:770
 msgid "Are you sure you want to reset?"
 msgstr ""
 
-#: MainWindow/__init__.py:763
+#: MainWindow/__init__.py:770
 msgid "Are you sure?"
 msgstr ""
 
-#: MainWindow/__init__.py:795
+#: MainWindow/__init__.py:802
 msgid "Save current items as ..."
 msgstr ""
 
-#: MainWindow/__init__.py:797
+#: MainWindow/__init__.py:804
 msgid "CSV file (*.%s)"
 msgstr ""
 
-#: MainWindow/__init__.py:824
+#: MainWindow/__init__.py:831
 msgid "Log file"
 msgstr ""
 
-#: MainWindow/__init__.py:825
+#: MainWindow/__init__.py:832
 msgid "All files"
 msgstr ""
 
-#: MainWindow/__init__.py:829
+#: MainWindow/__init__.py:836
 msgid "Import selection from ..."
 msgstr ""
 
-#: MainWindow/__init__.py:865
+#: MainWindow/__init__.py:872
 msgid ""
 "These items could not be loaded, it doesn't look like they exist :\n"
 "\n"
 msgstr ""
 
-#: MainWindow/__init__.py:886
+#: MainWindow/__init__.py:893
 msgid "Regular Expression Help"
 msgstr ""
 
-#: MainWindow/__init__.py:890
+#: MainWindow/__init__.py:897
 msgid "Date and Time Formatting Help"
 msgstr ""
 
-#: MainWindow/__init__.py:894
+#: MainWindow/__init__.py:901
 msgid "Examples"
 msgstr ""
 
-#: MainWindow/__init__.py:930 operations/__init__.py:27
+#: MainWindow/__init__.py:937 operations/__init__.py:28
 #: renamer/wxRenamerView.py:279
 msgid "directory"
 msgstr ""
@@ -525,56 +525,56 @@ msgstr ""
 msgid "Date and Time"
 msgstr ""
 
-#: operations/__init__.py:27
+#: operations/__init__.py:30
 msgid "Modify the directory structure (move items)"
 msgstr ""
 
-#: operations/__init__.py:28
-msgid "Find text and replace it with text or sub-operation"
-msgstr ""
-
-#: operations/__init__.py:28 operations/move.py:110 operations/move.py:269
+#: operations/__init__.py:32 operations/move.py:110 operations/move.py:269
 msgid "replace"
 msgstr ""
 
-#: operations/__init__.py:29
-msgid "Case changes, character conversions, etc..."
+#: operations/__init__.py:34
+msgid "Find text and replace it with text or sub-operation"
 msgstr ""
 
-#: operations/__init__.py:29
+#: operations/__init__.py:36
 msgid "modify"
 msgstr ""
 
-#: operations/__init__.py:30
-msgid "Find text and move it"
+#: operations/__init__.py:38
+msgid "Case changes, character conversions, etc..."
 msgstr ""
 
-#: operations/__init__.py:30
+#: operations/__init__.py:40
 msgid "move text"
 msgstr ""
 
-#: operations/__init__.py:31
-msgid "Find two portions of text and swap them"
+#: operations/__init__.py:42
+msgid "Find text and move it"
 msgstr ""
 
-#: operations/__init__.py:31
+#: operations/__init__.py:44
 msgid "swap"
 msgstr ""
 
-#: operations/__init__.py:32
-msgid "Insert text or sub-operation"
+#: operations/__init__.py:46
+msgid "Find two portions of text and swap them"
 msgstr ""
 
-#: operations/__init__.py:32
+#: operations/__init__.py:48
 msgid "insert"
 msgstr ""
 
-#: operations/__init__.py:33
-msgid "Change the length of the item"
+#: operations/__init__.py:50
+msgid "Insert text or sub-operation"
 msgstr ""
 
-#: operations/__init__.py:33
+#: operations/__init__.py:52
 msgid "length"
+msgstr ""
+
+#: operations/__init__.py:54
+msgid "Change the length of the item"
 msgstr ""
 
 #: operations/changeLength.py:51
@@ -942,79 +942,79 @@ msgstr ""
 msgid "All Languages / Unicode"
 msgstr ""
 
-#: operations/modification.py:97 preferences/general.py:85 utils.py:214
+#: operations/modification.py:97 preferences/general.py:85 utils.py:216
 msgid "Western Europe"
 msgstr ""
 
-#: operations/modification.py:98 preferences/general.py:86 utils.py:216
+#: operations/modification.py:98 preferences/general.py:86 utils.py:220
 msgid "Central & Eastern Europe"
 msgstr ""
 
-#: operations/modification.py:98 preferences/general.py:86 utils.py:218
+#: operations/modification.py:98 preferences/general.py:86 utils.py:223
 msgid "Esperanto, Maltese"
 msgstr ""
 
-#: operations/modification.py:99 preferences/general.py:87 utils.py:219
+#: operations/modification.py:99 preferences/general.py:87 utils.py:226
 msgid "Nordic Languages"
 msgstr ""
 
-#: operations/modification.py:99 preferences/general.py:87 utils.py:221
+#: operations/modification.py:99 preferences/general.py:87 utils.py:229
 msgid "Celtic Languages"
 msgstr ""
 
-#: operations/modification.py:100 preferences/general.py:88 utils.py:222
+#: operations/modification.py:100 preferences/general.py:88 utils.py:232
 msgid "Baltic Languages"
 msgstr ""
 
-#: operations/modification.py:100 preferences/general.py:88 utils.py:223
+#: operations/modification.py:100 preferences/general.py:88 utils.py:235
 msgid "Cyrillic Languages"
 msgstr ""
 
-#: operations/modification.py:100 preferences/general.py:88 utils.py:225
+#: operations/modification.py:100 preferences/general.py:88 utils.py:239
 msgid "Greek"
 msgstr ""
 
-#: operations/modification.py:101 preferences/general.py:89 utils.py:227
+#: operations/modification.py:101 preferences/general.py:89 utils.py:243
 msgid "Turkish"
 msgstr ""
 
-#: operations/modification.py:101 preferences/general.py:89 utils.py:229
+#: operations/modification.py:101 preferences/general.py:89 utils.py:247
 msgid "Hebrew"
 msgstr ""
 
-#: operations/modification.py:101 preferences/general.py:89 utils.py:231
+#: operations/modification.py:101 preferences/general.py:89 utils.py:250
 msgid "Arabic"
 msgstr ""
 
-#: operations/modification.py:101 preferences/general.py:89 utils.py:232
+#: operations/modification.py:101 preferences/general.py:89 utils.py:253
 msgid "Urdu"
 msgstr ""
 
-#: operations/modification.py:101 preferences/general.py:89 utils.py:233
+#: operations/modification.py:101 preferences/general.py:89 utils.py:256
 msgid "Thai"
 msgstr ""
 
-#: operations/modification.py:102 preferences/general.py:90 utils.py:234
+#: operations/modification.py:102 preferences/general.py:90 utils.py:259
 msgid "Vietnamese"
 msgstr ""
 
-#: operations/modification.py:102 preferences/general.py:90 utils.py:235
+#: operations/modification.py:102 preferences/general.py:90 utils.py:262
 msgid "Traditional Chinese"
 msgstr ""
 
-#: operations/modification.py:103 preferences/general.py:91 utils.py:236
+#: operations/modification.py:103 preferences/general.py:91 utils.py:265
 msgid "Simplified Chinese"
 msgstr ""
 
-#: operations/modification.py:103 preferences/general.py:91 utils.py:237
+#: operations/modification.py:103 preferences/general.py:91 utils.py:268
 msgid "Unified Chinese"
 msgstr ""
 
-#: operations/modification.py:103 preferences/general.py:91 utils.py:238
+#: operations/modification.py:103 preferences/general.py:91 utils.py:271
 msgid "Korean"
 msgstr ""
 
-#: operations/modification.py:104 preferences/general.py:92 utils.py:239
+#: operations/modification.py:104 preferences/general.py:92 utils.py:274
 msgid "Japanese"
 msgstr ""
 
@@ -1023,7 +1023,7 @@ msgid "Search for what to modify, by:"
 msgstr ""
 
 #: operations/modification.py:303 operations/regExpr.py:134
-#: operations/regExpr.py:137 operations/replace.py:99 picker/__init__.py:206
+#: operations/regExpr.py:137 operations/replace.py:99 picker/__init__.py:207
 msgid "Regular-Expression: %s"
 msgstr ""
 
@@ -1215,7 +1215,7 @@ msgstr ""
 
 #: operations/opButtons.py:63 operations/opButtons.py:84
 #: operations/opButtons.py:163 operations/opParser.py:59
-#: operations/opParser.py:399
+#: operations/opParser.py:401
 msgid "date"
 msgstr ""
 
@@ -1226,7 +1226,7 @@ msgid ""
 msgstr ""
 
 #: operations/opButtons.py:69 operations/opButtons.py:166
-#: operations/opParser.py:399
+#: operations/opParser.py:401
 msgid "time"
 msgstr ""
 
@@ -1388,7 +1388,7 @@ msgstr ""
 msgid "How far back to get folder"
 msgstr ""
 
-#: operations/opButtons.py:160 operations/opParser.py:399
+#: operations/opButtons.py:160 operations/opParser.py:401
 msgid "numb"
 msgstr ""
 
@@ -1408,39 +1408,39 @@ msgstr ""
 msgid "encoded by"
 msgstr ""
 
-#: operations/opParser.py:209
+#: operations/opParser.py:211
 msgid "Roman numeral error: %s"
 msgstr ""
 
-#: operations/opParser.py:240 operations/opParser.py:342
+#: operations/opParser.py:242 operations/opParser.py:344
 msgid "Could not open file!"
 msgstr ""
 
-#: operations/opParser.py:250 operations/opParser.py:260
+#: operations/opParser.py:252 operations/opParser.py:262
 msgid "Exif error: %s"
 msgstr ""
 
-#: operations/opParser.py:266 operations/opParser.py:317
+#: operations/opParser.py:268 operations/opParser.py:319
 msgid "Could not read Exif tag"
 msgstr ""
 
-#: operations/opParser.py:363
+#: operations/opParser.py:365
 msgid "Could not read audio metadata"
 msgstr ""
 
-#: operations/opParser.py:368
+#: operations/opParser.py:370
 msgid "Could not determine audio file type"
 msgstr ""
 
-#: operations/opParser.py:383
+#: operations/opParser.py:385
 msgid "Invalid encoding specified: %s"
 msgstr ""
 
-#: operations/opParser.py:388
+#: operations/opParser.py:390
 msgid "Could not read tag: %s"
 msgstr ""
 
-#: operations/opParser.py:399
+#: operations/opParser.py:401
 msgid "folder"
 msgstr ""
 
@@ -1536,69 +1536,69 @@ msgstr ""
 msgid "This is a translated string"
 msgstr ""
 
-#: picker/__init__.py:70 picker/__init__.py:322 picker/__init__.py:333
+#: picker/__init__.py:70 picker/__init__.py:323 picker/__init__.py:334
 msgid "Cannot read path!"
 msgstr ""
 
-#: picker/__init__.py:81
+#: picker/__init__.py:82
 msgid "- audio"
 msgstr ""
 
-#: picker/__init__.py:82
+#: picker/__init__.py:83
 msgid "- image"
 msgstr ""
 
-#: picker/__init__.py:83
+#: picker/__init__.py:84
 msgid "- video"
 msgstr ""
 
-#: picker/__init__.py:84
+#: picker/__init__.py:85
 msgid "- office related"
 msgstr ""
 
-#: picker/__init__.py:85
+#: picker/__init__.py:86
 msgid "- web related"
 msgstr ""
 
-#: picker/__init__.py:86
+#: picker/__init__.py:87
 msgid "- programming"
 msgstr ""
 
-#: picker/__init__.py:87
+#: picker/__init__.py:88
 msgid "- compressed"
 msgstr ""
 
-#: picker/__init__.py:88
+#: picker/__init__.py:89
 msgid "- an extension"
 msgstr ""
 
-#: picker/__init__.py:89
+#: picker/__init__.py:90
 msgid "- only an extension"
 msgstr ""
 
-#: picker/__init__.py:237
+#: picker/__init__.py:238
 msgid "Getting directory contents please wait ..."
 msgstr ""
 
-#: picker/__init__.py:312 picker/__init__.py:326 picker/__init__.py:357
+#: picker/__init__.py:313 picker/__init__.py:327 picker/__init__.py:358
 msgid "Retrieved %s items from directory"
 msgstr ""
 
-#: picker/__init__.py:316
+#: picker/__init__.py:317
 msgid ""
 "The item '%s' has an encoding error.\n"
 "Unable to process this path in recursive mode, please correct the name and try again."
 msgstr ""
 
-#: picker/__init__.py:318
+#: picker/__init__.py:319
 msgid "Unable to load item"
 msgstr ""
 
-#: picker/__init__.py:352
+#: picker/__init__.py:353
 msgid "At least one item has an encoding error in its name. You will not be able to modify these."
 msgstr ""
 
-#: picker/__init__.py:353
+#: picker/__init__.py:354
 msgid "Encoding Error"
 msgstr ""
 
@@ -1892,11 +1892,11 @@ msgstr ""
 msgid "These settings apply to loading and saving of log files."
 msgstr ""
 
-#: renamer/engine.py:51
+#: renamer/engine.py:52
 msgid "Renaming Failed : %s"
 msgstr ""
 
-#: renamer/engine.py:52
+#: renamer/engine.py:53
 msgid ""
 "Error renaming:\n"
 "%s \n"
@@ -1907,21 +1907,21 @@ msgid ""
 "Reason: %s"
 msgstr ""
 
-#: renamer/engine.py:54
+#: renamer/engine.py:55
 msgid "Renaming Failed !!"
 msgstr ""
 
-#: renamer/engine.py:136 renamer/engine.py:139 renamer/preview.py:180
+#: renamer/engine.py:137 renamer/engine.py:140 renamer/preview.py:184
 msgid "Duplicate name"
 msgstr ""
 
-#: renamer/engine.py:137
+#: renamer/engine.py:138
 msgid ""
 "This name already exists:\n"
 "%s"
 msgstr ""
 
-#: renamer/engine.py:138
+#: renamer/engine.py:139
 msgid ""
 "\n"
 "\n"
@@ -1931,23 +1931,23 @@ msgid ""
 "Go ahead and do this?"
 msgstr ""
 
-#: renamer/engine.py:160
+#: renamer/engine.py:161
 msgid "Writing undo files, please wait ..."
 msgstr ""
 
-#: renamer/engine.py:189
+#: renamer/engine.py:190
 msgid "Adjusting %s recursive paths, please wait ..."
 msgstr ""
 
-#: renamer/engine.py:192
+#: renamer/engine.py:193
 msgid "Adjusting %%% recursive paths, please wait ..."
 msgstr ""
 
-#: renamer/engine.py:208
+#: renamer/engine.py:209
 msgid "Renaming in progress, please wait ..."
 msgstr ""
 
-#: renamer/engine.py:215
+#: renamer/engine.py:216
 msgid ""
 "\n"
 "Make sure 'undo' directory exists and is read/write\n"
@@ -1956,62 +1956,62 @@ msgid ""
 "Do you want to continue??"
 msgstr ""
 
-#: renamer/engine.py:216
+#: renamer/engine.py:217
 msgid "Problem with undo!"
 msgstr ""
 
-#: renamer/engine.py:230 renamer/engine.py:249
+#: renamer/engine.py:231 renamer/engine.py:250
 msgid "Renaming for %s items completed"
 msgstr ""
 
-#: renamer/engine.py:239
+#: renamer/engine.py:240
 msgid "Renaming cancelled"
 msgstr ""
 
-#: renamer/engine.py:282
+#: renamer/engine.py:283
 msgid ""
 "%s\n"
 "\n"
 "Undo Failed !!"
 msgstr ""
 
-#: renamer/engine.py:298
+#: renamer/engine.py:299
 msgid "Nothing to undo"
 msgstr ""
 
-#: renamer/preview.py:60
+#: renamer/preview.py:62
 msgid "Previewed %s items with no errors"
 msgstr ""
 
-#: renamer/preview.py:89
+#: renamer/preview.py:92
 msgid "Error chekcing %%% names, please wait ..."
 msgstr ""
 
-#: renamer/preview.py:146 renamer/preview.py:152
+#: renamer/preview.py:150 renamer/preview.py:156
 msgid "Invalid Windows character: %s"
 msgstr ""
 
-#: renamer/preview.py:165
+#: renamer/preview.py:169
 msgid "Invalid name: %s"
 msgstr ""
 
-#: renamer/preview.py:169
+#: renamer/preview.py:173
 msgid "Completely blank"
 msgstr ""
 
-#: renamer/preview.py:175
+#: renamer/preview.py:179
 msgid "Name length over 255 characters"
 msgstr ""
 
-#: renamer/preview.py:191
+#: renamer/preview.py:195
 msgid "Blank file name"
 msgstr ""
 
-#: renamer/preview.py:245
+#: renamer/preview.py:249
 msgid "Generating %s new names, please wait ..."
 msgstr ""
 
-#: renamer/preview.py:280
+#: renamer/preview.py:284
 msgid "Generating %%% new names, please wait ..."
 msgstr ""
 
@@ -2134,11 +2134,11 @@ msgstr ""
 msgid "Really destroy this '%s' operation?"
 msgstr ""
 
-#: sorting/__init__.py:60
+#: sorting/__init__.py:61
 msgid "creation time"
 msgstr ""
 
-#: sorting/__init__.py:62
+#: sorting/__init__.py:63
 msgid "metadata change time"
 msgstr ""
 

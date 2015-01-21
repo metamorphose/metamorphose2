@@ -571,7 +571,7 @@ class MainWindow(wx.Frame):
         try:
             locales[language]
         except KeyError:
-            msg = u"Could not initialise language: '%s'.\nContinuing in " % language
+            msg = u"Could not initialize language: '%s'.\nContinuing in " % language
             msg += u"American English (en_US)\n"
             print(msg)
             language = 'en_US'
@@ -581,8 +581,15 @@ class MainWindow(wx.Frame):
 
         # set locale and language
         wx.Locale(locales[language][0], wx.LOCALE_LOAD_DEFAULT)
-        Lang = gettext.translation(u'metamorphose2', app.locale_path(language),
-                                   languages=[locales[language][1]])
+        
+        try:
+            Lang = gettext.translation(u'metamorphose2', app.locale_path(language),
+                                       languages=[locales[language][1]])
+        except IOError:
+            print("Could not find the translation file for '%s'." % language)
+            print("Try running messages/update_langs.sh\n")
+            sys.exit(1)
+        
         Lang.install(unicode=True)
 
         # set some globals

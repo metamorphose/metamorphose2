@@ -3,7 +3,7 @@
 # May work with other UNIXes.
 #
 # Authors : Ianaré Sévi, Javier Prats, Pierre-Yves Chibon
-#hacked by Gabriel Espinoza to create RPM packages
+# hacked by Gabriel Espinoza to create RPM packages
 #
 
 # Specify an alternate install root
@@ -66,7 +66,6 @@ install: install-doc
 	chmod -R a+r *;
 	find . -type d ! -regex '.*/\..*' -exec chmod 755 {} \;
 	rm $(PACKAGE).1.gz
-	#chmod 755 src/$(PACKAGE).py messages/update_langs.sh;
 
 	# copy program files and libraries
 	cp -pR src/* $(DESTDIR)$(prefix)/share/$(PACKAGE)/;
