@@ -34,6 +34,15 @@ For binary (normal) installs, use the appropriate install file for your system
 (setup.exe, .deb, etc ...).
 
 
+Cloning
+=======
+
+Submodules are used, so after cloning don't forget to check them out::
+
+  git submodule init
+  git submodule update
+
+
 Requirements
 ============
 
@@ -70,11 +79,11 @@ The makefile should take care of everything for you, it is architecture and dist
 
 Métamorphose will be installed in ``/usr/share/metamorphose2``, you can run it with::
 
-  $ metamorphose2
+  metamorphose2
 
 and access the man page with::
 
-  $ man metamorphose2
+  man metamorphose2
 
 If you are using a freedesktop.org compatible window manager (like Gnome or KDE),
 there should be an entry in ``Applications`` -> ``Accessories``.
@@ -90,11 +99,11 @@ Remove the user-specific files here:
 
 In Linux & BSD, if you have the sources::
 
-  $ make remove
+  make remove
 
 To remove all user files as well::
 
-  $ make remove remusr=1
+  make remove remusr=1
 
 
 ============
