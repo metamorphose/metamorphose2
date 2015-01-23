@@ -4,8 +4,9 @@
 # Update or create all translation files.
 #
 
+# XXX TODO Verify compatibility on non-Bourne shells such as zsh
 msgfmt='/usr/bin/msgfmt'
-msgs_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+msgs_dir=$( cd "$( dirname "${0}" )" && pwd )
 
 cd $msgs_dir
 for dir in `ls -1`; do
