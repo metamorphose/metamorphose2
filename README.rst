@@ -37,6 +37,10 @@ For binary (normal) installs, use the appropriate install file for your system
 Cloning
 =======
 
+Cloning the sources from the remote::
+
+  git clone https://github.com/metamorphose/metamorphose2.git
+
 Submodules are used, so after cloning don't forget to check them out::
 
   git submodule init

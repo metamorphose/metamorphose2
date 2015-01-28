@@ -1,11 +1,18 @@
-#!/bin/bash
-
+#!/bin/sh
 #
 # Update or create all translation files.
 #
 
 # XXX TODO Verify compatibility on non-Bourne shells such as zsh
-msgfmt='/usr/bin/msgfmt'
+
+unamestr=`uname`
+
+if [ "$unamestr" == 'Linux' ]; then
+	msgfmt='/usr/bin/msgfmt'
+elif [ "$unamestr" == 'FreeBSD' ]; then
+	msgfmt='/usr/local/bin/msgfmt'
+fi
+
 msgs_dir=$( cd "$( dirname "${0}" )" && pwd )
 
 cd $msgs_dir
