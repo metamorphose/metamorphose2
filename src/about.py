@@ -94,7 +94,7 @@ class About(wx.Dialog):
                 URL=u'http://file-folder-ren.sourceforge.net/', style=0)
 
         self.bugReport = hl.HyperLinkCtrl(self, wxID_ABOUTLINK, _(u"GitHub Project Page"),
-                URL=u'https://github.com/ianare/metamorphose2')
+                URL=u'https://github.com/metamorphose/metamorphose2')
         self.bugReport.Show(True)
 
         self.donateButton = wx.Button(id=wxID_PANELDONATEBUTTON,
