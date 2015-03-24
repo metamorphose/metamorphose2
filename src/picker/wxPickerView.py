@@ -23,7 +23,7 @@ import app
 import utils
 import wx
 try:
-    import Image
+    from PIL import Image
 except:
     utils.make_err_msg(_("Python Imaging Library (PIL) not found.\nRefer to readme file for install instructions.\n\nYou will not be able to preview images."),
                        _("PIL needed"))
