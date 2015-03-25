@@ -2,7 +2,6 @@
 ._*
 .DS_Store*
 .Trash-*
-*~
 .Trashes
 Thumbs.db
 .directory
@@ -42,3 +41,22 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+# Netbeans / Eclipse
+nbproject/
+*.project
+.nbrun
+
+# JetBrains
+.idea/
+*.ipr
+*.iws
+*.iml
+
+# VIm
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
