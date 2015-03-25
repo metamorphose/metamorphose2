@@ -44,8 +44,7 @@ class Parameters(classes.Parameters):
 
         root = self.get_value(self.view.path)
         self.set_root_path(root)
-        widgets = (
-                   'foldersOn', # grab folders
+        widgets = ('foldersOn', # grab folders
                    'filesOn', # grab files
                    'notType', # invert filter
                    'FilterSel',
@@ -309,8 +308,6 @@ class Core():
                             for entry in dirnames:
                                 entry = os.path.join(base, entry)
                                 _filter_folders(entry)
-
-                        main.set_status_msg(_(u"Retrieved %s items from directory") % len(files), u'wait')
 
                 except UnicodeDecodeError as err:
                     entry = err[1].decode(sys.getfilesystemencoding(), 'replace')
