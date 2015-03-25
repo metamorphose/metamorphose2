@@ -97,9 +97,9 @@ Removing
 ========
 Remove the user-specific files here:
 
-- Windows: C:\Documents and Settings\USERNAME\Application Data\.metamorphose2
-- Linux/BSD: ~/.metamorphose2
-- Mac: /Library/Application Support/.metamorphose2
+- Windows: ``C:\Documents and Settings\USERNAME\Application Data\.metamorphose2``
+- Linux/BSD: ``~/.metamorphose2``
+- Mac: ``/Library/Application Support/.metamorphose2``
 
 In Linux & BSD, if you have the sources::
 
@@ -118,9 +118,10 @@ Program locks up when 'walking' a large number of files/folders
 
   Not really locked up, but the time it takes to process entries can be long if you
   are loading many items. During this process the application doesn't refresh, giving
-  the appearance of being locked up but is actually working on stuff.<br/>
-  The time in this state is dependent on your computer, whether the directory is on a local drive or a
-  network share, and of course the number of items.
+  the appearance of being locked up but is actually working on stuff.
+
+  The time in this state is dependent on your computer, whether the directory is
+  on a local drive or a network share, and of course the number of items.
 
   This will be addressed in a future release.
 
