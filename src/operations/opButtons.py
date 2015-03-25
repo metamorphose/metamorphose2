@@ -23,7 +23,7 @@ import wx
 ] = [wx.NewId() for __init_ctrls in range(11)]
 
 class Panel(wx.Panel):
-    """"
+    """
     Helper panel to some of the operations panels.
     It allows the usage of buttons to insert sub-operations,
     and contains the associated sub-operations.

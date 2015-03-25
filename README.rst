@@ -43,17 +43,16 @@ Cloning the sources from the remote::
 
 Submodules are used, so after cloning don't forget to check them out::
 
-  git submodule init
-  git submodule update
+  git submodule update --init
 
 
 Requirements
 ============
 
-- Python, version 2.6
-- wxPython, version 2.8
-- Python Imaging Library (PIL), version 1.1.6 or greater
-- Mutagen, , version 1.15 or greater
+- Python: version 2.6 or 2.7 (*not* compatible with 3.x)
+- wxPython: version 2.8
+- Python Imaging Library (PIL): version 1.1.6 or greater
+- Mutagen: version 1.21 or greater
 
 
 Running

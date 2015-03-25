@@ -166,10 +166,6 @@ class Parser():
         if incrementOnDiff and curName is not False and lastName != curName:
             self.counter = 0
 
-            #if True:
-            #    return u''
-
-
         # calculate current number based on user settings:
         i = start + (self.counter * int(count))
 
