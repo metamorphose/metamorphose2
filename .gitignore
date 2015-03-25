@@ -42,6 +42,13 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 
+# QtCreator
+*.autosave
+*.creator
+*.config
+*.files
+*.includes
+
 # Netbeans / Eclipse
 nbproject/
 *.project
