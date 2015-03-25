@@ -2,15 +2,60 @@
 # Git normalization
 #
 
-.gitattributes  export-ignore
-.gitignore      export-ignore
-nbproject/      export-ignore
+# Don't export these to archive
+.gitattributes export-ignore
+.gitignore export-ignore
 
-*.py    text eol=lf diff=python whitespace=blank-at-eol,space-before-tab,tab-in-indent,tabwidth=4
-*.txt   text eol=lf
-*.md    text eol=lf
-*.html  text eol=lf
-*.cfg   text eol=lf diff=xml
-*.sh    text eol=lf
-*.pot   text eol=lf
-*.po    text eol=lf
+# Shorthand for text files
+[attr]istext            text eol=lf whitespace=trailing-space,space-before-tab
+[attr]istext-tab2       text eol=lf whitespace=trailing-space,space-before-tab,tab-in-indent,tabwidth=2
+[attr]istext-tab4       text eol=lf whitespace=trailing-space,space-before-tab,tab-in-indent,tabwidth=4
+
+# Shorthand for binary files
+[attr]isbinary          -text diff
+
+# Auto-detect text files, ensure they use LF
+* text=auto eol=lf
+
+# Define text file attributes
+*.c     istext          diff=cpp
+*.cpp   istext-tab4     diff=cpp
+*.css   istext-tab2
+*.csv   istext
+*.h     istext-tab4     diff=cpp
+*.htm   istext-tab2     diff=html
+*.html  istext-tab2     diff=html
+*.js    istext-tab2
+*.json  istext-tab2
+*.md    istext
+*.php   istext-tab4     diff=php
+*.po    istext
+*.pro   istext
+*.py    istext-tab4     diff=python
+*.rst   istext
+*.sh    istext
+*.sls   istext-tab2
+*.sty   istext          diff=tex
+*.svg   istext
+*.txt   istext
+*.tex   istext          diff=tex
+*.ui    istext
+*.xml   istext
+*.xsd   istext
+*.yml   istext-tab2
+
+# Define binary file attributes
+*.eot   isbinary
+*.gif   isbinary
+*.gz    isbinary
+*.ico   isbinary
+*.jpg   isbinary
+*.jpeg  isbinary
+*.otf   isbinary
+*.png   isbinary
+*.pdf   isbinary
+*.tif   isbinary
+*.tiff  isbinary
+*.ttf   isbinary
+*.woff  isbinary
+*.zip   isbinary
