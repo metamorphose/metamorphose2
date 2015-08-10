@@ -23,7 +23,8 @@ import wx
     wxID_PANELBETWEEN, wxID_PANELBTWTEXTMATCH1,
     wxID_PANELBTWTEXTMATCH2, wxID_PANELSTATICTEXT6, wxID_PANELSTATICTEXT7,
     wxID_PANELSTATICTEXT1
-] = [wx.NewId() for __init_ctrls in range(15)]
+ ] = [wx.NewId() for __init_ctrls in range(15)]
+
 
 class Panel(wx.Panel):
     """
@@ -62,7 +63,6 @@ class Panel(wx.Panel):
         mainSizer.Add(posSizer, 0, wx.EXPAND | wx.TOP, 10)
 
         self.SetSizerAndFit(mainSizer)
-
 
     def __init_ctrls(self, prnt, title, Name):
         wx.Panel.__init__(self, id=wxID_PANEL, name=Name, parent=prnt, style=0)

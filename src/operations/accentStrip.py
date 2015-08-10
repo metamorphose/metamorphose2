@@ -553,6 +553,7 @@ def auto_convert(s, rplc=u"_"):
     else:
         return fast_convert(s)
 
+
 def full_convert(s, rplc=u"_"):
     """
     Complete conversion including unknown character squashing.
@@ -572,6 +573,7 @@ def full_convert(s, rplc=u"_"):
         else:
             rs += rplc
     return rs
+
 
 def fast_convert(s):
     """

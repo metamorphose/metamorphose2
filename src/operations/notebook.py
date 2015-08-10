@@ -18,6 +18,7 @@ import numbering
 import utils
 import wx
 
+
 class Notebook(wx.Notebook):
     """Base class for all notebooks used to display operation tabs."""
 

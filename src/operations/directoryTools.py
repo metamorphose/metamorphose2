@@ -23,7 +23,8 @@ import wx
     wxID_RADIOBUTTON2, wxID_ADDCURRENT, wxID_PATHRECUR,
     wxID_INVERSE, wxID_BROWSE, wxID_ADDBYFILENAME,
     wxID_USEFILEEXT, wxID_USEFILENAME
-] = [wx.NewId() for __init_ctrls in range(11)]
+ ] = [wx.NewId() for __init_ctrls in range(11)]
+
 
 class Panel(wx.Panel):
     """This is the panel in charge of directory manipulations."""
@@ -55,7 +56,6 @@ class Panel(wx.Panel):
         superSizer.Add(fileNameSizer, 0, wx.ALL, 5)
 
         self.SetSizerAndFit(superSizer)
-
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'directoryToolsPanel',
@@ -254,4 +254,3 @@ class Panel(wx.Panel):
                 widget.Enable(False)
         main.show_preview(event)
     """
-

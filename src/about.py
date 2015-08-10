@@ -21,13 +21,15 @@ import wx
 import wx.lib.buttons
 import wx.lib.hyperlink as hl
 
+
 def create(parent):
     return About(parent)
 
 [wxID_ABOUT, wxID_ABOUTCLOSE, wxID_ABOUTCOPYRIGHT, wxID_PANELDONATEBUTTON,
     wxID_ABOUTGREET, wxID_ABOUTVERSION, wxID_ABOUTLINK, wxID_ABOUTDONATE,
     wxID_ABOUTWXVERSION, wxID_PANELCREDITSBUTTON, wxID_PANELLICENSEBUTTON
-] = [wx.NewId() for __init_ctrls in range(11)]
+ ] = [wx.NewId() for __init_ctrls in range(11)]
+
 
 class About(wx.Dialog):
     """The about dialog."""
@@ -140,5 +142,3 @@ class About(wx.Dialog):
 
     def on_donate_button(self, event):
         self.donate.GotoURL("http://sourceforge.net/donate/index.php?group_id=146403")
-
-

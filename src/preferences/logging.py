@@ -19,7 +19,8 @@ import wx
     wxID_PANELLOGLOCATION, wxID_PANELLOGSEPARATOR, wxID_PANELSTATICTEXT1,
     wxID_PANELSTATICTEXT2, wxID_PANELSTATICTEXT3, wxID_PANELSTATICTEXT4,
     wxID_PANELSTATICTEXT5,
-] = [wx.NewId() for __init_ctrls in range(11)]
+ ] = [wx.NewId() for __init_ctrls in range(11)]
+
 
 class Panel(wx.Panel):
     """Logging preferences panel."""

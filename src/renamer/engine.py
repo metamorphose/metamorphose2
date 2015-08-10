@@ -24,6 +24,7 @@ import classes
 import shutil1
 import utils
 
+
 class Core():
     """
     Renaming Engine.
@@ -53,7 +54,6 @@ class Core():
         utils.make_err_msg(_(u"Error renaming:\n%s \n\nto:\n%s \n\nReason: %s")\
                            % (original[0], renamed[0], err),
                            _(u"Renaming Failed !!"))
-
 
     def _rename_item(self, i, original, renamed, refresh_int):
         """
@@ -94,7 +94,6 @@ class Core():
         # renaming is successful
         return False
 
-
     def __compare(self, renamed, original):
         """Dupe checking, windows is case insensitive."""
         renamed = renamed[0]
@@ -106,7 +105,6 @@ class Core():
             return True
         else:
             return False
-
 
     def __rename_item_list(self, event):
         """After pre-renaming checks are completed, rename the list of items."""
@@ -168,7 +166,7 @@ class Core():
             self.renamedFile.write(renamed[0] + u'\n')
         return error, i
 
-    def _print_list(self, list):
+    def _print_list(list):
         """Print out a list (for testing/debug)."""
         for item in list:
             print(item)
@@ -257,7 +255,6 @@ class Core():
         if event != 'undo':
             main.bottomWindow.set_undo_redo_type('undo')
         main.picker.view.path.SetEditable(True)
-
 
     def undo_last_rename(self, event):
         """

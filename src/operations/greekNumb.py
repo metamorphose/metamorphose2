@@ -67,6 +67,7 @@ TODO
 from __future__ import print_function
 import math
 
+
 class Error(EnvironmentError):
     pass
 

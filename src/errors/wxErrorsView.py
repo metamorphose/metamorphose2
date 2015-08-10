@@ -19,7 +19,8 @@ from wx.lib.mixins.listctrl import ListCtrlAutoWidthMixin
 [wxID_ERRORPANEL, wxID_ERRORPANELERRORSLIST, wxID_ERRORPANELERRORSSTATICTEXT1,
     wxID_ERRORPANELERRORSREMOVEERRORS, wxID_ERRORPANELERRORSREMOVEWARNINGS,
     wxID_ERRORPANELERRORSSTATICTEXT2, wxID_ERRORPANELERRORSREMOVE, wxID_ERRORPANELERRORSSAVE
-] = [wx.NewId() for __init_ctrls in range(8)]
+ ] = [wx.NewId() for __init_ctrls in range(8)]
+
 
 class ErrorList(wx.ListCtrl, ListCtrlAutoWidthMixin):
     """List control for errors."""
@@ -116,7 +117,6 @@ class Panel(wx.Panel):
         self.staticText2 = wx.StaticText(id=wxID_ERRORPANELERRORSSTATICTEXT2,
                                          label=_("from above items."), name=u'staticText1', parent=self, style=0)
 
-
     def __init__(self, Core, parent, main_window):
         global main
         main = main_window
@@ -133,7 +133,6 @@ class Panel(wx.Panel):
         #print self.GetParent().GetEffectiveMinSize()
         #width = self.GetSize()[0]
         #self.errorsList.SetColumnWidth(1, width-200)
-
 
     def display_errors(self, errorLog, warn, bad):
         self.errorLog = errorLog

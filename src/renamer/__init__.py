@@ -46,7 +46,6 @@ class Core():
         self.insert_operation(n, opPanel)
         return opPanel
 
-
     ## == View related methods == ##
 
     def destroy_all_operations(self):
@@ -65,7 +64,6 @@ class Core():
 
     def insert_operation(self, n, opPanel):
         self.operations.insert(n, opPanel)
-
 
     ## == Renaming related methods == ##
 

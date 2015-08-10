@@ -66,6 +66,7 @@ AUDIO_INFO = {
     _('encoded by'): "encodedby",
     _('comment'): 'comment',
 }
+
 IMAGE_INFO = {
     _(u"width"): u"EXIF ExifImageWidth",
     #_(u"date taken") : u'EXIF DateTimeOriginal',
@@ -263,7 +264,6 @@ class Parser():
                 else:
                     self.__add_to_warnings(path, _(u"Could not read Exif tag"))
                     return False
-
 
     def __date_time(self, op, path, operation):
         dateTimePanel = operation.dateTimePanel

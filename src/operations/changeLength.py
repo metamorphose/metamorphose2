@@ -18,7 +18,8 @@ import wx
 [wxID_PANEL, wxID_PANELMOD_LENGTH, wxID_PANELMOD_LENGTH_DIRECTION,
     wxID_PANELMOD_LENGTH_PAD, wxID_PANELMOD_LENGTH_POSITION,
     wxID_PANELMOD_LENGTH_TYPE, wxID_PANELSTATICBOX1, wxID_MAINPANELMOD_LENGTH
-] = [wx.NewId() for __init_ctrls in range(8)]
+ ] = [wx.NewId() for __init_ctrls in range(8)]
+
 
 class OpPanel(Operation):
     def __init_sizer(self):

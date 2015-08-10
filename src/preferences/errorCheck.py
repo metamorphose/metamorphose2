@@ -21,7 +21,8 @@ import wx
 [wxID_PANEL, wxID_PANELDELETEBADCHARS,
     wxID_PANELMARKBADCHARS, wxID_PANELMARKWARNING, wxID_PANELUSEWINCHARS,
     wxID_PANELUSEWINNAMES, wxID_PANELWINNAMESBAD, wxID_PANELWINNAMESWARN,
-] = [wx.NewId() for __init_ctrls in range(8)]
+ ] = [wx.NewId() for __init_ctrls in range(8)]
+
 
 class Panel(wx.Panel):
     def __init_sizers(self):
@@ -89,7 +90,6 @@ class Panel(wx.Panel):
                                           label=_(u'Mark name as bad'), name=u'winNamesBad', parent=self)
 
         self.__init_sizers()
-
 
     def __init__(self, parent):
         self.__init_ctrls(parent)

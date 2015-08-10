@@ -16,6 +16,7 @@ import classes
 import wxErrorsView
 import app
 
+
 class Parameters(classes.Parameters):
     """Handle loading parameters"""
 

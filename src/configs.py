@@ -248,7 +248,6 @@ class LoadConfig():
                     if child.nodeType == 1:
                         self.__apply_values(parent, child)
 
-
     def __get_operation_params(self, op):
         """Get operation parameters from XML, return dict."""
         params = {}
@@ -264,7 +263,6 @@ class LoadConfig():
                     if value == 'False': value = False
                     params[node.nodeName] = value
         return params
-
 
     def __load_config_xml(self, config):
         pages = utils.get_notebook_page_names(main)
@@ -327,7 +325,6 @@ class LoadConfig():
                     if hasattr(operation, 'on_config_load'):
                         operation.on_config_load()
 
-
     def __load_file(self, configFilePath):
         """Read file and apply settings."""
         app.debug_print("loading config file : %s" % configFilePath)
@@ -366,4 +363,3 @@ class LoadConfig():
             if app.autoModeLevel != 0 or\
                 (app.prefs.get('previewOnConfig') and app.autoModeLevel is False):
                     main.picker.view.reset_dirpicker_on_config_load()
-

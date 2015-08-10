@@ -45,8 +45,9 @@ romanNumeralMap = (('M',  1000),
 
 #Create tables for fast conversion of roman numerals.
 #See fillLookupTables() below.
-toRomanTable = [ None ]  # Skip an index since Roman numerals have no zero
+toRomanTable = [None]  # Skip an index since Roman numerals have no zero
 #fromRomanTable = {}
+
 
 def toRoman(n):
     """convert integer to Roman numeral"""
@@ -63,6 +64,7 @@ def toRoman(n):
 #    if not fromRomanTable.has_key(s):
 #        raise InvalidRomanNumeralError, 'Invalid Roman numeral: %s' % s
 #    return fromRomanTable[s]
+
 
 def toRomanDynamic(n):
     """convert integer to Roman numeral using dynamic programming"""

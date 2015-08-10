@@ -25,7 +25,8 @@ import wx
     wxID_PANELREPL_MOVE_TXT, wxID_PANELREPL_MOVE_TXT_MOD,
     wxID_PANELREPL_MOVE_TXT_VALUE, wxID_PANELSTATICTEXT6, wxID_PANELSTATICBOX1,
     wxID_PANELSTATICTEXT5
-] = [wx.NewId() for __init_ctrls in range(9)]
+ ] = [wx.NewId() for __init_ctrls in range(9)]
+
 
 class OpPanel(Operation):
     """
@@ -57,7 +58,6 @@ class OpPanel(Operation):
 
         mainSizer.Add(self.moveSizer, 0, wx.EXPAND)
         self.SetSizerAndFit(mainSizer)
-
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'Panel', parent=prnt,

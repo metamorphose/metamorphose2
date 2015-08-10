@@ -87,7 +87,7 @@ class Core():
              ( _(u"- compressed") , u"\.(zip|tar|7z|ace|gz|tgz|rar|r\d{1,3}|cab|bz2)$"),
              ( _(u"- an extension") , u"^.+\..+$"),
              ( _(u"- only an extension") , u"(^|\\\|/)\."),
-       )
+        )
         self.CustomSearches = {}
 
         global main
@@ -96,7 +96,6 @@ class Core():
         self.view = wxPickerView.Panel(self, parent, MainWindow)
         self.params = Parameters(self.view)
         self.joinedItems = []
-
 
     # wrappers to acces Panel
 
@@ -168,7 +167,6 @@ class Core():
             self.joinedItems.remove(fullItem)
 
             self.enable_buttons()
-
 
     def _set_initial(self):
         self.clear_all()

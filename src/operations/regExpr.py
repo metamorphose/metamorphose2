@@ -20,7 +20,8 @@ import wx
 [wxID_PANEL, wxID_PANELA_Z, wxID_PANELDIGIT,
     wxID_PANELREG_EXPR, wxID_PANELREG_EXP_DIV,
     wxID_PANELREG_EXP_I, wxID_PANELREG_EXP_U,
-] = [wx.NewId() for __init_ctrls in range(7)]
+ ] = [wx.NewId() for __init_ctrls in range(7)]
+
 
 class Panel(wx.Panel):
     """Panel to hold regular expression stuff."""

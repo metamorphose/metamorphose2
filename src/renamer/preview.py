@@ -26,8 +26,8 @@ import time
 import app
 import classes
 
-# preview generator, should not be accesed directly
-#
+
+# preview generator, should not be accessed directly
 class Core():
     def __init__(self, MainWindow):
         app.debug_print("loading renamer preview");
@@ -39,18 +39,15 @@ class Core():
     def setup(self):
         self.prefs = app.prefs
 
-
     def getOperations(self):
         def getActive(x):
             if x.IsEnabled():
                 return x
         return filter(getActive, main.renamer.operations)
 
-
     def addStatus(self, x):
         """Add renamed status."""
         return [x, False]
-
 
     def setStatusMessage(self):
         """Show some messages and display problems in error tab."""
@@ -78,7 +75,6 @@ class Core():
         else:
             main.bottomWindow.go.Enable(False)
             main.menuFile.GoMenu.Enable(False)
-
 
     def error_check_items(self):
         """Run stand-alone error check on all items,"""
@@ -113,8 +109,6 @@ class Core():
 
         self.setStatusMessage()
 
-
-
     #--- ERROR CHECKING: -----------------------------------------------------#
     # TODO : should be separate class within this file
     def appendErrorLog(self, ec, itemToRename, msg, log):
@@ -123,7 +117,6 @@ class Core():
         else:
             main.bad.append(ec)
         main.errorLog.insert(0, (ec, itemToRename, msg, log))
-
 
     def errorCheck(self, renamedItem, itemToRename, path):
         """Do final error checking and optional character stripping.
@@ -196,14 +189,12 @@ class Core():
 
         return (renamedItem, path)
 
-
     # Stop ongoing preview
     def stopPreview(self):
         main.bottomWindow.go.Enable(False)
         main.menuFile.GoMenu.Enable(False)
         main.menuFile.SaveLog.Enable(False)
         main.bottomWindow.display.DeleteAllItems()
-
 
     def generate_names(self, event):
         """
@@ -235,8 +226,6 @@ class Core():
         else:
             self.stopPreview()
 
-
-
     #--- GENERATE NEW NAMES --------------------------------------------------#
 
     def run(self, operations):
@@ -262,8 +251,10 @@ class Core():
         # define here for faster processing
         def split(item):
             return os.path.split(item)
+
         def splitext(item):
             return os.path.splitext(item)
+
         def join(newPath, renamedItem):
             return unicode(os.path.join(newPath, renamedItem))
 

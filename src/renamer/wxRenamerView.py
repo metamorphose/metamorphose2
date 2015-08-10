@@ -35,13 +35,14 @@ import wx
     wxID_MENUAPPLYEXTENSION, wxID_MENUDESTROY,
     wxID_MENUDESTROYALL, wxID_RESETOPERATIONBUTTON,
     wxID_MENUCHANGENAME,
-] = [wx.NewId() for __init_ctrls in range(26)]
+ ] = [wx.NewId() for __init_ctrls in range(26)]
 
 
 BackgroundClr = wx.SystemSettings_GetColour(wx.SYS_COLOUR_WINDOW)
 HighlightClr = wx.SystemSettings_GetColour(wx.SYS_COLOUR_HIGHLIGHT)
 HighlightTxtClr = wx.SystemSettings_GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT)
 TxtClr = wx.SystemSettings_GetColour(wx.SYS_COLOUR_WINDOWTEXT)
+
 
 class OperationDropTarget(wx.TextDropTarget):
     def __init__(self, object):
@@ -178,7 +179,6 @@ class IntroTextPanel(wx.Panel):
         self.SetMinSize(wx.Size(txtSize[0], txtSize[1] + gap))
 
 
-
 class Panel(wx.Panel):
     def __init_sizers(self):
         mainSizer = self.mainSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -298,7 +298,6 @@ class Panel(wx.Panel):
         self.Bind(wx.EVT_MENU, self.__destroy_all_gui_operations,
                   id=wxID_MENUDESTROYALL)
 
-
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_, name=u'mainPanel',
                           parent=prnt, size=wx.DefaultSize, style=wx.TAB_TRAVERSAL)
@@ -413,7 +412,6 @@ class Panel(wx.Panel):
                                self.__available_drag_init)
         wx.EVT_LIST_BEGIN_DRAG(self.usedOperations, self.usedOperations.GetId(),
                                self.__used_drag_init)
-
 
     def __init__(self, Core, parent, main_window):
         global main
@@ -561,7 +559,6 @@ class Panel(wx.Panel):
             self.enableOperation.SetLabel(_(u"Enable"))
             self.enableOperation.SetValue(True)
         self.mainSizer.Layout()
-
 
     def __used_operations_listbox(self, event):
         """show operation from box."""

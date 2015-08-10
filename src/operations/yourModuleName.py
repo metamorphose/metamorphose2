@@ -21,6 +21,7 @@ import wx
 
 [wxID_PANEL, wxID_PANELSTATICTEXT1] = [wx.NewId() for __init_ctrls in range(2)]
 
+
 class OpPanel(Operation):
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_PANEL, name=u'Panel', parent=prnt,
@@ -29,7 +30,6 @@ class OpPanel(Operation):
         self.staticText1 = wx.StaticText(id=wxID_PANELSTATICTEXT1,
                                          label=_(u"This is a translated string"), name=u'staticText1', parent=self,
                                          pos=wx.Point(192, 72), size=wx.Size(-1, -1), style=0)
-
 
     def __init__(self, parent, main_window, params={}):
         Operation.__init__(self, params)

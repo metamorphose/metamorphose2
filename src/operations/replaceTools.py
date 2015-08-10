@@ -17,7 +17,8 @@ import search
 import wx
 
 [wxID_PANEL, wxID_PANELREPL_TXT, wxID_PANELSTATICTEXT1, wxID_PANELSTATICBOX1
-] = [wx.NewId() for __init_ctrls in range(4)]
+ ] = [wx.NewId() for __init_ctrls in range(4)]
+
 
 class Panel(wx.Panel):
     """This is the panel in charge of replacing matches with text or operations."""

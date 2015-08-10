@@ -27,9 +27,11 @@ import general
 import utils
 import wx
 
+
 def create_dialog(parent, initial=False):
     """Create and return the preferences dialog."""
     return Dialog(parent, Methods(), initial)
+
 
 class Methods:
     """

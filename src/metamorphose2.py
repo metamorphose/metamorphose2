@@ -19,11 +19,11 @@
 """
 Métamorphose is a free, open source program to mass rename files and folders.
 
-A profesional renaming tool, it has many powerful functions.
+A professional renaming tool, it has many powerful functions.
 Well suited for those that need to rename many files and/or folders on a regular basis.
 
 In addition to general usage operations, it is useful for photo and music
-collections, webmasters, programmers, legal and clerical, et cetera.
+collections, webmasters, programmers, legal and clerical, etc.
 
 This is what you should run to start the program.
 """
@@ -42,7 +42,7 @@ if not hasattr(sys, "frozen"):
     else:
         try:
             wxversion.select('2.8')
-        except:
+        except wxversion.VersionError:
             print("\nwxPython version 2.8 is required!\n")
             sys.exit()
 import wx

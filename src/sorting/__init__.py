@@ -64,7 +64,6 @@ class Core():
         self.view = wxSortingView.Panel(self, parent, main_window)
         self.params = Parameters(self.view)
 
-
     def _get_from_exif(self, path, selection):
         """Get wanted Exif info from image for sorting."""
         ref = {7: 'EXIF DateTimeOriginal', 8: 'Image DateTime'}
@@ -104,7 +103,7 @@ class Core():
                 dir, file = os.path.split(x[0])
                 return (dir, file[frm:to].lower())
 
-        # inteligent number sorting
+        # intelligent number sorting
         elif params.intelySort:
             # return the number in the name
             def _get_numb(x):

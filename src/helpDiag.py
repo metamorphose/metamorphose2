@@ -23,6 +23,7 @@ import utils
 import wx
 import wx.html
 
+
 def create(parent):
     return Dialog(parent)
 
@@ -106,5 +107,3 @@ class Dialog(wx.Dialog):
         for tab in notebookTabs:
             tab.LoadPage(helpFiles[i])
             i += 1
-
-

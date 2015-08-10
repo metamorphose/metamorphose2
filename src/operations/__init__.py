@@ -66,6 +66,7 @@ def get_internal_name(name):
     """Get the operation name as within the application."""
     return defs[name][0]
 
+
 def get_translated_name(opType):
     """Get the translated operation name from the operation type."""
     type = False
@@ -73,6 +74,7 @@ def get_translated_name(opType):
         if v[0] == opType:
             type = k
     return type
+
 
 def get_longest_name_length():
     """Get the length of the longest operation name."""

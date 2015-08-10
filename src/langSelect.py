@@ -17,6 +17,7 @@
 import utils
 import wx
 
+
 def create(parent, Title, event):
     return LangSelect(parent, Title, event)
 
@@ -45,6 +46,7 @@ languages = (
     #('zh_CN', u'中文', 'cn'),
 )
 
+
 class LangSelect(wx.Dialog):
     def __init_sizer(self):
         optionsSizer = wx.FlexGridSizer(rows=3, cols=2, hgap=2, vgap=10)
@@ -65,7 +67,6 @@ class LangSelect(wx.Dialog):
         sizer.Add(buttonsSizer, 0, wx.BOTTOM | wx.TOP, 5)
 
         self.SetSizerAndFit(sizer)
-
 
     def __init_ctrls(self, prnt, Title):
         wx.Dialog.__init__(self, id=-1, name=u'langSelect',

@@ -27,7 +27,6 @@ homedir = 'metamorphose2'
 if os.sep == '/':
     homedir = '.' + homedir
 
-# Methods
 
 def debug_print(msg):
     """Print debug messages to screen, if debugging is enabled."""
@@ -36,6 +35,7 @@ def debug_print(msg):
             print(msg)
         except:
             print('invalid char in msg')
+
 
 def __set_real_path():
     """Set application path."""
@@ -55,9 +55,11 @@ def __set_real_path():
 
 realPath = __set_real_path()
 
+
 def get_real_path(file):
     """Return application path for file."""
     return os.path.join(realPath, file)
+
 
 def __get_version():
     """Get current version from file."""
@@ -69,6 +71,7 @@ def __get_version():
         v = f.readline().strip()
         f.close()
     return v + u' (beta)'
+
 
 def locale_path(lang):
     """Return locale directory."""
@@ -115,6 +118,3 @@ cliMode = False
 
 # preferences object to be set on load
 prefs = False
-
-
-# Links

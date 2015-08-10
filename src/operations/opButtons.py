@@ -20,7 +20,8 @@ import wx
     wxID_PANELINS_NUM, wxID_PANELINSTIME, wxID_PANELSTATICTEXT1,
     wxID_PANELEXIF, wxID_PANELEXIFSELECT, wxID_PANELFOLDER,
     wxID_PANELFOLDERDEPTH
-] = [wx.NewId() for __init_ctrls in range(11)]
+ ] = [wx.NewId() for __init_ctrls in range(11)]
+
 
 class Panel(wx.Panel):
     """
@@ -44,7 +45,6 @@ class Panel(wx.Panel):
         buttonSizer.Add(self.folderDepth, 0, wx.RIGHT | wx.ALIGN_CENTER, 4)
         mainSizer.Add(buttonSizer, 0, wx.EXPAND | wx.TOP, 2)
         self.SetSizerAndFit(mainSizer)
-
 
     def __init_ctrls(self, prnt, Name):
         wx.Panel.__init__(self, id=wxID_PANEL, name=Name, parent=prnt,
@@ -136,7 +136,6 @@ class Panel(wx.Panel):
         self.folderDepth.SetValue(1)
         self.folderDepth.SetToolTipString(_(u"How far back to get folder"))
 
-
     def __init__(self, prnt, main_window, name=u'opButtonsPanel'):
         global main
         main = main_window
@@ -177,7 +176,6 @@ class Panel(wx.Panel):
 
     def _on_folder_button(self, event):
         self._insert_text(_(u"folder%s") % self.folderDepth.GetValue())
-
 
     def parse_input(self, text, file, operation):
         """

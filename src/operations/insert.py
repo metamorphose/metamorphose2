@@ -18,6 +18,7 @@ from operation import Operation
 import utils
 import wx
 
+
 class OpPanel(Operation):
     """This panel controls inserts."""
     

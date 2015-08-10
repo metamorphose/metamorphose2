@@ -24,7 +24,8 @@ import wx
     wxID_PANELSTATICTEXT1, wxID_PANELSTATICTEXT3, wxID_PANELSTATICTEXT5,
     wxID_PANELSTATICTEXT6, wxID_PANELSTATICTEXT7, wxID_PANELSTEP,
     wxID_PANELSTYLE, wxID_PANELSPECIAL, wxID_PANELRINCREMENTONDIFF,
-] = [wx.NewId() for __init_ctrls in range(30)]
+ ] = [wx.NewId() for __init_ctrls in range(30)]
+
 
 class Panel(wx.Panel):
     """
@@ -419,7 +420,6 @@ class Panel(wx.Panel):
             self.alphaUc.Enable(False)
             self.alphaPad.Enable(False)
         main.show_preview(event)
-
 
     def _on_startbyitems_checkbox(self, event):
         if self.startByItems.GetValue():

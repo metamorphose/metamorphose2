@@ -27,7 +27,8 @@ import wx
     wxID_SORTINGPANELSTATSORTCHOICE, wxID_SORTINGPANELUPBUTTON,
     wxID_SORTINGPANELUPMORE, wxID_SORTINGPANELUPTOP,
     wxID_SORTINGPANELNORMALSORT,
-] = [wx.NewId() for __init_ctrls in range(22)]
+ ] = [wx.NewId() for __init_ctrls in range(22)]
+
 
 class Panel(wx.Panel):
     def __init_mainsizer_items(self, parent):
@@ -224,7 +225,6 @@ class Panel(wx.Panel):
 
         self.__init_sizers()
 
-
     def __init__(self, Core, parent, main_window):
         global main
         main = main_window
@@ -236,7 +236,6 @@ class Panel(wx.Panel):
         self.posOptions = (self.staticText1, self.staticText2, self.PosStart,
                            self.PosLength)
         self.setSortingOptions(False)
-
 
     # Adjust after loading config
     def on_config_load(self, ):
@@ -300,7 +299,6 @@ class Panel(wx.Panel):
                 item.Enable(True)
             self.statSort.Enable(True)
             self.setStatOptions(event)
-
 
     def show_preview(self, event):
         main.show_preview(event)

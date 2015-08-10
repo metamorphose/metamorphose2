@@ -17,7 +17,8 @@ import wx
 [wxID_PANEL, wxID_PANELALWAYSMAKELOG, wxID_PANELAUTOSELECTALL,
     wxID_PANELPREVIEWONCONFIG, wxID_PANELRELOADAFTERRENAME,
     wxID_PANELAUTOSHOWERROR,
-] = [wx.NewId() for __init_ctrls in range(6)]
+ ] = [wx.NewId() for __init_ctrls in range(6)]
+
 
 class Panel(wx.Panel):
     """Automation preferences panel."""

@@ -30,7 +30,8 @@ import wx.lib.masked.timectrl
     wxID_PANELSTATICTEXT5, wxID_PANELSTATICTEXT6,
     wxID_PANELTIME, wxID_PANELTIMESEPERATOR,
     wxID_PANELTIMETESTDISPLAY,
-] = [wx.NewId() for __init_ctrls in range(21)]
+ ] = [wx.NewId() for __init_ctrls in range(21)]
+
 
 class Panel(wx.Panel):
     """
@@ -222,7 +223,6 @@ class Panel(wx.Panel):
         self._test_date(False)
         self._test_time(False)
 
-
     def get_from_item_checkbox(self, event):
         """Enable or disable based on whether to get from item or not."""
         enabled = (self.itemTimeType, )
@@ -322,7 +322,6 @@ class Panel(wx.Panel):
                 pass
             self.dateTime[2] = time
     #------------------------------------------------#
-
 
     def _test_date(self, event):
         """Display date according to current settings."""

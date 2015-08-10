@@ -20,6 +20,7 @@ import replaceTools
 import utils
 import wx
 
+
 class OpPanel(Operation):
     """Panel in charge of replacing matches with text or operations."""
 
@@ -39,7 +40,6 @@ class OpPanel(Operation):
                                  _(u"Replace settings"), u'replace.ico')
         self.numberingPanel = self.notebook.numbering
         self.dateTimePanel = self.notebook.dateTime
-
 
     def __init__(self, parent, main_window, params={}):
         Operation.__init__(self, params)

@@ -28,8 +28,9 @@ import wx.html
 
 try:
     import Image
-except:
+except ImportError:
     pass
+
 
 def get_wxversion():
     """Get the wxPython Version."""
@@ -39,6 +40,7 @@ def get_wxversion():
     wxVer = wxVer.rstrip(".")
     return wxVer
 
+
 def is_pil_loaded():
     """Determine if the python imaging library is loaded."""
     try:
@@ -47,6 +49,7 @@ def is_pil_loaded():
         return False
     else:
         return True
+
 
 def set_min_size(parent, ignoreCtrls=(), ignoreClasses=()):
     """Recursively set all sizes to platform defaults
@@ -65,6 +68,7 @@ def set_min_size(parent, ignoreCtrls=(), ignoreClasses=()):
         if child not in ignoreCtrls and not isinstance(child, ignoreClasses):
             set_min_size(child, ignoreCtrls, ignoreClasses)
 
+
 def adjust_exact_buttons(parent, ignore=()):
     """
     Adjust button sizes when using BU_EXACTFIT
@@ -76,6 +80,7 @@ def adjust_exact_buttons(parent, ignore=()):
             txt = child.GetLabel()
             size = wx.Size(child.GetTextExtent(txt)[0] + 18, -1)
             child.SetMinSize(size)
+
 
 def safe_makedir(dir):
     """Create a folder."""
@@ -89,11 +94,13 @@ def safe_makedir(dir):
                 make_err_msg(unicode(error), u"Error")
                 pass
 
+
 def init_environment():
     """Create necessary folders."""
     dirs = ('undo', 'configs')
     for d in dirs:
         safe_makedir(get_user_path(d))
+
 
 def calc_slice_pos(s, l):
     """Calculate the correct start and end positions for slices."""
@@ -110,6 +117,7 @@ def calc_slice_pos(s, l):
         to = s + l
     return frm, to
 
+
 def make_yesno_dlg(msg, title):
     """Show a generic yes / no choice message dialog."""
     dlg = wx.MessageDialog(None, msg, title, wx.YES_NO | wx.YES_DEFAULT | wx.ICON_WARNING)
@@ -120,6 +128,7 @@ def make_yesno_dlg(msg, title):
     dlg.Destroy()
     return returnValue
 
+
 def make_err_msg(msg, title=None):
     """Make a generic error message dialog."""
     if not title:
@@ -127,6 +136,7 @@ def make_err_msg(msg, title=None):
     dlg = wx.MessageDialog(None, msg, title, wx.ICON_ERROR)
     dlg.ShowModal()
     dlg.Destroy()
+
 
 def make_warn_msg(msg, title=None):
     """Make a generic warning message dialog."""
@@ -136,6 +146,7 @@ def make_warn_msg(msg, title=None):
     dlg.ShowModal()
     dlg.Destroy()
 
+
 def make_info_msg(msg, title=None):
     """Make a generic info message dialog."""
     if not title:
@@ -144,20 +155,24 @@ def make_info_msg(msg, title=None):
     dlg.ShowModal()
     dlg.Destroy()
 
+
 def get_user_path(file):
     """Return user's default config path."""
     base = wx.StandardPaths.Get().GetUserConfigDir()
     return os.path.join(base, app.homedir, file)
 
+
 def icon_path(icon):
     """Get the full icon path."""
     return app.get_real_path(u'icons/%s' % icon)
+
 
 def reset_counter(parent, tools, c):
     """Reset a numbering counter."""
     tools.opButtonsPanel.parser.counter = c
     tools.opButtonsPanel.parser.auxCount = 0
     parent.numberingPanel.set_number_params(True)
+
 
 def write_file(path, data):
     """Write to a file."""
@@ -174,6 +189,7 @@ def write_file(path, data):
         fp.write(unicode(data))
         fp.close()
 
+
 def get_notebook_page_names(parent):
     """
     Get all notebook page names.
@@ -185,6 +201,7 @@ def get_notebook_page_names(parent):
         pages.append(parent.notebook.GetPage(i))
     return pages
 
+
 def dev_null(event):
     """
     Do nothing.
@@ -193,11 +210,13 @@ def dev_null(event):
     """
     pass
 
+
 def udate(main, format, itemDateTime):
     """Time encode/decode crap, a workaround for strftime not accepting unicode."""
     #print(main.encoding)
     udate = time.strftime(format.encode(main.encoding), itemDateTime)
     return udate.decode(main.encoding)
+
 
 def set_busy(busy):
     """Set the application as busy, disable user input."""
@@ -205,6 +224,7 @@ def set_busy(busy):
         wx.BeginBusyCursor()
     else:
         wx.EndBusyCursor()
+
 
 def get_encoding_choices(key):
     """Return valid encodings tuple for a given language type."""

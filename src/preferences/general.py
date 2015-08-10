@@ -18,7 +18,8 @@ import wx
 [wxID_PANEL, wxID_PANELCLEARUNDO, wxID_PANELENCODINGGROUP,
     wxID_PANELENCODINGSELECT, wxID_PANELSHOWHIDDENDIRS, wxID_PANELSTATICBOX1,
     wxID_PANELSTATICTEXT1, wxID_PANELSTATICTEXT2, wxID_PANELUSEDIRTREE,
-] = [wx.NewId() for __init_ctrls in range(9)]
+ ] = [wx.NewId() for __init_ctrls in range(9)]
+
 
 class Panel(wx.Panel):
     def __init_itemsizer_items(self, parent):

@@ -20,6 +20,7 @@ import app
 import utils
 import wx
 
+
 class Parameters:
     """Load parameters from GUI to core."""
     def set_value_method(self):
@@ -52,7 +53,7 @@ class SmallHelp(wx.Dialog):
 
     def __init__(self, prnt, helpFile, title, icon, size=False):
 
-        if size == False:
+        if not size:
             size = wx.Size(610, 531)
         wx.Dialog.__init__(self, id=-1, name='smallHelpDialog', parent=prnt,
                            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER | wx.MAXIMIZE_BOX,

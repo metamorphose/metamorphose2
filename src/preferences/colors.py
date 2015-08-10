@@ -14,6 +14,7 @@
 
 import wx
 
+
 class ColourPickerCtrl(wx.ColourPickerCtrl):
     """Custom wx.ColourPickerCtrl to make changing look easier."""
     def __init__(self, parent, col, name):

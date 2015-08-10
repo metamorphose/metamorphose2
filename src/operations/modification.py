@@ -29,11 +29,12 @@ import wx
 [wxID_PANEL, wxID_PANELOTHER_OPERATION_VALUE, wxID_PANELSTATICTEXT1,
     wxID_PANELOTHERMOD, wxID_PANELCASEMOD, wxID_PANELCASE_OPERATION_VALUE,
     wxID_PANELENCODINGGROUP, wxID_PANELFIXENCODE, wxID_PANELENCODINGSELECT
-] = [wx.NewId() for __init_ctrls in range(9)]
+ ] = [wx.NewId() for __init_ctrls in range(9)]
 
 # taken from urllib standard python library
 _hextochr = dict(('%02x' % i, chr(i)) for i in range(256))
 _hextochr.update(('%02X' % i, chr(i)) for i in range(256))
+
 
 class OpPanel(Operation):
     """
@@ -107,7 +108,6 @@ class OpPanel(Operation):
         self.encodingGroup.Bind(wx.EVT_CHOICE, self.__encoding_options,
                                 id=wxID_PANELENCODINGGROUP)
 
-
     def __init__(self, parent, main_panel, params={}):
         Operation.__init__(self, params)
         global main
@@ -148,7 +148,6 @@ class OpPanel(Operation):
         self.__make_encoding_select(choicesList)
         self.encodingSelect.SetSelection(0)
         self.create_operation(event)
-
 
     def __unquote(self, s):
         """
@@ -278,7 +277,6 @@ class OpPanel(Operation):
             self.comds = (_fix_encode, )
             self.op = 0
         main.show_preview(event)
-
 
     def rename_item(self, path, name, ext, original):
         newName = self.join_ext(name, ext)

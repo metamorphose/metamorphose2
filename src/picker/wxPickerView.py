@@ -24,7 +24,7 @@ import utils
 import wx
 try:
     from PIL import Image
-except:
+except ImportError:
     utils.make_err_msg(_("Python Imaging Library (PIL) not found.\nRefer to readme file for install instructions.\n\nYou will not be able to preview images."),
                        _("PIL needed"))
 
@@ -37,7 +37,7 @@ except:
     wxID_PICKERPANELWALKIT, wxID_PICKERPANELFILTERBYRE, wxID_SELECTIONAREA,
     wxID_PICKERPANELIGNORECASE, wxID_PICKERPANELUSELOCALE, wxID_PICKERPANELWALKDEPTH,
     wxID_PICKERPANELSTATICTEXT2,
-] = [wx.NewId() for __init_ctrls in range(23)]
+ ] = [wx.NewId() for __init_ctrls in range(23)]
 
 
 # Panel refers to instance as dirpicker
@@ -584,7 +584,6 @@ class Panel(wx.Panel):
                 self.Core.set_path(event)
         finally: dlg.Destroy()
 
-
     def set_path(self, event):
         """Set the picker path."""
         if app.prefs.get(u'useDirTree'):
@@ -601,7 +600,6 @@ class Panel(wx.Panel):
             # if tree won't display original path, force it
             if self.dirPicker.GetPath() != path:
                 self.path.SetValue(path)
-
 
     def select_all(self, event):
         """Add all items to renaming list."""

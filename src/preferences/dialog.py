@@ -24,6 +24,7 @@ import general
 import utils
 import wx
 
+
 class Notebook(wx.Toolbook):
     """Notebook for preferences."""
     def __init__(self, parent, id, name):
@@ -58,6 +59,7 @@ class Notebook(wx.Toolbook):
                 notebookPage.init_enabled()
             i += 1
 
+
 class Dialog(wx.Dialog):
     """
     Preferences dialog.
@@ -84,7 +86,6 @@ class Dialog(wx.Dialog):
                            wx.TextCtrl, wx.Button, wx.Choice, wx.SpinCtrl,
                            wx.FilePickerCtrl, wx.DirPickerCtrl, wx.ColourPickerCtrl))
         self.SetSizerAndFit(self.mainSizer)
-        
 
     def __init_ctrls(self, parent):
         wx.Dialog.__init__(self, name=u'dialog', parent=parent,

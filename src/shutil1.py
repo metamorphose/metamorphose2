@@ -18,10 +18,12 @@ except NameError:
 
 
 __all__ = ["copyfileobj", "copyfile", "copymode", "copystat", "copy", "copy2",
-    "copytree", "move", "rmtree", "Error"]
+           "copytree", "move", "rmtree", "Error"]
+
 
 class Error(EnvironmentError):
     pass
+
 
 def copyfileobj(fsrc, fdst, length=16 * 1024):
     """copy data from file-like object fsrc to file-like object fdst"""
@@ -30,6 +32,7 @@ def copyfileobj(fsrc, fdst, length=16 * 1024):
         if not buf:
             break
         fdst.write(buf)
+
 
 def _samefile(src, dst):
     # Macintosh, Unix.
@@ -42,6 +45,7 @@ def _samefile(src, dst):
     # All other platforms: check for same pathname.
     return (os.path.normcase(os.path.abspath(src)) ==
             os.path.normcase(os.path.abspath(dst)))
+
 
 def copyfile(src, dst):
     """Copy data from src to dst"""
@@ -60,12 +64,14 @@ def copyfile(src, dst):
         if fsrc:
             fsrc.close()
 
+
 def copymode(src, dst):
     """Copy mode bits from src to dst"""
     if hasattr(os, 'chmod'):
         st = os.stat(src)
         mode = stat.S_IMODE(st.st_mode)
         os.chmod(dst, mode)
+
 
 def copystat(src, dst):
     """Copy all stat info (mode bits, atime and mtime) from src to dst"""
@@ -88,6 +94,7 @@ def copy(src, dst):
     copyfile(src, dst)
     copymode(src, dst)
 
+
 def copy2(src, dst, ignore_permission_err=False):
     """Copy data and all stat info ("cp -p src dst").
 
@@ -106,6 +113,7 @@ def copy2(src, dst, ignore_permission_err=False):
             pass
         else:
             raise
+
 
 def copytree(src, dst, symlinks=False, ignore_permission_err=False):
     """Recursively copy a directory tree using copy2().
@@ -155,6 +163,7 @@ def copytree(src, dst, symlinks=False, ignore_permission_err=False):
     if errors:
         raise Error, errors
 
+
 def rmtree(path, ignore_errors=False, onerror=None):
     """Recursively delete a directory tree.
 
@@ -195,6 +204,7 @@ def rmtree(path, ignore_errors=False, onerror=None):
     except os.error:
         onerror(os.rmdir, path, sys.exc_info())
 
+
 def move(src, dst, ignore_permission_err=False):
     """Recursively move a file or directory to another location.
 
@@ -217,6 +227,7 @@ def move(src, dst, ignore_permission_err=False):
         else:
             copy2(src, dst, ignore_permission_err)
             os.unlink(src)
+
 
 def destinsrc(src, dst):
     return abspath(dst).startswith(abspath(src))
