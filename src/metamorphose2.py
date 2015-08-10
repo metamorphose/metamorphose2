@@ -34,17 +34,16 @@ path = sys.path[0]
 
 # Prefer wxpython 2.8
 if not hasattr(sys, "frozen"):
-    msg = "\nwxPython 2.8 is required!\n"
     try:
         import wxversion
-    except:
-        print(msg)
+    except ImportError:
+        print("\nwxPython required!\n")
         sys.exit()
     else:
         try:
             wxversion.select('2.8')
         except:
-            print(msg)
+            print("\nwxPython version 2.8 is required!\n")
             sys.exit()
 import wx
 import os
