@@ -329,17 +329,16 @@ class Panel(wx.Panel):
             h = h * ops
         
         # set horizontal size
-        longest = operations.get_longest_name_length()
-        w = app.fontParams['size'] * longest
-
-        scrollBarSize = wx.SystemSettings.GetMetric(wx.SYS_VSCROLL_X)
-        Size = (w, h)
+        longest = operations.get_longest_name_length() + 3
+        scrollbarWidth = wx.SystemSettings.GetMetric(wx.SYS_VSCROLL_X)
+        w = (app.fontParams['size'] * longest) + scrollbarWidth
+        size = (w, h)
         
-        self.availableOperations.SetMinSize(Size)
-        self.availableOperations.SetColumnWidth(0, w-scrollBarSize)
+        self.availableOperations.SetMinSize(size)
+        self.availableOperations.SetColumnWidth(0, w-scrollbarWidth)
 
         self.usedOperations = UsedOperations(wxID_USEDOPERATIONS,
-                                             u'usedOperations', self, w, scrollBarSize)
+                                             u'usedOperations', self, w, scrollbarWidth)
         self.usedOperations.Bind(wx.EVT_LIST_ITEM_SELECTED,
                                  self.__used_operations_listbox, id=wxID_USEDOPERATIONS)
 
