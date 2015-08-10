@@ -51,7 +51,7 @@ Requirements
 
 - Python: version 2.6 or 2.7 (*not* compatible with 3.x)
 - wxPython: version 2.8
-- Python Imaging Library (PIL): version 1.1.6 or greater
+- Python Imaging Library (PIL) 1.1.6 or greater **or** Pillow 2.3.0 or greater
 - Mutagen: version 1.21 or greater
 
 
