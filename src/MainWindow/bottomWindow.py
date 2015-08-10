@@ -30,6 +30,7 @@ wxID_THUMBSIZE, wxID_AUTOPREVIEW,
 wxID_IMGPREVIEW, wxID_UNDOREDO,
 ] = [wx.NewId() for _init_coll_menuEdit_Items in range(10)]
 
+
 class ListCtrl(wx.ListCtrl):
     """Bottom preview virtual listcrtl."""
 
@@ -210,7 +211,6 @@ class ListCtrl(wx.ListCtrl):
         return img
 
 
-
 class MainPanel(wx.Panel):
     """
     The bottom panel of the main splitter.
@@ -227,7 +227,6 @@ class MainPanel(wx.Panel):
         mainSizer.AddSizer(buttonSizer, 0, wx.EXPAND | wx.ALIGN_LEFT | wx.TOP, 5)
         mainSizer.AddWindow(self.display, 1, wx.EXPAND | wx.ALL, 5)
         self.SetSizerAndFit(mainSizer)
-
 
     def __init_ctrls(self, prnt):
         wx.Panel.__init__(self, id=wxID_BOTTOM_WINDOW, name=u'Panel',
@@ -279,7 +278,6 @@ class MainPanel(wx.Panel):
                                        style=0)
         self.autoPreview.SetToolTipString(_(u"Disable when working with many items"))
         self.autoPreview.SetValue(True)
-
 
     def __init__(self, prnt, MainWindow):
         self.main = MainWindow

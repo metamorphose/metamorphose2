@@ -19,7 +19,8 @@ import wx
 [wxID_EDITDIALOG, wxID_EDITDIALOGBUTTON1, wxID_EDITDIALOGBUTTON2,
     wxID_EDITDIALOGSTATICTEXT1, wxID_EDITDIALOGSTATICTEXT2, wxID_EDITDIALOGVALUE,
     wxID_EDITDIALOGSTATICTEXT3
-] = [wx.NewId() for __init_ctrls in range(7)]
+ ] = [wx.NewId() for __init_ctrls in range(7)]
+
 
 class Dialog(wx.Dialog):
     def __init_boxsizer1(self, parent):
@@ -98,7 +99,6 @@ class Dialog(wx.Dialog):
         self.MoveXY(pos[0], pos[1] - newY)
 
         self.load_item(item)
-
 
     def load_item(self, item):
         """Load the item's value and apply it to the dialog."""
