@@ -41,9 +41,9 @@ import utils
 import wx
 import wx.lib.dialogs
 
+
 def create(parent):
     return MainWindow(parent)
-
 
 [wxID_MAIN_WINDOW, wxID_MAIN_WINDOWDISPLAY,
 wxID_MAIN_WINDOWNOTEBOOK, wxID_MAIN_WINDOWSTATUSBAR1,
@@ -66,7 +66,7 @@ wxID_MENUPICKER_OK,
 
 wxID_MENUSETTINGS_PREFERENCES, wxID_MENUSETTINGS_LANG,
 
-] = [wx.NewId() for __init_menu_edit in range(27)]
+ ] = [wx.NewId() for __init_menu_edit in range(27)]
 
 
 class MySplitter(wx.SplitterWindow):
@@ -89,7 +89,6 @@ class MainWindow(wx.Frame):
         self.menuPicker.getAllMenu.Enable(False)
         self.menuPicker.getNoneMenu.Enable(False)
         self.menuFile.GoMenu.Enable(False)
-
 
     def __init_menu_file(self, parent):
         parent.LoadIniMenu = wx.MenuItem(parent, wxID_MENUFILE_LOADINI,
@@ -165,7 +164,6 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_MENU, self.on_menu_exit,
                   id=wxID_MENUFILE_EXIT)
 
-
     def __init_menu_renamer(self, parent):
         parent.destroyMenu = wx.MenuItem(parent, wxID_MENURENAMER_DESTROY,
                                          _(u"Delete operation"),
@@ -186,7 +184,6 @@ class MainWindow(wx.Frame):
                   id=wxID_MENURENAMER_DESTROY)
         self.Bind(wx.EVT_MENU, self.renamer.view.destroy_all_operations,
                   id=wxID_MENURENAMER_DESTROYALL)
-
 
     def __init_menu_picker(self, parent):
         parent.browseMenu = wx.MenuItem(parent, wxID_MENUPICKER_BROWSE,
@@ -234,7 +231,6 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_MENU, self.picker.walk_from_menu,
                   id=wxID_MENUPICKER_WALK)
 
-
     def __init_menu_edit(self, parent):
         parent.PrefsMenu = wx.MenuItem(parent,
                                        wxID_MENUSETTINGS_PREFERENCES, _(u"Preferences"),
@@ -256,7 +252,6 @@ class MainWindow(wx.Frame):
                   id=wxID_MENUSETTINGS_PREFERENCES)
         self.Bind(wx.EVT_MENU, self.language_select,
                   id=wxID_MENUSETTINGS_LANG)
-
 
     def __init_menu_help(self, parent):
         parent.aboutMenu = wx.MenuItem(parent,
@@ -305,7 +300,6 @@ class MainWindow(wx.Frame):
                   id=wxID_MENUHELP_FORMATHELP)
         self.Bind(wx.EVT_MENU, self.show_small_help,
                   id=wxID_MENUHELP_REHELP)
-
 
     def __init_notebook(self):
         parent = self.notebook
@@ -371,7 +365,7 @@ class MainWindow(wx.Frame):
                 'family': wx.DEFAULT,
                 'weight': wx.NORMAL,
             }
-        #print app.fontParams
+        #print(app.fontParams)
         self.SetFont(wx.Font(
                      app.fontParams['size'],
                      app.fontParams['family'],
@@ -422,13 +416,13 @@ class MainWindow(wx.Frame):
             split = -205
         self.splitter.SplitHorizontally(self.notebook, self.bottomWindow, split)
 
-
-    def usage(self):
+    @staticmethod
+    def usage():
         """Print CLI usage and options to screen."""
         print()
         print("Metamorphose 2.%s\nRunning on Python %s, wxPython %s" % (app.version, platform.python_version(), utils.get_wxversion()))
-        print("Copyright (C) 2006-2014 ianare sevi")
-        print("<http://file-folder-ren.sourceforge.net/>\n")
+        print("Copyright (C) 2006-2015 ianare sevi")
+        print("<https://github.com/metamorphose/metamorphose2>\n")
         print("Metamorphose is a graphical mass renaming program for files and folders.")
         print("There is support for automating GUI tasks via command line.\n")
         print("metamorphose2 [/path/to/open/spaces ok]")
@@ -444,7 +438,7 @@ class MainWindow(wx.Frame):
         print("                    1 = auto preview items")
         print("                    2 = auto rename items")
         print("                    3 = auto rename items and exit on success")
-        print("-l=, --language  Overide prefered language :")
+        print("-l=, --language  Override preferred language :")
         print("                    en_US")
         print("                    fr")
         print()
@@ -453,9 +447,10 @@ class MainWindow(wx.Frame):
         print()
         sys.exit()
 
-    def exit(self, message):
+    @staticmethod
+    def exit(message):
         """Display message and exit"""
-        print("Command line error :")
+        print("Command line error:")
         print(message)
         print()
         sys.exit(1)
@@ -506,21 +501,20 @@ class MainWindow(wx.Frame):
             # use a config path
             elif o in ("-c", "--config"):
                 configFilePath = self.strip_leading(a)
-        # set auto level
+            # set auto level
             elif o in ("-a", "--auto"):
                 level = self.strip_leading(a)
                 if level not in ('0', '1', '2', '3'):
-                    exit("Invalid auto mode level : '%s'" % level)
+                    self.exit("Invalid auto mode level: '%s'" % level)
                 elif not configFilePath:
-                    exit("Auto mode level must be used with configuration file ( '-c' or '--config' option )")
+                    self.exit("Auto mode level must be used with configuration file ( '-c' or '--config' option )")
                 else:
-                    print("Auto mode level set : %s" % level)
+                    print("Auto mode level set: %s" % level)
                     app.autoModeLevel = int(level)
-        # specify the language
+            # specify the language
             elif o in ("-l", "--language"):
                 app.language = self.strip_leading(a)
         return path, configFilePath
-
 
     def set_language(self):
         """
@@ -693,9 +687,10 @@ class MainWindow(wx.Frame):
             self.picker.view.path.SetValue(path)
             self.picker.set_path(True)
 
-
+#
 #--- MISC STUFF: ------------------------------------------------------------#
-    # Little functions to make repetative stuff easier to implement.
+#
+    # Little functions to make repetitive stuff easier to implement.
 
     def make_space(self, statusText):
         """add spacing for translation"""
@@ -711,7 +706,6 @@ class MainWindow(wx.Frame):
         """
         if event and self.bottomWindow.autoPreview.GetValue():
             self.on_preview_button(False)
-
 
     def language_select(self, event):
         """Open language selection dialog."""
@@ -760,9 +754,10 @@ class MainWindow(wx.Frame):
         self.SetStatusText(self.make_space(msg))
         app.debug_print(u"status message : '%s'" % msg)
 
-
-
+#
 #--- MENU ACTIONS: -----------------------------------------------------------#
+#
+
     def on_menu_exit(self, event):
         self.Close()
 
@@ -814,7 +809,6 @@ class MainWindow(wx.Frame):
                                      time.localtime()) + '.' + app.prefs.get('logFextension')
                 path = os.path.join(app.prefs.get(u'logLocation'), file)
                 utils.write_file(path, CSVfile)
-
 
     def import_items_from_text(self, event):
         """Import item selection from text file."""
@@ -881,7 +875,6 @@ class MainWindow(wx.Frame):
                 self.display_results(True)
             f.close()
 
-
     def show_help(self, event):
         """Opens main help dialog."""
         helpDiag.create(self).Show()
@@ -917,8 +910,10 @@ class MainWindow(wx.Frame):
         # to reinit color definitions
         self.bottomWindow.set_preferences()
 
-
+#
 #--- DISPLAY RESULTS ---------------------------------------------------------#
+#
+
     def display_results(self, showDirs=False):
         """
         Resets the bottom preview virtual list, then sets amount of items and the
@@ -962,9 +957,9 @@ class MainWindow(wx.Frame):
             display.SetColumnWidth(2, 135)
 
         # show the last warning/error
-        if self.warn != []:
+        if self.warn:
             display.EnsureVisible(self.warn[-1])
-        elif self.bad != []:
+        elif self.bad:
             display.EnsureVisible(self.bad[-1])
 
         # show the currently selected item
@@ -975,8 +970,10 @@ class MainWindow(wx.Frame):
         else:
             display.EnsureVisible(self.currentItem)
 
-
+#
 #--- CHANGE ITEM POSITION IN LIST --------------------------------------------#
+#
+
     def on_item_selected(self, event):
         """Set the selected item."""
         self.currentItem = event.m_itemIndex
@@ -1004,15 +1001,19 @@ class MainWindow(wx.Frame):
             self.currentItem = moveTo
             self.on_preview_button(0)
 
-
+#
 #--- NAME GENERATION ---------------------------------------------------------#
+#
+
     def on_preview_button(self, event):
         utils.set_busy(True)
         self.renamer.preview(event)
         utils.set_busy(False)
 
-
+#
 #--- RENAMING: ---------------------------------------------------------------#
+#
+
     def rename_items(self, event):
         """Rename selected items."""
         self.renamer.rename(event)
