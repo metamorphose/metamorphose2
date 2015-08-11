@@ -85,7 +85,9 @@ def locale_path(lang):
     else:
         return get_real_path(u'../messages')
 
-# Variables
+#
+#--- Variables
+#
 
 # Application version
 version = __get_version()
@@ -111,10 +113,12 @@ showTimes = False
 debug = False
 # Font parameters
 fontParams = {}
-# Runnin in GUI or CLI mode (future)
+# Running in GUI or CLI mode (future)
 cliMode = False
 
-# Objects
+#
+#--- Objects
+#
 
 # preferences object to be set on load
 prefs = False

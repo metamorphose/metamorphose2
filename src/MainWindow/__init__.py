@@ -19,7 +19,6 @@ This is the main application.
 # needed modules:
 from __future__ import print_function
 import codecs
-import getopt
 import gettext
 import locale
 import os
@@ -42,8 +41,8 @@ import wx
 import wx.lib.dialogs
 
 
-def create(parent):
-    return MainWindow(parent)
+def create(parent, options):
+    return MainWindow(parent, options)
 
 [wxID_MAIN_WINDOW, wxID_MAIN_WINDOWDISPLAY,
 wxID_MAIN_WINDOWNOTEBOOK, wxID_MAIN_WINDOWSTATUSBAR1,
@@ -189,7 +188,7 @@ class MainWindow(wx.Frame):
         parent.browseMenu = wx.MenuItem(parent, wxID_MENUPICKER_BROWSE,
                                         _(u"&Browse...\tF4"),
                                         self.make_space(_(u"Browse for path")))
-        parent.browseMenu.SetBitmap(wx.Bitmap(\
+        parent.browseMenu.SetBitmap(wx.Bitmap(
                                     utils.icon_path(u'browse.png'), wx.BITMAP_TYPE_PNG))
         parent.okMenu = wx.MenuItem(parent, wxID_MENUPICKER_OK,
                                     _(u"&Refresh\tF5"),
@@ -200,12 +199,12 @@ class MainWindow(wx.Frame):
         parent.getAllMenu = wx.MenuItem(parent, wxID_MENUPICKER_ALL,
                                         _(u"Select &All\tctrl+A"),
                                         self.make_space(_(u"Select all items in picker")))
-        parent.getAllMenu.SetBitmap(wx.Bitmap(\
+        parent.getAllMenu.SetBitmap(wx.Bitmap(
                                     utils.icon_path(u'selectAll.png'), wx.BITMAP_TYPE_PNG))
         parent.getNoneMenu = wx.MenuItem(parent, wxID_MENUPICKER_NONE,
                                          _(u"Select &None\tctrl+N"),
                                          self.make_space(_(u"Deselect all items in picker")))
-        parent.getNoneMenu.SetBitmap(wx.Bitmap(\
+        parent.getNoneMenu.SetBitmap(wx.Bitmap(
                                      utils.icon_path(u'selectNone.png'), wx.BITMAP_TYPE_PNG))
         parent.walkMenu = wx.MenuItem(parent, wxID_MENUPICKER_WALK,
                                       _(u"Recursive &selection\tctrl+R"),
@@ -240,11 +239,11 @@ class MainWindow(wx.Frame):
                                       wxID_MENUSETTINGS_LANG, _(u"Language"),
                                       self.make_space(_(u"Change the language")))
 
-        parent.PrefsMenu.SetBitmap(wx.Bitmap(\
+        parent.PrefsMenu.SetBitmap(wx.Bitmap(
                                    utils.icon_path(u'preferences.ico'), wx.BITMAP_TYPE_ICO))
         parent.AppendItem(parent.PrefsMenu)
 
-        parent.langMenu.SetBitmap(wx.Bitmap(\
+        parent.langMenu.SetBitmap(wx.Bitmap(
                                   utils.icon_path(u'language.png'), wx.BITMAP_TYPE_PNG))
         parent.AppendItem(parent.langMenu)
 
@@ -269,13 +268,13 @@ class MainWindow(wx.Frame):
         parent.examplesMenu = wx.MenuItem(parent,
                                           wxID_MENUHELP_EXAMPLES, _(u"&Examples\tF2"),
                                           self.make_space(_(u"Some useful examples")))
-        parent.examplesMenu.SetBitmap(wx.Bitmap(\
+        parent.examplesMenu.SetBitmap(wx.Bitmap(
                                       utils.icon_path(u'examples.ico'), wx.BITMAP_TYPE_ICO))
 
         parent.FormatHelpMenu = wx.MenuItem(parent,
                                             wxID_MENUHELP_FORMATHELP, _(u"&Date && Time Formats"),
                                             self.make_space(_(u"Display a reference for Date & Time formats")))
-        parent.FormatHelpMenu.SetBitmap(wx.Bitmap(\
+        parent.FormatHelpMenu.SetBitmap(wx.Bitmap(
                                         utils.icon_path(u'date_time.ico'), wx.BITMAP_TYPE_ICO))
 
         parent.REhelpMenu = wx.MenuItem(parent,
@@ -416,106 +415,6 @@ class MainWindow(wx.Frame):
             split = -205
         self.splitter.SplitHorizontally(self.notebook, self.bottomWindow, split)
 
-    @staticmethod
-    def usage():
-        """Print CLI usage and options to screen."""
-        print()
-        print("Metamorphose 2.%s\nRunning on Python %s, wxPython %s" % (app.version, platform.python_version(), utils.get_wxversion()))
-        print("Copyright (C) 2006-2015 ianare sevi")
-        print("<https://github.com/metamorphose/metamorphose2>\n")
-        print("Metamorphose is a graphical mass renaming program for files and folders.")
-        print("There is support for automating GUI tasks via command line.\n")
-        print("metamorphose2 [/path/to/open/spaces ok]")
-        print("metamorphose2 [-t] [-d] [-p /path/to/open] [[-c /path/to/file.cfg] [-a level (0-3)]] [-l language]")
-        print()
-        print("-h,  --help       Show help screen and exit.")
-        print("-t,  --timer      Show time taken to complete operations.")
-        print("-d,  --debug      Show debugging information.")
-        print("-p=, --path       Specify a directory to load.")
-        print("-c=, --config     Specify a configuration file to load.")
-        print("-a=, --auto       Specify automatic mode level to use with configuration file:")
-        print("                    0 = do not preview items")
-        print("                    1 = auto preview items")
-        print("                    2 = auto rename items")
-        print("                    3 = auto rename items and exit on success")
-        print("-l=, --language  Override preferred language :")
-        print("                    en_US")
-        print("                    fr")
-        print()
-        print("If no other options are given, you may specify a path to open:")
-        print("$ metamorphose2 /srv/samba/Windows Likes Spaces")
-        print()
-        sys.exit()
-
-    @staticmethod
-    def exit(message):
-        """Display message and exit"""
-        print("Command line error:")
-        print(message)
-        print()
-        sys.exit(1)
-
-    def strip_leading(self, a):
-        """remove a leading '=' from CLI options"""
-        if '=' in a:
-            a = a.lstrip('=')
-        return a
-
-    def __get_cli_options(self):
-        """Get options passed in at the command line"""
-        shortOptions = "htdp:vc:va:vl:v"
-        longOptions = ["help", "timer", "debug", "path=", "config=", "auto=", "language="]
-        try:
-            opts, args = getopt.getopt(sys.argv[1:], shortOptions, longOptions)
-        except getopt.GetoptError as err:
-            # print help information and exit:
-            print(str(err))
-            sys.exit(2)
-
-        # set options
-        path = False
-        configFilePath = False
-
-        if sys.argv[1:] != [] and opts == []:
-            path = ''
-            for chunk in sys.argv[1:]:
-                path += chunk + ' '
-
-        for o, a in opts:
-            # show processing times
-            if o in ("-t", "--timer"):
-                app.showTimes = True
-                print("Showing processing times")
-            # show debug messages
-            elif o in ("-d", "--debug"):
-                app.debug = True
-                print("Running in debug mode")
-                print("Version : " + app.version)
-                print("Python %s, wxPython %s" % (platform.python_version(), utils.get_wxversion()))
-            # set path
-            elif o in ("-p", "--path"):
-                path = self.strip_leading(a)
-            # show help and exit
-            elif o in ("-h", "--help"):
-                self.usage()
-            # use a config path
-            elif o in ("-c", "--config"):
-                configFilePath = self.strip_leading(a)
-            # set auto level
-            elif o in ("-a", "--auto"):
-                level = self.strip_leading(a)
-                if level not in ('0', '1', '2', '3'):
-                    self.exit("Invalid auto mode level: '%s'" % level)
-                elif not configFilePath:
-                    self.exit("Auto mode level must be used with configuration file ( '-c' or '--config' option )")
-                else:
-                    print("Auto mode level set: %s" % level)
-                    app.autoModeLevel = int(level)
-            # specify the language
-            elif o in ("-l", "--language"):
-                app.language = self.strip_leading(a)
-        return path, configFilePath
-
     def set_language(self):
         """
         Determine language to be loaded depending on : setting file, CLI option,
@@ -552,12 +451,12 @@ class MainWindow(wx.Frame):
             language = syslang
         '''
         # get language from file if not specified from command line
-        if app.language == '':
-            try:# see if language file exist
+        if not app.language:
+            try:  # see if language file exist
                 langIni = codecs.open(utils.get_user_path(u'language.ini'), 'r', 'utf-8')
-            except IOError:# have user choose language
+            except IOError:  # have user choose language
                 language = self.language_select(0)
-            else:# get language from file
+            else:  # get language from file
                 language = langIni.read().strip()
         else:
             language = app.language
@@ -603,16 +502,13 @@ class MainWindow(wx.Frame):
             except (ValueError, KeyError):
                 pass
 
-
-    def __init__(self, prnt):
+    def __init__(self, prnt, options):
         # Important variables needed throughout the application classes
         self.warn = [] # warnings
         self.bad = [] # errors
         self.errorLog = [] # all errors go here
         self.items = [] # items to rename
         self.spacer = u" " * 6 # spacer for status messages (to clear image)
-
-        path, configFilePath = self.__get_cli_options()
 
         wx.Frame.__init__(self, id=wxID_MAIN_WINDOW, name=u'MainWindow',
                           parent=prnt, style=wx.DEFAULT_FRAME_STYLE)
@@ -622,9 +518,11 @@ class MainWindow(wx.Frame):
 
         self.set_language()
 
-        app.debug_print("Operating System : " + platform.system())
-        app.debug_print("System encoding : " + self.encoding)
-        app.debug_print("Interface language : " + app.language)
+        app.debug_print("Operating System: %s - %s - %s" % (platform.system(), platform.release(), platform.version()))
+        app.debug_print("System encoding: " + self.encoding)
+        app.debug_print("Python version: " + platform.python_version())
+        app.debug_print("wxPython version: " + utils.get_wxversion())
+        app.debug_print("Interface language: " + app.language)
 
         # import these modules here since they need language settings activated
         global renamer
@@ -636,7 +534,7 @@ class MainWindow(wx.Frame):
         global bottomWindow
         import bottomWindow
 
-        # initialise preferences
+        # initialize preferences
         app.prefs = preferences.Methods()
 
         # icons used for status bar messages
@@ -655,7 +553,7 @@ class MainWindow(wx.Frame):
         # build main GUI
         self.__init_ctrls(prnt)
 
-        # clear undo (if set in preferences):
+        # clear undo if set in preferences:
         if app.prefs.get(u'clearUndo'):
             try:
                 originalFile = codecs.open(utils.get_user_path(u'undo/original.bak'),
@@ -677,13 +575,13 @@ class MainWindow(wx.Frame):
         self.Center(wx.HORIZONTAL | wx.VERTICAL)
 
         # Load config from command line
-        if configFilePath:
+        if options['configFilePath']:
             app.debug_print("Load config from CLI")
-            configs.LoadConfig(self, configFilePath)
+            configs.LoadConfig(self, options['configFilePath'])
 
         # Set root directory from command line arguments:
-        if path:
-            path = path.rstrip()
+        if options['path']:
+            path = options['path'].rstrip()
             self.picker.view.path.SetValue(path)
             self.picker.set_path(True)
 
@@ -790,9 +688,9 @@ class MainWindow(wx.Frame):
                 CSVfile += unicode(q + original[0] + q + sep + q + renamed[0] + q + '\n')
 
             if app.showTimes:
-                print("Export file contents for %s items : %s" % (len(self.toRename), (time.time() - t)))
+                print("Export file contents for %s items: %s" % (len(self.toRename), (time.time() - t)))
 
-            # trigered by menu, allow to choose output file
+            # triggered by menu, allow to choose output file
             if event:
                 dlg = wx.FileDialog(self, message=_(u"Save current items as ..."),
                                     defaultDir='', defaultFile=u'.%s' % ext,
@@ -907,7 +805,7 @@ class MainWindow(wx.Frame):
         prefDiag = preferences.create_dialog(self)
         prefDiag.ShowModal()
         prefDiag.Destroy()
-        # to reinit color definitions
+        # to re-init color definitions
         self.bottomWindow.set_preferences()
 
 #
@@ -940,9 +838,9 @@ class MainWindow(wx.Frame):
             display.imgs = pickerList.imgs
         else:
             display.imgs = wx.ImageList(16, 16)
-            display.folderIco = display.imgs.Add(wx.Bitmap(\
+            display.folderIco = display.imgs.Add(wx.Bitmap(
                                                  utils.icon_path(u'folder16.png'), wx.BITMAP_TYPE_PNG))
-            display.fileIco = display.imgs.Add(wx.Bitmap(\
+            display.fileIco = display.imgs.Add(wx.Bitmap(
                                                utils.icon_path(u'file16.png'), wx.BITMAP_TYPE_PNG))
         display.SetImageList(display.imgs, wx.IMAGE_LIST_SMALL)
 
@@ -965,7 +863,7 @@ class MainWindow(wx.Frame):
         # show the currently selected item
         try:
             display.Select(self.currentItem, True)
-        except TypeError:#may need AttributeError
+        except TypeError:  # may need AttributeError
             pass
         else:
             display.EnsureVisible(self.currentItem)
@@ -980,7 +878,7 @@ class MainWindow(wx.Frame):
 
     def change_item_order(self, change):
         """Move the selected item."""
-        if self.currentItem != None:
+        if self.currentItem:
             try:
                 moveTo = self.currentItem + change
             except TypeError:
