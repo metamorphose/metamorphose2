@@ -34,41 +34,22 @@ import getopt
 import app
 
 
-path = sys.path[0]
+syspath = sys.path[0]
 
-# Prefer wxpython 2.8
 if not hasattr(sys, "frozen"):
     try:
         import wxversion
     except ImportError:
         print("\nwxPython required!\n")
         sys.exit()
-    else:
-        try:
-            wxversion.select('2.8')
-        except wxversion.VersionError:
-            print("\nwxPython version 2.8 is required!\n")
-            sys.exit()
-import wx
 import os
 import platform
-import MainWindow
-
-# wxversion changes path
-sys.path[0] = path
-
-
-class BoaApp(wx.App):
-    def OnInit(self):
-        wx.InitAllImageHandlers()
-        self.main = MainWindow.create(None, get_options())
-        self.main.Show()
-        self.SetTopWindow(self.main)
-        return True
 
 
 def usage():
-    """Print CLI usage and options to screen."""
+    """
+    Print CLI usage and options to screen.
+    """
     print()
     print("Metamorphose 2.%s" % app.version)
     print("Copyright (C) 2006-2015 ianare sevi")
@@ -88,10 +69,11 @@ def usage():
     print("                    1 = auto preview items")
     print("                    2 = auto rename items")
     print("                    3 = auto rename items and exit on success")
-    print("-l=, --language  Override preferred language:")
+    print("-l=, --language   Override preferred language:")
     print("                    en_US")
     print("                    fr")
     print("                    es")
+    print("-w=, --wxversion  Specify wxPython Version - use at your own risk!")
     print()
     print("If no other options are given, you may specify a path to open:")
     print("$ metamorphose2 /srv/samba/Windows Likes Spaces")
@@ -100,20 +82,23 @@ def usage():
 
 
 def strip_leading(a):
-    """remove a leading '=' from CLI options"""
+    """
+    remove a leading '=' from CLI options
+    """
     if '=' in a:
         a = a.lstrip('=')
     return a
 
 
 def get_options():
-    """Get options passed in at the command line"""
-    short_options = "htdp:vc:va:vl:v"
-    long_options = ["help", "timer", "debug", "path=", "config=", "auto=", "language="]
+    """
+    Get options passed in at the command line
+    """
+    short_options = "htdp:vc:va:vl:vw:v"
+    long_options = ["help", "timer", "debug", "path=", "config=", "auto=", "language=", "wx="]
     try:
         opts, args = getopt.getopt(sys.argv[1:], short_options, long_options)
     except getopt.GetoptError as err:
-        # print help information and exit:
         print(str(err))
         sys.exit(2)
 
@@ -122,32 +107,27 @@ def get_options():
         'configFilePath': False,
     }
 
+    wx_version = '2.8'
+
     if sys.argv[1:] != [] and opts == []:
         options['path'] = ''
         for chunk in sys.argv[1:]:
             options['path'] += chunk + ' '
 
     for o, a in opts:
-        # show processing times
         if o in ("-t", "--timer"):
             app.showTimes = True
             print("Showing processing times")
-        # show debug messages
         elif o in ("-d", "--debug"):
             app.debug = True
             print("Running in debug mode")
             print("Version: " + app.version)
-            #print("Python %s, wxPython %s" % (platform.python_version(), utils.get_wxversion()))
-        # set path
         elif o in ("-p", "--path"):
             options['path'] = strip_leading(a)
-        # show help and exit
         elif o in ("-h", "--help"):
             usage()
-        # use a config path
         elif o in ("-c", "--config"):
             options['configFilePath'] = strip_leading(a)
-        # set auto level
         elif o in ("-a", "--auto"):
             level = strip_leading(a)
             if level not in ('0', '1', '2', '3'):
@@ -157,13 +137,18 @@ def get_options():
             else:
                 print("Auto mode level set: %s" % level)
                 app.autoModeLevel = int(level)
-        # specify the language
         elif o in ("-l", "--language"):
             app.language = strip_leading(a)
-    return options
+        elif not hasattr(sys, "frozen") and o in ("-w", "--wxversion"):
+            wx_version = strip_leading(a)
+
+    if wx_version != '2.8':
+        print("\nWarning: Metamorphose has only been tested on wxPython version 2.8!\n")
+
+    return wx_version, options
 
 
-def main():
+def main(wx_version, cli_options):
     if platform.system() == 'Linux':
         try:
             # to fix some KDE display issues:
@@ -172,13 +157,36 @@ def main():
         except (ValueError, KeyError):
             pass
 
+    try:
+        wxversion.select(wx_version)
+    except wxversion.VersionError:
+        print("\nFailed to load wxPython version %s!\n" % wx_version)
+        sys.exit()
+
+    import wx
+    if 'unicode' not in wx.PlatformInfo:
+        print("\nInstalled version: %s\nYou need a unicode build of wxPython to run Metamorphose 2.\n"
+              % wxversion.getInstalled())
+
+    # wxversion changes path
+    sys.path[0] = syspath
+
+    import MainWindow
+
+    class BoaApp(wx.App):
+        def OnInit(self):
+            wx.InitAllImageHandlers()
+            self.main = MainWindow.create(None, cli_options)
+            self.main.Show()
+            self.SetTopWindow(self.main)
+            return True
+
     application = BoaApp(0)
     application.MainLoop()
 
 
 if __name__ == '__main__':
-    if 'unicode' not in wx.PlatformInfo:
-        print("\nInstalled version: %s\nYou need a unicode build of wxPython to run Metamorphose 2.\n"
-              % wxversion.getInstalled())
-    else:
-        main()
+    wx_version, cli_options = get_options()
+    main(wx_version, cli_options)
+
+
