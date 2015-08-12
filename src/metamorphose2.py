@@ -175,7 +175,6 @@ def main(wx_version, cli_options):
 
     class BoaApp(wx.App):
         def OnInit(self):
-            wx.InitAllImageHandlers()
             self.main = MainWindow.create(None, cli_options)
             self.main.Show()
             self.SetTopWindow(self.main)

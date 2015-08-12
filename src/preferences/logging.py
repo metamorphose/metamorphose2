@@ -23,7 +23,9 @@ import wx
 
 
 class Panel(wx.Panel):
-    """Logging preferences panel."""
+    """
+    Logging preferences panel
+    """
     def __init_itemsizer_items(self, parent):
         parent.AddSpacer(wx.Size(8, 8), border=0, flag=0)
         parent.AddWindow(self.staticText5, 0, border=5, flag=wx.ALL)
@@ -49,7 +51,7 @@ class Panel(wx.Panel):
         parent.AddWindow(self.logFextension, 0, border=0, flag=0)
 
     def __init_sizers(self):
-        self.logOptionsSizer = wx.FlexGridSizer(cols=2, hgap=0, rows=1, vgap=3)
+        self.logOptionsSizer = wx.FlexGridSizer(cols=2, hgap=0, rows=3, vgap=3)
         self.__init_logoptions_sizer(self.logOptionsSizer)
         self.itemSizer = wx.BoxSizer(orient=wx.VERTICAL)
         self.__init_itemsizer_items(self.itemSizer)
@@ -94,7 +96,6 @@ class Panel(wx.Panel):
         self.staticText5 = wx.StaticText(id=wxID_PANELSTATICTEXT5,
                                          label=_(u'These settings apply to loading and saving of log files.'),
                                          name='staticText5', parent=self)
-
         self.__init_sizers()
 
     def __init__(self, parent):

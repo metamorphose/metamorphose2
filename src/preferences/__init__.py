@@ -29,7 +29,9 @@ import wx
 
 
 def create_dialog(parent, initial=False):
-    """Create and return the preferences dialog."""
+    """
+    Create and return the preferences dialog.
+    """
     return Dialog(parent, Methods(), initial)
 
 
@@ -52,7 +54,9 @@ class Methods:
         return prefFile
 
     def __create_new(self):
-        """Create default preferences file."""
+        """
+        Create default preferences file.
+        """
         msg = _(u"Please take a moment to set your preferences.\n\n")
         title = _(u"Preferences")
         utils.make_warn_msg(msg, title)
@@ -62,7 +66,9 @@ class Methods:
         prefDiag.Destroy()
 
     def __read_file(self):
-        """Process file and return preferences dictionary."""
+        """
+        Process file and return preferences dictionary.
+        """
         prefFile = self.__open_pref_file('r')
 
         prefFile.seek(0)
@@ -87,7 +93,9 @@ class Methods:
         return prefs
 
     def __load_preferences(self):
-        """Get values from file (one way or another)"""
+        """
+        Get values from file (one way or another)
+        """
         prefFile = self.__find_pref_file()
         # make sure the file exist and is filled:
         if not os.path.exists(prefFile) or os.path.getsize(prefFile) < 5:
@@ -111,7 +119,9 @@ class Methods:
         self.prefs = prefs
 
     def set_prefs(self, prefDialog):
-        """Get values from panels and set to file."""
+        """
+        Get values from panels and set to file.
+        """
         prefFile = self.__open_pref_file('w')
         options = self.header
         # get all pages in notebook
@@ -160,8 +170,8 @@ class Methods:
         self.__load_preferences()
 
     def get(self, preference, strict=True):
-        """Attempt to load a preference setting
-
+        """
+        Attempt to load a preference setting
         Load or recreate preference file if needed.
         """
         if not self.prefs:
@@ -180,8 +190,8 @@ class Methods:
                 return self.get(preference)
 
     def get_all(self):
-        """Get all preferences.
-
+        """
+        Get all preferences.
         Will attempt to load from file if no preferences are defined.
         """
         if not self.prefs:

@@ -26,7 +26,9 @@ import wx
 
 
 class Notebook(wx.Toolbook):
-    """Notebook for preferences."""
+    """
+    Notebook for preferences.
+    """
     def __init__(self, parent, id, name):
         wx.Toolbook.__init__(self, parent, id, name=name, style=wx.BK_TOP)
 
@@ -89,7 +91,7 @@ class Dialog(wx.Dialog):
 
     def __init_ctrls(self, parent):
         wx.Dialog.__init__(self, name=u'dialog', parent=parent,
-                           style=wx.CAPTION, title=u'Preferences')
+                           style=wx.CAPTION | wx.STAY_ON_TOP, title=_(u"Preferences"))
         self.SetIcon(wx.Icon(utils.icon_path(u'preferences.ico'),
                      wx.BITMAP_TYPE_ICO))
 
@@ -136,7 +138,9 @@ class Dialog(wx.Dialog):
             main.show_preview(True)
 
     def load_prefs(self, panel):
-        """load preferences from file and apply them to a panel."""
+        """
+        load preferences from file and apply them to a panel.
+        """
         app.debug_print('Loading %s preferences ...' % panel.GetName())
         for child in panel.GetChildren():
             try:
@@ -158,11 +162,8 @@ class Dialog(wx.Dialog):
                     child.SetColour(v)
 
     def __close_diag(self, event):
-        self.Close()
+        self.Destroy()
 
     def __on_ok_button(self, event):
         self.__on_apply_button(event)
-        self.Close()
-
-
-
+        self.Destroy()

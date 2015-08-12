@@ -6,19 +6,21 @@ Métamorphose is a graphical mass renaming program for files and folders.
 
 These are the command line options::
 
-  -h,  --help       Show the help screen and exit
-  -t,  --timer      Show time taken to complete operations
-  -d,  --debug      Show debugging information
-  -p=, --path=      Specify a directory to load
-  -c=, --config=    Specify a Metamorphose2 config file to load
-  -a=, --auto=      Specify automatic mode level (when also using -c option):
-                      0 = do not preview items (will overide preferences)
-                      1 = auto preview items (will overide preferences)
+  -h,  --help       Show help screen and exit.
+  -t,  --timer      Show time taken to complete operations.
+  -d,  --debug      Show debugging information.
+  -p=, --path       Specify a directory to load.
+  -c=, --config     Specify a configuration file to load.
+  -a=, --auto       Specify automatic mode level to use with configuration file:
+                      0 = do not preview items
+                      1 = auto preview items
                       2 = auto rename items
                       3 = auto rename items and exit on success
-  -l=, --language=  Overide prefered interface language:
+  -l=, --language   Override preferred language:
                       en_US
                       fr
+                      es
+  -w=, --wxversion  Specify wxPython Version - use at your own risk!
 
 If no other options are given, you may specify a path to open::
 
@@ -52,7 +54,6 @@ Requirements
 - Python: version 2.6 or 2.7 (*not* compatible with 3.x)
 - wxPython: version 2.8
 - Python Imaging Library (PIL) 1.1.6 or greater **or** Pillow 2.3.0 or greater
-- Mutagen: version 1.21 or greater
 
 
 Running
