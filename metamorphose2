@@ -4,7 +4,8 @@ PREFIX=/usr
 MAIN=
 
 #findPrefix
-if [ -x /bin/rpm ];then
+if [ -x /bin/rpm ]
+then
   MAIN=`rpm -ql metamorphose2|grep metamorphose2.py`
   if [ -f "$MAIN" ];then
     exec python $MAIN "$@"
@@ -14,9 +15,9 @@ fi
 #findPrefixEnd
 
 #run
-if [ -d "$PREFIX/share/metamorphose2" ];
+if [ -d "$PREFIX/share/metamorphose2" ]
 then
-  exec python $PREFIX/share/metamorphose2/metamorphose2.py "$@";
+  exec python $PREFIX/share/metamorphose2/metamorphose2.py "$@"
 else
-  exec python src/metamorphose2.py "$@";
-fi;
+  exec python src/metamorphose2.py "$@"
+fi

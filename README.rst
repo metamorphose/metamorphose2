@@ -51,8 +51,8 @@ Submodules are used, so after cloning don't forget to check them out::
 Requirements
 ============
 
-- Python: version 2.6 or 2.7 (*not* compatible with 3.x)
-- wxPython: version 2.8
+- Python 2.6 or 2.7 (*not* compatible with 3.x)
+- wxPython 2.8 (preferred) or 3.0
 - Python Imaging Library (PIL) 1.1.6 or greater **or** Pillow 2.3.0 or greater
 
 
