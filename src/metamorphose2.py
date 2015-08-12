@@ -30,7 +30,9 @@ This is what you should run to start the program.
 
 from __future__ import print_function
 import sys
-import getopt
+import os
+import platform
+from getopt import GetoptError, getopt
 import app
 
 
@@ -42,8 +44,6 @@ if not hasattr(sys, "frozen"):
     except ImportError:
         print("\nwxPython required!\n")
         sys.exit()
-import os
-import platform
 
 
 def usage():
@@ -97,8 +97,8 @@ def get_options():
     short_options = "htdp:vc:va:vl:vw:v"
     long_options = ["help", "timer", "debug", "path=", "config=", "auto=", "language=", "wx="]
     try:
-        opts, args = getopt.getopt(sys.argv[1:], short_options, long_options)
-    except getopt.GetoptError as err:
+        opts, args = getopt(sys.argv[1:], short_options, long_options)
+    except GetoptError as err:
         print(str(err))
         sys.exit(2)
 
@@ -107,7 +107,7 @@ def get_options():
         'configFilePath': False,
     }
 
-    wx_version = '2.8'
+    wx_version = ('2.8', '3.0')
 
     if sys.argv[1:] != [] and opts == []:
         options['path'] = ''
@@ -142,9 +142,6 @@ def get_options():
         elif not hasattr(sys, "frozen") and o in ("-w", "--wxversion"):
             wx_version = strip_leading(a)
 
-    if wx_version != '2.8':
-        print("\nWarning: Metamorphose has only been tested on wxPython version 2.8!\n")
-
     return wx_version, options
 
 
@@ -157,11 +154,12 @@ def main(wx_version, cli_options):
         except (ValueError, KeyError):
             pass
 
-    try:
-        wxversion.select(wx_version)
-    except wxversion.VersionError:
-        print("\nFailed to load wxPython version %s!\n" % wx_version)
-        sys.exit()
+    if not hasattr(sys, "frozen"):
+        try:
+            wxversion.select(wx_version)
+        except wxversion.VersionError:
+            print("\nFailed to load wxPython version %s!\n" % wx_version)
+            sys.exit()
 
     import wx
     if 'unicode' not in wx.PlatformInfo:
