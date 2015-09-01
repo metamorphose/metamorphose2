@@ -5,6 +5,7 @@
 
 # XXX TODO Verify compatibility on non-Bourne shells such as zsh
 
+
 msgfmt_location=`which msgfmt`
 
 msgs_dir=$( cd "$( dirname "${0}" )" && pwd )
