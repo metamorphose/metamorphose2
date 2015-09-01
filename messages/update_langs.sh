@@ -5,11 +5,7 @@
 
 # XXX TODO Verify compatibility on non-Bourne shells such as zsh
 
-if [ "$(uname)" == "Linux" ]; then
-	msgfmt_location='/usr/bin/msgfmt'
-elif [ "$(uname)" == "FreeBSD" ]; then
-	msgfmt_location='/usr/local/bin/msgfmt'
-fi
+msgfmt_location=`which msgfmt`
 
 msgs_dir=$( cd "$( dirname "${0}" )" && pwd )
 
