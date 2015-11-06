@@ -5,14 +5,10 @@
 
 # XXX TODO Verify compatibility on non-Bourne shells such as zsh
 
-if [ "$(uname)" == "Linux" ]; then
-	msgfmt_location='/usr/bin/msgfmt'
-elif [ "$(uname)" == "FreeBSD" ]; then
-	msgfmt_location='/usr/local/bin/msgfmt'
-fi
+
+msgfmt_location=`which msgfmt`
 
 msgs_dir=$( cd "$( dirname "${0}" )" && pwd )
-
 cd $msgs_dir
 for dir in `ls -1`; do
     if [ -d $dir ]; then
@@ -21,6 +17,7 @@ for dir in `ls -1`; do
         fi
         echo "$msgs_dir/$dir/LC_MESSAGES/metamorphose2.mo"
         $msgfmt_location -o $dir/LC_MESSAGES/metamorphose2.mo $dir/$dir.po
+	cp $dir/LC_MESSAGES/*.mo /usr/share/locale/$dir/LC_MESSAGES/
         rm -f $dir/*.mo
     fi
 done
