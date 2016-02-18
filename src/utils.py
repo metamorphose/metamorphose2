@@ -32,15 +32,6 @@ except ImportError:
     pass
 
 
-def get_wxversion():
-    """Get the wxPython Version."""
-    wxVer = ""
-    for x in wx.VERSION:
-        wxVer = wxVer + str(x) + "."
-    wxVer = wxVer.rstrip(".")
-    return wxVer
-
-
 def is_pil_loaded():
     """Determine if the python imaging library is loaded."""
     try:

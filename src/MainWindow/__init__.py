@@ -389,6 +389,7 @@ class MainWindow(wx.Frame):
                                                 name=u'statusBar1', parent=self)
         self.SetStatusBar(self.statusBar1)
 
+
         self.statusImage = wx.StaticBitmap(bitmap=self.statusImages[u'eyes'],
                                            id=wxID_MAIN_WINDOWSTATUSIMAGE, name=u'statusImage',
                                            parent=self.statusBar1, size=wx.Size(-1, 16), style=0)
@@ -421,6 +422,7 @@ class MainWindow(wx.Frame):
         or neither.
         Apply language to interface.
         """
+        app.debug_print("== Interface Localization ==")
 
         # reference:
         locales = {
@@ -474,7 +476,7 @@ class MainWindow(wx.Frame):
 
         # set locale and language
         wx.Locale(locales[language][0], wx.LOCALE_LOAD_DEFAULT)
-        
+
         try:
             Lang = gettext.translation(u'metamorphose2', app.locale_path(language),
                                        languages=[locales[language][1]])
@@ -482,7 +484,7 @@ class MainWindow(wx.Frame):
             print("Could not find the translation file for '%s'." % language)
             print("Try running messages/update_langs.sh\n")
             sys.exit(1)
-        
+
         Lang.install(unicode=True)
 
         # set some globals
@@ -493,7 +495,10 @@ class MainWindow(wx.Frame):
             self.langLTR = False
             self.alignment = wx.ALIGN_RIGHT
         app.language = language
+        app.debug_print("Set language: " + app.language)
+
         self.encoding = unicode(locale.getlocale()[1])
+        app.debug_print("Set encoding: " + self.encoding)
 
         # to get some language settings to display properly:
         if platform.system() in ('Linux', 'FreeBSD'):
@@ -501,6 +506,9 @@ class MainWindow(wx.Frame):
                 os.environ['LANG'] = locales[language][1]
             except (ValueError, KeyError):
                 pass
+        app.debug_print("============================")
+        app.debug_print("")
+
 
     def __init__(self, prnt, options):
         # Important variables needed throughout the application classes
@@ -509,34 +517,6 @@ class MainWindow(wx.Frame):
         self.errorLog = [] # all errors go here
         self.items = [] # items to rename
         self.spacer = u" " * 6 # spacer for status messages (to clear image)
-
-        wx.Frame.__init__(self, id=wxID_MAIN_WINDOW, name=u'MainWindow',
-                          parent=prnt, style=wx.DEFAULT_FRAME_STYLE)
-
-        # first run?
-        utils.init_environment()
-
-        self.set_language()
-
-        app.debug_print("Operating System: %s - %s - %s" % (platform.system(), platform.release(), platform.version()))
-        app.debug_print("System encoding: " + self.encoding)
-        app.debug_print("Python version: " + platform.python_version())
-        app.debug_print("wxPython version: " + utils.get_wxversion())
-        app.debug_print("Interface language: " + app.language)
-
-        # import these modules here since they need language settings activated
-        global renamer
-        import renamer
-        global configs
-        import configs
-        global picker
-        import picker
-        global bottomWindow
-        import bottomWindow
-
-        # initialize preferences
-        app.prefs = preferences.Methods()
-
         # icons used for status bar messages
         self.statusImages = {
             u'failed': wx.Bitmap(utils.icon_path(u'failed_sb.ico'),
@@ -549,7 +529,41 @@ class MainWindow(wx.Frame):
                                    wx.BITMAP_TYPE_ICO),
             u'eyes': wx.Bitmap(utils.icon_path(u'eyes.png'),
                                wx.BITMAP_TYPE_PNG),
-            }
+        }
+
+        app.debug_print("Init MainWindow")
+        wx.Frame.__init__(self, id=wxID_MAIN_WINDOW, name=u'MainWindow',
+                          parent=prnt, style=wx.DEFAULT_FRAME_STYLE)
+        app.debug_print("")
+
+        app.debug_print("======== System Info =======")
+        app.debug_print("Operating System: %s - %s - %s" % (platform.system(), platform.release(), platform.version()))
+        app.debug_print("Python version: " + platform.python_version())
+        app.debug_print("wxPython version: " + wx.version())
+        app.debug_print("============================")
+        app.debug_print("")
+
+        # first run?
+        utils.init_environment()
+
+        self.set_language()
+
+        # import these modules here since they need language settings activated
+        global renamer
+        import renamer
+        global configs
+        import configs
+        global picker
+        import picker
+        global bottomWindow
+        import bottomWindow
+
+        # initialize preferences
+        app.debug_print("======== Preferences =======")
+        app.prefs = preferences.Methods()
+        app.debug_print("============================")
+        app.debug_print("")
+
         # build main GUI
         self.__init_ctrls(prnt)
 
@@ -650,7 +664,7 @@ class MainWindow(wx.Frame):
         """Set status bar text and image."""
         self.statusImage.SetBitmap(self.statusImages[img])
         self.SetStatusText(self.make_space(msg))
-        app.debug_print(u"status message : '%s'" % msg)
+        app.debug_print(u"status message: '%s'" % msg)
 
 #
 #--- MENU ACTIONS: -----------------------------------------------------------#

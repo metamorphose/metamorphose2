@@ -33,6 +33,15 @@ def create(parent):
 
 class About(wx.Dialog):
     """The about dialog."""
+
+    def _get_wxversion(self):
+	"""Get the wxPython Version."""
+	wxVer = ""
+	for x in wx.VERSION:
+	    wxVer = wxVer + str(x) + "."
+	wxVer = wxVer.rstrip(".")
+	return wxVer
+  
     def __init_sizer(self):
         bottomRow = wx.BoxSizer(wx.HORIZONTAL)
         bottomRow.Add(self.bugReport, 0, wx.ALIGN_CENTER | wx.RIGHT)
@@ -91,7 +100,7 @@ class About(wx.Dialog):
         self.wxVersion = wx.StaticText(id=wxID_ABOUTWXVERSION,
                                        label=_(u"Using Python %s, wxPython %s") % (
                                            platform.python_version(),
-                                           utils.get_wxversion()
+                                           self._get_wxversion()
                                        ),
                                        name=u'version', parent=self)
         self.wxVersion.SetFont(wx.Font(fontSize + 1, fontFamily, fontStyle, wx.NORMAL, False))
