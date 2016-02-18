@@ -101,6 +101,7 @@ class Dialog(wx.Dialog):
         self.apply.Bind(wx.EVT_BUTTON, self.__on_apply_button)
 
         self.ok = wx.Button(id=wx.ID_OK, name=u'ok', parent=self, style=0)
+        self.ok.SetDefault()
         self.ok.Bind(wx.EVT_BUTTON, self.__on_ok_button)
 
         self.close = wx.Button(id=wx.ID_CANCEL, name=u'close', parent=self, style=0)
