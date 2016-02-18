@@ -105,6 +105,5 @@ install-doc:
 	install -d $(DESTDIR)$(prefix)/share/man/man1/
 	gzip -c9 manpage.1 > $(PACKAGE).1.gz
 	install -m 644 $(PACKAGE).1.gz $(DESTDIR)$(prefix)/share/man/man1/
-	cp *.html $(DESTDIR)$(prefix)/share/doc/$(PACKAGE)/
 
 # EOF

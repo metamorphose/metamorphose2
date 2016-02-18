@@ -73,10 +73,7 @@ Installing
 
 As root::
 
-  make build
-  make install
-
-``build`` makes the directory structure, ``install`` copies the sources and byte-compiles them.
+  make all
 
 Under Linux & freeBSD
 The makefile should take care of everything for you, it is architecture and distro independant.
