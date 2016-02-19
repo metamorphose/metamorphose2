@@ -23,10 +23,10 @@ Some methods utility methods that make more sense
 here than in the utils module.
 """
 
-homedir = 'metamorphose2'
-if os.sep == '/':
-    homedir = '.' + homedir
 
+#
+# Functions
+#
 
 def debug_print(msg):
     """Print debug messages to screen, if debugging is enabled."""
@@ -49,28 +49,16 @@ def __set_real_path():
                 break
         if not path:
             print("Could not determine application path.\nMake sure the application is correctly installed.\n")
-            sys.exit();
+            sys.exit(1);
         #print(path)
     return os.path.join(path)
 
 realPath = __set_real_path()
 
 
-def get_real_path(file):
+def get_real_path(path):
     """Return application path for file."""
-    return os.path.join(realPath, file)
-
-
-def __get_version():
-    """Get current version from file."""
-    try:
-        f = open(get_real_path("version"))
-    except:
-        v = 'unknown'
-    else:
-        v = f.readline().strip()
-        f.close()
-    return v + u' (beta)'
+    return os.path.join(realPath, path)
 
 
 def locale_path(lang):
@@ -85,40 +73,62 @@ def locale_path(lang):
     else:
         return get_real_path(u'../messages')
 
+
 #
-#--- Variables
+# Basic Variables
 #
 
-# Application version
-version = __get_version()
+# home directory, for config files and such
+homedir = 'metamorphose2'
+if os.sep == '/':
+    homedir = '.' + homedir
+
+# Application versions
+__f = open(get_real_path("version"))
+version = __f.readline().strip()
+prefsVersion = __f.readline().strip()
+__f.close()
+
 # Interface language
 language = ''
+
 # Items with warnings
 warn = []
+
 # Items with errors
 bad = []
+
 # All errors
 errorLog = []
+
 # Items to rename
 items = []
+
 # Has regular expression error message
 REmsg = False
+
 # If true, will need to sort items before renaming
 recursiveFolderOn = False
+
 # Automatic mode level
 autoModeLevel = False
+
 # Show processing times
 showTimes = False
+
 # Show debug info
 debug = False
+
 # Font parameters
 fontParams = {}
+
 # Running in GUI or CLI mode (future)
 cliMode = False
 
 #
-#--- Objects
+# Classes
 #
 
 # preferences object to be set on load
 prefs = False
+

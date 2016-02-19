@@ -55,8 +55,7 @@ class Notebook(wx.Toolbook):
             page = page(self)
             self.AddPage(page, pane[1], imageId=pane[2])
             notebookPage = self.GetPage(i)
-            if not parent.initial:
-                parent.load_prefs(notebookPage)
+            parent.load_prefs(notebookPage)
             if hasattr(notebookPage, 'init_enabled'):
                 notebookPage.init_enabled()
             i += 1
@@ -83,7 +82,6 @@ class Dialog(wx.Dialog):
         self.buttons = wx.BoxSizer(orient=wx.HORIZONTAL)
         self.__init_mainsizer_items(self.mainSizer)
         self.__init_buttons_items(self.buttons)
-        
         utils.set_min_size(self, ignoreClasses=(
                            wx.TextCtrl, wx.Button, wx.Choice, wx.SpinCtrl,
                            wx.FilePickerCtrl, wx.DirPickerCtrl, wx.ColourPickerCtrl))
@@ -95,8 +93,6 @@ class Dialog(wx.Dialog):
         self.SetIcon(wx.Icon(utils.icon_path(u'preferences.ico'),
                      wx.BITMAP_TYPE_ICO))
 
-        self.notebook = Notebook(id=-1, name=u'notebook', parent=self)
-
         self.apply = wx.Button(id=wx.ID_APPLY, name=u'apply', parent=self, style=0)
         self.apply.Bind(wx.EVT_BUTTON, self.__on_apply_button)
 
@@ -107,49 +103,63 @@ class Dialog(wx.Dialog):
         self.close = wx.Button(id=wx.ID_CANCEL, name=u'close', parent=self, style=0)
         self.close.Bind(wx.EVT_BUTTON, self.__close_diag)
 
+        self.notebook = Notebook(id=-1, name=u'notebook', parent=self)
+
         self.__init_sizers()
 
-    def __init__(self, parent, prefs, initial):
+    def __init__(self, parent, methods, initial):
+        app.debug_print("Open preferences dialog")
         global main
         main = parent
-        self.initial = initial
-        self.prefs = prefs
+        self.prefs = methods
         self.__init_ctrls(parent)
-        if initial:
-            self.close.Enable(False)
-            self.apply.Enable(False)
-        
+
         self.CentreOnScreen()
         # to see if these change when applying
-        if not initial:
-            self.oldDirTree = self.prefs.get(u'useDirTree')
-            self.oldSHowHiddenDirs = self.prefs.get(u'showHiddenDirs')
+        self.oldDirTree = self.prefs.get(u'useDirTree')
+        self.oldSHowHiddenDirs = self.prefs.get(u'showHiddenDirs')
 
     def __on_apply_button(self, event):
+        app.debug_print("Save preferences from dialog")
         self.prefs.set_prefs(self)
         prefs = app.prefs = self.prefs
-        if not self.initial:
-            if prefs.get(u'useDirTree') != self.oldDirTree:
-                main.picker.set_tree()
-            if prefs.get(u'showHiddenDirs') != self.oldSHowHiddenDirs:
-                main.picker.dirPicker.ShowHidden(prefs.get(u'showHiddenDirs'))
-            self.oldDirTree = prefs.get(u'useDirTree')
-            self.oldSHowHiddenDirs = prefs.get(u'showHiddenDirs')
-            main.bottomWindow.display.set_preferences()
-            main.show_preview(True)
+        if prefs.get(u'useDirTree') != self.oldDirTree:
+            main.picker.set_tree()
+        if prefs.get(u'showHiddenDirs') != self.oldSHowHiddenDirs:
+            main.picker.dirPicker.ShowHidden(prefs.get(u'showHiddenDirs'))
+        self.oldDirTree = prefs.get(u'useDirTree')
+        self.oldSHowHiddenDirs = prefs.get(u'showHiddenDirs')
+        main.bottomWindow.display.set_preferences()
+        main.show_preview(True)
 
     def load_prefs(self, panel):
         """
         load preferences from file and apply them to a panel.
         """
-        app.debug_print('Loading %s preferences ...' % panel.GetName())
+        app.debug_print('Load preferences from file into %s' % panel.GetName())
+        object_types = (
+            wx.CheckBox,
+            wx.RadioButton,
+            wx.SpinCtrl,
+            wx.ComboBox,
+            wx.TextCtrl,
+            wx.Choice,
+            wx.DirPickerCtrl,
+            wx.FilePickerCtrl,
+            wx.ColourPickerCtrl
+            )
         for child in panel.GetChildren():
+            if not isinstance(child, object_types):
+                continue
+            child_name = child.GetName()
             try:
-                v = self.prefs.get(child.GetName(), False)
+                v = self.prefs.get(child_name)
             except KeyError:
-                pass
+                app.debug_print("Could not find value for: '%s'" % (child_name))
+                # forces the user to apply prefs, hopefully fixing the file
+                self.close.Enable(False)
             else:
-                app.debug_print("   %s = %s" % (child.GetName(), v))
+                app.debug_print("   %s = %s" % (child_name, v))
                 if isinstance(child, wx.CheckBox) or isinstance(child, wx.RadioButton)\
                     or isinstance(child, wx.SpinCtrl):
                         child.SetValue(v)

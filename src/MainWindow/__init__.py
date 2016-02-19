@@ -538,8 +538,8 @@ class MainWindow(wx.Frame):
 
         app.debug_print("======== System Info =======")
         app.debug_print("Operating System: %s - %s - %s" % (platform.system(), platform.release(), platform.version()))
-        app.debug_print("Python version: " + platform.python_version())
-        app.debug_print("wxPython version: " + wx.version())
+        app.debug_print("Python version: %s" % platform.python_version())
+        app.debug_print("wxPython version: %s" % wx.version())
         app.debug_print("============================")
         app.debug_print("")
 

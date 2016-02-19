@@ -121,7 +121,8 @@ def get_options():
         elif o in ("-d", "--debug"):
             app.debug = True
             print("Running in debug mode")
-            print("Version: " + app.version)
+            print("Application Version: %s" % app.version)
+            print("Preferences Version: %s" % app.prefsVersion)
         elif o in ("-p", "--path"):
             options['path'] = strip_leading(a)
         elif o in ("-h", "--help"):
