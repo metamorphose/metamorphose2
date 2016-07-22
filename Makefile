@@ -21,11 +21,9 @@ all: build install
 
 build:
 	# make needed directories
-	install -d $(DESTDIR)$(prefix)/share/doc/$(PACKAGE)/;
 	install -d $(DESTDIR)$(prefix)/share/$(PACKAGE)/;
 
 remove:
-	rm -fR $(DESTDIR)$(prefix)/share/doc/$(PACKAGE);
 	rm -fR $(DESTDIR)$(prefix)/share/$(PACKAGE);
 	rm -f $(DESTDIR)$(prefix)/bin/$(PACKAGE);
 	rm -f $(DESTDIR)$(prefix)/share/man/man1/$(PACKAGE).1.gz;
